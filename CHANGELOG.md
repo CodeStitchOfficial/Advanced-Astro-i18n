@@ -49,8 +49,8 @@ Refer to [Astro's documentation on Pagination](https://docs.astro.build/en/guide
 + const { page } = Astro.props as { page: Page };
 
 ```
-
-* [7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/commit/7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631#diff-55bed05322ee2559a6dac7d240323af8cf226d6cbcfd2a0f29ba9fbd3ad1d319) - Add extra blog posts to test the pagination system
+* [7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/commit/7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631#diff-55bed05322ee2559a6dac7d240323af8cf226d6cbcfd2a0f29ba9fbd3ad1d319) - Add translations strings and t functions for pagination buttons
+* [383a919117cc64bf9a626c496979e446d1533482](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/commit/383a919117cc64bf9a626c496979e446d1533482) - Add extra blog posts to test the pagination system
 
 ## 2.1.0
 ### Major change
