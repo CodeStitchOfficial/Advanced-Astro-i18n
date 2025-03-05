@@ -1,6 +1,7 @@
 ---
+import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import { getLocalePlaceholder, setDynamicParams, t } from "i18n:astro";
+import { getDefaultLocalePlaceholder, getLocalePlaceholder, setDynamicParams, t } from "i18n:astro";
 import { collectionFilters, handleI18nSlug } from "@astrolicious/i18n/content-collections";
 import BaseLayout from "src/layouts/BaseLayout.astro";
 import Landing from "@components/Landing.astro";
@@ -10,8 +11,8 @@ import FeaturedPost from "@components/FeaturedPost.astro";
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@utils/utils"
 import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-import type { GetStaticPaths } from "astro";
-import { getDefaultLocalePlaceholder } from "i18n:astro";
+const optimizedImage = await getOptimizedImage(landingImage)
+
 
 export const getStaticPaths = (async () => {
 	const locale = getLocalePlaceholder();
@@ -31,7 +32,6 @@ export const getStaticPaths = (async () => {
 					defaultLocale,
 				}),
 			);
-
 			const dynamicParams = equivalentPosts.map((entry) => {
 				const { locale, slug } = handleI18nSlug(entry.id);
 
@@ -58,9 +58,6 @@ export const getStaticPaths = (async () => {
 
 const { post, dynamicParams } = Astro.props;
 setDynamicParams(dynamicParams);
-
-const optimizedImage = await getOptimizedImage(landingImage)
-
 ---
 
 <BaseLayout

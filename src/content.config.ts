@@ -15,7 +15,6 @@ const blogsCollection = defineCollection({
 			image: image(),
 			imageAlt: z.string(),
 			defaultLocaleVersion: reference("blog").optional(),
-
 		}),
 });
 

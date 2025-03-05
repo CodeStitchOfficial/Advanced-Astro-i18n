@@ -1,0 +1,101 @@
+---
+import PaginationButton from "./PaginationButton.astro";
+
+// More info on all the Page props: https://docs.astro.build/en/guides/routing/#the-page-prop
+// We're just destructuring what we need here.
+const { page } = Astro.props;
+const { currentPage, url } = page;
+const { prev: prevUrl, next: nextUrl } = url;
+---
+
+{
+	(prevUrl || nextUrl) && (
+		<nav role="navigation" aria-label="Pagination">
+			<ul class="pagination--group">
+				{prevUrl && (
+					<li>
+						<PaginationButton href={prevUrl} arrow="left" rel="prev">
+							Prev
+						</PaginationButton>
+					</li>
+				)}
+
+				{!prevUrl && (
+					<li>
+						<PaginationButton arrow="left" rel="prev" class="disabled">
+							Prev
+						</PaginationButton>
+					</li>
+				)}
+				<li>
+					<span class="pagination--current" aria-current="page">
+						{currentPage.toString()}
+					</span>
+				</li>
+
+        {nextUrl && (
+					<li>
+						<PaginationButton href={nextUrl} arrow="right" rel="next">
+							Next
+						</PaginationButton>
+					</li>
+				)}
+
+				{!nextUrl && (
+					<li>
+						<PaginationButton arrow="right" rel="next" class="disabled">
+							Next
+						</PaginationButton>
+					</li>
+				)}
+			</ul>
+		</nav>
+	)
+}
+
+<style lang="less">
+	ul,
+	li {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+
+	nav {
+		width: 100%;
+	}
+
+	.pagination--group {
+		width: 100%;
+		margin: 2em 0;
+		display: grid;
+    grid-template-columns: minmax(0, 1fr) 50px minmax(0, 1fr); /* prev-button | current | next-button */
+		justify-items: center;
+		align-items: center;
+		gap: 1em;
+	}
+
+	.pagination--current {
+		padding: 1rem;
+		background-color: var(--primaryDark);
+    color: var(--bodyTextColor);
+		border-radius: (8/16rem);
+		justify-self: center;
+	}
+
+	@media only screen and (min-width: 64em) {
+		.pagination--group {
+			grid-template-columns: repeat(auto-fit, minmax(min(min-content, 100%), 1fr));
+		}
+	}
+
+  	/* Dark Mode */
+	@media only screen and (min-width: 0em) {
+		body.dark-mode {
+      .pagination--current {
+        background-color: var(--secondaryLight);
+        color: var(--light);
+      }
+		}
+	}
+</style>
