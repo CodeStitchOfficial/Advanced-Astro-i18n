@@ -1,101 +1,101 @@
 ---
+import PaginationButton from "./PaginationButton.astro";
 
-const { prevUrl, currPage, nextUrl } = Astro.props;
+// More info on all the Page props: https://docs.astro.build/en/guides/routing/#the-page-prop
+// We're just destructuring what we need here.
+const { page } = Astro.props;
+const { currentPage, url } = page;
+const { prev: prevUrl, next: nextUrl } = url;
 ---
 
 {
-  (prevUrl || nextUrl) && (
-    <section class="pagination--links">
-     
-      {prevUrl && (
-        // @ts-ignore
-        <a
-          href={prevUrl}
+	(prevUrl || nextUrl) && (
+		<nav role="navigation" aria-label="Pagination">
+			<ul class="pagination--group">
+				{prevUrl && (
+					<li>
+						<PaginationButton href={prevUrl} arrow="left" rel="prev">
+							Prev
+						</PaginationButton>
+					</li>
+				)}
 
-        >
-          Prev
-        </a>
-      )}
+				{!prevUrl && (
+					<li>
+						<PaginationButton arrow="left" rel="prev" class="disabled">
+							Prev
+						</PaginationButton>
+					</li>
+				)}
+				<li>
+					<span class="pagination--current" aria-current="page">
+						{currentPage.toString()}
+					</span>
+				</li>
 
-      <span class="pagination--current">{currPage.toString()}</span>
+        {nextUrl && (
+					<li>
+						<PaginationButton href={nextUrl} arrow="right" rel="next">
+							Next
+						</PaginationButton>
+					</li>
+				)}
 
-      {nextUrl && (
-        // @ts-ignore
-        <a
-          
-          href={nextUrl}
-
-        >
-          Next
-        </a>
-      )}
-    </section>
-  )
+				{!nextUrl && (
+					<li>
+						<PaginationButton arrow="right" rel="next" class="disabled">
+							Next
+						</PaginationButton>
+					</li>
+				)}
+			</ul>
+		</nav>
+	)
 }
 
 <style lang="less">
-  a {
-    text-decoration: none;
-    width: 5rem;
-    height: 2rem;
-    background-color: var(--bodyTextColorWhite);;
-    color: var(var(--bodyTextColor););
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5em;
-  }
-  .pagination--links {
-    width: 100%;
-    margin: 2em 0;
-    display: grid;
-		grid-template-columns: 1fr;
-    justify-items: center;
-    align-items: center;
-    gap: 1em;
-  }
+	ul,
+	li {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
 
-  [rel="next"] {
-      flex-direction: row-reverse;
-    }
+	nav {
+		width: 100%;
+	}
 
-  .pagination--current {
-    padding: 1rem;
-    border: 1px solid var(--sl-color-gray-5);
-    border-radius: 0.5rem;
-    justify-self: center;
-  }
+	.pagination--group {
+		width: 100%;
+		margin: 2em 0;
+		display: grid;
+    grid-template-columns: minmax(0, 1fr) 50px minmax(0, 1fr); /* prev-button | current | next-button */
+		justify-items: center;
+		align-items: center;
+		gap: 1em;
+	}
 
+	.pagination--current {
+		padding: 1rem;
+		background-color: var(--primaryDark);
+    color: var(--bodyTextColor);
+		border-radius: (8/16rem);
+		justify-self: center;
+	}
 
-  [data-icon="mdi--arrow-left"],
-  [data-icon="mdi--arrow-right"] {
-    transition: 0.3s;
-  }
+	@media only screen and (min-width: 64em) {
+		.pagination--group {
+			grid-template-columns: repeat(auto-fit, minmax(min(min-content, 100%), 1fr));
+		}
+	}
 
-  [rel="next"]:not(.disabled) {
-    &:hover {
-      [data-icon="mdi--arrow-right"] {
-        transform: translateX(0.5em);
+  	/* Dark Mode */
+	@media only screen and (min-width: 0em) {
+		body.dark-mode {
+      .pagination--current {
+        background-color: var(--secondaryLight);
+        color: var(--light);
       }
-    }
-  }
-
-  [rel="prev"]:not(.disabled) {
-    &:hover {
-      [data-icon="mdi--arrow-left"] {
-        transform: translateX(-0.5em);
-      }
-    }
-  }
-
-  @media only screen and (min-width: 64em) {
-    .pagination--links {
-      grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
-
-    }
-
-    .pagination--button {
-      min-width: 10rem;
-    }
-  }
+		}
+	}
 </style>
