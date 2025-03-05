@@ -49,5 +49,9 @@
         "pageNotFound": "404 - La page que vous cherchez n'existe pas.",
         "linkText": "Retourner à la page d'accueil"
     },
-    "skipLink": "Cliquez pour accéder au contenu principal."
+    "skipLink": "Cliquez pour accéder au contenu principal.",
+    "pagination": {
+        "previous": "Préc.",
+        "next": "Suiv."
+    }
 }

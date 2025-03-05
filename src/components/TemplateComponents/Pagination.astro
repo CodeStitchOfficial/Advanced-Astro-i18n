@@ -1,4 +1,5 @@
 ---
+import { t } from "i18n:astro";
 import PaginationButton from "./PaginationButton.astro";
 
 // More info on all the Page props: https://docs.astro.build/en/guides/routing/#the-page-prop
@@ -15,7 +16,7 @@ const { prev: prevUrl, next: nextUrl } = url;
 				{prevUrl && (
 					<li>
 						<PaginationButton href={prevUrl} arrow="left" rel="prev">
-							Prev
+							{t("pagination.previous")}
 						</PaginationButton>
 					</li>
 				)}
@@ -23,7 +24,7 @@ const { prev: prevUrl, next: nextUrl } = url;
 				{!prevUrl && (
 					<li>
 						<PaginationButton arrow="left" rel="prev" class="disabled">
-							Prev
+							{t("pagination.previous")}
 						</PaginationButton>
 					</li>
 				)}
@@ -36,7 +37,7 @@ const { prev: prevUrl, next: nextUrl } = url;
         {nextUrl && (
 					<li>
 						<PaginationButton href={nextUrl} arrow="right" rel="next">
-							Next
+							{t("pagination.next")}
 						</PaginationButton>
 					</li>
 				)}
@@ -44,7 +45,7 @@ const { prev: prevUrl, next: nextUrl } = url;
 				{!nextUrl && (
 					<li>
 						<PaginationButton arrow="right" rel="next" class="disabled">
-							Next
+							{t("pagination.next")}
 						</PaginationButton>
 					</li>
 				)}
