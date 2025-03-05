@@ -1,7 +1,59 @@
 # Advanced Astro v4 i18n
 
+## 2.2.0
+### Major change 
+New feature: Pagination
+
+The blog index now has a pagination feature that allows to break up large collections into multiple pages. Paginated route names should use the same [bracket] syntax as a standard dynamic route. For instance, the file name /blog/[page].astro will generate routes for /blog/1, /blog/2, etc, where [page] is the generated page number.
+Refer to [Astro's documentation on Pagination](https://docs.astro.build/en/guides/routing/#pagination) for more information.
+
+### patch change
+- Upgraded Astro packages
+
+#### What should I do on my fork?
+* [119cc5fa2a2d4289d5905f6107fb426315e6f46b](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/commit/119cc5fa2a2d4289d5905f6107fb426315e6f46b) - Add the `Paginate.astro` and `paginateButton.astro` components
+* [7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/commit/7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631#diff-ee82542e4c17b61e51157a8be5e0d05783aa3063649de4aacc31b15c9d24748e) - `blog.astro` is gone, and we now use `routes/blog/[...page].astro` to hold the pagination routing logic
+
+```diff
+// blog/[...page].astro
+- const locale = getLocale();
+- const posts = await getCollection("blog", ({ id }) => {
+-    return id.startsWith(locale);
+- });
+- posts.sort(
+-      (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+-);
+
++ import type { GetStaticPaths, Page } from "astro";
++ import type { CollectionEntry } from "astro:content";
++ import { collectionFilters } from "@astrolicious/i18n/content-collections";
++ import { getLocalePlaceholder } from "i18n:astro";
++ import Pagination from "@components/TemplateComponents/Pagination.astro";
++ 
++ export const getStaticPaths = (async ({ paginate }) => {
++   const locale = getLocalePlaceholder();
++   const posts = await getCollection("blog", (post: CollectionEntry<"blog">) =>
++     collectionFilters.byLocale(post, { locale })
++   );
++ 
++   const sortedPosts = posts.sort(
++     (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
++ );
++ 
++   // paginates with options - https://docs.astro.build/en/reference/api-reference/#paginate
++   return paginate(sortedPosts, {
++     pageSize: 3,
++   });
++ }) satisfies GetStaticPaths;
++ 
++ const { page } = Astro.props as { page: Page };
+
+```
+
+* [7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/commit/7a6b2ae7a59dffe4c96abcdf8f161efea8d0c631#diff-55bed05322ee2559a6dac7d240323af8cf226d6cbcfd2a0f29ba9fbd3ad1d319) - Add extra blog posts to test the pagination system
+
 ## 2.1.0
-### Patch change
+### Major change
 * [#20](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/pull/20) Feature: adds support for localized routes.
 For example, we are on /blog/third-post-in-english and switch language to fr. We will now correctly navigate to /fr/blog/troisieme-article-en-francais
 
