@@ -17,5 +17,10 @@
     "autoprefixer": "^10.4.20",
     "i18next": "^23.16.8",
     "less": "^4.2.1"
-  }
+  },
+    "overrides": {
+      "@astrolicious/i18n": {
+        "astro-integration-kit": "^0.18.0"
+      }
+    }
 }
