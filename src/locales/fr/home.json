@@ -6,10 +6,11 @@
   "hero": {
     "topper": "Kit Avancé",
     "title": {
-      "1": "Kit Avancé Astro v4",
+      "1": "Kit Avancé Astro v5",
       "2": "i18n"
     },
     "p1": "Ce kit avancé comprend un environnement Astro préconfiguré qui permet de réutiliser des composants, de centraliser les données et d'évoluer en fonction de la croissance de vos clients. Ce kit est spécialement conçu pour les clients souhaitant un site multi-langues et est donc configuré avec les outils d'internationalisation (i18n) d'Astro pour deux langues: anglais et français",
+    "p2": "Ce kit utilise astrolicious/i18n, qui n'est plus maintenu. Le package, ainsi que ce kit, devraient toujours fonctionner, mais soyez particulièrement prudent lors de la mise à jour des versions d'Astro.",
     "cta1": "En savoir plus",
     "cta2": "Écrivez-nous"
   },
