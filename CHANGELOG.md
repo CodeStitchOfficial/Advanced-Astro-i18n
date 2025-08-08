@@ -1,5 +1,17 @@
 # Advanced Astro v4 i18n
 
+## 2.2.2
+### Patch changes
+ - Added package overrides to resolve dependency conflicts with astro-integration-kit
+
+ ```diff
++ "overrides": {
++   "@astrolicious/i18n": {
++     "astro-integration-kit": "^0.18.0"
++   }
++ }
+```
+
 ## 2.2.1
 ### Patch changes
  - Astro has been upgraded to v.5.7.12
