@@ -33,6 +33,9 @@ const optimizedMobileLandingImage = await getOptimizedImage(mobileLandingImage)
         <p class="cs-text">
           {t("home:hero.p1")}
         </p>
+        <p class="cs-text cs-caution">
+          {t("home:hero.p2")}
+        </p>
         <a href={getLocalePath("/about")} class="cs-button-solid">{t("home:hero.cta1")}</a>
         <a href={getLocalePath("/contact")} class="cs-button-transparent">
           <img
@@ -662,6 +665,12 @@ const optimizedMobileLandingImage = await getOptimizedImage(mobileLandingImage)
         /* 40px - 48px */
         margin-bottom: clamp(2.5rem, 4vw, 3rem);
         color: var(--bodyTextColorWhite);
+      }
+
+      .cs-caution {
+        background-color: var(--primary);
+        padding: (16/16rem) (24/16rem);
+        font-size: (20/16rem);
       }
 
       .cs-button-solid {
