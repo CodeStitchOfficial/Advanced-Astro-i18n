@@ -10,9 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.3.1",
+    "@astrojs/sitemap": "^3.4.2",
     "@astrolicious/i18n": "^0.6.1",
-    "astro": "^5.7.12",
+    "astro": "^5.7.14",
     "astro-icon": "^1.1.5",
     "autoprefixer": "^10.4.21",
     "i18next": "^23.16.8",
