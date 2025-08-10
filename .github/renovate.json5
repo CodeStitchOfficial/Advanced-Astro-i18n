@@ -4,6 +4,8 @@
     "config:recommended",
     "schedule:monthly",
     "group:allNonMajor",
+    "group:monorepos",
+    ":semanticPrefixFixDepsChoreOthers",
     ":automergePatch",
     ":disableDependencyDashboard"
   ],
