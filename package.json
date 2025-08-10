@@ -13,10 +13,10 @@
     "@astrojs/sitemap": "^3.3.1",
     "@astrolicious/i18n": "^0.6.1",
     "astro": "^5.7.12",
-    "astro-icon": "^1.1.4",
-    "autoprefixer": "^10.4.20",
+    "astro-icon": "^1.1.5",
+    "autoprefixer": "^10.4.21",
     "i18next": "^23.16.8",
-    "less": "^4.2.1"
+    "less": "^4.2.2"
   },
     "overrides": {
       "@astrolicious/i18n": {
