@@ -1,69 +1,51 @@
 {
-    "layout":{
-      "title":"Pixel Perfect Websites",
-      "description":"Meta description for the page"
-    },
-    "hero":{
-      "topper":"Advanced Kit",
-      "title":{
-        "1":"Advanced Astro v5",
-        "2":"i18n"
-      },
-      "p1":"This advanced kit includes a pre-configured Astro environment, which allows for repeated components, centralized data and greater room to scale as your clients grow. This kit is specially designed for customers who want a multi-language site, and is therefore configured with Astro's internationalization tools (i18n) for two languages: English and French.",
-      "p2":"This kit is powered by astrolicious/i18n, which is now unmaintained. The package, and this kit, should still work, but be extra careful when updating Astro versions.",
-      "cta1":"Explore More",
-      "cta2":"Get in touch"
-    },
-    "services":[
-      {
-        "heading":"Service 1",
-        "p":"Talk about the service with keywords people will be searching for it by. Keep it 1-2 sentences."
-      },
-      {
-        "heading":"Service 2",
-        "p":"Talk about the service with keywords people will be searching for it by. Keep it 1-2 sentences."
-      },
-      {
-        "heading":"Service 3",
-        "p":"Talk about the service with keywords people will be searching for it by. Keep it 1-2 sentences."
-      }
-    ],
-    "about":{
-      "topper":"About Us",
-      "title":"About Company Title",
-      "p1":"Our company was created In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-      "p2":"We believe that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-      "p3":"It's important In consequat tincidunt turpis sit amet imperdiet.",
-      "rank":"CEO-Founder",
-      "cta":"More about us"
-    },
-    "extra":{
-      "topper":"SEO Ranking",
-      "title":"Talk about a main service keyword",
-      "p1":"Our main service In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-      "p2":"Research shows that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per."
-    },
-    "portfolio":{
-      "topper":"Our Portfolio",
-      "title":"Et orci volutpat, back up generator installations",
-      "cta":"View Our Products"
-    },
-    "reviews":{
-      "topper":"Our Reviews",
-      "title":"Words from our customers",
-      "p":"Our clients are In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-      "reviews":[
-        {
-          "review":"Dictum dolor, nullam morbi sem in auctor proin. Consequat dolor habitasse nam sed tempor.",
-          "name":"John Doe",
-          "rank":"Homeowner"
-        },
-        {
-          "review":"Dictum dolor, nullam morbi sem in auctor proin. Consequat dolor habitasse nam sed tempor.",
-          "name":"Jane Doe",
-          "rank":"Homeowner"
-        }
-      ],
-      "cta":"Our Reviews"
-    }
-  }
+	"layout": {
+		"title": "Pixel Perfect Websites",
+		"description": "Meta description for the page"
+	},
+	"hero": {
+		"topper": "Advanced Kit",
+		"title": {
+			"1": "Advanced Astro v5",
+			"2": "i18n"
+		},
+		"p1": "This advanced kit includes a pre-configured Astro environment, which allows for repeated components, centralized data and greater room to scale as your clients grow. This kit is specially designed for customers who want a multi-language site, and is therefore configured with Astro's internationalization tools (i18n) for two languages: English and French.",
+		"p2": "This kit is powered by astrolicious/i18n, which is now unmaintained. The package, and this kit, should still work, but be extra careful when updating Astro versions.",
+		"cta1": "Explore More",
+		"cta2": "Get in touch"
+	},
+	"services": [
+		{
+			"heading": "Service 1",
+			"p": "Talk about the service with keywords people will be searching for it by. Keep it 1-2 sentences."
+		},
+		{
+			"heading": "Service 2",
+			"p": "Talk about the service with keywords people will be searching for it by. Keep it 1-2 sentences."
+		},
+		{
+			"heading": "Service 3",
+			"p": "Talk about the service with keywords people will be searching for it by. Keep it 1-2 sentences."
+		}
+	],
+	"about": {
+		"topper": "About Us",
+		"title": "About Company Title",
+		"p1": "Our company was created In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p2": "We believe that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p3": "It's important In consequat tincidunt turpis sit amet imperdiet.",
+		"rank": "CEO-Founder",
+		"cta": "More about us"
+	},
+	"extra": {
+		"topper": "SEO Ranking",
+		"title": "Talk about a main service keyword",
+		"p1": "Our main service In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p2": "Research shows that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per."
+	},
+	"portfolio": {
+		"topper": "Our Portfolio",
+		"title": "Et orci volutpat, back up generator installations",
+		"cta": "View Our Products"
+	}
+}

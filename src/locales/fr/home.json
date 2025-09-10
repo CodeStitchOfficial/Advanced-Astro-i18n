@@ -1,69 +1,51 @@
 {
-  "layout": {
-    "title": "Sites Internet au pixel près !",
-    "description": "Meta description pour la page"
-  },
-  "hero": {
-    "topper": "Kit Avancé",
-    "title": {
-      "1": "Kit Avancé Astro v5",
-      "2": "i18n"
-    },
-    "p1": "Ce kit avancé comprend un environnement Astro préconfiguré qui permet de réutiliser des composants, de centraliser les données et d'évoluer en fonction de la croissance de vos clients. Ce kit est spécialement conçu pour les clients souhaitant un site multi-langues et est donc configuré avec les outils d'internationalisation (i18n) d'Astro pour deux langues: anglais et français",
-    "p2": "Ce kit utilise astrolicious/i18n, qui n'est plus maintenu. Le package, ainsi que ce kit, devraient toujours fonctionner, mais soyez particulièrement prudent lors de la mise à jour des versions d'Astro.",
-    "cta1": "En savoir plus",
-    "cta2": "Écrivez-nous"
-  },
-  "services": [
-    {
-      "heading": "Service 1",
-      "p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
-    },
-    {
-      "heading": "Service 2",
-      "p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
-    },
-    {
-      "heading": "Service 3",
-      "p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
-    }
-  ],
-  "about": {
-    "topper": "À propos",
-    "title": "À propos de Nom de la société",
-    "p1": "Notre société a été In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-    "p2": "Nous croyons fermement que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-    "p3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
-    "rank": "PDG",
-    "cta": "En savoir plus sur Nom de la Société"
-  },
-  "extra": {
-    "topper": "SEO Ranking",
-    "title": "Parler d'un mot-clé de service principal",
-    "p1": "Nom de la société est spécialisée en In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-    "p2": "Les statistiques montrent que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per."
-  },
-  "portfolio": {
-    "topper": "Notre Portfolio",
-    "title": "In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet",
-    "cta": "Voir tous nos projets"
-  },
-  "reviews": {
-    "topper": "Nos avis",
-    "title": "Quelques mots de clients satisfaits",
-    "p": "Nos clients sont In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-    "reviews": [
-      {
-        "review": "Dictum dolor, nullam morbi sem in auctor proin. Consequat dolor habitasse nam sed tempor.",
-        "name": "John Doe",
-        "rank": "Propriétaire"
-      },
-      {
-        "review": "Dictum dolor, nullam morbi sem in auctor proin. Consequat dolor habitasse nam sed tempor.",
-        "name": "Jane Doe",
-        "rank": "Propriétaire"
-      }
-    ],
-    "cta": "Nos avis"
-  }
+	"layout": {
+		"title": "Sites Internet au pixel près !",
+		"description": "Meta description pour la page"
+	},
+	"hero": {
+		"topper": "Kit Avancé",
+		"title": {
+			"1": "Kit Avancé Astro v5",
+			"2": "i18n"
+		},
+		"p1": "Ce kit avancé comprend un environnement Astro préconfiguré qui permet de réutiliser des composants, de centraliser les données et d'évoluer en fonction de la croissance de vos clients. Ce kit est spécialement conçu pour les clients souhaitant un site multi-langues et est donc configuré avec les outils d'internationalisation (i18n) d'Astro pour deux langues: anglais et français",
+		"p2": "Ce kit utilise astrolicious/i18n, qui n'est plus maintenu. Le package, ainsi que ce kit, devraient toujours fonctionner, mais soyez particulièrement prudent lors de la mise à jour des versions d'Astro.",
+		"cta1": "En savoir plus",
+		"cta2": "Écrivez-nous"
+	},
+	"services": [
+		{
+			"heading": "Service 1",
+			"p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
+		},
+		{
+			"heading": "Service 2",
+			"p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
+		},
+		{
+			"heading": "Service 3",
+			"p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
+		}
+	],
+	"about": {
+		"topper": "À propos",
+		"title": "À propos de Nom de la société",
+		"p1": "Notre société a été In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p2": "Nous croyons fermement que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
+		"rank": "PDG",
+		"cta": "En savoir plus sur Nom de la Société"
+	},
+	"extra": {
+		"topper": "SEO Ranking",
+		"title": "Parler d'un mot-clé de service principal",
+		"p1": "Nom de la société est spécialisée en In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p2": "Les statistiques montrent que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per."
+	},
+	"portfolio": {
+		"topper": "Notre Portfolio",
+		"title": "In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet",
+		"cta": "Voir tous nos projets"
+	}
 }
