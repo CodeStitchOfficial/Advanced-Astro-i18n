@@ -1,11 +1,11 @@
 ---
-import ThemeSelect from "./ThemeSelect.astro";
-import LanguageSelect from "./LanguageSelect.astro";
+import ThemeSelect from "../TemplateComponents/DarkMode/ThemeSelect.astro";
+import MultiLocalesSelect from "./LanguageSwitch/MultiLocalesSelect.astro";
 ---
 
 <div class="options-wrapper">
+    <MultiLocalesSelect />
     <ThemeSelect />
-    <LanguageSelect />
 </div>
 
 <style>

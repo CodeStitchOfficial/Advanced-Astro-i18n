@@ -1,0 +1,273 @@
+---
+import { getLocale, getSwitcherData, t } from "i18n:astro";
+
+const locale = getLocale();
+const data = getSwitcherData();
+
+// Create language options dynamically from the i18n configuration
+const languageOptions = data.map((option) => ({
+    locale: option.locale,
+    href: option.href,
+    label: t(`languageSelect.${option.locale}` as any),
+    code: option.locale.toUpperCase().slice(0, 2), // Get first 2 characters for language code
+}));
+---
+
+<language-toggle>
+    <div
+        class="language-toggle"
+        role="button"
+        tabindex="0"
+        aria-label={t("language-label")}
+    >
+        <div class="toggle-track">
+            <div class="toggle-slider" data-current-locale={locale}></div>
+            {
+                languageOptions.map((option) => (
+                    <div
+                        class="language-option"
+                        data-locale={option.locale}
+                        data-href={option.href}
+                        data-active={locale === option.locale}
+                    >
+                        <span class="language-code">{option.code}</span>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</language-toggle>
+
+<script>
+    class LanguageToggle extends HTMLElement {
+        constructor() {
+            super();
+            this.toggle = this.querySelector(".language-toggle");
+            this.slider = this.querySelector(".toggle-slider");
+            this.options = Array.from(
+                this.querySelectorAll(".language-option"),
+            );
+
+            this.init();
+        }
+
+        init() {
+            // Add click handler
+            this.toggle.addEventListener("click", (e) => {
+                e.preventDefault();
+                this.switchLanguage();
+            });
+
+            // Add keyboard support
+            this.toggle.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    this.switchLanguage();
+                }
+            });
+
+            // Update slider position based on current locale
+            this.updateSliderPosition();
+        }
+
+        switchLanguage() {
+            const currentLocale = this.slider.dataset.currentLocale;
+            const otherOption = this.options.find(
+                (option) => option.dataset.locale !== currentLocale,
+            );
+
+            if (otherOption) {
+                const newHref = otherOption.dataset.href;
+                const newLocale = otherOption.dataset.locale;
+
+                // Animate the toggle
+                this.animateToggle(newLocale);
+
+                // Navigate after animation
+                setTimeout(() => {
+                    window.location.pathname = newHref;
+                }, 150);
+            }
+        }
+
+        animateToggle(newLocale) {
+            // Update slider position
+            this.slider.dataset.currentLocale = newLocale;
+            this.updateSliderPosition();
+
+            // Update active states
+            this.options.forEach((option) => {
+                option.dataset.active = option.dataset.locale === newLocale;
+            });
+        }
+
+        updateSliderPosition() {
+            const currentLocale = this.slider.dataset.currentLocale;
+            const activeOption = this.querySelector(
+                `[data-locale="${currentLocale}"]`,
+            );
+
+            if (activeOption) {
+                const rect = activeOption.getBoundingClientRect();
+                const trackRect =
+                    this.querySelector(".toggle-track").getBoundingClientRect();
+                const left = rect.left - trackRect.left;
+                const width = rect.width;
+
+                this.slider.style.transform = `translateX(${left}px)`;
+                this.slider.style.width = `${width}px`;
+            }
+        }
+    }
+
+    customElements.define("language-toggle", LanguageToggle);
+</script>
+
+<style lang="less">
+    language-toggle {
+        display: inline-block;
+    }
+
+    .language-toggle {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        outline: none;
+        margin-top: 7.5px;
+
+        &:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+            border-radius: 8px;
+        }
+    }
+
+    .toggle-track {
+        position: relative;
+        display: flex;
+        background: var(--backgroundDark);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 2px;
+        min-width: 80px;
+        height: 32px;
+        transition: all 0.3s ease;
+
+        &:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+    }
+
+    .toggle-slider {
+        position: absolute;
+        top: 2px;
+        left: 0;
+        height: calc(100% - 4px);
+        background: var(--primary);
+        border-radius: 6px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .language-option {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        z-index: 2;
+        flex: 1;
+        height: 28px;
+        min-width: 36px;
+
+        &[data-active="true"] {
+            color: var(--light);
+            font-weight: 600;
+        }
+
+        &[data-active="false"] {
+            color: var(--bodyTextColor);
+            font-weight: 500;
+        }
+    }
+
+    .language-code {
+        font-size: 0.875rem;
+        font-weight: inherit;
+        letter-spacing: 0.025em;
+        transition: all 0.3s ease;
+        line-height: 1;
+        display: block;
+    }
+
+    /* Dark mode styles */
+    body.dark-mode {
+        .toggle-track {
+            background: var(--medium);
+            border-color: var(--grey);
+
+            &:hover {
+                border-color: var(--primaryLight);
+                box-shadow: 0 0 0 1px var(--primaryLight);
+            }
+        }
+
+        .toggle-slider {
+            background: var(--primaryLight);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .language-option {
+            &[data-active="true"] {
+                color: var(--light);
+            }
+
+            &[data-active="false"] {
+                color: var(--light);
+            }
+        }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .language-option {
+            min-width: 32px;
+            height: 26px;
+        }
+
+        .language-code {
+            font-size: 0.8rem;
+        }
+
+        .toggle-track {
+            min-width: 72px;
+            height: 30px;
+        }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+        .toggle-track {
+            border-width: 2px;
+        }
+
+        .toggle-slider {
+            border: 2px solid var(--neutral);
+        }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+        .toggle-slider,
+        .language-option,
+        .toggle-track {
+            transition: none;
+        }
+    }
+</style>
