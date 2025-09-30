@@ -547,6 +547,8 @@ import Settings from "./TemplateComponents/Settings.astro";
       .cs-dropdown {
         position: relative;
         &:hover,
+        &:focus,
+        &:focus-within,
         &.cs-active {
           cursor: pointer;
           .cs-drop-ul {
@@ -708,7 +710,8 @@ import Settings from "./TemplateComponents/Settings.astro";
 
         .cs-li-link {
           &.cs-drop-link {
-            &:hover {
+            &:hover,
+            &:focus {
               background-color: var(--medium);
             }
           }
