@@ -12,7 +12,7 @@
 	"dependencies": {
 		"@astrojs/sitemap": "^3.5.1",
 		"@astrolicious/i18n": "^0.6.2",
-		"astro": "^5.13.7",
+		"astro": "^5.13.11",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.21",
 		"i18next": "^23.16.8",
