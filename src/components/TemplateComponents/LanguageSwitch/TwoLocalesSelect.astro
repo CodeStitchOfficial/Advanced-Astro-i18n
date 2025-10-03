@@ -89,15 +89,13 @@ const languageOptions = data.map((option) => ({
 		position: relative;
 		display: inline-flex;
 		align-items: center;
-		margin-top: 7.5px;
 	}
 
 	.toggle-track {
 		position: relative;
 		display: flex;
-		padding: 2px;
-		min-width: 80px;
-		height: 32px;
+		min-width: 5rem;
+		height: 2rem;
 		transition: all 0.3s;
 
 		&:focus-within {
@@ -197,23 +195,6 @@ const languageOptions = data.map((option) => ({
 				color: var(--light);
 				opacity: 1;
 			}
-		}
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 768px) {
-		.language-option {
-			min-width: 32px;
-			height: 26px;
-		}
-
-		.language-code {
-			font-size: 0.8rem;
-		}
-
-		.toggle-track {
-			min-width: 72px;
-			height: 30px;
 		}
 	}
 </style>
