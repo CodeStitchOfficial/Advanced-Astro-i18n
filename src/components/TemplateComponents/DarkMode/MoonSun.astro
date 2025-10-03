@@ -3,154 +3,134 @@
 ---
 
 <style lang="less">
-    /*-- -------------------------- -->
+	/*-- -------------------------- -->
 <---      Dark Mode Toggle      -->
 <--- -------------------------- -*/
 
-    /* Mobile - 360px */
-    @media only screen and (min-width: 0rem) {
-        body.dark-mode {
-            .dark-mode-toggle {
-                .cs-sun {
-                    opacity: 1;
-                    transform: translate(-50%, -50%);
-                }
+	/* Mobile - 360px */
+	@media only screen and (min-width: 0rem) {
+		body.dark-mode {
+			.dark-mode-toggle {
+				.cs-sun {
+					opacity: 1;
+					transform: translate(-50%, -50%);
+				}
 
-                .cs-moon {
-                    opacity: 0;
-                    transform: translate(-50%, -150%);
-                }
-            }
-        }
+				.cs-moon {
+					opacity: 0;
+					transform: translate(-50%, -150%);
+				}
+			}
+		}
 
-        .dark-mode-toggle {
-            width: (48/16rem);
-            height: (48/16rem);
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            border: none;
-            display: block;
-            order: 4;
-            position: relative;
-            z-index: 1000;
-            overflow: hidden;
+		.dark-mode-toggle {
+			width: (48/16rem);
+			height: (48/16rem);
+			margin: 0;
+			padding: 0;
+			background: transparent;
+			border: none;
+			display: block;
+			order: 4;
+			position: relative;
+			z-index: 1000;
+			overflow: hidden;
+			transition: all 0.3s;
 
-            img,
-            svg {
-                width: (20/16rem);
-                height: (20/16rem);
-                //center image inside button
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                pointer-events: none;
-            }
+			&:hover {
+				opacity: 0.8;
+			}
 
-            .cs-moon {
-                z-index: 2;
-                // Transition properties
-                transition:
-                    transform 0.3s,
-                    opacity 0.3s;
-            }
+			img,
+			svg {
+				width: (20/16rem);
+				height: (20/16rem);
+				//center image inside button
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				pointer-events: none;
+			}
 
-            .cs-sun {
-                opacity: 0;
-                z-index: 1;
-                // Transition property
-                transform: translate(-50%, 100%);
-                transition:
-                    transform 0.3s,
-                    opacity 0.3s;
-            }
-        }
-    }
+			.cs-moon {
+				z-index: 2;
+				// Transition properties
+				transition:
+					transform 0.3s,
+					opacity 0.3s;
+			}
 
-    /* Desktop - 1024px */
-    @media only screen and (min-width: 64rem) {
-        .dark-mode-toggle {
-            margin: 0;
-            position: relative;
-            top: auto;
-            right: auto;
-            transform: none;
+			.cs-sun {
+				opacity: 0;
+				z-index: 1;
+				// Transition property
+				transform: translate(-50%, 100%);
+				transition:
+					transform 0.3s,
+					opacity 0.3s;
+			}
+		}
+	}
 
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
+	/* Desktop - 1024px */
+	@media only screen and (min-width: 64rem) {
+		.dark-mode-toggle {
+			margin: 0;
+			position: relative;
+			top: auto;
+			right: auto;
+			transform: none;
+
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 </style>
 
 <button class="dark-mode-toggle" aria-label="dark mode toggle">
-    <img
-        class="cs-moon"
-        aria-hidden="true"
-        src="/assets/svgs/moon.svg"
-        decoding="async"
-        alt="moon"
-        width="15"
-        height="15"
-    />
-    <img
-        class="cs-sun"
-        aria-hidden="true"
-        src="/assets/svgs/sun.svg"
-        decoding="async"
-        alt="sun"
-        width="15"
-        height="15"
-    />
+	<img class="cs-moon" aria-hidden="true" src="/assets/svgs/moon.svg" decoding="async" alt="moon" width="15" height="15" />
+	<img class="cs-sun" aria-hidden="true" src="/assets/svgs/sun.svg" decoding="async" alt="sun" width="15" height="15" />
 </button>
 
 <script>
-    //
-    //    The Dark Mode System
-    //
+	// helper functions to toggle dark mode
+	function enableDarkMode() {
+		document.body.classList.add("dark-mode");
+		localStorage.setItem("theme", "dark");
+	}
+	function disableDarkMode() {
+		document.body.classList.remove("dark-mode");
+		localStorage.setItem("theme", "light");
+	}
 
-    // helper functions to toggle dark mode
-    function enableDarkMode() {
-        document.body.classList.add("dark-mode");
-        localStorage.setItem("theme", "dark");
-    }
-    function disableDarkMode() {
-        document.body.classList.remove("dark-mode");
-        localStorage.setItem("theme", "light");
-    }
+	// determines a new users dark mode preferences
+	function detectColorScheme() {
+		// default to the light theme
+		let theme = "light";
 
-    // determines a new users dark mode preferences
-    function detectColorScheme() {
-        // default to the light theme
-        let theme = "light";
+		// check localStorage for a saved 'theme' variable. if it's there, the user has visited before, so apply the necessary theme choices
+		if (localStorage.getItem("theme")) {
+			theme = localStorage.getItem("theme") || theme;
+		}
+		// if it's not there, check to see if the user has applied dark mode preferences themselves in the browser
+		else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+			theme = "dark";
+		}
 
-        // check localStorage for a saved 'theme' variable. if it's there, the user has visited before, so apply the necessary theme choices
-        if (localStorage.getItem("theme")) {
-            theme = localStorage.getItem("theme");
-        }
-        // if it's not there, check to see if the user has applied dark mode preferences themselves in the browser
-        else if (
-            window.matchMedia &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches
-        ) {
-            theme = "dark";
-        }
+		// if there is no preference set, the default of light will be used. apply accordingly
+		theme === "dark" ? enableDarkMode() : disableDarkMode();
+	}
 
-        // if there is no preference set, the default of light will be used. apply accordingly
-        theme === "dark" ? enableDarkMode() : disableDarkMode();
-    }
+	// run on page load
+	detectColorScheme();
 
-    // run on page load
-    detectColorScheme();
-
-    // add event listener to all dark mode button toggles (mobile and desktop)
-    document.querySelectorAll(".dark-mode-toggle").forEach((button) => {
-        button.addEventListener("click", () => {
-            // on click, check localStorage for the dark mode value, use to apply the opposite of what's saved
-            localStorage.getItem("theme") === "light"
-                ? enableDarkMode()
-                : disableDarkMode();
-        });
-    });
+	// add event listener to all dark mode button toggles (mobile and desktop)
+	document.querySelectorAll(".dark-mode-toggle").forEach((button) => {
+		button.addEventListener("click", () => {
+			// on click, check localStorage for the dark mode value, use to apply the opposite of what's saved
+			localStorage.getItem("theme") === "light" ? enableDarkMode() : disableDarkMode();
+		});
+	});
 </script>
