@@ -3,271 +3,249 @@ import { getLocale, getSwitcherData, t } from "i18n:astro";
 
 const locale = getLocale();
 const data = getSwitcherData();
+const { instanceId } = Astro.props;
 
-// Create language options dynamically from the i18n configuration
+const languageCodeMap: Record<string, string> = {
+	en: "EN",
+	fr: "FR",
+};
+
 const languageOptions = data.map((option) => ({
-    locale: option.locale,
-    href: option.href,
-    label: t(`languageSelect.${option.locale}` as any),
-    code: option.locale.toUpperCase().slice(0, 2), // Get first 2 characters for language code
+	locale: option.locale,
+	href: option.href,
+	label: t(`languageSelect.${option.locale}` as any),
+	code: languageCodeMap[option.locale] || option.locale.toUpperCase().slice(0, 2),
 }));
 ---
 
 <language-toggle>
-    <div
-        class="language-toggle"
-        role="button"
-        tabindex="0"
-        aria-label={t("language-label")}
-    >
-        <div class="toggle-track">
-            <div class="toggle-slider" data-current-locale={locale}></div>
-            {
-                languageOptions.map((option) => (
-                    <div
-                        class="language-option"
-                        data-locale={option.locale}
-                        data-href={option.href}
-                        data-active={locale === option.locale}
-                    >
-                        <span class="language-code">{option.code}</span>
-                    </div>
-                ))
-            }
-        </div>
-    </div>
+	<div class="language-toggle" role="radiogroup" aria-label={t("language-label")} aria-describedby={`language-instructions-${instanceId}`}>
+		<span id={`language-instructions-${instanceId}`} class="visually-hidden">
+			{t("languageSelect.instructions")}
+		</span>
+		<div class="toggle-track">
+			{
+				languageOptions.map((option) => (
+					<>
+						<input type="radio" class="language-check" name="language-selector" id={`lang-${instanceId}-${option.locale}`} value={option.locale} data-href={option.href} autocomplete="off" checked={locale === option.locale} />
+						<label class={`language-option${locale === option.locale ? " is-selected" : ""}`} for={`lang-${instanceId}-${option.locale}`} lang={option.locale} data-locale={option.locale}>
+							<span class="language-code" aria-hidden="true">
+								{option.code}
+							</span>
+							<span class="visually-hidden">{option.label}</span>
+						</label>
+					</>
+				))
+			}
+		</div>
+		<div role="status" aria-live="polite" aria-atomic="true" class="visually-hidden language-status"></div>
+	</div>
 </language-toggle>
 
 <script>
-    class LanguageToggle extends HTMLElement {
-        constructor() {
-            super();
-            this.toggle = this.querySelector(".language-toggle");
-            this.slider = this.querySelector(".toggle-slider");
-            this.options = Array.from(
-                this.querySelectorAll(".language-option"),
-            );
+	class LanguageToggle extends HTMLElement {
+		private radios: HTMLInputElement[] = [];
+		private statusElement: HTMLElement | null = null;
 
-            this.init();
-        }
+		connectedCallback() {
+			this.init();
+		}
 
-        init() {
-            // Add click handler
-            this.toggle.addEventListener("click", (e) => {
-                e.preventDefault();
-                this.switchLanguage();
-            });
+		init() {
+			this.radios = Array.from(this.querySelectorAll(".language-check"));
+			this.statusElement = this.querySelector(".language-status");
 
-            // Add keyboard support
-            this.toggle.addEventListener("keydown", (e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    this.switchLanguage();
-                }
-            });
+			this.radios.forEach((radio) => {
+				radio.addEventListener("keydown", (e) => {
+					const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+					if (keys.includes(e.key)) {
+						e.preventDefault();
+						const i = this.radios.indexOf(radio);
+						let next;
+						if (["ArrowLeft", "ArrowUp"].includes(e.key)) {
+							next = i > 0 ? i - 1 : this.radios.length - 1;
+						} else {
+							next = i < this.radios.length - 1 ? i + 1 : 0;
+						}
+						this.radios[next]?.focus();
+					} else if (["Enter", " "].includes(e.key)) {
+						e.preventDefault();
+						if (!radio.checked) {
+							radio.checked = true;
+							radio.dispatchEvent(new Event("change", { bubbles: true }));
+						}
+					}
+				});
 
-            // Update slider position based on current locale
-            this.updateSliderPosition();
-        }
+				radio.addEventListener("change", () => {
+					if (radio.checked) {
+						const label = radio.nextElementSibling;
+						const labelText = label?.querySelector(".visually-hidden")?.textContent;
+						if (this.statusElement && labelText) {
+							this.statusElement.textContent = `${labelText} selected`;
+						}
+						window.location.href = radio.dataset.href || "/";
+					}
+				});
+			});
+		}
+	}
 
-        switchLanguage() {
-            const currentLocale = this.slider.dataset.currentLocale;
-            const otherOption = this.options.find(
-                (option) => option.dataset.locale !== currentLocale,
-            );
-
-            if (otherOption) {
-                const newHref = otherOption.dataset.href;
-                const newLocale = otherOption.dataset.locale;
-
-                // Animate the toggle
-                this.animateToggle(newLocale);
-
-                // Navigate after animation
-                setTimeout(() => {
-                    window.location.pathname = newHref;
-                }, 150);
-            }
-        }
-
-        animateToggle(newLocale) {
-            // Update slider position
-            this.slider.dataset.currentLocale = newLocale;
-            this.updateSliderPosition();
-
-            // Update active states
-            this.options.forEach((option) => {
-                option.dataset.active = option.dataset.locale === newLocale;
-            });
-        }
-
-        updateSliderPosition() {
-            const currentLocale = this.slider.dataset.currentLocale;
-            const activeOption = this.querySelector(
-                `[data-locale="${currentLocale}"]`,
-            );
-
-            if (activeOption) {
-                const rect = activeOption.getBoundingClientRect();
-                const trackRect =
-                    this.querySelector(".toggle-track").getBoundingClientRect();
-                const left = rect.left - trackRect.left;
-                const width = rect.width;
-
-                this.slider.style.transform = `translateX(${left}px)`;
-                this.slider.style.width = `${width}px`;
-            }
-        }
-    }
-
-    customElements.define("language-toggle", LanguageToggle);
+	customElements.define("language-toggle", LanguageToggle);
 </script>
 
 <style lang="less">
-    language-toggle {
-        display: inline-block;
-    }
+	.language-toggle {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		margin-top: 7.5px;
+	}
 
-    .language-toggle {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        cursor: pointer;
-        user-select: none;
-        outline: none;
-        margin-top: 7.5px;
+	.toggle-track {
+		position: relative;
+		display: flex;
+		background: var(--backgroundDark);
+		border: 1px solid var(--border);
+		padding: 2px;
+		min-width: 80px;
+		height: 32px;
+		transition: all 0.3s;
 
-        &:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 2px;
-            border-radius: 8px;
-        }
-    }
+		&:focus-within {
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+		}
+	}
 
-    .toggle-track {
-        position: relative;
-        display: flex;
-        background: var(--backgroundDark);
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        padding: 2px;
-        min-width: 80px;
-        height: 32px;
-        transition: all 0.3s ease;
+	.toggle-slider {
+		position: absolute;
+		top: 2px;
+		left: 0;
+		height: calc(100% - 4px);
+		background: var(--primary);
+		transition: all 0.3s;
+		z-index: 1;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		pointer-events: none;
+	}
 
-        &:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 1px var(--primary);
-        }
-    }
+	// Hide the radio input completely (Bootstrap btn-check pattern)
+	.language-check {
+		position: absolute;
+		clip: rect(0, 0, 0, 0);
+		pointer-events: none;
 
-    .toggle-slider {
-        position: absolute;
-        top: 2px;
-        left: 0;
-        height: calc(100% - 4px);
-        background: var(--primary);
-        border-radius: 6px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+		&:focus + .language-option {
+			outline: 2px solid var(--secondary);
+		}
 
-    .language-option {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-        border-radius: 6px;
-        transition: all 0.3s ease;
-        z-index: 2;
-        flex: 1;
-        height: 28px;
-        min-width: 36px;
+		&:focus:not(:focus-visible) + .language-option {
+			outline: none;
+		}
+	}
 
-        &[data-active="true"] {
-            color: var(--light);
-            font-weight: 600;
-        }
+	.language-option {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		// z-index: 2;
+		flex: 1;
+		height: 2rem;
+		min-width: 2rem;
+		cursor: pointer;
+		// user-select: none;
+		border: 2px solid transparent;
+		color: var(--bodyTextColor);
+		font-weight: 500;
+		transition: all 0.3s;
 
-        &[data-active="false"] {
-            color: var(--bodyTextColor);
-            font-weight: 500;
-        }
-    }
+		&:hover {
+			border-color: var(--primary);
+			opacity: 0.8;
+		}
 
-    .language-code {
-        font-size: 0.875rem;
-        font-weight: inherit;
-        letter-spacing: 0.025em;
-        transition: all 0.3s ease;
-        line-height: 1;
-        display: block;
-    }
+		.language-code {
+			font-weight: 500;
+		}
 
-    /* Dark mode styles */
-    body.dark-mode {
-        .toggle-track {
-            background: var(--medium);
-            border-color: var(--grey);
+		// Selected state (applied via JS)
+		&.is-selected {
+			color: var(--light);
+			background-color: var(--primary);
+			font-weight: 600;
 
-            &:hover {
-                border-color: var(--primaryLight);
-                box-shadow: 0 0 0 1px var(--primaryLight);
-            }
-        }
+			.language-code {
+				font-weight: 600;
+			}
+		}
+	}
 
-        .toggle-slider {
-            background: var(--primaryLight);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
+	.language-code {
+		font-size: 0.875rem;
+		letter-spacing: 0.025em;
+		transition: all 0.3s;
+		line-height: 1;
+		display: block;
+	}
 
-        .language-option {
-            &[data-active="true"] {
-                color: var(--light);
-            }
+	.visually-hidden {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border-width: 0;
+	}
 
-            &[data-active="false"] {
-                color: var(--light);
-            }
-        }
-    }
+	/* Dark mode styles */
+	body.dark-mode {
+		.toggle-track {
+			background: var(--medium);
+			border-color: var(--grey);
 
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-        .language-option {
-            min-width: 32px;
-            height: 26px;
-        }
+			&:hover {
+				border-color: var(--primaryLight);
+			}
+		}
 
-        .language-code {
-            font-size: 0.8rem;
-        }
+		.toggle-slider {
+			background: var(--primaryLight);
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+		}
 
-        .toggle-track {
-            min-width: 72px;
-            height: 30px;
-        }
-    }
+		.language-option {
+			color: var(--light);
+			opacity: 0.7;
 
-    /* High contrast mode support */
-    @media (prefers-contrast: high) {
-        .toggle-track {
-            border-width: 2px;
-        }
+			&:hover {
+				opacity: 0.9;
+			}
 
-        .toggle-slider {
-            border: 2px solid var(--neutral);
-        }
-    }
+			&.is-selected {
+				color: var(--light);
+				opacity: 1;
+			}
+		}
+	}
 
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-        .toggle-slider,
-        .language-option,
-        .toggle-track {
-            transition: none;
-        }
-    }
+	/* Responsive adjustments */
+	@media (max-width: 768px) {
+		.language-option {
+			min-width: 32px;
+			height: 26px;
+		}
+
+		.language-code {
+			font-size: 0.8rem;
+		}
+
+		.toggle-track {
+			min-width: 72px;
+			height: 30px;
+		}
+	}
 </style>
