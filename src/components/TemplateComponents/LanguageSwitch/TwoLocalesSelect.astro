@@ -6,195 +6,230 @@ const data = getSwitcherData();
 const { instanceId } = Astro.props;
 
 const languageCodeMap: Record<string, string> = {
-	en: "EN",
-	fr: "FR",
+  en: "EN",
+  fr: "FR",
 };
 
 const languageOptions = data.map((option) => ({
-	locale: option.locale,
-	href: option.href,
-	label: t(`languageSelect.${option.locale}` as any),
-	code: languageCodeMap[option.locale] || option.locale.toUpperCase().slice(0, 2),
+  locale: option.locale,
+  href: option.href,
+  label: t(`languageSelect.${option.locale}` as any),
+  code:
+    languageCodeMap[option.locale] || option.locale.toUpperCase().slice(0, 2),
 }));
 ---
 
 <language-toggle>
-	<div class="language-toggle" role="radiogroup" aria-label={t("language-label")} aria-describedby={`language-instructions-${instanceId}`}>
-		<span id={`language-instructions-${instanceId}`} class="visually-hidden">
-			{t("languageSelect.instructions")}
-		</span>
-		<div class="toggle-track">
-			{
-				languageOptions.map((option) => (
-					<>
-						<input type="radio" class="language-check" name="language-selector" id={`lang-${instanceId}-${option.locale}`} value={option.locale} data-href={option.href} autocomplete="off" checked={locale === option.locale} />
-						<label class:list={["language-option", { "is-selected": locale === option.locale }]} for={`lang-${instanceId}-${option.locale}`} lang={option.locale} data-locale={option.locale}>
-							<span class="language-code" aria-hidden="true">
-								{option.code}
-							</span>
-							<span class="visually-hidden">{option.label}</span>
-						</label>
-					</>
-				))
-			}
-		</div>
-		<div role="status" aria-live="polite" aria-atomic="true" class="visually-hidden language-status"></div>
-	</div>
+  <div
+    class="language-toggle"
+    role="radiogroup"
+    aria-label={t("language-label")}
+    aria-describedby={`language-instructions-${instanceId}`}
+  >
+    <span id={`language-instructions-${instanceId}`} class="visually-hidden">
+      {t("languageSelect.instructions")}
+    </span>
+    <div class="toggle-track">
+      {
+        languageOptions.map((option) => (
+          <>
+            <input
+              type="radio"
+              class="language-check"
+              name="language-selector"
+              id={`lang-${instanceId}-${option.locale}`}
+              value={option.locale}
+              data-href={option.href}
+              autocomplete="off"
+              checked={locale === option.locale}
+            />
+            <label
+              class:list={[
+                "language-option",
+                { "is-selected": locale === option.locale },
+              ]}
+              for={`lang-${instanceId}-${option.locale}`}
+              lang={option.locale}
+              data-locale={option.locale}
+            >
+              <span class="language-code" aria-hidden="true">
+                {option.code}
+              </span>
+              <span class="visually-hidden">{option.label}</span>
+            </label>
+          </>
+        ))
+      }
+    </div>
+    <div
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      class="visually-hidden language-status"
+    >
+    </div>
+  </div>
 </language-toggle>
 
 <script>
-	class LanguageToggle extends HTMLElement {
-		connectedCallback() {
-			const radios = Array.from(this.querySelectorAll(".language-check")) as HTMLInputElement[];
-			const statusElement = this.querySelector(".language-status");
+  class LanguageToggle extends HTMLElement {
+    connectedCallback() {
+      const radios = Array.from(
+        this.querySelectorAll(".language-check")
+      ) as HTMLInputElement[];
+      const statusElement = this.querySelector(".language-status");
 
-			radios.forEach((radio, i, arr) => {
-				radio.addEventListener("keydown", (e) => {
-					const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
+      radios.forEach((radio, i, arr) => {
+        radio.addEventListener("keydown", (e) => {
+          const keys = ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"];
 
-					if (keys.includes(e.key)) {
-						e.preventDefault();
+          if (keys.includes(e.key)) {
+            e.preventDefault();
 
-						const delta = ["ArrowLeft", "ArrowUp"].includes(e.key) ? -1 : 1;
-						let nextIndex = (i + delta) % arr.length;
+            const delta = ["ArrowLeft", "ArrowUp"].includes(e.key) ? -1 : 1;
+            let nextIndex = (i + delta) % arr.length;
 
-						if (nextIndex < 0) nextIndex = arr.length - 1;
+            if (nextIndex < 0) nextIndex = arr.length - 1;
 
-						arr[nextIndex]?.focus();
-					} else if (["Enter", " "].includes(e.key) && !radio.checked) {
-						e.preventDefault();
-						radio.checked = true;
-						radio.dispatchEvent(new Event("change", { bubbles: true }));
-					}
-				});
+            arr[nextIndex]?.focus();
+          } else if (["Enter", " "].includes(e.key) && !radio.checked) {
+            e.preventDefault();
+            radio.checked = true;
+            radio.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        });
 
-				radio.addEventListener("change", () => {
-					if (radio.checked) {
-						const labelText = radio.nextElementSibling?.querySelector(".visually-hidden")?.textContent;
+        radio.addEventListener("change", () => {
+          if (radio.checked) {
+            const labelText =
+              radio.nextElementSibling?.querySelector(
+                ".visually-hidden"
+              )?.textContent;
 
-						if (statusElement && labelText) statusElement.textContent = `${labelText} selected`;
+            if (statusElement && labelText)
+              statusElement.textContent = `${labelText} selected`;
 
-						window.location.href = radio.dataset.href || "/";
-					}
-				});
-			});
-		}
-	}
+            window.location.href = radio.dataset.href || "/";
+          }
+        });
+      });
+    }
+  }
 
-	customElements.define("language-toggle", LanguageToggle);
+  customElements.define("language-toggle", LanguageToggle);
 </script>
 
 <style lang="less">
-	.language-toggle {
-		position: relative;
-		display: inline-flex;
-		align-items: center;
-	}
+  .language-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
 
-	.toggle-track {
-		position: relative;
-		display: flex;
-		min-width: 5rem;
-		height: 2rem;
-		transition: all 0.3s;
+  .toggle-track {
+    position: relative;
+    display: flex;
+    min-width: 5rem;
+    height: 2rem;
+    transition: all 0.3s;
 
-		&:focus-within {
-			outline: 2px solid var(--primary);
-			outline-offset: 2px;
-		}
-	}
+    &:focus-within {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+  }
 
-	// Hide the radio input completely (Bootstrap btn-check pattern)
-	.language-check {
-		position: absolute;
-		clip: rect(0, 0, 0, 0);
-		pointer-events: none;
+  // Hide the radio input completely (Bootstrap btn-check pattern)
+  .language-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
 
-		&:focus + .language-option {
-			outline: 2px solid var(--secondary);
-		}
+    &:focus + .language-option {
+      outline: 2px solid var(--secondary);
+    }
 
-		&:focus:not(:focus-visible) + .language-option {
-			outline: none;
-		}
-	}
+    &:focus:not(:focus-visible) + .language-option {
+      outline: none;
+    }
+  }
 
-	.language-option {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex: 1;
-		min-width: 2rem;
-		cursor: pointer;
-		border: 2px solid transparent;
-		color: var(--bodyTextColor);
-		font-weight: 500;
-		transition: all 0.3s;
+  .language-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    min-width: 2rem;
+    cursor: pointer;
+    border: 2px solid transparent;
+    color: var(--bodyTextColor);
+    font-weight: 500;
+    transition: all 0.3s;
 
-		&:hover {
-			border-color: var(--primaryLight);
-			opacity: 0.8;
-		}
+    &:hover {
+      border-color: var(--primaryLight);
+      opacity: 0.8;
+    }
 
-		.language-code {
-			font-weight: 500;
-		}
+    .language-code {
+      font-weight: 500;
+    }
 
-		// Selected state (applied via JS)
-		&.is-selected {
-			color: var(--light);
-			background-color: var(--primary);
-			font-weight: 600;
+    // Selected state (applied via JS)
+    &.is-selected {
+      color: var(--light);
+      background-color: var(--primary);
+      font-weight: 600;
 
-			.language-code {
-				font-weight: 600;
-			}
-		}
-	}
+      .language-code {
+        font-weight: 600;
+      }
+    }
+  }
 
-	.language-code {
-		font-size: 0.875rem;
-		letter-spacing: 0.025em;
-		transition: all 0.3s;
-		line-height: 1;
-		display: block;
-	}
+  .language-code {
+    font-size: 0.875rem;
+    letter-spacing: 0.025em;
+    transition: all 0.3s;
+    line-height: 1;
+    display: block;
+  }
 
-	.visually-hidden {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		padding: 0;
-		margin: -1px;
-		overflow: hidden;
-		clip: rect(0, 0, 0, 0);
-		white-space: nowrap;
-		border-width: 0;
-	}
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 
-	/* Dark mode styles */
-	body.dark-mode {
-		.toggle-track {
-			background: var(--medium);
-			border-color: var(--grey);
+  /* Dark mode styles */
+  body.dark-mode {
+    .toggle-track {
+      background: var(--medium);
+      border-color: var(--grey);
 
-			&:hover {
-				border-color: var(--primaryLight);
-			}
-		}
+      &:hover {
+        border-color: var(--primaryLight);
+      }
+    }
 
-		.language-option {
-			color: var(--light);
-			opacity: 0.7;
+    .language-option {
+      color: var(--light);
+      opacity: 0.7;
 
-			&:hover {
-				opacity: 0.9;
-			}
+      &:hover {
+        opacity: 0.9;
+      }
 
-			&.is-selected {
-				color: var(--light);
-				opacity: 1;
-			}
-		}
-	}
+      &.is-selected {
+        color: var(--light);
+        opacity: 1;
+      }
+    }
+  }
 </style>
