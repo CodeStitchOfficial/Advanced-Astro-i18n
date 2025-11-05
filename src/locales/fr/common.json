@@ -1,57 +1,58 @@
 {
-    "home": "Accueil",
-    "about": "À propos",
-    "projects": "Portfolio",
-    "project-1": "Projet 1",
-    "project-2": "Projet 2",
-    "blog": "Blog",
-    "contact": "Contact",
-    "theme-label": "Select theme",
-    "language-label": "Select language",
-    "languageSelect": {
-        "en": "Anglais",
-        "fr": "Français"
-    },
-    "themeSelect": {
-        "accessibleLabel": "Choisissez le thème",
-        "light": "Clair",
-        "dark": "Sombre",
-        "auto": "Auto"
-    },
-    "quote": "Obtenir devis gratuit",
-    "estimate": "Obtenir un devis",
-    "ctaComponent": {
-        "title": "Confiez votre projet",
-        "subtitle": "à nos experts",
-        "message": "Dites quelque chose d'accrocheur, d'informatif et d'encourageant à cliquer sur le bouton pour aller à la page de contact. J'aime ajouter cette bannière en bas de chaque page.",
-        "cta": "Obtenir un devis",
-        "alt":" "
-    },
-    "about-page": {
-        "landing": "À propos",
-        "topper": "À propos",
-        "title": "À propos de Nom de la Compagnie",
-        "p-1": "Notre compagnie a été fondée In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-        "p-2": "Nous croyons que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-        "p-3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
-        "rank": "PDG",
-        "cta": "Notre portfolio"
-    },
-    "footer": {
-        "information": "informations",
-        "services": "Services",
-        "contact": "Contact",
-        "click": "Nous envoyer un email",
-        "p": "Contenu supplémentaire si vous en avez besoin, sinon vous pouvez supprimer tout ce tag <p>. C'est ce que je fais habituellement.",
-        "credit": "Conçu et codé maison par "
-    },
-    "notFound": {
-        "pageNotFound": "404 - La page que vous cherchez n'existe pas.",
-        "linkText": "Retourner à la page d'accueil"
-    },
-    "skipLink": "Cliquez pour accéder au contenu principal.",
-    "pagination": {
-        "previous": "Préc.",
-        "next": "Suiv."
-    }
+	"home": "Accueil",
+	"about": "À propos",
+	"projects": "Portfolio",
+	"project-1": "Projet 1",
+	"project-2": "Projet 2",
+	"blog": "Blog",
+	"contact": "Contact",
+	"theme-label": "Select theme",
+	"language-label": "Select language",
+	"languageSelect": {
+		"en": "Anglais",
+		"fr": "Français",
+		"instructions": "Utilisez les flèches pour naviguer, appuyez sur Entrée pour sélectionner"
+	},
+	"themeSelect": {
+		"accessibleLabel": "Choisissez le thème",
+		"light": "Clair",
+		"dark": "Sombre",
+		"auto": "Auto"
+	},
+	"quote": "Obtenir devis gratuit",
+	"estimate": "Obtenir un devis",
+	"ctaComponent": {
+		"title": "Confiez votre projet",
+		"subtitle": "à nos experts",
+		"message": "Dites quelque chose d'accrocheur, d'informatif et d'encourageant à cliquer sur le bouton pour aller à la page de contact. J'aime ajouter cette bannière en bas de chaque page.",
+		"cta": "Obtenir un devis",
+		"alt": " "
+	},
+	"about-page": {
+		"landing": "À propos",
+		"topper": "À propos",
+		"title": "À propos de Nom de la Compagnie",
+		"p-1": "Notre compagnie a été fondée In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p-2": "Nous croyons que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p-3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
+		"rank": "PDG",
+		"cta": "Notre portfolio"
+	},
+	"footer": {
+		"information": "informations",
+		"services": "Services",
+		"contact": "Contact",
+		"click": "Nous envoyer un email",
+		"p": "Contenu supplémentaire si vous en avez besoin, sinon vous pouvez supprimer tout ce tag <p>. C'est ce que je fais habituellement.",
+		"credit": "Conçu et codé maison par "
+	},
+	"notFound": {
+		"pageNotFound": "404 - La page que vous cherchez n'existe pas.",
+		"linkText": "Retourner à la page d'accueil"
+	},
+	"skipLink": "Cliquez pour accéder au contenu principal.",
+	"pagination": {
+		"previous": "Préc.",
+		"next": "Suiv."
+	}
 }
