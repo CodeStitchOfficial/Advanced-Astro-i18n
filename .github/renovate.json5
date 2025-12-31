@@ -1,29 +1,16 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
     "config:recommended",
     "schedule:monthly",
     "group:allNonMajor",
     "group:monorepos",
     ":semanticPrefixFixDepsChoreOthers",
     ":automergePatch",
-    ":disableDependencyDashboard"
+    ":disableDependencyDashboard",
   ],
-  "labels": ["dependencies"],
-  "rangeStrategy": "bump",
-  "postUpdateOptions": [
-    "npmDedupe"
-  ],
-  "ignoreDeps": [
-    "@astrolicious/i18n",
-    "astro-integration-kit"
-  ],
-  "packageRules": [
-    {
-      "description": "Be extra cautious with Astro core updates due to deprecated i18n dependency",
-      "matchPackageNames": ["astro"],
-      "matchUpdateTypes": ["minor", "major"],
-      "automerge": false
-    }
-  ]
+  labels: ["dependencies"],
+  rangeStrategy: "bump",
+  postUpdateOptions: ["npmDedupe"],
+  ignoreDeps: ["@astrolicious/i18n", "astro-integration-kit", "astro"],
 }
