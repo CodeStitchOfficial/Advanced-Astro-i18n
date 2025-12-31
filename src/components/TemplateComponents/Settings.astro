@@ -1,44 +1,51 @@
 ---
-import ThemeSelect from "./ThemeSelect.astro";
-import LanguageSelect from "./LanguageSelect.astro";
+// import ThemeSelect from "./DarkMode/ThemeSelect.astro";
+// import MultiLocalesSelect from "./LanguageSwitch/MultiLocalesSelect.astro";
+import MoonSun from "./DarkMode/MoonSun.astro";
+import TwoLocalesSelect from "./LanguageSwitch/TwoLocalesSelect.astro";
+
+const { instanceId } = Astro.props;
 ---
 
 <div class="options-wrapper">
-    <ThemeSelect />
-    <LanguageSelect />
+	<TwoLocalesSelect instanceId={instanceId} />
+	<MoonSun />
+	<!-- <ThemeSelect /> -->
+	<!-- <MultiLocalesSelect /> -->
 </div>
 
 <style>
-    /* Mobile */
-    @media only screen and (min-width: 0) {
-        .options-wrapper {
-            display: flex;
-            flex-direction: column;
-            margin-left: auto;
-            border-top: 1px solid hsl(224, 6%, 77%);
-            padding-block: 1em;
-        }
+	/* Mobile */
+	@media only screen and (min-width: 0) {
+		.options-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			margin-left: auto;
+			border-top: 1px solid hsl(224, 6%, 77%);
+			padding-block: 1em;
+		}
 
-        body.dark-mode {
-            .options-wrapper {
-                border-top: 1px solid hsl(224, 10%, 23%);
-            }
-        }
-    }
+		body.dark-mode {
+			.options-wrapper {
+				border-top: 1px solid hsl(224, 10%, 23%);
+			}
+		}
+	}
 
-    @media only screen and (min-width: 64rem) {
-        .options-wrapper {
-            display: flex;
-            flex-direction: row;
-            padding: 0;
-            border-top: none;
-            gap: 1.5em;
-        }
+	@media only screen and (min-width: 64rem) {
+		.options-wrapper {
+			display: flex;
+			flex-direction: row;
+			padding: 0;
+			border-top: none;
+			gap: 1.5em;
+		}
 
-        body.dark-mode {
-            .options-wrapper {
-                border-top: none;
-            }
-        }
-    }
+		body.dark-mode {
+			.options-wrapper {
+				border-top: none;
+			}
+		}
+	}
 </style>
