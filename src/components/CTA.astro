@@ -1,5 +1,9 @@
 ---
-import { t, getLocalePath } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 // Import the component and all the images you want to use with it
 import CSPicture from "@components/TemplateComponents/CSPicture.astro";
 import mobileImage from "@assets/images/CTA/construction-m.jpg"
@@ -17,7 +21,7 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
     <p>
       {t("ctaComponent.message")}
     </p>
-    <a href={getLocalePath("/contact")} class="cs-button-solid">{t("ctaComponent.cta")}</a>
+    <a href={getLocalizedRoute(locale,"/contact")} class="cs-button-solid">{t("ctaComponent.cta")}</a>
   </div>
   <CSPicture
     mobileImgUrl={mobileImage}

@@ -1,7 +1,7 @@
 {
 	"name": "advanced-astro-i18n",
 	"type": "module",
-	"version": "2.2.2",
+	"version": "3.0.0",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -10,20 +10,10 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"@astrojs/sitemap": "^3.6.1",
-		"@astrolicious/i18n": "^0.6.2",
-		"astro": "5.13.11",
+		"@astrojs/sitemap": "^3.7.0",
+		"astro": "^5.17.2",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.24",
-		"i18next": "^23.16.8",
 		"less": "^4.5.1"
-	},
-	"overrides": {
-		"@astrolicious/i18n": {
-			"astro-integration-kit": "^0.18.0"
-		},
-		"vite": {
-			"esbuild": "^0.27.2"
-		}
 	}
 }

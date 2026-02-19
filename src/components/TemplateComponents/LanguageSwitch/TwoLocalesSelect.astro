@@ -1,22 +1,20 @@
 ---
-import { getLocale, getSwitcherData, t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
+import { locales, languageSwitcherMap } from "@config/siteSettings";
 
-const locale = getLocale();
-const data = getSwitcherData();
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 const { instanceId } = Astro.props;
 
-const languageCodeMap: Record<string, string> = {
-  en: "EN",
-  fr: "FR",
-};
-
-const languageOptions = data.map((option) => ({
-  locale: option.locale,
-  href: option.href,
-  label: t(`languageSelect.${option.locale}` as any),
-  code:
-    languageCodeMap[option.locale] || option.locale.toUpperCase().slice(0, 2),
-}));
+const languageOptions = await Promise.all(
+  locales.map(async (l) => ({
+    locale: l,
+    href: await getLocalizedPathname(l, Astro.url),
+    label: t(`languageSelect.${l}`),
+    code: languageSwitcherMap[l],
+  }))
+);
 ---
 
 <language-toggle>
@@ -72,6 +70,8 @@ const languageOptions = data.map((option) => ({
 </language-toggle>
 
 <script>
+  import { setLocalePreference } from "@js/localePreference";
+
   class LanguageToggle extends HTMLElement {
     connectedCallback() {
       const radios = Array.from(
@@ -109,6 +109,7 @@ const languageOptions = data.map((option) => ({
             if (statusElement && labelText)
               statusElement.textContent = `${labelText} selected`;
 
+            setLocalePreference(radio.value);
             window.location.href = radio.dataset.href || "/";
           }
         });

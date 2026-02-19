@@ -1,7 +1,8 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
-import { getLocalePath, t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 import { getOptimizedImage } from "@utils/utils";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Hero (for rendering)
@@ -9,6 +10,9 @@ import landingImage from "@assets/images/hero.jpg"; // <-- THE PATH TO THE ASSET
 import mobileLandingImage from "@assets/images/hero-m.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 const optimizedLandingImage = await getOptimizedImage(landingImage);
 const optimizedMobileLandingImage = await getOptimizedImage(mobileLandingImage);
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 ---
 
 <BaseLayout title={t("home:layout.title")} description={t("home:layout.description")} preloadedImage={optimizedMobileLandingImage}>
@@ -31,8 +35,8 @@ const optimizedMobileLandingImage = await getOptimizedImage(mobileLandingImage);
 				<p class="cs-text cs-caution">
 					{t("home:hero.p2")}
 				</p>
-				<a href={getLocalePath("/about")} class="cs-button-solid">{t("home:hero.cta1")}</a>
-				<a href={getLocalePath("/contact")} class="cs-button-transparent">
+				<a href={getLocalizedRoute(locale,"/about")} class="cs-button-solid">{t("home:hero.cta1")}</a>
+				<a href={getLocalizedRoute(locale,"/contact")} class="cs-button-transparent">
 					<img class="cs-img" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Hero/play.svg" alt="play icon" width="17" height="17" />
 					{t("home:hero.cta2")}
 				</a>
@@ -119,7 +123,7 @@ const optimizedMobileLandingImage = await getOptimizedImage(mobileLandingImage);
 					<span class="cs-job">{t("home:about.rank")}</span>
 					<img class="cs-quote-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/SideBySide/quote-white.svg" alt="gavel" width="136" height="77" />
 				</div>
-				<a href={getLocalePath("/about")} class="cs-button-solid">{t("home:about.cta")}</a>
+				<a href={getLocalizedRoute(locale,"/about")} class="cs-button-solid">{t("home:about.cta")}</a>
 			</div>
 		</div>
 	</section>

@@ -1,10 +1,10 @@
 ---
 import type { GetImageResult } from "astro";
 import { ClientRouter } from "astro:transitions";
-import I18nClient from "@astrolicious/i18n/components/I18nClient.astro";
-import I18nHead from "@astrolicious/i18n/components/I18nHead.astro";
 
-import { getHtmlAttrs, getLocales, t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
+import { locales, localeMap } from "@config/siteSettings";
 import client from "@data/client.json";
 import { trimArrSlashes, trimStringSlashes } from "@utils/utils";
 import ThemeProvider from "@components/TemplateComponents/ThemeProvider.astro";
@@ -20,21 +20,28 @@ interface Props {
 
 const { description, title, preloadedImage } = Astro.props as Props;
 
-const locales = getLocales();
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
 // Trimming "/" from the beginning and end to handle URLs with or without trailing slashes.
-const trimmedLocales = trimArrSlashes(locales);
+const trimmedLocales = trimArrSlashes([...locales]);
 const trimmedPathname = trimStringSlashes(Astro.url.pathname);
 
 const isLandingPage = Astro.url.pathname === "/" || trimmedLocales.includes(trimmedPathname);
+
+// Generate hreflang alternate links
+const hrefLangLinks = await Promise.all(
+	locales.map(async (l) => ({
+		locale: l,
+		hreflang: localeMap[l],
+		href: new URL(await getLocalizedPathname(l, Astro.url), Astro.site).href,
+	}))
+);
 ---
 
 <!-- A fully fleshed-out <head>, dynamically changing based on client.json and the page front matter -->
-<html {...getHtmlAttrs()}>
-	<!-- Automatically generates attributes -->
+<html lang={locale}>
 	<head>
-		<!-- i18n support -->
-		<I18nClient />
-
 		<!-- View Transitions support -->
 		<ClientRouter />
 
@@ -50,8 +57,11 @@ const isLandingPage = Astro.url.pathname === "/" || trimmedLocales.includes(trim
 		<link rel="canonical" href={`https://${client.domain}${Astro.url.pathname}`} />
 		<link rel="sitemap" href="/sitemap-index.xml" />
 
-		<!-- automatically generates hreflang alternate links to improve SEO -->
-		<I18nHead />
+		<!-- Hreflang alternate links for SEO -->
+		{hrefLangLinks.map(({ hreflang, href }) => (
+			<link rel="alternate" hreflang={hreflang} href={href} />
+		))}
+		<link rel="alternate" hreflang="x-default" href={hrefLangLinks[0].href} />
 
 		<!--Social Media Display-->
 		<meta property="og:title" content={title} />
@@ -71,7 +81,7 @@ const isLandingPage = Astro.url.pathname === "/" || trimmedLocales.includes(trim
 
 		<!--For home page, use service keywords for the title, including location for SEO.
         Other pages should just include the page name.
-        
+
         EXAMPLE:
         Home page - House Painting Contractors | Painters and Co. | TestCity, WA
         About Page - About us | Painters and Co.

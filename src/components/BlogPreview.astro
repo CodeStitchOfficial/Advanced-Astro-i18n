@@ -1,12 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import { formatDate } from "@utils/utils.ts";
-import { getLocalePath, t } from "i18n:astro";
-import { handleI18nSlug } from "@astrolicious/i18n/content-collections";
+import { getLocaleFromUrl, removeLocaleFromSlug } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
 // Receiving incoming props and destructuring them
 const { post } = Astro.props;
-const { slug } = handleI18nSlug(post.id);
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const slug = removeLocaleFromSlug(post.id);
 const { title, date, description, image, imageAlt } = post.data;
 ---
 
@@ -18,7 +20,7 @@ const { title, date, description, image, imageAlt } = post.data;
         <p class="cs-item-text">
             {description}
         </p>
-        <a href={getLocalePath(`/blog/${slug}`)} class="cs-link">
+        <a href={getLocalizedRoute(locale,`/blog/${slug}`)} class="cs-link">
             {t("blog:readMore")}
             <img
                 class="cs-arrow"
