@@ -21,7 +21,11 @@
 // SOFTWARE.
 
 import Select from '@components/TemplateComponents/Select.astro';
-import { t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 ---
 
 <cs-theme-select>

@@ -1,9 +1,12 @@
 ---
-import { t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
 import PaginationButton from "./PaginationButton.astro";
 
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
 // More info on all the Page props: https://docs.astro.build/en/guides/routing/#the-page-prop
-// We're just destructuring what we need here.
 const { page } = Astro.props;
 const { currentPage, url } = page;
 const { prev: prevUrl, next: nextUrl } = url;

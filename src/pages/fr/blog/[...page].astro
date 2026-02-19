@@ -1,9 +1,9 @@
 ---
 import type { GetStaticPaths, Page } from "astro";
-import type { CollectionEntry } from "astro:content";
 import { getCollection } from "astro:content";
-import { collectionFilters } from "@astrolicious/i18n/content-collections";
-import { getLocalePlaceholder, t } from "i18n:astro";
+import { getLocaleFromUrl, filterCollectionByLanguage } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import { defaultLocale } from "@config/siteSettings";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import Landing from "@components/Landing.astro";
@@ -11,16 +11,12 @@ import BlogPreview from "@components/BlogPreview.astro";
 import Pagination from "@components/TemplateComponents/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	// https://astro-i18n.netlify.app/reference/content-collections/collection-filters/
-	const locale = getLocalePlaceholder();
-	const posts = await getCollection("blog", (post: CollectionEntry<"blog">) => collectionFilters.byLocale(post, { locale }));
+	const allPosts = await getCollection("blog");
+	const frPosts = filterCollectionByLanguage(allPosts, "fr");
+	const sortedPosts = frPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
 
-	const sortedPosts = posts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
-
-	// paginates with options - https://docs.astro.build/en/reference/api-reference/#paginate
 	return paginate(sortedPosts, {
 		pageSize: 3,
-		params: { locale },
 	});
 }) satisfies GetStaticPaths;
 
@@ -29,6 +25,8 @@ import { getOptimizedImage } from "@utils/utils";
 import landingImage from "@assets/images/landing.jpg"; // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 const optimizedImage = await getOptimizedImage(landingImage);
 
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 const { page } = Astro.props as { page: Page };
 ---
 

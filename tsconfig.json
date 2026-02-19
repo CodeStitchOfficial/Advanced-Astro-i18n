@@ -4,10 +4,9 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "strict": true,
-    "strictNullChecks": true, // necessary for Astro content collections
-    "checkJs": false, // set to true if you want strict checks on your .js files 
+    "strictNullChecks": true,
+    "checkJs": false,
     "baseUrl": ".",
-    // creates aliases for imports
     "paths": {
       "@layouts/*":["src/layouts/*"],
       "@assets/*":["src/assets/*"],
@@ -15,7 +14,8 @@
       "@styles/*": ["src/styles/*"],
       "@components/*": ["src/components/*"],
       "@utils/*": ["src/utils/*"],
-      "@i18n/*": ["src/i18n/*"]
+      "@js/*": ["src/js/*"],
+      "@config/*": ["src/config/*"]
     },
     "incremental": true,
 		"skipLibCheck": true

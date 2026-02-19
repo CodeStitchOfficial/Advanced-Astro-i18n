@@ -20,9 +20,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 import Select from "../Select.astro";
-import { getLocale, getSwitcherData, t } from "i18n:astro";
-const locale = getLocale();
-const data = getSwitcherData();
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
+import { locales } from "@config/siteSettings";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const options = await Promise.all(
+  locales.map(async (l) => ({
+    value: await getLocalizedPathname(l, Astro.url),
+    selected: l === locale,
+    label: t(`languageSelect.${l}`),
+  }))
+);
 ---
 
 {
@@ -32,11 +43,7 @@ const data = getSwitcherData();
 				icon="mdi--language"
 				label={locale}
 				value={locale}
-				options={data.map((option) => ({
-					value: option.href,
-					selected: option.locale === locale,
-					label: t(`languageSelect.${option.locale}` as any),
-				}))}
+				options={options}
 				width="6em"
 			/>
 		</starlight-lang-select>
@@ -44,6 +51,8 @@ const data = getSwitcherData();
 }
 
 <script>
+	import { setLocalePreference } from "@js/localePreference";
+
 	class StarlightLanguageSelect extends HTMLElement {
 		constructor() {
 			super();
@@ -51,7 +60,8 @@ const data = getSwitcherData();
 			if (select) {
 				select.addEventListener("change", (e) => {
 					if (e.currentTarget instanceof HTMLSelectElement) {
-						window.location.pathname = e.currentTarget.value;
+						setLocalePreference(e.currentTarget.value);
+					window.location.pathname = e.currentTarget.value;
 					}
 				});
 			}

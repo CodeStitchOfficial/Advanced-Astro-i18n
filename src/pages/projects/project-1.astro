@@ -2,12 +2,16 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import CTA from "@components/CTA.astro";
 import Landing from "@components/Landing.astro";
-import { getLocalePath, t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@utils/utils"
 import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
 const optimizedImage = await getOptimizedImage(landingImage)
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 ---
 
 <BaseLayout title={t("projects")} description="Meta description for the page" preloadedImage = {optimizedImage}>
@@ -15,7 +19,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title={t("project-2")} image={optimizedImage}/>
+  <Landing title={t("project-1")} image={optimizedImage}/>
 
   <!-- ============================================ -->
   <!--                   Gallery                    -->
@@ -209,7 +213,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
       </div>
-      <a href={getLocalePath("/contact")} class="cs-button-solid">{t("ctaComponent.cta")}</a>
+      <a href={getLocalizedRoute(locale,"/contact")} class="cs-button-solid">{t("ctaComponent.cta")}</a>
     </div>
   </section>
   <CTA />

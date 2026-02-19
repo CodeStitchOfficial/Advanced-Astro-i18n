@@ -1,7 +1,11 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocalePath, t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 import { Picture } from "astro:assets";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 const title = t("notFound.pageNotFound");
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
@@ -12,7 +16,7 @@ const optimizedImage = await getOptimizedImage(landingImage)
 <BaseLayout title={title} description={title} preloadedImage = {optimizedImage}>
   <section id="int-hero">
     <h1>{title}</h1>
-    <a href={getLocalePath("/")} class="cs-button-solid">{t("notFound.linkText")}</a>
+    <a href={getLocalizedRoute(locale, "/")} class="cs-button-solid">{t("notFound.linkText")}</a>
     <Picture
       src={landingImage}
       formats={["avif", "webp"]}

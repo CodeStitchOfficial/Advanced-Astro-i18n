@@ -2,8 +2,11 @@
 import client from "@data/client.json";
 import navData from "@data/navData";
 import { getCurrentYear } from "@utils/utils";
-import { getLocalePath, t } from "i18n:astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 const currentYear = getCurrentYear();
 ---
 
@@ -11,7 +14,7 @@ const currentYear = getCurrentYear();
 <footer id="footer">
   <div class="container">
     <section class="left-section">
-      <a class="logo" href={getLocalePath("/")}
+      <a class="logo" href={getLocalizedRoute(locale,"/")}
         ><img
           loading="lazy"
           decoding="async"
@@ -35,7 +38,7 @@ const currentYear = getCurrentYear();
           {
             navData.map((entry: any) => (
               <li>
-                {entry.url && (<a href={getLocalePath(entry.url)}>{t(entry.key)}</a>)}
+                {entry.url && (<a href={getLocalizedRoute(locale,entry.url)}>{t(entry.key)}</a>)}
               </li>
             ))
           }
@@ -54,7 +57,7 @@ const currentYear = getCurrentYear();
             <h2>{t("footer.contact")}</h2>
           </li>
           <li>
-            <a href={getLocalePath("/contact")}>
+            <a href={getLocalizedRoute(locale,"/contact")}>
               {client.address.lineOne}<br />
               {client.address.lineTwo}<br />
               {client.address.city}
@@ -78,7 +81,7 @@ const currentYear = getCurrentYear();
 
   <section class="credit">
     <span>{t("footer.credit")}</span>
-    <a href={getLocalePath("/")} target="_blank" rel="noopener">Your Company Name</a>
+    <a href={getLocalizedRoute(locale,"/")} target="_blank" rel="noopener">Your Company Name</a>
     <span class="copyright"> Copyright {currentYear}</span>
   </section>
 </footer>

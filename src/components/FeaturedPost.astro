@@ -2,10 +2,12 @@
 import { getCollection } from "astro:content";
 import { Image } from "astro:assets";
 import { formatDate } from "@utils/utils.ts";
-import { getLocale, getLocalePath, t } from "i18n:astro";
+import { getLocaleFromUrl, removeLocaleFromSlug } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
 // Gets posts by locale AND by tag
-const locale = getLocale();
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 const featuredPosts = await getCollection("blog", ({ id, data }) => {
   return id.startsWith(locale) && data.tags.includes("featured");
 });
@@ -18,7 +20,7 @@ const featuredPosts = await getCollection("blog", ({ id, data }) => {
     {featuredPosts.length === 0 && <h2>{t("blog:noFeaturedPosts")}</h2>}
     {
       featuredPosts.map((post) => (
-        <a class="blog-feature" href={getLocalePath("/blog/[slug]", { slug: post.id.split('/')[1] ?? '' })}>
+        <a class="blog-feature" href={getLocalizedRoute(locale, `/blog/${removeLocaleFromSlug(post.id)}`)}>
           <picture class="blog-featureImage">
             <Image
               src={post.data.image}
