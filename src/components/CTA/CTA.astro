@@ -4,11 +4,10 @@ import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
-// Import the component and all the images you want to use with it
-import CSPicture from "@components/TemplateComponents/CSPicture.astro";
-import mobileImage from "@assets/images/CTA/construction-m.jpg"
-import desktopImage from "@assets/images/CTA/cabinets2.jpg"
-import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
+import CSPicture from "@components/CSPicture/CSPicture.astro";
+import ctaImage from "@assets/images/CTA/cabinets2.jpg";
+import ctaSquaresUrl from "@assets/svgs/cta-squares.svg?url";
+const ctaSquaresBg = `url("${ctaSquaresUrl}")`;
 ---
 
 <section id="cta">
@@ -23,18 +22,11 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
     </p>
     <a href={getLocalizedRoute(locale,"/contact")} class="cs-button-solid">{t("ctaComponent.cta")}</a>
   </div>
-  <CSPicture
-    mobileImgUrl={mobileImage}
-    mobileMediaWidth="600px"
-    desktopImgUrl={desktopImage}
-    desktopMediaWidth="601px"
-    fallbackImgUrl={fallbackImage}
-    alt={t("ctaComponent.alt")}
-  />
+  <CSPicture src={ctaImage} alt={t("ctaComponent.alt")} />
 </section>
 
 <!-- Don't forget to place the picture styles over into the CSPicture component -->
-<style lang="less">
+<style lang="less" define:vars={{ ctaSquaresBg }}>
   /* Mobile */
   @media only screen and (min-width: 0em) {
     #cta {
@@ -99,7 +91,7 @@ import fallbackImage from "@assets/images/CTA/cabinets2.jpg"
         content: "";
         width: (2000/16rem);
         height: (1108/16rem);
-        background: url("/assets/svgs/cta-squares.svg");
+        background: var(--ctaSquaresBg);
         background-position: center;
         background-size: contain;
         background-repeat: no-repeat;

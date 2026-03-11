@@ -1,9 +1,11 @@
 ---
-import client from "@data/client.json";
-import navData from "@data/navData";
+import { Image } from "astro:assets";
+import { BUSINESS } from "@data/client";
+import navData from "@data/navData.json";
 import { getCurrentYear } from "@utils/utils";
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
+import logoWhite from "@assets/svgs/logo-white.svg";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -15,14 +17,7 @@ const currentYear = getCurrentYear();
   <div class="container">
     <section class="left-section">
       <a class="logo" href={getLocalizedRoute(locale,"/")}
-        ><img
-          loading="lazy"
-          decoding="async"
-          src="/assets/svgs/logo-white.svg"
-          alt="logo"
-          width="264"
-          height="78"
-        />
+        ><Image src={logoWhite} alt="logo" width={264} height={78} loading="lazy" decoding="async" />
       </a>
       <p>
         {t("footer.p")}
@@ -58,21 +53,21 @@ const currentYear = getCurrentYear();
           </li>
           <li>
             <a href={getLocalizedRoute(locale,"/contact")}>
-              {client.address.lineOne}<br />
-              {client.address.lineTwo}<br />
-              {client.address.city}
-              {client.address.state}
-              {client.address.zip}
+              {BUSINESS.address.lineOne}<br />
+              {BUSINESS.address.lineTwo}<br />
+              {BUSINESS.address.city}
+              {BUSINESS.address.state}
+              {BUSINESS.address.zip}
             </a>
           </li>
           <li>
-            <a href={`tel:${client.phoneForTel}`}>
+            <a href={`tel:${BUSINESS.phoneForTel}`}>
               T:
-              {client.phoneFormatted}
+              {BUSINESS.phoneFormatted}
             </a>
           </li>
           <li>
-            <a href={`mailto:${client.email}`}>{t("footer.click")}</a>
+            <a href={`mailto:${BUSINESS.email}`}>{t("footer.click")}</a>
           </li>
         </ul>
       </div>

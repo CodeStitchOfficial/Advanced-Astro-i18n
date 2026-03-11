@@ -1,17 +1,12 @@
 ---
-// import ThemeSelect from "./DarkMode/ThemeSelect.astro";
-import MoonSun from "./DarkMode/MoonSun.astro";
-// import MultiLocalesSelect from "./LanguageSwitch/MultiLocalesSelect.astro";
-import TwoLocalesSelect from "./LanguageSwitch/TwoLocalesSelect.astro";
+import ThemeSelect from "@components/DarkMode/ThemeSelect.astro";
+import TwoLocalesSelect from "@components/LanguageSwitch/TwoLocalesSelect.astro";
 
-const { instanceId } = Astro.props;
 ---
 
 <div class="options-wrapper">
-	<!-- <MultiLocalesSelect instanceId={instanceId}/> -->
-	<TwoLocalesSelect instanceId={instanceId} />
-	<MoonSun />
-	<!-- <ThemeSelect /> -->
+	<TwoLocalesSelect />
+	<ThemeSelect />
 </div>
 
 <style>

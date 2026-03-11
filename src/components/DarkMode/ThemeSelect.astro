@@ -1,0 +1,113 @@
+---
+// Adapted from Starlight's Theme Select - https://github.com/withastro/starlight/blob/main/packages/starlight/components/ThemeSelect.astro
+// MIT License
+// Copyright (c) 2023 Astro contributors
+
+import Select from "@components/Select/Select.astro";
+import { Icon } from "astro-icon/components";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+{/* Icon templates — referenced by updatePickers() to swap the select widget's icon */}
+<template id="theme-icons">
+	<Icon name="mdi--sun" class="light" />
+	<Icon name="mdi--moon" class="dark" />
+	<Icon name="mdi--laptop" class="auto" />
+</template>
+
+{/* Inlined to expose window.StarlightThemeProvider before the custom element upgrades */}
+<script is:inline>
+	window.StarlightThemeProvider = (() => {
+		const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("cs-theme");
+		return {
+			updatePickers(theme = storedTheme || "auto") {
+				document.querySelectorAll("cs-theme-select").forEach((picker) => {
+					const select = picker.querySelector("select");
+					if (select) select.value = theme;
+					const tmpl = document.querySelector("#theme-icons");
+					const newIcon = tmpl && tmpl.content.querySelector("." + theme);
+					if (newIcon) {
+						const oldIcon = picker.querySelector("svg.label-icon");
+						if (oldIcon) {
+							oldIcon.replaceChildren(...newIcon.cloneNode(true).childNodes);
+						}
+					}
+				});
+			},
+		};
+	})();
+</script>
+
+<cs-theme-select>
+	<Select
+		icon="mdi--laptop"
+		label={t("themeSelect.accessibleLabel")}
+		value="auto"
+		options={[
+			{ label: t("themeSelect.dark"), selected: false, value: "dark" },
+			{ label: t("themeSelect.light"), selected: false, value: "light" },
+			{ label: t("themeSelect.auto"), selected: true, value: "auto" },
+		]}
+		width="6.25em"
+	/>
+</cs-theme-select>
+
+<script>
+	type Theme = "auto" | "dark" | "light";
+
+	const storageKey = "cs-theme";
+
+	const parseTheme = (theme: unknown): Theme =>
+		theme === "auto" || theme === "dark" || theme === "light" ? theme : "auto";
+
+	const loadTheme = (): Theme =>
+		parseTheme(typeof localStorage !== "undefined" && localStorage.getItem(storageKey));
+
+	function storeTheme(theme: Theme): void {
+		if (typeof localStorage !== "undefined") {
+			localStorage.setItem(storageKey, theme === "light" || theme === "dark" ? theme : "");
+		}
+	}
+
+	const getPreferredColorScheme = (): Theme =>
+		matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+
+	function enableDarkMode() {
+		document.body.classList.add("dark-mode");
+	}
+	function disableDarkMode() {
+		document.body.classList.remove("dark-mode");
+	}
+
+	function onThemeChange(theme: Theme): void {
+		StarlightThemeProvider.updatePickers(theme);
+		storeTheme(theme);
+		if (theme === "auto") {
+			getPreferredColorScheme() === "light" ? disableDarkMode() : enableDarkMode();
+		} else {
+			localStorage.getItem(storageKey) === "light" ? disableDarkMode() : enableDarkMode();
+		}
+	}
+
+	// React to OS-level color scheme changes
+	matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => {
+		onThemeChange("auto");
+	});
+
+	class StarlightThemeSelect extends HTMLElement {
+		constructor() {
+			super();
+			onThemeChange(loadTheme());
+			this.querySelector("select")?.addEventListener("change", (e) => {
+				if (e.currentTarget instanceof HTMLSelectElement) {
+					onThemeChange(parseTheme(e.currentTarget.value));
+				}
+			});
+		}
+	}
+	customElements.define("cs-theme-select", StarlightThemeSelect);
+</script>

@@ -1,0 +1,169 @@
+---
+import { Image } from "astro:assets";
+import moonSvg from "@assets/svgs/moon.svg";
+import sunSvg from "@assets/svgs/sun.svg";
+---
+
+<style lang="less">
+  /*-- -------------------------- -->
+<---      Dark Mode Toggle      -->
+<--- -------------------------- -*/
+
+  /* Mobile - 360px */
+  @media only screen and (min-width: 0rem) {
+    body.dark-mode {
+      .dark-mode-toggle {
+        .cs-sun {
+          opacity: 1;
+          transform: translate(-50%, -50%);
+        }
+
+        .cs-moon {
+          opacity: 0;
+          transform: translate(-50%, -150%);
+        }
+      }
+    }
+
+    /* Disable transitions during initial theme setup to prevent FOUC */
+    body.no-transitions {
+      .dark-mode-toggle {
+        .cs-moon,
+        .cs-sun {
+          transition: none !important;
+        }
+      }
+    }
+
+    .dark-mode-toggle {
+      width: (48/16rem);
+      height: (48/16rem);
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      display: block;
+      order: 4;
+      position: relative;
+      z-index: 1000;
+      overflow: hidden;
+      transition: all 0.3s;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      img,
+      svg {
+        width: (20/16rem);
+        height: (20/16rem);
+        //center image inside button
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .cs-moon {
+        z-index: 2;
+        transition:
+          transform 0.3s,
+          opacity 0.3s;
+      }
+
+      .cs-sun {
+        opacity: 0;
+        z-index: 1;
+        transform: translate(-50%, 100%);
+        transition:
+          transform 0.3s,
+          opacity 0.3s;
+      }
+    }
+  }
+
+  /* Desktop - 1024px */
+  @media only screen and (min-width: 64rem) {
+    .dark-mode-toggle {
+      margin: 0;
+      position: relative;
+      top: auto;
+      right: auto;
+      transform: none;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+</style>
+
+<button class="dark-mode-toggle" aria-label="dark mode toggle" aria-pressed="false">
+  <Image class="cs-moon" aria-hidden="true" src={moonSvg} alt="moon" width={15} height={15} decoding="async" />
+  <Image class="cs-sun" aria-hidden="true" src={sunSvg} alt="sun" width={15} height={15} decoding="async" />
+</button>
+
+<script>
+  // Shared localStorage key (cs-theme). Falls back to legacy "theme" key for
+  // cross-kit compatibility with the Intermediate kit.
+  const STORAGE_KEY = "cs-theme";
+  const LEGACY_KEY = "theme";
+
+  /** Resolve the effective theme from storage, handling 'auto'/empty as system pref. */
+  function resolveTheme(): "dark" | "light" {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === "dark" || stored === "light") return stored;
+    // 'auto', '' (empty string), or not set — check system pref
+    if (stored === null) {
+      // Fall back to legacy key used by the Intermediate kit
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (legacy === "dark" || legacy === "light") return legacy;
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+
+  function enableDarkMode() {
+    document.body.classList.add("dark-mode");
+    localStorage.setItem(STORAGE_KEY, "dark");
+    document.querySelectorAll<HTMLButtonElement>(".dark-mode-toggle").forEach((btn) => {
+      btn.setAttribute("aria-pressed", "true");
+    });
+  }
+
+  function disableDarkMode() {
+    document.body.classList.remove("dark-mode");
+    localStorage.setItem(STORAGE_KEY, "light");
+    document.querySelectorAll<HTMLButtonElement>(".dark-mode-toggle").forEach((btn) => {
+      btn.setAttribute("aria-pressed", "false");
+    });
+  }
+
+  function applyTheme(suppressTransitions = false) {
+    if (suppressTransitions) {
+      document.body.classList.add("no-transitions");
+    }
+    resolveTheme() === "dark" ? enableDarkMode() : disableDarkMode();
+    if (suppressTransitions) {
+      setTimeout(() => document.body.classList.remove("no-transitions"), 50);
+    }
+  }
+
+  function initToggles() {
+    document.querySelectorAll<HTMLButtonElement>(".dark-mode-toggle").forEach((button) => {
+      button.addEventListener("click", () => {
+        resolveTheme() === "light" ? enableDarkMode() : disableDarkMode();
+      });
+    });
+  }
+
+  // Initial load — suppress transitions to avoid FOUC
+  applyTheme(true);
+  initToggles();
+
+  // Re-apply after View Transitions page swap
+  document.addEventListener("astro:page-load", () => {
+    applyTheme(true);
+    initToggles();
+  });
+</script>

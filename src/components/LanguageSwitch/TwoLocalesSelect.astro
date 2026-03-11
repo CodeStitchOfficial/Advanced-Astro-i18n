@@ -5,7 +5,7 @@ import { locales, languageSwitcherMap } from "@config/siteSettings";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
-const { instanceId } = Astro.props;
+const uid = Math.random().toString(36).slice(2, 7);
 
 const languageOptions = await Promise.all(
   locales.map(async (l) => ({
@@ -22,9 +22,9 @@ const languageOptions = await Promise.all(
     class="language-toggle"
     role="radiogroup"
     aria-label={t("language-label")}
-    aria-describedby={`language-instructions-${instanceId}`}
+    aria-describedby={`language-instructions-${uid}`}
   >
-    <span id={`language-instructions-${instanceId}`} class="visually-hidden">
+    <span id={`language-instructions-${uid}`} class="visually-hidden">
       {t("languageSelect.instructions")}
     </span>
     <div class="toggle-track">
@@ -35,7 +35,7 @@ const languageOptions = await Promise.all(
               type="radio"
               class="language-check"
               name="language-selector"
-              id={`lang-${instanceId}-${option.locale}`}
+              id={`lang-${uid}-${option.locale}`}
               value={option.locale}
               data-href={option.href}
               autocomplete="off"
@@ -46,7 +46,7 @@ const languageOptions = await Promise.all(
                 "language-option",
                 { "is-selected": locale === option.locale },
               ]}
-              for={`lang-${instanceId}-${option.locale}`}
+              for={`lang-${uid}-${option.locale}`}
               lang={option.locale}
               data-locale={option.locale}
             >
