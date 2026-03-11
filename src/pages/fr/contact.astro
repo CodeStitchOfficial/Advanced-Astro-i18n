@@ -1,9 +1,11 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import client from "@data/client.json";
-import Landing from "@components/Landing.astro";
+import { BUSINESS } from "@data/client";
+import Banner from "@components/Banner/Banner.astro";
+import { Picture } from "astro:assets";
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
+import skyscraper from "@assets/images/skyscraper.jpg";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@utils/utils"
@@ -23,7 +25,7 @@ const t = useTranslations(locale);
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Landing title={t("contact:landing")} image={optimizedImage}/>
+  <Banner title={t("contact:landing")} image={optimizedImage}/>
 
   <!-- ============================================ -->
   <!--                Contact Form                  -->
@@ -92,42 +94,28 @@ const t = useTranslations(locale);
       <div class="cs-right-section">
         <!--Email-->
         <span class="cs-header">{t("contact:form.email")}</span>
-        <a class="cs-link" href={`mailto:${client.email}`}>{client.email}</a>
+        <a class="cs-link" href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
         <!--Phone-->
         <span class="cs-header">{t("contact:form.phone")}</span>
-        <a class="cs-link" href={`tel:${client.phoneForTel}`}
-          >{client.phoneFormatted}</a
+        <a class="cs-link" href={`tel:${BUSINESS.phoneForTel}`}
+          >{BUSINESS.phoneFormatted}</a
         >
         <!--Address-->
         <span class="cs-header">{t("contact:form.address")}</span>
-        <a class="cs-link" href={client.address.mapLink}>
-          {client.address.lineOne},
+        <a class="cs-link" href={BUSINESS.address.mapLink}>
+          {BUSINESS.address.lineOne},
           <br />
-          {client.address.lineTwo},
+          {BUSINESS.address.lineTwo},
           <br />
           <span class="cs-block">
-            {client.address.city}
-            {client.address.state}
-            {client.address.zip}
+            {BUSINESS.address.city}
+            {BUSINESS.address.state}
+            {BUSINESS.address.zip}
           </span>
         </a>
 
         <!-- Background Image-->
-        <picture class="cs-bg-picture">
-          <source
-            media="(min-width: 601px)"
-            srcset="/assets/images/skyscraper.jpg"
-          />
-          <img
-            aria-hidden="true"
-            decoding="async"
-            src="/assets/images/skyscraper.jpg"
-            alt="building"
-            loading="lazy"
-            width="2500"
-            height="1667"
-          />
-        </picture>
+        <Picture src={skyscraper} alt="building" width={2500} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-bg-picture" }} aria-hidden="true" decoding="async" loading="lazy" />
       </div>
     </div>
   </section>

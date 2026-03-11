@@ -5,9 +5,10 @@ import { getLocaleFromUrl, filterCollectionByLanguage, removeLocaleFromSlug } fr
 import { useTranslations } from "@js/translationUtils";
 import { defaultLocale } from "@config/siteSettings";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Landing from "@components/Landing.astro";
-import BlogFullArticle from "@components/BlogFullArticle.astro";
-import FeaturedPost from "@components/FeaturedPost.astro";
+import Banner from "@components/Banner/Banner.astro";
+import BlogFullArticle from "@components/BlogFullArticle/BlogFullArticle.astro";
+import FeaturedPost from "@components/FeaturedPost/FeaturedPost.astro";
+import { getBlogPostingSchema } from "@js/blogPostingSchema";
 
 // Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
 import {getOptimizedImage} from "@utils/utils"
@@ -29,6 +30,9 @@ export const getStaticPaths = (async () => {
 const { post } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
+
+const postUrl = new URL(Astro.url.pathname, Astro.site).href;
+const blogSchema = getBlogPostingSchema(post, locale, postUrl);
 ---
 
 <BaseLayout
@@ -36,7 +40,9 @@ const t = useTranslations(locale);
     description="Meta description for the page"
     preloadedImage = {optimizedImage}
 >
-  <Landing title={t("blog:landing")} image = {optimizedImage}/>
+  <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
+
+  <Banner title={t("blog:landing")} image = {optimizedImage}/>
 
   <section class="main-content-wrapper">
     <!--Main content -->

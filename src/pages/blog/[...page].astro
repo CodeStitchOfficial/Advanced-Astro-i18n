@@ -5,10 +5,10 @@ import { getLocaleFromUrl, filterCollectionByLanguage } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
 import { defaultLocale } from "@config/siteSettings";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA.astro";
-import Landing from "@components/Landing.astro";
-import BlogPreview from "@components/BlogPreview.astro";
-import Pagination from "@components/TemplateComponents/Pagination.astro";
+import CTA from "@components/CTA/CTA.astro";
+import Banner from "@components/Banner/Banner.astro";
+import BlogPreview from "@components/BlogPreview/BlogPreview.astro";
+import Pagination from "@components/Pagination/Pagination.astro";
 
 export const getStaticPaths = (async ({ paginate }) => {
 	const allPosts = await getCollection("blog");
@@ -35,7 +35,7 @@ const { page } = Astro.props as { page: Page };
 	<!--                    LANDING                   -->
 	<!-- ============================================ -->
 
-	<Landing title={t("blog:landing")} image={optimizedImage} />
+	<Banner title={t("blog:landing")} image={optimizedImage} />
 
 	<!-- ============================================ -->
 	<!--                    Blog                      -->
