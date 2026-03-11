@@ -32,21 +32,18 @@ function loadNamespace(locale: Locale, namespace: string): Record<string, unknow
 }
 
 /** Traverse a nested object by dot-separated key path. */
-function getNestedValue(obj: Record<string, unknown>, keyPath: string): string {
+function getNestedValue(obj: Record<string, unknown>, keyPath: string): unknown {
   const keys = keyPath.split(".");
   let current: unknown = obj;
 
   for (const key of keys) {
-    if (current == null || typeof current !== "object") {
+    if (current == null || typeof current !== "object" || Array.isArray(current)) {
       return keyPath;
     }
     current = (current as Record<string, unknown>)[key];
   }
 
-  if (typeof current === "string") {
-    return current;
-  }
-  return keyPath;
+  return current ?? keyPath;
 }
 
 /**
@@ -55,7 +52,7 @@ function getNestedValue(obj: Record<string, unknown>, keyPath: string): string {
  * and traverses hero.title. Keys without a namespace use "common" by default.
  */
 export function useTranslations(locale: Locale) {
-  return function t(key: string): string {
+  return function t<T = string>(key: string): T {
     let namespace = "common";
     let keyPath = key;
 
@@ -66,7 +63,7 @@ export function useTranslations(locale: Locale) {
     }
 
     const translations = loadNamespace(locale, namespace);
-    return getNestedValue(translations, keyPath);
+    return getNestedValue(translations, keyPath) as T;
   };
 }
 
@@ -191,20 +188,28 @@ export async function getLocalizedPathname(locale: Locale, url: URL): Promise<st
     neutralSegments = [...segments];
   }
 
-  // Reverse-translate each segment: find the route key that maps to each segment in the current locale
+  // Build reverse map: current locale's translated value → neutral key
   const currentRoutes = allRoutes[currentLocale] || {};
   const reverseMap: Record<string, string> = {};
   for (const [key, val] of Object.entries(currentRoutes)) {
     reverseMap[val] = key;
   }
 
-  const neutralizedSegments = neutralSegments.map((seg) => reverseMap[seg] || seg);
-
-  // Forward-translate: look up each segment in the target locale
   const targetRoutes = allRoutes[locale] || {};
-  const translatedSegments = neutralizedSegments.map((seg) => targetRoutes[seg] || seg);
-  const translatedPath = translatedSegments.join("/");
+
+  // Try full-path lookup first (handles multi-segment keys like blog slugs:
+  // "blog/deuxieme-article-en-francais" → "blog/second-post-in-english")
+  const fullPath = neutralSegments.join("/");
+  if (reverseMap[fullPath] !== undefined) {
+    const neutralizedPath = reverseMap[fullPath];
+    const translatedPath = targetRoutes[neutralizedPath] ?? neutralizedPath;
+    return getRelativeLocaleUrl(locale, translatedPath);
+  }
+
+  // Fall back to per-segment lookup (handles single-segment static routes like "a-propos" → "about")
+  const neutralizedSegments = neutralSegments.map((seg) => reverseMap[seg] ?? seg);
+  const translatedSegments = neutralizedSegments.map((seg) => targetRoutes[seg] ?? seg);
 
   // Use Astro's getRelativeLocaleUrl for proper locale prefixing
-  return getRelativeLocaleUrl(locale, translatedPath);
+  return getRelativeLocaleUrl(locale, translatedSegments.join("/"));
 }
