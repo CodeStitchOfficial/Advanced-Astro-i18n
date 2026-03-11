@@ -1,23 +1,24 @@
 {
-  "extends": "astro/tsconfigs/strictest",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
-  "compilerOptions": {
-    "strict": true,
-    "strictNullChecks": true,
-    "checkJs": false,
-    "baseUrl": ".",
-    "paths": {
-      "@layouts/*":["src/layouts/*"],
-      "@assets/*":["src/assets/*"],
-      "@data/*": ["src/data/*"],
-      "@styles/*": ["src/styles/*"],
-      "@components/*": ["src/components/*"],
-      "@utils/*": ["src/utils/*"],
-      "@js/*": ["src/js/*"],
-      "@config/*": ["src/config/*"]
-    },
-    "incremental": true,
+	"extends": "astro/tsconfigs/strictest",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"strict": true,
+		"strictNullChecks": true,
+		"checkJs": false,
+		"baseUrl": ".",
+		"paths": {
+			"@layouts/*": ["src/layouts/*"],
+			"@assets/*": ["src/assets/*"],
+			"@data/*": ["src/data/*"],
+			"@styles/*": ["src/styles/*"],
+			"@components/*": ["src/components/*"],
+			"@utils/*": ["src/utils/*"],
+			"@js/*": ["src/js/*"],
+			"@config/*": ["src/config/*"],
+			"@locales/*": ["src/locales/*"]
+		},
+		"incremental": true,
 		"skipLibCheck": true
-  }
+	}
 }
