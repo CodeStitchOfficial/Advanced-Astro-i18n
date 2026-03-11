@@ -18,8 +18,13 @@
 			"line": 85
 		},
 		{
+			"file": "src/components/Settings/Settings.astro",
+			"description": "## Header UI — Dark Mode & Language Switcher\n\n`Settings.astro` is where you swap the header's utility components. Just change the import to use a different component — no prop wiring needed.\n\n**Dark mode** — two options in `src/components/DarkMode/`:\n- `DarkModeToggle` — simple moon/sun button\n- `ThemeSelect` — three-way Light / Dark / Auto dropdown *(default)*\n\n**Language switcher** — two options in `src/components/LanguageSwitch/`:\n- `TwoLocalesSelect` — EN/FR button toggle, best for 2 locales *(default)*\n- `MultiLocalesSelect` — compact dropdown, best for 3+ locales\n\nTo remove either entirely, delete its line from the template.",
+			"line": 1
+		},
+		{
 			"file": "package.json",
-			"description": "Available commands: **npm run dev** starts the development server on localhost:4321, **npm run build** creates a production build, **npm preview** previews the production build locally, and **npm run remove-decap** removes Decap CMS if you don't need it.",
+			"description": "Available commands: **npm run dev** starts the development server on localhost:4321, **npm run build** creates a production build, **npm run preview** previews the production build locally, **npm run remove-demo** strips all demo content before going live, and **npm run remove-dark-mode** removes dark mode support if you don't need it.",
 			"line": 5
 		}
 	]

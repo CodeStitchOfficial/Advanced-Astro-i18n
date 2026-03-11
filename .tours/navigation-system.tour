@@ -13,8 +13,13 @@
 			"line": 45
 		},
 		{
-			"file": "src/js/nav.js",
-			"description": "`nav.js` holds the script that adds interactivity to the navigation: **Mobile menu toggle** (hamburger button), **Dropdown accessibility** (keyboard navigation with Enter/Escape), and **Focus management**. It's wrapped in 'astro:page-load' event to work with Astro's View Transitions. Copy and paste your JS stitch in here.",
+			"file": "src/components/Settings/Settings.astro",
+			"description": "`Settings.astro` is the header's utility bar — it renders the language switcher and dark mode toggle side by side. This is the file to edit when you want to swap or remove either component.\n\n**To swap the dark mode toggle**, replace the import and JSX tag. Two options live in `src/components/DarkMode/`:\n- `DarkModeToggle` — simple moon/sun button\n- `ThemeSelect` — three-way Light / Dark / Auto dropdown\n\n**To swap the language switcher**, replace the import and JSX tag. Two options live in `src/components/LanguageSwitch/`:\n- `TwoLocalesSelect` — EN/FR button toggle\n- `MultiLocalesSelect` — compact dropdown for 3+ locales\n\nThis component appears twice in `DynamicHeader` — once inside the mobile slide-out panel (`cs-shown`) and once in the desktop nav bar (`cs-hidden`). Edits here apply to both breakpoints automatically.",
+			"line": 1
+		},
+		{
+			"file": "src/assets/js/nav.js",
+			"description": "`nav.js` holds the script that adds interactivity to the navigation: **Mobile menu toggle** (hamburger button), **Dropdown accessibility** (keyboard navigation with Enter/Escape), and **Focus management**. It's wrapped in the `'astro:page-load'` event to work with Astro's View Transitions — this ensures the script re-runs after each client-side navigation. Paste your CodeStitch JS here.",
 			"line": 1
 		}
 	]
