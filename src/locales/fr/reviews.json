@@ -1,0 +1,38 @@
+{
+	"landing": "Avis",
+	"topper": "Nos Avis",
+	"title": "Ce Que Disent Nos Clients",
+	"p": "Découvrez ce que nos clients satisfaits ont à dire sur nos services. Nous sommes fiers de fournir un travail de qualité et un service client exceptionnel.",
+	"testimonials": [
+		{
+			"quote": "J'ai été émerveillé par la qualité du travail réalisé. L'équipe était professionnelle, ponctuelle et a dépassé mes attentes. Je recommande vivement leurs services à quiconque recherche une qualité optimale.",
+			"name": "Jean Dupont",
+			"role": "Propriétaire"
+		},
+		{
+			"quote": "Service exceptionnel du début à la fin. Ils ont communiqué clairement tout au long du processus et ont livré exactement ce qui était promis. Je les utiliserai certainement à nouveau.",
+			"name": "Marie Martin",
+			"role": "Chef d'entreprise"
+		},
+		{
+			"quote": "Le niveau d'artisanat et l'attention aux détails étaient impressionnants. Ils ont traité ma maison comme si c'était la leur. Je ne pourrais pas être plus heureux des résultats.",
+			"name": "Michel Bernard",
+			"role": "Gestionnaire de propriété"
+		},
+		{
+			"quote": "Équipe incroyablement professionnelle. Ils sont arrivés à l'heure, ont travaillé efficacement et ont fait le ménage après eux. Le résultat final était meilleur que ce que j'imaginais.",
+			"name": "Sophie Lefebvre",
+			"role": "Propriétaire"
+		},
+		{
+			"quote": "J'ai fait appel à de nombreux entrepreneurs au fil des ans, mais cette équipe se distingue. Leur expertise et leur engagement envers la qualité sont inégalés. Hautement recommandé!",
+			"name": "Robert Dubois",
+			"role": "Investisseur immobilier"
+		},
+		{
+			"quote": "De la consultation initiale à l'achèvement du projet, l'expérience a été transparente. Ils ont écouté mes besoins et ont livré un résultat parfait.",
+			"name": "Isabelle Moreau",
+			"role": "Designer d'intérieur"
+		}
+	]
+}

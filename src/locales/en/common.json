@@ -54,5 +54,6 @@
 	"pagination": {
 		"previous": "Prev",
 		"next": "Next"
-	}
+	},
+	"reviews": "Reviews"
 }

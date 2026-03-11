@@ -47,5 +47,26 @@
 		"topper": "Our Portfolio",
 		"title": "Et orci volutpat, back up generator installations",
 		"cta": "View Our Products"
+	},
+	"testimonials": {
+		"topper": "Testimonials",
+		"title": "Words From Our Customers",
+		"items": [
+			{
+				"quote": "I was amazed by the quality of work. The team was professional and exceeded my expectations. Highly recommend!",
+				"name": "John Smith",
+				"role": "Homeowner"
+			},
+			{
+				"quote": "Outstanding service from start to finish. They communicated clearly and delivered exactly what was promised.",
+				"name": "Sarah Johnson",
+				"role": "Business Owner"
+			},
+			{
+				"quote": "The level of craftsmanship was impressive. They treated my home like it was their own.",
+				"name": "Michael Brown",
+				"role": "Property Manager"
+			}
+		]
 	}
 }
