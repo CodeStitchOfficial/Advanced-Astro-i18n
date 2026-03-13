@@ -13,7 +13,7 @@ type HeroImage = GetImageResult | ImageMetadata;
 interface Props {
 	title?: string; // Override default title
 	description?: string; // Override default description
-	heroImage?: HeroImage | ImageMetadata; // Can be optimized hero OR raw ImageMetadata
+	heroImage?: HeroImage | undefined; // Can be optimized hero OR raw ImageMetadata
 }
 
 const { title = SITE.title, description = SITE.description, heroImage } = Astro.props;
