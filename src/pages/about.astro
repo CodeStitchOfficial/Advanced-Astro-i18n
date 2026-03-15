@@ -8,10 +8,7 @@ import { useTranslations } from "@js/translationUtils";
 import cabinets2 from "@assets/images/CTA/cabinets2.jpg";
 import construction from "@assets/images/construction.jpg";
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import {getOptimizedImage} from "@utils/utils"
-import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getOptimizedImage(landingImage)
+import landingImage from "@assets/images/landing.jpg";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -20,15 +17,14 @@ const t = useTranslations(locale);
 <BaseLayout
   title={t("about-page.landing")}
   description="Meta description for the page"
-  preloadedImage = {optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Banner 
-    title={t("about-page.landing")} 
-    image={optimizedImage}
+  <Banner
+    title={t("about-page.landing")}
+    image={landingImage}
   />
 
   <!-- ============================================ -->
@@ -39,8 +35,8 @@ const t = useTranslations(locale);
     <div class="cs-container">
       <!-- Left Image Section -->
       <div class="cs-left">
-        <Picture src={cabinets2} alt="cabinets" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture1" }} aria-hidden="true" decoding="async" loading="lazy" />
-        <Picture src={construction} alt="house" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture2" }} aria-hidden="true" decoding="async" loading="lazy" />
+        <Picture src={cabinets2} alt="cabinets" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture1" }} aria-hidden="true" decoding="async" priority />
+        <Picture src={construction} alt="house" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture2" }} aria-hidden="true" decoding="async" priority />
       </div>
       <!-- Right Content Section-->
       <div class="cs-right">

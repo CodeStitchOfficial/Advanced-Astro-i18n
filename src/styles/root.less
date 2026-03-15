@@ -6,256 +6,258 @@
 
 /* CodeStitch Root and Helpers */
 @media only screen and (min-width: 0em) {
-  :root {
-    --primary: #c00065;
-    --primaryLight: #8c5363;
-    --secondary: #302321;
-    --secondaryLight: #423432;
-    --headerColor: #1a1a1a;
-    --bodyTextColor: #4e4b66;
-    --bodyTextColorWhite: #fafbfc;
+	:root {
+		--primary: #c00065;
+		--primaryLight: #8c5363;
+		--secondary: #302321;
+		--secondaryLight: #423432;
+		--headerColor: #1a1a1a;
+		--bodyTextColor: #4e4b66;
+		--bodyTextColorWhite: #fafbfc;
 
-    /* dark mode colors */
-    --primaryDark: #fab0c6;
-    --dark: #1d1715;
-    --medium: #1d1715;
-    --accent: #460b05;
-    --grey: hsl(224, 14%, 16%);
-    --light: hsl(230, 20%, 94%);
+		/* dark mode colors */
+		--primaryDark: #fab0c6;
+		--dark: #1d1715;
+		--medium: #1d1715;
+		--accent: #460b05;
+		--grey: hsl(224, 14%, 16%);
+		--light: hsl(230, 20%, 94%);
 
-    /* 13px - 16px */
-    --topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
-    /* 31px - 49px */
-    --headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
-    --bodyFontSize: 1rem;
+		/* 13px - 16px */
+		--topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
+		/* 31px - 49px */
+		--headerFontSize: clamp(1.9375rem, 3.9vw, 3.0625rem);
+		--bodyFontSize: 1rem;
 
-    /* 60px - 100px top and bottom */
-    --sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
-  }
+		/* 60px - 100px top and bottom */
+		--sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
+	}
 
-  // Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
-  .cs-topper {
-    font-size: var(--topperFontSize);
-    font-weight: 700;
-    line-height: 1.2em;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--primaryLight);
-    display: block;
-  }
+	// Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
+	.cs-topper {
+		font-size: var(--topperFontSize);
+		font-weight: 700;
+		line-height: 1.2em;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--primaryLight);
+		display: block;
+	}
 
-  .cs-title {
-    font-size: var(--headerFontSize);
-    font-weight: 900;
-    line-height: 1.2em;
-    margin: 0 auto (16/16rem);
-    color: var(--headerColor);
-    position: relative;
-  }
+	.cs-title {
+		font-size: var(--headerFontSize);
+		font-weight: 900;
+		line-height: 1.2em;
+		margin: 0 auto (16/16rem);
+		color: var(--headerColor);
+		position: relative;
+	}
 
-  .cs-text {
-    font-size: var(--bodyFontSize);
-    line-height: 1.5em;
-    width: 100%;
-    margin: 0 auto;
-    color: var(--bodyTextColor);
-  }
+	.cs-text {
+		font-size: var(--bodyFontSize);
+		line-height: 1.5em;
+		width: 100%;
+		margin: 0 auto;
+		color: var(--bodyTextColor);
+	}
 
-  // Button - can be replaced using CodeStitch's "Button" Stitches
-  .cs-button-solid {
-    font-size: (16/16rem);
-    font-weight: bold;
-    line-height: (50/16em);
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
-    width: auto;
-    height: (50/16rem);
-    padding: 0 (30/16rem);
+	// Button - can be replaced using CodeStitch's "Button" Stitches
+	.cs-button-solid {
+		font-size: (16/16rem);
+		font-weight: bold;
+		line-height: (50/16em);
+		text-align: center;
+		text-transform: uppercase;
+		text-decoration: none;
+		width: auto;
+		height: (50/16rem);
+		padding: 0 (30/16rem);
 
-    // Transition Properties
-    color: var(--light);
-    background-color: var(--primary);
-    display: inline-block;
-    position: relative;
-    z-index: 1;
-    transition: color 0.3s;
-    transition-delay: 0.1s;
+		// Transition Properties
+		color: var(--light);
+		background-color: var(--primary);
+		display: inline-block;
+		position: relative;
+		z-index: 1;
+		transition: color 0.3s;
+		transition-delay: 0.1s;
 
-    &:hover {
-      color: #fff;
-      &:before {
-        width: 100%;
-      }
-    }
+		&:hover {
+			color: #fff;
+			&:before {
+				width: 100%;
+			}
+		}
 
-    &:before {
-      content: "";
+		&:before {
+			content: "";
 
-      //Transition properties
-      width: 0;
-      height: 100%;
-      background-color: #000;
-      opacity: 1;
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: -1;
-      transition: width 0.3s;
-    }
-  }
+			//Transition properties
+			width: 0;
+			height: 100%;
+			background-color: #000;
+			opacity: 1;
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			transition: width 0.3s;
+		}
+	}
 }
 
 /* Dark mode general styles */
 @media only screen and (min-width: 0em) {
-  body.dark-mode {
-    background-color: var(--dark);
+	body.dark-mode {
+		background-color: var(--dark);
 
-    /* Fallback text color */
-    p,
-    li,
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        color: #fff;
-    }
+		/* Fallback text color */
+		p,
+		li,
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: #fff;
+		}
 
-    .cs-topper {
-      color: var(--primaryDark);
-    }
+		.cs-topper {
+			color: var(--primaryDark);
+		}
 
-    .cs-reviewer {
-      color: var(--bodyTextColorWhite);
-    }
-  }
-
+		.cs-reviewer {
+			color: var(--bodyTextColorWhite);
+		}
+	}
 }
 
 /* Fonts and general styles */
 @media only screen and (min-width: 0em) {
-  // Grab your fonts to locally host from https://google-webfonts-helper.herokuapp.com/fonts
+	// Grab your fonts to locally host from https://google-webfonts-helper.herokuapp.com/fonts
+	/* roboto-regular - latin */
+	@font-face {
+		font-style: normal;
+		font-family: "Roboto";
+		font-weight: 400;
+		font-display: swap;
+		src:
+			local(""),
+			url("/assets/fonts/roboto-v29-latin-regular.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/assets/fonts/roboto-v29-latin-regular.woff")
+				format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-700 - latin */
+	@font-face {
+		font-style: normal;
+		font-family: "Roboto";
+		font-weight: 700;
+		font-display: swap;
+		src:
+			local(""),
+			url("/assets/fonts/roboto-v29-latin-700.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/assets/fonts/roboto-v29-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
+	/* roboto-900 - latin */
+	@font-face {
+		font-style: normal;
+		font-family: "Roboto";
+		font-weight: 900;
+		font-display: swap;
+		src:
+			local(""),
+			url("/assets/fonts/roboto-v29-latin-900.woff2") format("woff2"),
+			/* Chrome 26+, Opera 23+, Firefox 39+ */
+				url("/assets/fonts/roboto-v29-latin-900.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+	}
 
-  /* roboto-regular - latin */
-  @font-face {
-    font-style: normal;
-    font-family: "Roboto";
-    font-weight: 400;
-    font-display: swap;
-    src: local(""),
-      url("/assets/fonts/roboto-v29-latin-regular.woff2") format("woff2"),
-      /* Chrome 26+, Opera 23+, Firefox 39+ */
-        url("/assets/fonts/roboto-v29-latin-regular.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
-  /* roboto-700 - latin */
-  @font-face {
-    font-style: normal;
-    font-family: "Roboto";
-    font-weight: 700;
-    font-display: swap;
-    src: local(""),
-      url("/assets/fonts/roboto-v29-latin-700.woff2") format("woff2"),
-      /* Chrome 26+, Opera 23+, Firefox 39+ */
-        url("/assets/fonts/roboto-v29-latin-700.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
-  /* roboto-900 - latin */
-  @font-face {
-    font-style: normal;
-    font-family: "Roboto";
-    font-weight: 900;
-    font-display: swap;
-    src: local(""),
-      url("/assets/fonts/roboto-v29-latin-900.woff2") format("woff2"),
-      /* Chrome 26+, Opera 23+, Firefox 39+ */
-        url("/assets/fonts/roboto-v29-latin-900.woff") format("woff"); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
-  }
+	body,
+	html {
+		font-family: "Roboto", Arial, sans-serif;
+		font-size: 100%;
+		margin: 0;
+		padding: 0;
+		color: var(--bodyTextColor);
+		overflow-x: hidden;
+	}
 
-  body,
-  html {
-    font-family: "Roboto", Arial, sans-serif;
-    font-size: 100%;
-    margin: 0;
-    padding: 0;
-    color: var(--bodyTextColor);
-    overflow-x: hidden;
-  }
+	*,
+	*:before,
+	*:after {
+		margin: 0;
+		box-sizing: border-box;
+		padding: 0;
+	}
 
-  *,
-  *:before,
-  *:after {
-    margin: 0;
-    box-sizing: border-box;
-    padding: 0;
-  }
+	body {
+		transition: background-color 0.3s;
+	}
 
-  body {
-    transition: background-color 0.3s;
-  }
+	.container {
+		width: 92%;
+		margin: auto;
+		position: relative;
+	}
 
-  .container {
-    width: 92%;
-    margin: auto;
-    position: relative;
-  }
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		margin: 0;
+		color: var(--headerColor);
+	}
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-    color: var(--headerColor);
-  }
+	p,
+	li,
+	a {
+		font-size: (16/16rem);
+		line-height: 1.5em;
+		margin: 0;
+	}
 
-  p,
-  li,
-  a {
-    font-size: (16/16rem);
-    line-height: 1.5em;
-    margin: 0;
-  }
+	p,
+	li {
+		color: #353535;
+	}
 
-  p,
-  li {
-    color: #353535;
-  }
+	a,
+	button {
+		&:hover {
+			cursor: pointer;
+		}
+	}
 
-  a,
-  button {
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  // Hidden Screen reader skip nav button
-  .skip {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1111111;
-  }
+	// Hidden Screen reader skip nav button
+	.skip {
+		opacity: 0;
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1111111;
+	}
 }
 
 /* Reset Margins */
 @media only screen and (min-width: 1024px) {
-  body,
-  html {
-    margin: 0;
-    padding: 0;
-  }
+	body,
+	html {
+		margin: 0;
+		padding: 0;
+	}
 }
 
 /* Scale full website with the viewport width */
 @media only screen and (min-width: 2000px) {
-  body,
-  html {
-    font-size: 0.85vw;
-  }
+	body,
+	html {
+		font-size: 0.85vw;
+	}
 }
 
 .sr-only {
@@ -271,10 +273,9 @@
 }
 
 .cs-hidden {
-  display: none;
+	display: none;
 }
 
 .cs-shown {
-  display: flex;
+	display: flex;
 }
-

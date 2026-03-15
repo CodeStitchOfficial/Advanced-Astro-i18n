@@ -1,19 +1,16 @@
 ---
 import { getImage } from "astro:assets";
-import type { GetImageResult } from "astro";
+import type { ImageMetadata } from "astro";
 import { BUSINESS, OG, SITE } from "@data/client";
 import { getLocalBusinessSchema } from "@js/localBusinessSchema.js";
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { getLocalizedPathname } from "@js/translationUtils";
 import { locales, localeMap } from "@config/siteSettings";
 
-// Props and Types
-type HeroImage = GetImageResult | ImageMetadata;
-
 interface Props {
 	title?: string; // Override default title
 	description?: string; // Override default description
-	heroImage?: HeroImage | undefined; // Can be optimized hero OR raw ImageMetadata
+	heroImage?: ImageMetadata | undefined;
 }
 
 const { title = SITE.title, description = SITE.description, heroImage } = Astro.props;
@@ -48,20 +45,13 @@ const ogDescription = description;
 let socialImage: string;
 
 if (heroImage) {
-	// Check if it's already optimized (has .src property) or needs optimization
-	if ("src" in heroImage && typeof heroImage.src === "string") {
-		// Already optimized by page (GetImageResult or ContentImage)
-		socialImage = Astro.url.origin + heroImage.src;
-	} else {
-		// Raw ImageMetadata - optimize it for OG
-		const optimizedImage = await getImage({
-			src: heroImage as ImageMetadata,
-			width: 1200,
-			height: 600,
-			format: "webp",
-		});
-		socialImage = Astro.url.origin + optimizedImage.src;
-	}
+	const optimizedImage = await getImage({
+		src: heroImage,
+		width: 1200,
+		height: 600,
+		format: "webp",
+	});
+	socialImage = Astro.url.origin + optimizedImage.src;
 } else {
 	// Default social image (static file in public/)
 	socialImage = Astro.url.origin + OG.image;
@@ -113,11 +103,12 @@ if (heroImage) {
 <meta name="twitter:description" content={ogDescription} />
 <meta name="twitter:image" content={socialImage} />
 
-<!-- Favicons -->
-<!-- Use [RealFaviconGenerator.net](https://realfavicongenerator.net/) -->
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png?v1" />
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png" />
-<link rel="manifest" href="/assets/favicons/site.webmanifest" />
-<meta name="msapplication-TileColor" content="#da532c" />
-<meta name="theme-color" content="#ffffff" />
+<!--Favicons-->
+<!-- https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96"/>
+<link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg"/>
+<link rel="shortcut icon" href="/assets/favicons/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png"/>
+<meta name="apple-mobile-web-app-title" content="Starter Kit"/>
+<link rel="manifest" href="/assets/favicons/site.webmanifest"/>
+

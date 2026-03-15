@@ -15,21 +15,18 @@ import port7 from "@assets/images/portfolio/port7.jpg";
 import port8 from "@assets/images/portfolio/port8.jpg";
 import port9 from "@assets/images/portfolio/port9.jpg";
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import {getOptimizedImage} from "@utils/utils"
-import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getOptimizedImage(landingImage)
+import landingImage from "@assets/images/landing.jpg";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 ---
 
-<BaseLayout title={t("projects")} description="Meta description for the page" preloadedImage = {optimizedImage}>
+<BaseLayout title={t("projects")} description="Meta description for the page">
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Banner title={t("project-2")} image={optimizedImage}/>
+  <Banner title={t("project-2")} image={landingImage}/>
 
   <!-- ============================================ -->
   <!--                   Gallery                    -->

@@ -6,12 +6,10 @@ const { title, image } = Astro.props
 <section id="int-hero">
     <h1 id="home-h">{title}</h1>
 
-    <Picture 
-        src={image.src}
-        width={image.attributes.width}
-        height={image.attributes.height}
-        formats={['avif', 'webp']} 
-        aria-hidden="true" 
+    <Picture
+        src={image}
+        formats={['avif', 'webp']}
+        aria-hidden="true"
         decoding="async"
         alt=""
         loading="eager"

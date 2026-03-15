@@ -10,10 +10,7 @@ import BlogFullArticle from "@components/BlogFullArticle/BlogFullArticle.astro";
 import FeaturedPost from "@components/FeaturedPost/FeaturedPost.astro";
 import { getBlogPostingSchema } from "@js/blogPostingSchema";
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import {getOptimizedImage} from "@utils/utils"
-import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getOptimizedImage(landingImage)
+import landingImage from "@assets/images/landing.jpg";
 
 export const getStaticPaths = (async () => {
 	const allPosts = await getCollection("blog");
@@ -38,11 +35,11 @@ const blogSchema = getBlogPostingSchema(post, locale, postUrl);
 <BaseLayout
     title={t("blog:landing")}
     description="Meta description for the page"
-    preloadedImage = {optimizedImage}
+
 >
   <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
 
-  <Banner title={t("blog:landing")} image = {optimizedImage}/>
+  <Banner title={t("blog:landing")} image={landingImage}/>
 
   <section class="main-content-wrapper">
     <!--Main content -->

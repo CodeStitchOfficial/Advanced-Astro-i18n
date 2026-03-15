@@ -15,7 +15,7 @@ const t = useTranslations(locale);
 	<div class="cs-container">
 		<!--Nav Logo-->
 		<a href={getLocalizedRoute(locale,"/")} class="cs-logo" aria-label="back to home">
-			<Image src={logoBlack} alt="logo" width={210} height={29} aria-hidden="true" decoding="async" />
+			<Image src={logoBlack} alt="logo" width={210} height={29} aria-hidden="true" decoding="async" priority/>
 		</a>
 		<!--Navigation List-->
 		<nav class="cs-nav" role="navigation">

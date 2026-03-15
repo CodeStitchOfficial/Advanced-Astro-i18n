@@ -7,10 +7,7 @@ import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
 import skyscraper from "@assets/images/skyscraper.jpg";
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import {getOptimizedImage} from "@utils/utils"
-import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getOptimizedImage(landingImage)
+import landingImage from "@assets/images/landing.jpg";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -19,13 +16,12 @@ const t = useTranslations(locale);
 <BaseLayout
   title={t("contact:landing")}
   description="Meta description for the page"
-  preloadedImage = {optimizedImage}
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Banner title={t("contact:landing")} image={optimizedImage}/>
+  <Banner title={t("contact:landing")} image={landingImage}/>
 
   <!-- ============================================ -->
   <!--                Contact Form                  -->
@@ -115,7 +111,7 @@ const t = useTranslations(locale);
         </a>
 
         <!-- Background Image-->
-        <Picture src={skyscraper} alt="building" width={2500} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-bg-picture" }} aria-hidden="true" decoding="async" loading="lazy" />
+        <Picture src={skyscraper} alt="building" width={2500} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-bg-picture" }} aria-hidden="true" decoding="async" priority />
       </div>
     </div>
   </section>

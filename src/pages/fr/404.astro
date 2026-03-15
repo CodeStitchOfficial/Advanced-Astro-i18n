@@ -8,12 +8,9 @@ const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const title = t("notFound.pageNotFound");
 
-// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Landing (for rendering)
-import {getOptimizedImage} from "@utils/utils"
-import landingImage from "@assets/images/landing.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
-const optimizedImage = await getOptimizedImage(landingImage)
+import landingImage from "@assets/images/landing.jpg";
 ---
-<BaseLayout title={title} description={title} preloadedImage = {optimizedImage}>
+<BaseLayout title={title} description={title}>
   <section id="int-hero">
     <h1>{title}</h1>
     <a href={getLocalizedRoute(locale, "/")} class="cs-button-solid">{t("notFound.linkText")}</a>
