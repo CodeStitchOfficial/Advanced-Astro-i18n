@@ -33,7 +33,7 @@ const currentYear = getCurrentYear();
           {
             navData.map((entry: any) => (
               <li>
-                {entry.url && (<a href={getLocalizedRoute(locale,entry.url)}>{t(entry.key)}</a>)}
+                {entry.url && (<a href={getLocalizedRoute(locale,entry.url)}>{entry.label[locale]}</a>)}
               </li>
             ))
           }
