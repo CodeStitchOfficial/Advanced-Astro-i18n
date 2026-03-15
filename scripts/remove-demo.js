@@ -12,7 +12,7 @@
  * Run with: npm run remove-demo
  */
 
-import { existsSync, rmSync, writeFileSync, mkdirSync } from "fs";
+import { existsSync, rmSync, readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import readline from "readline";
@@ -156,6 +156,25 @@ const t = useTranslations(locale);
 </BaseLayout>
 `
 	);
+
+	// ── Update _template.astro files (remove Banner/CTA/landingImage) ────────
+	for (const tpl of ["src/pages/_template.astro", "src/pages/fr/_template.astro"]) {
+		const abs = join(root, tpl);
+		if (!existsSync(abs)) continue;
+		let src = readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
+		// Remove imports
+		src = src.replace(/import Banner from "@components\/Banner\/Banner\.astro";\n/, "");
+		src = src.replace(/import CTA from "@components\/CTA\/CTA\.astro";\n/, "");
+		src = src.replace(/import landingImage from "@assets\/images\/landing\.jpg";\n/, "");
+		// Remove Banner comment block + usage
+		src = src.replace(/\t<!-- =+[^]*?LANDING[^]*?=+ -->\n\n\t<Banner[^\n]+\/>\n\n/, "");
+		// Remove CTA usage
+		src = src.replace(/\t<CTA \/>\n/, "");
+		// Collapse extra blank lines
+		src = src.replace(/\n{3,}/g, "\n\n");
+		writeFileSync(abs, src, "utf8");
+		console.log(`  updated  ${tpl}`);
+	}
 
 	// ── Create .demo-removed marker ───────────────────────────────────────────
 	writeFileSync(markerPath, new Date().toISOString() + "\n", "utf8");

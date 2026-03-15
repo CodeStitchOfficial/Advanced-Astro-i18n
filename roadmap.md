@@ -88,6 +88,7 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 
 - [] create remove i18n
 - [] create add-page
+- [] create tests for scripts?
 
 ### documentation
 
