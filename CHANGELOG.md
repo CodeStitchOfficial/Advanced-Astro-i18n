@@ -1,4 +1,68 @@
-# Advanced Astro v4 i18n
+# Advanced Astro v5 i18n
+
+## 3.0.0
+### Major changes
+- Migrated i18n system from `@astrolicious/i18n` to vanilla Astro i18n. The third-party integration has been removed entirely and replaced with a lightweight, self-contained utility layer.
+- Routing moved from `src/routes/` to `src/pages/`, with French pages living as full copies under `src/pages/fr/` (duplication over shared components, for maximum flexibility).
+- `prefixDefaultLocale: false` — English URLs stay clean (`/blog/...`), French gets the `/fr/` prefix.
+
+#### New files
+- `src/js/localeUtils.ts` — locale detection helpers
+- `src/js/translationUtils.ts` — `t()` translation function and `getLocalizedPathname()` for cross-locale URL resolution
+- `src/js/localePreference.ts` — browser language preference handling
+- `src/config/siteSettings.ts` — centralised site configuration
+- `src/config/routeTranslations.ts` — static route translation map + `localizedCollections` config
+- `src/components/TemplateComponents/LanguageSwitch/BrowserLanguageRedirect.astro` — redirects home page visitors to their preferred locale on first visit
+
+#### Blog slug translation (language switcher)
+- Added `mappingKey` field to the blog collection schema (`src/content.config.ts`) to link equivalent posts across locales
+- Added `mappingKey` frontmatter to all 8 blog posts (4 en + 4 fr pairs)
+- `getLocalizedPathname()` is now async — it scans content collections at build time, groups entries by `mappingKey`, and merges them with static route translations
+- Added `generateDynamicRouteTranslations()` to build full route maps from content collections
+- Updated `TwoLocalesSelect.astro`, `MultiLocalesSelect.astro`, and `BaseLayout.astro` to await async `getLocalizedPathname`
+- Switching languages on a blog post now correctly translates the slug (e.g. `/blog/fourth-post-in-english/` ↔ `/fr/blog/quatrieme-article-en-francais/`)
+
+#### Route translations
+- French project pages translated and renamed: `/projects/project-1/` → `/fr/projets/projet-1/`, `/projects/project-2/` → `/fr/projets/projet-2/`
+- All static route translations declared in `src/config/routeTranslations.ts`
+
+#### What should I do on my fork?
+1. **Remove `@astrolicious/i18n`**
+
+    ```bash
+    npm uninstall @astrolicious/i18n astro-integration-kit
+    ```
+
+2. **Add the new utility and config files** from `src/js/` and `src/config/`
+
+3. **Update path aliases in `tsconfig.json`**
+
+    ```json
+    {
+      "compilerOptions": {
+        "paths": {
+          "@js/*": ["src/js/*"],
+          "@config/*": ["src/config/*"]
+        }
+      }
+    }
+    ```
+
+4. **Recreate your pages under `src/pages/`**, duplicating them per locale under `src/pages/fr/`
+
+5. **Add `mappingKey` to your blog collection schema** (`src/content.config.ts`) and to the frontmatter of every blog post
+
+6. **Replace all `i18n:astro` / `@astrolicious/i18n` imports** with the new utilities:
+
+    ```diff
+    - import { getLocale, t } from "i18n:astro";
+    + import { getLang } from "@js/localeUtils";
+    + import { t, getLocalizedPathname } from "@js/translationUtils";
+    ```
+
+7. **Update language switcher components** to `await getLocalizedPathname(...)` (it is now async)
+
+---
 
 ## 2.2.2
 ### Patch changes

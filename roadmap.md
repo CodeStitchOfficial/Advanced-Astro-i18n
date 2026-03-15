@@ -62,26 +62,35 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 - [x] Verify both language switcher components handle all page types correctly (static, blog, projects)
 
 - [x] add feature: redirect to language based on browser preference for home page only
+- [x] i18n sitemap
 
 ### kit standardization (see Int kit)
 
-- [ ] Add Decap CMS integration
-- [ ] Add `remove-decap` script
-- [ ] Add `remove-demo` script
-- [ ] Add `remove-dark-mode` script
-- [ ] Remove preloading system
-- [ ] Create BaseHead and SEO components
-- [ ] Check favicon and fonts handling
-- [ ] Update blog post content to match the other CodeStitch kits (placeholder content alignment)
-- [ ] Use Astro <Picture /> throughout
+- [x] Add Decap CMS integration
+- [x] Add `remove-decap` script
+- [x] Add `remove-demo` script
+- [x] Add `remove-dark-mode` script
+- [x] Remove preloading system
+- [x] Check favicon / check with other kits for CS favicon
+- [x] Update blog post content to match the other CodeStitch kits (placeholder content alignment)
+- [x] Use Astro <Picture /> throughout
+- [x] should we use glob to load portfolio images? => too cumbersome
+
+### Post-standardization checks
+
+- [] set up decapbridge + test decap admn auth
+- [] test i18n sitemap and hreflang
+- [] tweak? and test remove-decap
+- [] check and update code tours
+- [] upgrade to Astro v6 and test Fonts API and live collection
+
+### new script
+
+- [] create remove i18n
+- [] create add-page
 
 ### documentation
 
 - [ ] update documentation and changelog
 
 ### random fixes
-
-- BaseLayout.astro
-      <link rel="alternate" hreflang="x-default" href={hrefLangLinks[0].href} /> Object is possibly 'undefined'.
-- Header.astro
-  implement a non-dynamic header too
