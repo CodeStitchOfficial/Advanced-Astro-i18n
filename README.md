@@ -135,15 +135,16 @@ Only the vanilla web technologies are _required_ before using this kit, with fam
 │   ├── assets/
 │   │   └── images/
 │   ├── components/
-│   │   └── TemplateComponents/
-│   │       ├── DarkMode/
-│   │       ├── LanguageSwitch/
-│   │       │   ├── BrowserLanguageRedirect.astro
-│   │       │   ├── MultiLocalesSelect.astro
-│   │       │   └── TwoLocalesSelect.astro
-│   │       ├── CSPicture.astro
-│   │       ├── Pagination.astro
-│   │       └── Settings.astro
+│   │   ├── DarkMode/
+│   │   │   ├── DarkModeToggle.astro
+│   │   │   └── ThemeSelect.astro
+│   │   ├── LanguageSwitch/
+│   │   │   ├── BrowserLanguageRedirect.astro
+│   │   │   ├── MultiLocalesSelect.astro
+│   │   │   └── TwoLocalesSelect.astro
+│   │   ├── Settings/
+│   │   │   └── Settings.astro
+│   │   └── ...
 │   ├── config/
 │   │   ├── routeTranslations.ts
 │   │   └── siteSettings.ts
@@ -196,7 +197,7 @@ Only the vanilla web technologies are _required_ before using this kit, with fam
 ### Key Directories
 
 - **`public/`** — Static assets that won't be processed by Astro (fonts, favicons, `_redirects`, `robots.txt`).
-- **`src/components/`** — Reusable Astro components. `TemplateComponents/` contains non-CodeStitch components (dark mode, language switcher, pagination, etc.).
+- **`src/components/`** — Reusable Astro components. Template utility components (dark mode toggles, language switcher, pagination, etc.) live in named subdirectories alongside CodeStitch section components.
 - **`src/config/`** — i18n configuration: locale definitions (`siteSettings.ts`) and route translations (`routeTranslations.ts`).
 - **`src/content/blog/`** — Blog posts organized by locale (`en/`, `fr/`).
 - **`src/data/`** — Site-wide data (`client.json`, `navData.json`).
@@ -429,12 +430,12 @@ The home page (`/`) automatically redirects visitors to their preferred locale b
 
 ### Language Switcher Components
 
-Two language switcher components are provided in `src/components/TemplateComponents/LanguageSwitch/`:
+Two language switcher components are provided in `src/components/LanguageSwitch/`:
 
 - **`TwoLocalesSelect.astro`** — A simple toggle for two-locale setups (e.g. EN/FR).
 - **`MultiLocalesSelect.astro`** — A dropdown menu for projects with more than two locales.
 
-Both components use `getLocalizedPathname(locale, Astro.url)` to resolve the equivalent URL in the target locale, including translated route segments and blog post slugs.
+Both components use `getLocalizedPathname(locale, Astro.url)` to resolve the equivalent URL in the target locale, including translated route segments and blog post slugs. To swap which one is active, edit the imports in `src/components/Settings/Settings.astro`.
 
 ## Content Collections
 
