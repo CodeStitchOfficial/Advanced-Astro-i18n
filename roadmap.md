@@ -78,6 +78,8 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 
 ### Post-standardization checks
 
+- [x] removed static header didnt make sense in a multilanguage project
+
 - [] set up decapbridge + test decap admn auth
 - [] test i18n sitemap and hreflang
 - [] tweak? and test remove-decap
@@ -86,12 +88,15 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 
 ### new script
 
-- [] create remove i18n
-- [] create add-page
-- [] create tests for scripts?
+- [x] create remove i18n
+- [x] create add-page
+- [x] create tests for scripts?
+- [x] refactor i18n script for agnostic / unknown locales (as opposed to current EN FR hardcoded) use /galaxy-v7/scripts and notably prompt.js as a base for work. this kit is i18n by default. should we use a CLI to prompt for locales / removal of i18n setup? if so, at what stage should we implement it, and how? how to avoid conflicts with other scripts?
 
 ### documentation
 
 - [ ] update documentation and changelog
 
 ### random fixes
+
+- [] FOUC is back
