@@ -12,7 +12,8 @@
 		"remove-dark-mode": "node scripts/remove-dark-mode.js",
 		"remove-decap": "node scripts/remove-decap.js",
 		"remove-i18n": "node scripts/remove-i18n.js",
-		"create-page": "node scripts/create-page.js"
+		"create-page": "node scripts/create-page.js",
+		"test:scripts": "node --test scripts/tests/unit.test.js scripts/tests/create-page.test.js scripts/tests/remove-demo.test.js scripts/tests/remove-i18n.test.js"
 	},
 	"dependencies": {
 		"@astrojs/sitemap": "^3.7.0",

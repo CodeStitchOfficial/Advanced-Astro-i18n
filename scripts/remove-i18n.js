@@ -3,9 +3,10 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import readline from "readline";
 import { collectFiles } from "./utils/collect-files.js";
+import { removeObjectKey, humanizeKey, flattenIntoMap, lookupTranslation } from "./utils/transforms.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, "..");
+const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
 
 // ─── Guard ────────────────────────────────────────────────────────────────────
 const markerPath = join(root, ".i18n-removed");
@@ -87,42 +88,6 @@ async function buildTranslationMap(defaultLocale) {
 	}
 
 	return map;
-}
-
-function flattenIntoMap(obj, namespace, prefix, map) {
-	for (const [key, value] of Object.entries(obj)) {
-		const fullKey = prefix ? `${prefix}.${key}` : key;
-		if (typeof value === "string") {
-			// Namespaced key: "namespace:key.nested"
-			map[`${namespace}:${fullKey}`] = value;
-			// Plain key (no namespace prefix) — last-write wins if duplicated across namespaces
-			if (!(fullKey in map)) map[fullKey] = value;
-		} else if (typeof value === "object" && value !== null) {
-			flattenIntoMap(value, namespace, fullKey, map);
-		}
-	}
-}
-
-function humanizeKey(key) {
-	// Strip namespace (e.g. "home:hero.title" → "hero.title")
-	const withoutNamespace = key.includes(":") ? key.split(":").slice(1).join(":") : key;
-	// Take the last dot-segment
-	const lastSegment = withoutNamespace.split(".").pop() || withoutNamespace;
-	// Replace dashes and underscores with spaces
-	const words = lastSegment.replace(/[-_]/g, " ");
-	// Sentence-case
-	return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
-function lookupTranslation(key, map) {
-	if (map[key] !== undefined) return map[key];
-	// Try without namespace prefix
-	if (key.includes(":")) {
-		const withoutNs = key.split(":").slice(1).join(":");
-		if (map[withoutNs] !== undefined) return map[withoutNs];
-	}
-	// Fallback: humanize the key
-	return humanizeKey(key);
 }
 
 // ─── Phase B: automated sweep ─────────────────────────────────────────────────
@@ -217,38 +182,6 @@ async function removeI18nFromFiles(translationMap) {
 }
 
 // ─── Phase C: targeted specific-file edits ────────────────────────────────────
-
-/**
- * Remove an object key block (e.g. `i18n: { ... },`) from JS/TS content.
- * Handles nested braces correctly by counting depth.
- */
-function removeObjectKey(content, keyName) {
-	const keyRegex = new RegExp(`(\\n[ \\t]*)${keyName}:\\s*\\{`);
-	const match = keyRegex.exec(content);
-	if (!match) return content;
-
-	const startIndex = match.index; // position of \n before the key
-	// Find the opening brace of this key's value
-	const braceOpenIndex = content.indexOf("{", match.index + match[0].length - 1);
-
-	// Count braces to find the matching closing brace
-	let depth = 1;
-	let i = braceOpenIndex + 1;
-	while (i < content.length && depth > 0) {
-		if (content[i] === "{") depth++;
-		else if (content[i] === "}") depth--;
-		i++;
-	}
-	// i is now right after the closing }
-
-	let endIndex = i;
-	// Consume trailing comma
-	if (content[endIndex] === ",") endIndex++;
-	// Consume trailing newline
-	if (content[endIndex] === "\n") endIndex++;
-
-	return content.slice(0, startIndex) + content.slice(endIndex);
-}
 
 async function patchSpecificFiles(defaultLocale) {
 	// ── astro.config.mjs ──────────────────────────────────────────────────────
@@ -400,8 +333,19 @@ async function removeI18n() {
 			"   write src/pages/fr/index.astro into a folder that no longer exists.\n"
 	);
 
+	// Queue-based readline: buffers lines so piped stdin doesn't race with async/await.
 	const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-	const ask = (q) => new Promise((resolve) => rl.question(q, resolve));
+	const lineQueue = [];
+	const waiters = [];
+	rl.on("line", (line) => {
+		if (waiters.length > 0) waiters.shift()(line);
+		else lineQueue.push(line);
+	});
+	const ask = (q) => {
+		process.stdout.write(q);
+		if (lineQueue.length > 0) return Promise.resolve(lineQueue.shift());
+		return new Promise((resolve) => waiters.push(resolve));
+	};
 
 	// Prompt 1: default locale (with validation + re-prompt)
 	let defaultLocale = "en";
@@ -424,7 +368,7 @@ async function removeI18n() {
 
 	if (confirm.toLowerCase() !== "yes") {
 		console.log("Aborted. No files were changed.");
-		process.exit(0);
+		return;
 	}
 
 	console.log();

@@ -24,7 +24,7 @@ import { fileURLToPath } from "url";
 import readline from "readline";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, "..");
+const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
 
 // ─── Guard: already run? ──────────────────────────────────────────────────────
 const markerPath = join(root, ".dark-mode-removed");

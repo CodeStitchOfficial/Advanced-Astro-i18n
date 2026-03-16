@@ -1,35 +1,61 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import { slugify, titleCase, insertIntoLocaleBlock } from "./utils/transforms.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = join(__dirname, "..");
+const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// ─── Client data ──────────────────────────────────────────────────────────────
 
-function slugify(name) {
-	return name
-		.toLowerCase()
-		.replace(/[^a-z0-9\s-]/g, "")
-		.replace(/\s+/g, "-")
-		.replace(/-+/g, "-")
-		.replace(/^-+|-+$/g, "");
+function readClientData() {
+	const clientPath = join(root, "src", "data", "client.ts");
+	if (!existsSync(clientPath)) return null;
+	const content = readFileSync(clientPath, "utf8");
+	const nameMatch = content.match(/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/);
+	const titleMatch = content.match(/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/);
+	return {
+		businessName: nameMatch?.[1] ?? null,
+		siteTitle: titleMatch?.[1] ?? null,
+	};
 }
 
-function titleCase(name) {
-	return name
-		.split(/\s+/)
-		.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
-		.join(" ");
+// ─── Route translations ────────────────────────────────────────────────────────
+
+function registerInRouteTranslations(slug, frSlug) {
+	const rtPath = join(root, "src", "config", "routeTranslations.ts");
+	if (!existsSync(rtPath)) return "missing";
+
+	let content = readFileSync(rtPath, "utf8");
+
+	const enResult = insertIntoLocaleBlock(content, "en", slug, slug);
+	const frResult = insertIntoLocaleBlock(
+		enResult ?? content,
+		"fr",
+		slug,
+		frSlug,
+	);
+
+	if (enResult === null && frResult === null) return "skipped";
+
+	const updated = frResult ?? enResult ?? content;
+	writeFileSync(rtPath, updated, "utf8");
+	return "registered";
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 function main() {
+	const client = readClientData();
+	if (client?.businessName) console.log(`Client: ${client.businessName}`);
+
 	const input = process.argv[2];
+	const frInput = process.argv[3];
 
 	if (!input) {
-		console.log('Please provide page names. Example: npm run create-page -- "Contact, About, Services"');
+		console.log(
+			'Please provide page names. Example: npm run create-page -- "Contact, About, Services"',
+		);
 		process.exit(1);
 	}
 
@@ -50,11 +76,21 @@ function main() {
 		.map((p) => p.trim())
 		.filter(Boolean);
 
-	for (const page of pages) {
+	const frNames = frInput
+		? frInput.split(",").map((p) => p.trim()).filter(Boolean)
+		: [];
+
+	const frSlugs = frNames.map(slugify);
+
+	for (let idx = 0; idx < pages.length; idx++) {
+		const page = pages[idx];
 		const slug = slugify(page);
 		if (!slug) continue;
 
 		const title = titleCase(page);
+		const frName = frNames[idx] ?? page;
+		const frTitle = titleCase(frName);
+		const frSlug = frSlugs[idx] ?? slug;
 
 		// EN page
 		const enPath = join(root, "src", "pages", `${slug}.astro`);
@@ -68,15 +104,28 @@ function main() {
 
 		// FR page (only if the fr/ directory and template exist)
 		if (frTemplate) {
-			const frPath = join(root, "src", "pages", "fr", `${slug}.astro`);
+			const frPath = join(root, "src", "pages", "fr", `${frSlug}.astro`);
 			if (existsSync(frPath)) {
-				console.log(`Skipped src/pages/fr/${slug}.astro — already exists`);
+				console.log(
+					`Skipped src/pages/fr/${frSlug}.astro — already exists`,
+				);
 			} else {
-				const content = frTemplate.replaceAll("Titre de la page", title);
+				const content = frTemplate.replaceAll("Titre de la page", frTitle);
 				writeFileSync(frPath, content, "utf8");
-				console.log(`Created src/pages/fr/${slug}.astro`);
+				console.log(`Created src/pages/fr/${frSlug}.astro`);
 			}
 		}
+
+		// routeTranslations.ts
+		const rtStatus = registerInRouteTranslations(slug, frSlug);
+		if (rtStatus === "registered") {
+			console.log(`Registered in routeTranslations.ts`);
+		} else if (rtStatus === "skipped") {
+			console.log(
+				`Skipped routeTranslations.ts — "${slug}" already registered`,
+			);
+		}
+
 	}
 }
 
