@@ -33,8 +33,8 @@ const blogSchema = getBlogPostingSchema(post, locale, postUrl);
 ---
 
 <BaseLayout
-    title={t("blog:landing")}
-    description="Meta description for the page"
+    title={post.data.title}
+    description={post.data.description}
 
 >
   <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
