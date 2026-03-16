@@ -32,6 +32,31 @@ const t = useTranslations(locale);
 		<!-- Sitewide Scripts -->
 		<script src="@assets/js/nav.js"></script>
 
+		<!-- FOUC prevention: applies dark-mode class before first paint.
+		     Reads cs-theme (set by ThemeSelect or DarkModeToggle) and falls
+		     back to the legacy "theme" key used by the Intermediate kit. -->
+		<script is:inline>
+			(function () {
+				var stored = localStorage.getItem("cs-theme");
+				var isDark;
+				if (stored === "dark") {
+					isDark = true;
+				} else if (stored === "light" || stored === "") {
+					isDark = false;
+				} else {
+					// Not set or any unexpected value — fall back to legacy key, then system pref
+					var legacy = localStorage.getItem("theme");
+					if (legacy === "dark") {
+						isDark = true;
+					} else if (legacy === "light") {
+						isDark = false;
+					} else {
+						isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+					}
+				}
+				if (isDark) document.body.classList.add("dark-mode");
+			})();
+		</script>
 	</head>
 	<body>
 		<!-- Screen reader skip main nav -->

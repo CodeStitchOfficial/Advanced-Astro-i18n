@@ -81,7 +81,7 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 - [x] removed static header didnt make sense in a multilanguage project
 
 - [] set up decapbridge + test decap admn auth
-- [] test i18n sitemap and hreflang
+- [x] test i18n sitemap and hreflang
 - [] tweak? and test remove-decap
 - [] check and update code tours
 - [] upgrade to Astro v6 and test Fonts API and live collection
@@ -99,4 +99,4 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 
 ### random fixes
 
-- [] FOUC is back
+- [x] FOUC is back
