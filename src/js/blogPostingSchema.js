@@ -18,7 +18,7 @@ export function getBlogPostingSchema(post, locale, postUrl) {
 		},
 		headline: title,
 		description: description ?? SITE.description,
-		image: image ? `${SITE.url}${image}` : `${SITE.url}${OG.image}`,
+		image: image ? `${SITE.url}${image.src}` : `${SITE.url}${OG.image}`,
 		author: {
 			"@type": "Person",
 			name: author ?? BUSINESS.name,
