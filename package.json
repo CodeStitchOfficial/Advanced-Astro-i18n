@@ -17,8 +17,8 @@
 		"test:scripts": "node --test scripts/tests/unit.test.js scripts/tests/create-page.test.js scripts/tests/remove-demo.test.js scripts/tests/remove-i18n.test.js"
 	},
 	"dependencies": {
-		"@astrojs/sitemap": "^3.7.0",
-		"astro": "^5.17.2",
+		"@astrojs/sitemap": "^3.7.1",
+		"astro": "^6.0.4",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.24",
 		"less": "^4.5.1"
