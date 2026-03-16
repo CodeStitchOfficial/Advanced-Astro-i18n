@@ -242,7 +242,7 @@ async function patchSpecificFiles(defaultLocale) {
 
 // ─── Phase D: move i18n infrastructure to scripts/deleted/ ───────────────────
 
-async function moveI18nFiles(defaultLocale) {
+async function moveI18nFiles(defaultLocale, prefixDefaultLocale = false) {
 	const deletedDir = join(root, "scripts", "deleted");
 
 	// Ensure destination directory exists
@@ -270,13 +270,28 @@ async function moveI18nFiles(defaultLocale) {
 	await moveDir(join(root, "src", "components", "LanguageSwitch"), join(deletedDir, "LanguageSwitch"), "LanguageSwitch component");
 
 	// Move non-default locale page subdirectories (e.g. src/pages/fr/)
+	// If prefixDefaultLocale=true, also promote {defaultLocale}/ contents to root
 	const pagesDir = join(root, "src", "pages");
 	try {
 		const entries = await fs.readdir(pagesDir, { withFileTypes: true });
 		for (const entry of entries) {
 			if (!entry.isDirectory()) continue;
 			if (!/^[a-z]{2}(-[a-z]{2})?$/i.test(entry.name)) continue;
-			if (entry.name === defaultLocale) continue;
+
+			if (entry.name === defaultLocale) {
+				if (prefixDefaultLocale) {
+					// Default locale pages live in a subfolder — promote contents to root
+					const srcDir = join(pagesDir, entry.name);
+					const srcEntries = await fs.readdir(srcDir, { withFileTypes: true });
+					for (const e of srcEntries) {
+						await fs.rename(join(srcDir, e.name), join(pagesDir, e.name));
+					}
+					await fs.rm(srcDir, { recursive: true, force: true });
+					console.log(`  Promoted src/pages/${entry.name}/ to root (prefixDefaultLocale was true)`);
+				}
+				continue;
+			}
+
 			const src = join(pagesDir, entry.name);
 			const dest = join(deletedDir, `pages-${entry.name}`);
 			await moveDir(src, dest, `src/pages/${entry.name}`);
@@ -373,6 +388,14 @@ async function removeI18n() {
 
 	console.log();
 
+	// Read prefixDefaultLocale before Phase C removes the i18n block from astro.config.mjs
+	let prefixDefaultLocale = false;
+	try {
+		const astroConfig = await fs.readFile(join(root, "astro.config.mjs"), "utf-8");
+		const m = astroConfig.match(/prefixDefaultLocale:\s*(true|false)/);
+		prefixDefaultLocale = m?.[1] === "true";
+	} catch { /* keep false */ }
+
 	// ── Phase A ──────────────────────────────────────────────────────────────
 	console.log("Phase A: Building translation map...");
 	const translationMap = await buildTranslationMap(defaultLocale);
@@ -388,7 +411,7 @@ async function removeI18n() {
 
 	// ── Phase D ──────────────────────────────────────────────────────────────
 	console.log("\nPhase D: Moving i18n infrastructure to scripts/deleted/...");
-	await moveI18nFiles(defaultLocale);
+	await moveI18nFiles(defaultLocale, prefixDefaultLocale);
 
 	// ── Phase E ──────────────────────────────────────────────────────────────
 	const remaining = await scanForReferences();

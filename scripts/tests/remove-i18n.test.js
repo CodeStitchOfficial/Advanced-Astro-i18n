@@ -41,6 +41,21 @@ export default defineConfig({
 \t],
 });`;
 
+const ASTRO_CONFIG_PREFIX_TRUE = `import { defineConfig } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+
+export default defineConfig({
+\tsite: "https://example.com",
+\ti18n: {
+\t\tdefaultLocale: "en",
+\t\tlocales: ["en", "fr"],
+\t\trouting: {
+\t\t\tprefixDefaultLocale: true,
+\t\t},
+\t},
+\tintegrations: [sitemap()],
+});`;
+
 const BASELAYOUT = `---
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
@@ -98,6 +113,22 @@ const BASE_FIXTURE = {
 	"src/layouts/BaseLayout.astro": BASELAYOUT,
 	"src/components/Meta/Meta.astro": META,
 	"src/pages/_template.astro": TEMPLATE_PAGE,
+	"src/pages/fr/index.astro": "<html>fr index</html>",
+	"src/locales/en/common.json": JSON.stringify({ home: "Home", skipLink: "Skip to content" }),
+	"src/js/localeUtils.ts": `export function getLocaleFromUrl() { return "en"; }`,
+	"src/js/translationUtils.ts": `export function useTranslations() { return (k) => k; }`,
+	"src/config/siteSettings.ts": `export const locales = ["en", "fr"]; export const localeMap = {};`,
+	"src/config/routeTranslations.ts": `export const routeTranslations = {};`,
+	"src/components/LanguageSwitch/LanguageSwitch.astro": `<select>Language</select>`,
+};
+
+// Fixture for prefixDefaultLocale: true — pages live in locale subfolders
+const BASE_FIXTURE_PREFIX_TRUE = {
+	"astro.config.mjs": ASTRO_CONFIG_PREFIX_TRUE,
+	"src/layouts/BaseLayout.astro": BASELAYOUT,
+	"src/components/Meta/Meta.astro": META,
+	"src/pages/en/index.astro": "<html>en index</html>",
+	"src/pages/en/about.astro": "<html>en about</html>",
 	"src/pages/fr/index.astro": "<html>fr index</html>",
 	"src/locales/en/common.json": JSON.stringify({ home: "Home", skipLink: "Skip to content" }),
 	"src/js/localeUtils.ts": `export function getLocaleFromUrl() { return "en"; }`,
@@ -242,6 +273,32 @@ test("Phase D: does NOT move the default locale's page folder", async (t) => {
 	await runScript(SCRIPT, [], { stdin: "fr\nyes\n", env: { SCRIPT_ROOT: fixture } });
 
 	assert.ok(await fileExists(fixture, "src/pages/fr/index.astro"), "fr pages kept (fr is default)");
+});
+
+test("Phase D (prefix=true): promotes default locale subfolder to root", async (t) => {
+	const fixture = await createFixture(BASE_FIXTURE_PREFIX_TRUE);
+	t.after(() => cleanupFixture(fixture));
+
+	await runScript(SCRIPT, [], { stdin: "\nyes\n", env: { SCRIPT_ROOT: fixture } });
+
+	assert.ok(await fileExists(fixture, "src/pages/index.astro"), "en/index.astro promoted to root");
+	assert.ok(await fileExists(fixture, "src/pages/about.astro"), "en/about.astro promoted to root");
+	assert.ok(!(await fileExists(fixture, "src/pages/en")), "src/pages/en/ removed after promotion");
+	assert.ok(!(await fileExists(fixture, "src/pages/fr")), "src/pages/fr removed");
+	assert.ok(await fileExists(fixture, "scripts/deleted/pages-fr/index.astro"), "fr pages in deleted/");
+});
+
+test("Phase D (prefix=true): promotes correct subfolder when custom default locale is given", async (t) => {
+	const fixture = await createFixture(BASE_FIXTURE_PREFIX_TRUE);
+	t.after(() => cleanupFixture(fixture));
+
+	// user says fr is the default locale
+	await runScript(SCRIPT, [], { stdin: "fr\nyes\n", env: { SCRIPT_ROOT: fixture } });
+
+	assert.ok(await fileExists(fixture, "src/pages/index.astro"), "fr/index.astro promoted to root");
+	assert.ok(!(await fileExists(fixture, "src/pages/fr")), "src/pages/fr/ removed after promotion");
+	assert.ok(!(await fileExists(fixture, "src/pages/en")), "src/pages/en removed");
+	assert.ok(await fileExists(fixture, "scripts/deleted/pages-en/index.astro"), "en pages in deleted/");
 });
 
 // ─── Phase F: marker ─────────────────────────────────────────────────────────

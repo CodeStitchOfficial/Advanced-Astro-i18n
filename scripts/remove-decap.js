@@ -1,8 +1,13 @@
-import { promises as fs } from "fs";
-import { join } from "path";
+import { promises as fs, readFileSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 import readline from "readline";
 import { collectFiles } from "./utils/collect-files.js";
 import { replaceInFiles } from "./utils/replace-in-files.js";
+import { readI18nConfig } from "./utils/read-i18n-config.js";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
 
 // Decap CMS file and directory paths
 const astroConfigPath = join("astro.config.mjs");
@@ -12,15 +17,37 @@ const destinationDir = join("scripts", "deleted");
 const adminDestinationPath = join(destinationDir, "admin");
 const adminPageDestinationPath = join(destinationDir, "admin.astro");
 
-// Blog-related paths
+// Blog-related static paths (locale-aware paths are resolved at runtime below)
 const blogContentPath = join("src", "content", "blog");
-const blogPagesPath = join("src", "pages", "blog");
-const blogPagesFrPath = join("src", "pages", "fr", "blog");
 const blogComponentsPath = join("src", "components");
 const blogContentDestination = join(destinationDir, "blog");
 const blogPagesDestination = join(destinationDir, "pages-blog");
-const blogPagesFrDestination = join(destinationDir, "pages-blog-fr");
 const blogComponentsDestination = join(destinationDir, "components");
+
+// Resolve blog pages paths based on current i18n config (sync)
+function resolveBlogPagesPaths() {
+	const i18n = readI18nConfig(root);
+	let prefixDefaultLocale = false;
+	try {
+		const astroConfig = readFileSync(join(root, "astro.config.mjs"), "utf-8");
+		const m = astroConfig.match(/prefixDefaultLocale:\s*(true|false)/);
+		prefixDefaultLocale = m?.[1] === "true";
+	} catch { /* keep false */ }
+
+	// Default locale blog path
+	const defaultBlogDir = prefixDefaultLocale && i18n
+		? join("src", "pages", i18n.defaultLocale, "blog")
+		: join("src", "pages", "blog");
+
+	// Non-default locale blog paths
+	const nonDefaultBlogDirs = i18n
+		? i18n.locales
+			.filter((l) => l !== i18n.defaultLocale)
+			.map((l) => ({ locale: l, path: join("src", "pages", l, "blog") }))
+		: [{ locale: "fr", path: join("src", "pages", "fr", "blog") }];
+
+	return { defaultBlogDir, nonDefaultBlogDirs };
+}
 
 // Blog-related component folders to remove
 const blogComponents = ["FeaturedPost", "BlogFullArticle", "BlogPreview", "Pagination"];
@@ -395,11 +422,12 @@ async function removeDecapCMS() {
 				console.log(`No blog icon files found, skipping...`);
 			}
 
-			// Move blog pages folder (EN)
-			await moveDir(blogPagesPath, blogPagesDestination, "Blog pages folder (EN)");
-
-			// Move blog pages folder (FR)
-			await moveDir(blogPagesFrPath, blogPagesFrDestination, "Blog pages folder (FR)");
+			// Move blog pages — paths depend on prefixDefaultLocale and active locales
+			const { defaultBlogDir, nonDefaultBlogDirs } = resolveBlogPagesPaths();
+			await moveDir(defaultBlogDir, blogPagesDestination, "Blog pages folder (default locale)");
+			for (const { locale, path } of nonDefaultBlogDirs) {
+				await moveDir(path, join(destinationDir, `pages-blog-${locale}`), `Blog pages folder (${locale})`);
+			}
 		}
 	} catch (error) {
 		console.error(`Error moving files: ${error}`);

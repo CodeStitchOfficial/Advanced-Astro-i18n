@@ -140,13 +140,14 @@ function determineOperations({ defaultLocale, currentLocales, newDefaultLocale, 
 
 // ─── Phase A: astro.config.mjs ────────────────────────────────────────────────
 
-async function patchAstroConfig({ defaultLocale, newDefaultLocale, newLocales }) {
+async function patchAstroConfig({ defaultLocale, newDefaultLocale, newLocales, prefixDefaultLocale }) {
 	const configPath = join(root, "astro.config.mjs");
 	try {
 		let content = await fs.readFile(configPath, "utf-8");
 		const localesString = newLocales.map((l) => `"${l}"`).join(", ");
 		content = content.replace(`defaultLocale: "${defaultLocale}"`, `defaultLocale: "${newDefaultLocale}"`);
 		content = content.replace(/locales:\s*\[[^\]]+\]/, `locales: [${localesString}]`);
+		content = content.replace(/prefixDefaultLocale:\s*(true|false)/, `prefixDefaultLocale: ${prefixDefaultLocale}`);
 		await fs.writeFile(configPath, content, "utf-8");
 		console.log("  Patched astro.config.mjs");
 	} catch (err) {
@@ -304,20 +305,184 @@ async function patchLocalesFolders({ defaultLocale, newDefaultLocale, localesToA
 
 // ─── Phase F: src/pages/ ──────────────────────────────────────────────────────
 
-async function patchPagesFolders({ defaultLocale, newDefaultLocale, currentLocales, localesToAdd, localesToRemove, editOldDefaultToNewDefault }) {
+const SWAP_TMP = "_locale_swap_tmp_";
+const isLocaleDir = (name) => /^[a-z]{2}(-[a-z]{2})?$/i.test(name);
+
+// Returns the subfolder name where a locale's pages live, or null for root.
+function defaultPagesDir(prefix, locale) {
+	return prefix ? locale : null;
+}
+
+async function patchPagesFolders({
+	defaultLocale, newDefaultLocale, currentLocales,
+	localesToAdd, localesToRemove, editOldDefaultToNewDefault,
+	prefixDefaultLocale: newPrefixDefaultLocale,
+	currentPrefixDefaultLocale,
+}) {
 	const pagesDir = join(root, "src", "pages");
 	const deletedDir = join(root, "scripts", "deleted");
+	const handledLocales = new Set();
 
-	// Find an existing non-default locale folder to use as a copy source
-	let templateLocale = null;
-	for (const locale of currentLocales) {
-		if (locale !== defaultLocale && existsSync(join(pagesDir, locale))) {
-			templateLocale = locale;
-			break;
+	// ── Step 1: Handle default locale pages structure ─────────────────────────
+	// null = pages live at src/pages/ root; string = pages live at src/pages/{locale}/
+	const oldDefaultDir = defaultPagesDir(currentPrefixDefaultLocale, defaultLocale);
+	const newDefaultTargetDir = defaultPagesDir(newPrefixDefaultLocale, newDefaultLocale);
+
+	if (defaultLocale === newDefaultLocale) {
+		// Locale unchanged — only prefix may have changed
+		if (oldDefaultDir !== newDefaultTargetDir) {
+			if (oldDefaultDir === null) {
+				// false → true: move root pages into {locale}/
+				const rootEntries = await fs.readdir(pagesDir, { withFileTypes: true });
+				const rootItems = rootEntries.filter((e) => !isLocaleDir(e.name));
+				const destDir = join(pagesDir, newDefaultTargetDir);
+				await fs.mkdir(destDir, { recursive: true });
+				for (const e of rootItems) {
+					await fs.rename(join(pagesDir, e.name), join(destDir, e.name));
+				}
+				console.log(`  Moved root pages → src/pages/${newDefaultTargetDir}/ (prefixDefaultLocale: false → true)`);
+			} else {
+				// true → false: move {locale}/ contents to root
+				const srcDir = join(pagesDir, oldDefaultDir);
+				if (existsSync(srcDir)) {
+					const srcEntries = await fs.readdir(srcDir, { withFileTypes: true });
+					for (const e of srcEntries) {
+						await fs.rename(join(srcDir, e.name), join(pagesDir, e.name));
+					}
+					await fs.rm(srcDir, { recursive: true, force: true });
+					console.log(`  Moved src/pages/${oldDefaultDir}/ to root (prefixDefaultLocale: true → false)`);
+				}
+			}
+			handledLocales.add(defaultLocale);
 		}
+		// else: nothing to do for default locale
+
+	} else if (editOldDefaultToNewDefault) {
+		// Old default locale is being renamed to new default — pages stay in place
+		if (oldDefaultDir === null) {
+			console.log(`  ℹ️  Root pages now represent "${newDefaultLocale}" — update page content manually`);
+		} else {
+			// prefix=true: rename {defaultLocale}/ → {newDefaultLocale}/
+			const srcDir = join(pagesDir, defaultLocale);
+			const destDir = join(pagesDir, newDefaultLocale);
+			if (existsSync(srcDir)) {
+				await fs.rename(srcDir, destDir);
+				console.log(`  Renamed src/pages/${defaultLocale}/ → src/pages/${newDefaultLocale}/`);
+			}
+		}
+		handledLocales.add(defaultLocale);
+		handledLocales.add(newDefaultLocale);
+
+	} else {
+		// Locale changed and new default was previously a non-default locale
+		// (its pages currently live in src/pages/{newDefaultLocale}/)
+		const newDefaultCurrentPath = join(pagesDir, newDefaultLocale);
+
+		if (newDefaultTargetDir === null && oldDefaultDir === null) {
+			// false → false, locale change: swap subfolder ↔ root (needs temp dir)
+			if (existsSync(newDefaultCurrentPath)) {
+				const tempDir = join(pagesDir, SWAP_TMP);
+
+				// 1a. Move new default subfolder → temp
+				await fs.rename(newDefaultCurrentPath, tempDir);
+
+				// 1b. Move old default root pages → subfolder or deleted
+				const rootEntries = await fs.readdir(pagesDir, { withFileTypes: true });
+				const rootItems = rootEntries.filter((e) => e.name !== SWAP_TMP && !isLocaleDir(e.name));
+
+				if (localesToRemove.includes(defaultLocale)) {
+					await fs.mkdir(deletedDir, { recursive: true });
+					const dest = join(deletedDir, `pages-${defaultLocale}`);
+					if (existsSync(dest)) await fs.rm(dest, { recursive: true });
+					await fs.mkdir(dest);
+					for (const e of rootItems) {
+						await fs.rename(join(pagesDir, e.name), join(dest, e.name));
+					}
+					console.log(`  Moved root pages (${defaultLocale}) → scripts/deleted/pages-${defaultLocale}/`);
+				} else {
+					const oldDefaultPath = join(pagesDir, defaultLocale);
+					await fs.mkdir(oldDefaultPath, { recursive: true });
+					for (const e of rootItems) {
+						await fs.rename(join(pagesDir, e.name), join(oldDefaultPath, e.name));
+					}
+					console.log(`  Created src/pages/${defaultLocale}/ (moved from root — was default locale)`);
+				}
+				handledLocales.add(defaultLocale);
+
+				// 1c. Promote temp → root
+				const tempEntries = await fs.readdir(tempDir, { withFileTypes: true });
+				for (const e of tempEntries) {
+					await fs.rename(join(tempDir, e.name), join(pagesDir, e.name));
+				}
+				await fs.rm(tempDir, { recursive: true, force: true });
+				console.log(`  Promoted src/pages/${newDefaultLocale}/ to root (new default locale)`);
+				handledLocales.add(newDefaultLocale);
+			}
+
+		} else if (newDefaultTargetDir === null && oldDefaultDir !== null) {
+			// true → false, locale change: promote {newDefaultLocale}/ to root; old default stays as subfolder
+			if (existsSync(newDefaultCurrentPath)) {
+				const srcEntries = await fs.readdir(newDefaultCurrentPath, { withFileTypes: true });
+				for (const e of srcEntries) {
+					await fs.rename(join(newDefaultCurrentPath, e.name), join(pagesDir, e.name));
+				}
+				await fs.rm(newDefaultCurrentPath, { recursive: true, force: true });
+				console.log(`  Promoted src/pages/${newDefaultLocale}/ to root (new default locale)`);
+			}
+			handledLocales.add(newDefaultLocale);
+			// oldDefaultDir ({defaultLocale}/) stays in place as a non-default subfolder
+
+		} else if (oldDefaultDir === null && newDefaultTargetDir !== null) {
+			// false → true, locale change: move root → {defaultLocale}/; new default stays in {newDefaultLocale}/
+			const rootEntries = await fs.readdir(pagesDir, { withFileTypes: true });
+			const rootItems = rootEntries.filter((e) => !isLocaleDir(e.name));
+
+			if (localesToRemove.includes(defaultLocale)) {
+				await fs.mkdir(deletedDir, { recursive: true });
+				const dest = join(deletedDir, `pages-${defaultLocale}`);
+				if (existsSync(dest)) await fs.rm(dest, { recursive: true });
+				await fs.mkdir(dest);
+				for (const e of rootItems) {
+					await fs.rename(join(pagesDir, e.name), join(dest, e.name));
+				}
+				console.log(`  Moved root pages (${defaultLocale}) → scripts/deleted/pages-${defaultLocale}/`);
+			} else {
+				const oldDefaultPath = join(pagesDir, defaultLocale);
+				await fs.mkdir(oldDefaultPath, { recursive: true });
+				for (const e of rootItems) {
+					await fs.rename(join(pagesDir, e.name), join(oldDefaultPath, e.name));
+				}
+				console.log(`  Created src/pages/${defaultLocale}/ (moved from root — was default locale)`);
+			}
+			handledLocales.add(defaultLocale);
+			// newDefaultLocale already at {newDefaultLocale}/ (its final location), no move needed
+			handledLocales.add(newDefaultLocale);
+
+		}
+		// else: true → true, locale change: no page folder moves required (config only)
 	}
 
-	// Add new non-default locale folders (default locale has no subfolder)
+	// ── Step 2: Remove non-default locale folders (skipping already-handled) ──
+	for (const locale of localesToRemove) {
+		if (handledLocales.has(locale)) continue;
+		const src = join(pagesDir, locale);
+		if (!existsSync(src)) continue;
+		await fs.mkdir(deletedDir, { recursive: true });
+		const dest = join(deletedDir, `pages-${locale}`);
+		if (existsSync(dest)) await fs.rm(dest, { recursive: true });
+		await fs.rename(src, dest);
+		console.log(`  Moved src/pages/${locale}/ → scripts/deleted/pages-${locale}/`);
+	}
+
+	// ── Step 3: Add new non-default locale folders ────────────────────────────
+	// Find a template locale (prefer a locale that was already non-default and stays non-default)
+	let templateLocale = null;
+	for (const locale of [...currentLocales, defaultLocale]) {
+		if (locale === newDefaultLocale) continue;
+		if (localesToRemove.includes(locale)) continue;
+		if (existsSync(join(pagesDir, locale))) { templateLocale = locale; break; }
+	}
+
 	for (const locale of localesToAdd) {
 		if (locale === newDefaultLocale) continue;
 		const dest = join(pagesDir, locale);
@@ -331,30 +496,6 @@ async function patchPagesFolders({ defaultLocale, newDefaultLocale, currentLocal
 			console.log(`  ⚠️  Content in src/pages/${locale}/ is in ${templateLocale} — translate manually`);
 		} else {
 			console.log(`  ⚠️  Could not scaffold src/pages/${locale}/ — no existing locale folder to copy from`);
-		}
-	}
-
-	// Remove locale folders → move to scripts/deleted/
-	for (const locale of localesToRemove) {
-		const src = join(pagesDir, locale);
-		if (!existsSync(src)) continue;
-		await fs.mkdir(deletedDir, { recursive: true });
-		const dest = join(deletedDir, `pages-${locale}`);
-		if (existsSync(dest)) await fs.rm(dest, { recursive: true });
-		await fs.rename(src, dest);
-		console.log(`  Moved src/pages/${locale}/ → scripts/deleted/pages-${locale}/`);
-	}
-
-	// Handle default locale change
-	if (defaultLocale !== newDefaultLocale) {
-		if (editOldDefaultToNewDefault) {
-			console.log(`  ℹ️  Default locale renamed: root pages now represent "${newDefaultLocale}"`);
-			console.log(`     No structural change needed — update page content manually`);
-		} else if (existsSync(join(pagesDir, newDefaultLocale))) {
-			// newDefaultLocale had a subfolder and should become root — warn, too risky to automate
-			console.log(`  ⚠️  Default locale changed to "${newDefaultLocale}" — manual steps required:`);
-			console.log(`     1. Move root pages (${defaultLocale}) to src/pages/${defaultLocale}/`);
-			console.log(`     2. Move src/pages/${newDefaultLocale}/ content up to src/pages/`);
 		}
 	}
 }
@@ -444,7 +585,15 @@ async function configI18n() {
 	}
 	const { defaultLocale, locales: currentLocales } = current;
 
-	console.log(`\nCurrent config: defaultLocale="${defaultLocale}", locales=[${currentLocales.join(", ")}]\n`);
+	// Read current prefixDefaultLocale from astro.config.mjs
+	let currentPrefixDefaultLocale = false;
+	try {
+		const astroConfig = await fs.readFile(join(root, "astro.config.mjs"), "utf-8");
+		const m = astroConfig.match(/prefixDefaultLocale:\s*(true|false)/);
+		currentPrefixDefaultLocale = m?.[1] === "true";
+	} catch { /* keep false */ }
+
+	console.log(`\nCurrent config: defaultLocale="${defaultLocale}", locales=[${currentLocales.join(", ")}], prefixDefaultLocale=${currentPrefixDefaultLocale}\n`);
 	console.log("NOTE: locale examples at https://github.com/cospired/i18n-iso-languages\n");
 
 	// ── Prompt 1: multiple languages? ─────────────────────────────────────────
@@ -479,10 +628,16 @@ async function configI18n() {
 	// Build final locales list (default first, deduplicated)
 	const newLocales = [...new Set([newDefaultLocale, ...additionalLocales])];
 
+	// ── Prompt 4: prefixDefaultLocale ─────────────────────────────────────────
+	const prefixPromptDefault = currentPrefixDefaultLocale ? "y" : "n";
+	const prefixAnswer = (await ask(`\nPrefix default locale in URLs? (/en/about vs /about) (y/n) [${prefixPromptDefault}]: `)).trim().toLowerCase();
+	const prefixDefaultLocale = prefixAnswer === "" ? currentPrefixDefaultLocale : prefixAnswer === "y";
+
 	// ── Confirm ───────────────────────────────────────────────────────────────
 	console.log(`\nNew config:`);
-	console.log(`  defaultLocale: "${newDefaultLocale}"`);
-	console.log(`  locales:       [${newLocales.join(", ")}]`);
+	console.log(`  defaultLocale:        "${newDefaultLocale}"`);
+	console.log(`  locales:              [${newLocales.join(", ")}]`);
+	console.log(`  prefixDefaultLocale:  ${prefixDefaultLocale}`);
 
 	const confirm = (await ask("\nType 'yes' to confirm: ")).trim();
 	rl.close();
@@ -502,7 +657,7 @@ async function configI18n() {
 		newLocales,
 	});
 
-	if (localesToAdd.length === 0 && localesToRemove.length === 0 && defaultLocale === newDefaultLocale) {
+	if (localesToAdd.length === 0 && localesToRemove.length === 0 && defaultLocale === newDefaultLocale && prefixDefaultLocale === currentPrefixDefaultLocale) {
 		console.log("No changes needed — config already matches.\n");
 		return;
 	}
@@ -510,9 +665,10 @@ async function configI18n() {
 	if (localesToAdd.length > 0) console.log(`Adding:   ${localesToAdd.join(", ")}`);
 	if (localesToRemove.length > 0) console.log(`Removing: ${localesToRemove.join(", ")}`);
 	if (editOldDefaultToNewDefault) console.log(`Renaming default: ${defaultLocale} → ${newDefaultLocale}`);
+	if (prefixDefaultLocale !== currentPrefixDefaultLocale) console.log(`prefixDefaultLocale: ${currentPrefixDefaultLocale} → ${prefixDefaultLocale}`);
 	console.log();
 
-	const ops = { defaultLocale, newDefaultLocale, currentLocales, newLocales, localesToAdd, localesToRemove, editOldDefaultToNewDefault };
+	const ops = { defaultLocale, newDefaultLocale, currentLocales, newLocales, localesToAdd, localesToRemove, editOldDefaultToNewDefault, prefixDefaultLocale, currentPrefixDefaultLocale };
 
 	// ── Phase A ───────────────────────────────────────────────────────────────
 	console.log("Phase A: astro.config.mjs...");
