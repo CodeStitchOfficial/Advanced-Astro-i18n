@@ -81,11 +81,18 @@ collections:
                 widget: "string",
                 i18n: true,
             }
-          - { label: "Featured", name: "featured", widget: "boolean", default: false, i18n: duplicate }
+          - {
+                label: "Featured",
+                name: "featured",
+                widget: "boolean",
+                default: false,
+                i18n: duplicate,
+            }
           - {
                 label: "Mapping Key",
                 name: "mappingKey",
                 widget: "string",
                 i18n: duplicate,
+                hint: "URL-friendly identifier. Used to 'link' translated blog posts for SEO purposes",
             }
           - { label: "Body", name: "body", widget: "markdown", i18n: true }
