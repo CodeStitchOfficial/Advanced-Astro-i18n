@@ -25,7 +25,7 @@
 		{
 			"file": "src/components/Hero/Hero.astro",
 			"description": "## Astro File Structure: Styles\n\nThe **`<style lang=\"less\">`** section is where you paste the LESS styles from your CodeStitch. Key points:\n- Styles are scoped to this component by default\n- Use `lang=\"less\"` to enable LESS syntax (nesting, variables, etc.)\n- Paste the stitch styles directly without modification\n- Dark mode is handled via `body.dark-mode` selectors at the bottom of this section",
-			"line": 53
+			"line": 45
 		},
 		{
 			"file": "src/pages/index.astro",

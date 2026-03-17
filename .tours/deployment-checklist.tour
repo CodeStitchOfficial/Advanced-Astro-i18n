@@ -25,7 +25,7 @@
 		{
 			"file": "src/components/Meta/Meta.astro",
 			"description": "Replace the default favicons with your own. Use [RealFaviconGenerator.net](https://realfavicongenerator.net/) to generate all necessary favicon files and sizes, then replace the files in `/public/assets/favicons/`.\n\nAlso check the hreflang links generated here are correct by inspecting your live page source — look for `<link rel=\"alternate\" hreflang=\"...\">`.",
-			"line": 88
+			"line": 106
 		},
 		{
 			"file": "package.json",

@@ -4,7 +4,7 @@
 	"steps": [
 		{
 			"file": "src/data/navData.json",
-			"description": "`navData.json` controls your site's navigation. Each entry has a **key** (display text), **url** (path), and optional **children** array for dropdown menus. The `<DynamicHeader />` component automatically generates the navigation from this data. Add, remove, or modify entries here to change your site's navigation structure, **or** delete this file and manage your navigation directly in the `<StaticHeader />` Header component.",
+			"description": "`navData.json` controls your site's navigation. Each entry has four possible fields:\n\n- **`key`** — unique identifier (not displayed; used internally)\n- **`url`** — the English path without locale prefix (e.g. `\"/about\"`); `<DynamicHeader />` applies `getLocalizedRoute()` automatically so French visitors get `/fr/a-propos`\n- **`label`** — **an object with a key per locale**: `{ \"en\": \"About\", \"fr\": \"À propos\" }` — this is the text rendered in the nav bar\n- **`children`** — optional array of sub-entries (same shape) for dropdown menus\n\nAdd, remove, or modify entries here to change your site's navigation structure.",
 			"line": 2
 		},
 		{

@@ -4,7 +4,7 @@
 	"steps": [
 		{
 			"file": "src/content.config.ts",
-			"description": "Content Collections are defined here using Astro v5's loader API. The **glob loader** scans all `.md` files under `src/content/blog/` (both locale subfolders). The **zod schema** validates frontmatter fields at build time. The `mappingKey` field is i18n-specific — it links equivalent posts across languages so the language switcher can navigate between them.",
+			"description": "Content Collections are defined here using Astro's loader API. The **glob loader** scans all `.md` files under `src/content/blog/` (both locale subfolders). The **zod schema** validates frontmatter fields at build time. The `mappingKey` field is i18n-specific — it links equivalent posts across languages so the language switcher can navigate between them.",
 			"line": 8
 		},
 		{
