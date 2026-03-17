@@ -5,11 +5,10 @@ import { formatDate } from "@utils/utils.ts";
 import { getLocaleFromUrl, getPostSlug } from "@js/localeUtils";
 import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
-// Gets posts by locale AND by tag
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const featuredPosts = await getCollection("blog", ({ id, data }) => {
-  return id.startsWith(locale) && data.tags.includes("featured");
+  return id.startsWith(locale) && data.featured === true;
 });
 
 ---

@@ -81,7 +81,7 @@ collections:
                 widget: "string",
                 i18n: true,
             }
-          - { label: "Tags", name: "tags", widget: "list", i18n: true }
+          - { label: "Featured", name: "featured", widget: "boolean", default: false, i18n: duplicate }
           - {
                 label: "Mapping Key",
                 name: "mappingKey",
