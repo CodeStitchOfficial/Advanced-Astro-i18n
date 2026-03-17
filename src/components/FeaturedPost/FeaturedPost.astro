@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import { formatDate } from "@utils/utils.ts";
-import { getLocaleFromUrl, removeLocaleFromSlug } from "@js/localeUtils";
+import { getLocaleFromUrl, getPostSlug } from "@js/localeUtils";
 import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
 // Gets posts by locale AND by tag
@@ -20,7 +20,7 @@ const featuredPosts = await getCollection("blog", ({ id, data }) => {
     {featuredPosts.length === 0 && <h2>{t("blog:noFeaturedPosts")}</h2>}
     {
       featuredPosts.map((post) => (
-        <a class="blog-feature" href={getLocalizedRoute(locale, `/blog/${removeLocaleFromSlug(post.id)}`)}>
+        <a class="blog-feature" href={getLocalizedRoute(locale, `/blog/${getPostSlug(post)}`)}>
           <Picture src={post.data.image} alt={post.data.imageAlt} width={60} formats={["avif", "webp"]} pictureAttributes={{ class: "blog-featureImage" }} decoding="async" />
           <div class="content-group">
             <h3 class="feature-h3">{post.data.title}</h3>

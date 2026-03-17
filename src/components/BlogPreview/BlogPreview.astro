@@ -1,14 +1,14 @@
 ---
 import { Image } from "astro:assets";
 import { formatDate } from "@utils/utils.ts";
-import { getLocaleFromUrl, removeLocaleFromSlug } from "@js/localeUtils";
+import { getLocaleFromUrl, getPostSlug } from "@js/localeUtils";
 import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 
 // Receiving incoming props and destructuring them
 const { post } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
-const slug = removeLocaleFromSlug(post.id);
+const slug = getPostSlug(post);
 const { title, date, description, image, imageAlt } = post.data;
 ---
 

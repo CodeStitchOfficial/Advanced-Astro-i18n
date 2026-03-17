@@ -49,6 +49,14 @@ collections:
       fields:
           - { label: "Title", name: "title", widget: "string", i18n: true }
           - {
+                label: "Slug",
+                name: "slug",
+                widget: "string",
+                i18n: true,
+                required: false,
+                hint: "URL-friendly identifier. Leave blank to auto-generate from title. Warning: changing the title without setting a slug will change the URL.",
+            }
+          - {
                 label: "Description",
                 name: "description",
                 widget: "string",

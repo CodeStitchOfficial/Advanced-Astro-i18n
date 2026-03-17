@@ -15,6 +15,7 @@ const blogsCollection = defineCollection({
 			image: image(),
 			imageAlt: z.string(),
 			mappingKey: z.string().optional(),
+		slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug must be lowercase alphanumeric with hyphens only (e.g. my-post-title)").optional(),
 		}),
 });
 

@@ -24,7 +24,7 @@
 		},
 		{
 			"file": "src/pages/blog/[...slug].astro",
-			"description": "Dynamic route for individual English blog post pages. **removeLocaleFromSlug(post.id)** strips the `en/` prefix so the URL is `/blog/first-post-in-english/` (not `/blog/en/first-post.../`). The `slot=\"schema\"` pattern injects BlogPosting JSON-LD into the page `<head>` via Meta.astro for SEO. The French counterpart lives at `src/pages/fr/blog/[...slug].astro`.",
+			"description": "Dynamic route for individual English blog post pages. The `slot=\"schema\"` pattern injects BlogPosting JSON-LD into the page `<head>` via Meta.astro for SEO. The French counterpart lives at `src/pages/fr/blog/[...slug].astro`.",
 			"line": 18
 		}
 	]

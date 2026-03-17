@@ -14,7 +14,7 @@
 		},
 		{
 			"file": "src/js/localeUtils.ts",
-			"description": "Three utility functions for working with locales:\n- **getLocaleFromUrl(url)** — reads the first URL path segment; returns `defaultLocale` if no locale prefix is found (since English has no prefix)\n- **filterCollectionByLanguage(collection, locale)** — filters blog posts to a specific language by checking the `en/` or `fr/` folder prefix in the entry ID\n- **removeLocaleFromSlug(id)** — strips the locale prefix from content IDs to produce clean URL slugs",
+			"description": "Three utility functions for working with locales:\n- **getLocaleFromUrl(url)** — reads the first URL path segment; returns `defaultLocale` if no locale prefix is found (since English has no prefix)\n- **filterCollectionByLanguage(collection, locale)** — filters blog posts to a specific language by checking the `en/` or `fr/` folder prefix in the entry ID.",
 			"line": 4
 		},
 		{

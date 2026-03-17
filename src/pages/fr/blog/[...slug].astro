@@ -1,7 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
-import { getLocaleFromUrl, filterCollectionByLanguage, removeLocaleFromSlug } from "@js/localeUtils";
+import { getLocaleFromUrl, filterCollectionByLanguage, getPostSlug } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
 import { defaultLocale } from "@config/siteSettings";
 import BaseLayout from "@layouts/BaseLayout.astro";
@@ -18,7 +18,7 @@ export const getStaticPaths = (async () => {
 
 	return posts.map((post) => ({
 		params: {
-			slug: removeLocaleFromSlug(post.id),
+			slug: getPostSlug(post),
 		},
 		props: { post },
 	}));

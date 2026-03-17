@@ -19,7 +19,7 @@
 		},
 		{
 			"file": "src/pages/blog/[...slug].astro",
-			"description": "Dynamic route for individual blog posts. **getStaticPaths()** uses `filterCollectionByLanguage` to get only English posts, then **removeLocaleFromSlug()** strips the `en/` prefix so the URL becomes `/blog/first-post-in-english/`. The French counterpart in `src/pages/fr/blog/[...slug].astro` generates `/fr/blog/premier-article-en-francais/`.",
+			"description": "Dynamic route for individual blog posts.",
 			"line": 18
 		},
 		{
