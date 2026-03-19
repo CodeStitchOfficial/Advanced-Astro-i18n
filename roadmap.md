@@ -80,11 +80,12 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 
 - [x] removed static header didnt make sense in a multilanguage project
 
-- [] set up decapbridge + test decap admn auth
+- [x] set up decapbridge + test decap admn auth
 - [x] test i18n sitemap and hreflang
-- [] tweak? and test remove-decap
-- [] check and update code tours
-- [] upgrade to Astro v6 and test Fonts API and live collection
+- [x] check and update code tours
+- [x] upgrade to Astro v6
+- [x] update zod import statement in content.config.ts
+- [] and test Fonts API and live collection
 
 ### new script
 
@@ -95,7 +96,7 @@ Migration from `@astrolicious/i18n` to vanilla Astro i18n (branch: `feat/v3`).
 
 ### documentation
 
-- [ ] update documentation and changelog
+- [x] update documentation and changelog
 
 ### random fixes
 
