@@ -13,7 +13,6 @@
 			"@data/*": ["src/data/*"],
 			"@styles/*": ["src/styles/*"],
 			"@components/*": ["src/components/*"],
-			"@utils/*": ["src/utils/*"],
 			"@js/*": ["src/js/*"],
 			"@config/*": ["src/config/*"],
 			"@locales/*": ["src/locales/*"]
