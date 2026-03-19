@@ -1,4 +1,4 @@
-# Advanced Astro v5 i18n
+# Advanced Astro v6 i18n
 
 ## 3.0.0
 ### Major changes
@@ -12,7 +12,7 @@
 - `src/js/localePreference.ts` — browser language preference handling
 - `src/config/siteSettings.ts` — centralised site configuration
 - `src/config/routeTranslations.ts` — static route translation map + `localizedCollections` config
-- `src/components/TemplateComponents/LanguageSwitch/BrowserLanguageRedirect.astro` — redirects home page visitors to their preferred locale on first visit
+- `src/components/LanguageSwitch/BrowserLanguageRedirect.astro` — redirects home page visitors to their preferred locale on first visit
 
 #### Blog slug translation (language switcher)
 - Added `mappingKey` field to the blog collection schema (`src/content.config.ts`) to link equivalent posts across locales
@@ -50,17 +50,58 @@
 
 4. **Recreate your pages under `src/pages/`**, duplicating them per locale under `src/pages/fr/`
 
-5. **Add `mappingKey` to your blog collection schema** (`src/content.config.ts`) and to the frontmatter of every blog post
+5. **Update your blog collection schema** (`src/content.config.ts`):
+    - Remove `tags: z.array(z.string())`
+    - Add `featured: z.boolean().optional()`
+    - Add `mappingKey` with slug-safe regex validation and `slug` (optional, for Decap):
+
+    ```ts
+    mappingKey: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).optional(),
+    ```
+
+    Then add a `mappingKey` value to the frontmatter of every blog post to link translated pairs.
 
 6. **Replace all `i18n:astro` / `@astrolicious/i18n` imports** with the new utilities:
 
     ```diff
     - import { getLocale, t } from "i18n:astro";
-    + import { getLang } from "@js/localeUtils";
+    + import { getLocaleFromUrl } from "@js/localeUtils";
     + import { t, getLocalizedPathname } from "@js/translationUtils";
     ```
 
 7. **Update language switcher components** to `await getLocalizedPathname(...)` (it is now async)
+
+#### Astro v6 upgrade
+- Upgraded Astro to **v6**
+
+#### Decap CMS
+- Pre-configured Decap admin panel with **DecapBridge** backend
+- Localized slug patterns enforced in Decap via regex validation on `slug` and `mappingKey` fields
+- Remove Decap entirely with `npm run remove-decap`
+
+#### Utility scripts
+- **`npm run config-i18n`** — Interactive CLI to configure locales and i18n options
+- **`npm run remove-i18n`** — Strips the i18n layer for single-locale use
+- **`npm run create-page`** — Scaffolds a new page for all locales
+- **`npm run remove-demo`** — Removes demo/placeholder content
+- **`npm run remove-dark-mode`** — Removes dark mode components and styles
+- **`npm run test:scripts`** — Runs unit tests for the utility scripts
+
+#### Schema changes
+- `tags: z.array(z.string())` removed; replaced by `featured: z.boolean().optional()`
+- `slug` field added with slug-safe regex validation (for Decap compatibility)
+- `mappingKey` now also enforced with the same regex
+
+#### Other changes & fixes
+- Fixed FOUC (Flash of Unstyled Content)
+- Fixed OG image generation and meta `<title>` / `<description>` handling
+- Removed the preloading system (`getOptimizedImage`) — redundant with Astro's built-in optimization
+- Removed `StaticHeader` — not applicable to multilingual projects
+- Navigation labels now driven by `navData` (removed reliance on `common.json`)
+- Added JSON-LD schema markup
+- Code tours rewritten to reflect the v3 architecture
+- Fixed accessibility issue: anchors without `href`
 
 ---
 
