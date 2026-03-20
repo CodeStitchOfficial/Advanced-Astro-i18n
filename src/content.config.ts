@@ -9,6 +9,12 @@ const blogsCollection = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
+			permalink: z
+				.string()
+				.regex(
+					/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
+					"Permalink must be lowercase alphanumeric with hyphens only (e.g. my-post-title)",
+				),
 			description: z.string(),
 			author: z.string(),
 			date: z.date(),
@@ -20,12 +26,6 @@ const blogsCollection = defineCollection({
 				.regex(
 					/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
 					"MappingKey must be lowercase alphanumeric with hyphens only (e.g. my-key)",
-				),
-			permalink: z
-				.string()
-				.regex(
-					/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-					"Permalink must be lowercase alphanumeric with hyphens only (e.g. my-post-title)",
 				),
 		}),
 });

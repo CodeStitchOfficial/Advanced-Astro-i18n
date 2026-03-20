@@ -61,25 +61,35 @@ collections:
                 name: "description",
                 widget: "string",
                 i18n: true,
+                required: true,
             }
           - {
                 label: "Author",
                 name: "author",
                 widget: "string",
                 i18n: duplicate,
+                required: true,
             }
-          - { label: "Date", name: "date", widget: "datetime", i18n: duplicate }
+          - {
+                label: "Date",
+                name: "date",
+                widget: "datetime",
+                i18n: duplicate,
+                required: true,
+            }
           - {
                 label: "Cover Image",
                 name: "image",
                 widget: "image",
                 i18n: duplicate,
+                required: true,
             }
           - {
                 label: "Image Alt",
                 name: "imageAlt",
                 widget: "string",
                 i18n: true,
+                required: true,
             }
           - {
                 label: "Featured",
@@ -93,6 +103,7 @@ collections:
                 name: "mappingKey",
                 widget: "string",
                 i18n: duplicate,
+                required: true,
                 hint: "URL-friendly identifier. Used to 'link' translated blog posts for SEO purposes",
             }
           - { label: "Body", name: "body", widget: "markdown", i18n: true }
