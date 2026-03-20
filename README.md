@@ -96,7 +96,6 @@ All commands are run from the root of the project, from a terminal:
 | `npm run remove-demo`      | Removes demo/placeholder content             |
 | `npm run remove-dark-mode` | Removes dark mode components and styles      |
 | `npm run remove-decap`     | Removes Decap CMS integration                |
-| `npm run remove-i18n`      | Strips the i18n layer for single-locale use  |
 | `npm run create-page`      | Scaffolds a new page for all locales         |
 | `npm run test:scripts`     | Runs unit tests for the utility scripts      |
 
@@ -220,17 +219,6 @@ To add a new locale manually (e.g. Spanish `es`):
 5. **`src/config/routeTranslations.ts`** — add `es` entries for each translated route segment
 6. **`src/content/blog/es/`** — add translated blog posts with matching `mappingKey` values
 
-### Using a single language
-
-To remove i18n entirely and use a single locale, run:
-
-```sh
-npm run remove-i18n
-```
-
-This strips the i18n layer, removes locale-prefixed pages, and simplifies the codebase for single-language use.
-
-Alternatively, `npm run config-i18n` lets you reconfigure locales interactively without fully removing i18n support.
 
 ### Page Structure
 

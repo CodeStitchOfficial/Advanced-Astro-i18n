@@ -39,10 +39,10 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 rl.question(
 	"\n⚠️  This will permanently remove dark mode support from the project.\n" +
 	"Dark mode CSS in custom components must be removed manually.\n\n" +
-	"Type 'yes' to confirm: ",
+	"Proceed? (y/n): ",
 	(answer) => {
 		rl.close();
-		if (answer.trim().toLowerCase() !== "yes") {
+		if (answer.trim().toLowerCase() !== "y") {
 			console.log("Aborted. No files were changed.");
 			process.exit(0);
 		}

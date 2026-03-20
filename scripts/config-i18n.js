@@ -600,7 +600,7 @@ async function configI18n() {
 	const multiAnswer = (await ask("Do you plan to use multiple languages? (y/n): ")).trim().toLowerCase();
 	if (multiAnswer !== "y") {
 		rl.close();
-		console.log("\nTo remove i18n support entirely, run: npm run remove-i18n\n");
+		console.log("\nExiting. No changes made.\n");
 		process.exit(0);
 	}
 
@@ -639,10 +639,10 @@ async function configI18n() {
 	console.log(`  locales:              [${newLocales.join(", ")}]`);
 	console.log(`  prefixDefaultLocale:  ${prefixDefaultLocale}`);
 
-	const confirm = (await ask("\nType 'yes' to confirm: ")).trim();
+	const confirm = (await ask("\nProceed? (y/n): ")).trim().toLowerCase();
 	rl.close();
 
-	if (confirm.toLowerCase() !== "yes") {
+	if (confirm !== "y") {
 		console.log("Aborted. No files were changed.");
 		return;
 	}

@@ -24,7 +24,7 @@
 		},
 		{
 			"file": "package.json",
-			"description": "Available commands:\n\n- **`config-i18n`** — interactive setup wizard: configure your locales, rename translated routes, and scaffold locale files. **Run this first** if you're customizing the i18n setup.\n- **`dev`** — start the dev server on localhost:4321\n- **`build`** — production build\n- **`preview`** — preview the production build locally\n- **`remove-demo`** — strip all demo pages, section components, and images before going live\n- **`remove-dark-mode`** — remove dark mode support if you don't need it\n- **`remove-decap`** — remove the Decap CMS integration\n- **`remove-i18n`** — remove i18n support and flatten to a single-language site\n- **`create-page`** — scaffold a new page with all locale variants",
+			"description": "Available commands:\n\n- **`config-i18n`** — interactive setup wizard: configure your locales, rename translated routes, and scaffold locale files. **Run this first** if you're customizing the i18n setup.\n- **`dev`** — start the dev server on localhost:4321\n- **`build`** — production build\n- **`preview`** — preview the production build locally\n- **`remove-demo`** — strip all demo pages, section components, and images before going live\n- **`remove-dark-mode`** — remove dark mode support if you don't need it\n- **`remove-decap`** — remove the Decap CMS integration\n- **`create-page`** — scaffold a new page with all locale variants",
 			"line": 5
 		}
 	]

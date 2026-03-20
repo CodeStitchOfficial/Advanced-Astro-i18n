@@ -12,7 +12,7 @@
  * Run with: npm run remove-demo
  */
 
-import { existsSync, rmSync, readFileSync, writeFileSync, mkdirSync } from "fs";
+import { existsSync, rmSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import readline from "readline";
@@ -33,10 +33,10 @@ const rl = readline.createInterface({ input: process.stdin, output: process.stdo
 rl.question(
 	"\n⚠️  This will permanently remove all demo content from the project.\n" +
 	"This includes demo pages, section components, and placeholder images.\n\n" +
-	"Type 'yes' to confirm: ",
+	"Proceed? (y/n): ",
 	(answer) => {
 		rl.close();
-		if (answer.trim().toLowerCase() !== "yes") {
+		if (answer.trim().toLowerCase() !== "y") {
 			console.log("Aborted. No files were changed.");
 			process.exit(0);
 		}
@@ -45,6 +45,16 @@ rl.question(
 );
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
+function collectAstroFiles(dir, results = []) {
+	if (!existsSync(dir)) return results;
+	for (const entry of readdirSync(dir, { withFileTypes: true })) {
+		const full = join(dir, entry.name);
+		if (entry.isDirectory()) collectAstroFiles(full, results);
+		else if (entry.name.endsWith(".astro")) results.push(full);
+	}
+	return results;
+}
+
 function remove(relPath) {
 	const abs = join(root, relPath);
 	if (existsSync(abs)) {
@@ -58,6 +68,38 @@ function write(relPath, content) {
 	mkdirSync(dirname(abs), { recursive: true });
 	writeFileSync(abs, content, "utf8");
 	console.log(`  updated  ${relPath}`);
+}
+
+function sweepDemoReferences() {
+	const srcDir = join(root, "src");
+	const files = collectAstroFiles(srcDir);
+
+	const importPatterns = [
+		/^import \w+ from "@components\/(Banner|CTA|Hero|Services|SideBySide|Gallery|Testimonials|Reviews)\/.+?";\n/gm,
+		/^import \w+ from "@assets\/images\/landing\.jpg";\n/gm,
+		/^import \w+ from "@assets\/images\/hero\.jpg";\n/gm,
+		/^import \w+ from "@assets\/images\/CTA\/cabinets2\.jpg";\n/gm,
+	];
+
+	const usagePatterns = [
+		/^\s*<Banner[^/]*\/>\n/gm,
+		/^\s*<(CTA|Hero|Services|SideBySide|SideBySideReverse|Gallery|Testimonials|Reviews) \/>\n/gm,
+	];
+
+	for (const file of files) {
+		let src = readFileSync(file, "utf8").replace(/\r\n/g, "\n");
+		const original = src;
+
+		for (const pattern of importPatterns) src = src.replace(pattern, "");
+		for (const pattern of usagePatterns) src = src.replace(pattern, "");
+		src = src.replace(/\n{3,}/g, "\n\n");
+
+		if (src !== original) {
+			writeFileSync(file, src, "utf8");
+			const rel = file.replace(root + "/", "").replace(root + "\\", "");
+			console.log(`  swept    ${rel}`);
+		}
+	}
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -102,8 +144,8 @@ function runRemoval() {
 		"src/data/navData.json",
 		JSON.stringify(
 			[
-				{ key: "home", url: "/", children: [] },
-				{ key: "contact", url: "/contact", children: [] },
+				{ key: "home", url: "/", label: { en: "Home", fr: "Accueil" }, children: [] },
+				{ key: "contact", url: "/contact", label: { en: "Contact", fr: "Contact" }, children: [] },
 			],
 			null,
 			"\t"
@@ -175,6 +217,22 @@ const t = useTranslations(locale);
 		writeFileSync(abs, src, "utf8");
 		console.log(`  updated  ${tpl}`);
 	}
+
+	// ── Reset contact pages from cleaned template ─────────────────────────────
+	const enTplPath = join(root, "src/pages/_template.astro");
+	const frTplPath = join(root, "src/pages/fr/_template.astro");
+
+	if (existsSync(enTplPath)) {
+		const tpl = readFileSync(enTplPath, "utf8").replaceAll("Page Title", "Contact");
+		write("src/pages/contact.astro", tpl);
+	}
+	if (existsSync(frTplPath)) {
+		const tpl = readFileSync(frTplPath, "utf8").replaceAll("Titre de la page", "Contact");
+		write("src/pages/fr/contact.astro", tpl);
+	}
+
+	// ── Sweep surviving pages for leftover demo references ───────────────────
+	sweepDemoReferences();
 
 	// ── Create .demo-removed marker ───────────────────────────────────────────
 	writeFileSync(markerPath, new Date().toISOString() + "\n", "utf8");

@@ -56,6 +56,19 @@ import landingImage from "@assets/images/landing.jpg";
 </BaseLayout>
 `;
 
+// A surviving page (not deleted by remove-demo) that references demo components
+const CONTACT_WITH_DEMO_REFS = `---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Banner from "@components/Banner/Banner.astro";
+import CTA from "@components/CTA/CTA.astro";
+import landingImage from "@assets/images/landing.jpg";
+---
+<BaseLayout>
+  <Banner title="Contact" image={landingImage} />
+  <CTA />
+</BaseLayout>
+`;
+
 const BASE_FIXTURE = {
 	"src/pages/_template.astro": EN_TEMPLATE,
 	"src/pages/fr/_template.astro": FR_TEMPLATE,
@@ -63,6 +76,8 @@ const BASE_FIXTURE = {
 	"src/pages/reviews.astro": "reviews page content",
 	"src/pages/index.astro": "old index",
 	"src/pages/fr/index.astro": "old fr index",
+	"src/pages/contact.astro": CONTACT_WITH_DEMO_REFS,
+	"src/pages/fr/contact.astro": CONTACT_WITH_DEMO_REFS,
 	"src/data/navData.json": JSON.stringify([{ key: "home", url: "/" }, { key: "about", url: "/about" }], null, "\t") + "\n",
 	"src/components/Banner/Banner.astro": "banner component",
 	"src/components/CTA/CTA.astro": "cta component",
@@ -75,7 +90,7 @@ test("removes demo pages when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	const { code } = await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	const { code } = await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	assert.equal(code, 0);
 	assert.ok(!(await fileExists(fixture, "src/pages/about.astro")), "about.astro removed");
@@ -86,7 +101,7 @@ test("removes demo components when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	assert.ok(!(await fileExists(fixture, "src/components/Banner/Banner.astro")), "Banner removed");
 	assert.ok(!(await fileExists(fixture, "src/components/CTA/CTA.astro")), "CTA removed");
@@ -96,7 +111,7 @@ test("strips Banner/CTA imports from EN template when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	const tpl = await readFile(fixture, "src/pages/_template.astro");
 	assert.ok(!tpl.includes('import Banner'), "Banner import removed from EN template");
@@ -110,7 +125,7 @@ test("strips Banner/CTA imports from FR template when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	const tpl = await readFile(fixture, "src/pages/fr/_template.astro");
 	assert.ok(!tpl.includes('import Banner'), "Banner import removed from FR template");
@@ -122,7 +137,7 @@ test("resets navData.json when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	const nav = JSON.parse(await readFile(fixture, "src/data/navData.json"));
 	assert.equal(nav.length, 2, "navData has exactly 2 entries after reset");
@@ -134,7 +149,7 @@ test("overwrites index.astro files when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	const en = await readFile(fixture, "src/pages/index.astro");
 	const fr = await readFile(fixture, "src/pages/fr/index.astro");
@@ -142,18 +157,47 @@ test("overwrites index.astro files when confirmed", async (t) => {
 	assert.ok(fr.includes("Bienvenue"), "FR index has bienvenue content");
 });
 
+test("resets EN contact.astro to template content", async (t) => {
+	const fixture = await createFixture(BASE_FIXTURE);
+	t.after(() => cleanupFixture(fixture));
+
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
+
+	const contact = await readFile(fixture, "src/pages/contact.astro");
+	assert.ok(!contact.includes('import Banner'), "no Banner import");
+	assert.ok(!contact.includes('import CTA'), "no CTA import");
+	assert.ok(!contact.includes('import landingImage'), "no landingImage import");
+	assert.ok(!contact.includes('<Banner'), "no Banner usage");
+	assert.ok(!contact.includes('<CTA'), "no CTA usage");
+	assert.ok(!contact.includes('cs-contact'), "form section removed");
+	assert.ok(contact.includes('Contact'), "title set to Contact");
+});
+
+test("resets FR contact.astro to template content", async (t) => {
+	const fixture = await createFixture(BASE_FIXTURE);
+	t.after(() => cleanupFixture(fixture));
+
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
+
+	const contact = await readFile(fixture, "src/pages/fr/contact.astro");
+	assert.ok(!contact.includes('import Banner'), "no Banner import");
+	assert.ok(!contact.includes('<Banner'), "no Banner usage");
+	assert.ok(!contact.includes('cs-contact'), "form section removed");
+	assert.ok(contact.includes('Contact'), "title set to Contact");
+});
+
 test("creates .demo-removed marker when confirmed", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
-	await runScript(SCRIPT, [], { stdin: "yes\n", env: { SCRIPT_ROOT: fixture } });
+	await runScript(SCRIPT, [], { stdin: "y\n", env: { SCRIPT_ROOT: fixture } });
 
 	assert.ok(await fileExists(fixture, ".demo-removed"), "marker file created");
 });
 
 // ─── Abort path ───────────────────────────────────────────────────────────────
 
-test("aborts without changes when user types anything other than 'yes'", async (t) => {
+test("aborts without changes when user types anything other than 'y'", async (t) => {
 	const fixture = await createFixture(BASE_FIXTURE);
 	t.after(() => cleanupFixture(fixture));
 
