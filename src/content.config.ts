@@ -21,11 +21,11 @@ const blogsCollection = defineCollection({
 					/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
 					"MappingKey must be lowercase alphanumeric with hyphens only (e.g. my-key)",
 				),
-			slug: z
+			permalink: z
 				.string()
 				.regex(
 					/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-					"Slug must be lowercase alphanumeric with hyphens only (e.g. my-post-title)",
+					"Permalink must be lowercase alphanumeric with hyphens only (e.g. my-post-title)",
 				)
 				.optional(),
 		}),

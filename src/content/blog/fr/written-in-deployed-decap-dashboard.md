@@ -1,6 +1,6 @@
 ---
 title: Posté depuis le dashboard
-slug: poste-depuis-dashboard
+permalink: poste-depuis-dashboard
 description: Posté depuis le dashboard
 author: geoff
 date: 2026-03-20T16:08:00.000+01:00
