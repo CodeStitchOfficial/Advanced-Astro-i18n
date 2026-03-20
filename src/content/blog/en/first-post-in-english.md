@@ -4,6 +4,7 @@ description: Lorem markdownum tardantis unam mitissima dissimulator inposuit   c
 author: Code Stitch
 date: 2023-06-08T15:26:46.705Z
 mappingKey: "post-1"
+permalink: first-post-in-english
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Kitchen
 ---

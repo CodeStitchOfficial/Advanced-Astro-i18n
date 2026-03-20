@@ -6,6 +6,7 @@ date: 2023-06-08T15:27:34.591Z
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Kitchen
 mappingKey: "post-4"
+permalink: fourth-post-in-english
 ---
 ## Sucos Creatoi
 

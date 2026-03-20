@@ -5,6 +5,7 @@ author: Code Stitch
 date: 2023-06-08T15:28:08.486Z
 featured: true
 mappingKey: "post-2"
+permalink: deuxieme-article-en-francais
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Cuisine
 ---
