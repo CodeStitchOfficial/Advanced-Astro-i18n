@@ -2,7 +2,7 @@
 import { Picture } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
+import { useTranslations } from "@js/translationUtils";
 
 interface Props {
 	image: ImageMetadata;
@@ -30,9 +30,8 @@ const t = useTranslations(locale);
 			<p class="cs-text">
 				{t("home:hero.p1")}
 			</p>
-			<a href={getLocalizedRoute(locale,"/about")} class="cs-button-solid">{t("home:hero.cta1")}</a>
-			<a href={getLocalizedRoute(locale,"/contact")} class="cs-button-transparent">
-				<img class="cs-img" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Hero/play.svg" alt="play icon" width="17" height="17" />
+			<a href="https://github.com/CodeStitchOfficial/Advanced-Astro-i18n" class="cs-button-solid">{t("home:hero.cta1")}</a>
+			<a href="https://codestitch.app/" class="cs-button-transparent">
 				{t("home:hero.cta2")}
 			</a>
 		</div>
@@ -163,6 +162,7 @@ const t = useTranslations(locale);
 				line-height: clamp(2.875em, 5.5vw, 3.5em);
 				height: initial;
 				margin-bottom: calc(16 / 16 * 1rem);
+				text-transform: none;
 			}
 
 			.cs-button-transparent {

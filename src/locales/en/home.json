@@ -9,9 +9,9 @@
 			"1": "Advanced Astro v5",
 			"2": "i18n"
 		},
-		"p1": "This advanced kit includes a pre-configured Astro environment, which allows for repeated components, centralized data and greater room to scale as your clients grow. This kit is specially designed for customers who want a multi-language site, and is therefore configured with Astro's internationalization tools (i18n) for two languages: English and French.",
-		"cta1": "Explore More",
-		"cta2": "Get in touch"
+		"p1": "This kit is specially designed for customers who want a multi-language site, and is therefore configured with Astro's internationalization tools (i18n) for two languages: English and French. It also includes a Decap CMS integration.",
+		"cta1": "GitHub",
+		"cta2": "CodeStitch"
 	},
 	"services": [
 		{

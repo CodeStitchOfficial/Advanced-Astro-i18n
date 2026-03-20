@@ -54,7 +54,7 @@ const t = useTranslations(locale);
 						isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 					}
 				}
-				if (isDark) document.body.classList.add("dark-mode");
+				if (isDark) document.body?.classList.add("dark-mode");
 			})();
 		</script>
 	</head>
