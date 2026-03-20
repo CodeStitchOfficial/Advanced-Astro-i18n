@@ -172,7 +172,7 @@ All commands are run from the root of the project, from a terminal:
 
 ### Key Directories
 
-- **`public/`** — Static assets that won't be processed by Astro (Decap admin, fonts, favicons, `_redirects`, `robots.txt`).
+- **`public/`** — Static assets that won't be processed by Astro (Decap admin, favicons, `_redirects`, `robots.txt`).
 - **`src/components/`** — Reusable Astro components.
 - **`src/config/`** — i18n configuration: locale definitions (`siteSettings.ts`) and route translations (`routeTranslations.ts`).
 - **`src/content/blog/`** — Blog posts organized by locale (`en/`, `fr/`).

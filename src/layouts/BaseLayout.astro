@@ -1,5 +1,6 @@
 ---
 import { ClientRouter } from "astro:transitions";
+import { Font } from "astro:assets";
 
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
@@ -23,6 +24,7 @@ const t = useTranslations(locale);
 	<head>
 		<!-- View Transitions support -->
 		<ClientRouter />
+		<Font cssVariable="--font-primary" />
 
 		<!-- SEO Meta Tags -->
 		<Meta title={title} description={description}>
