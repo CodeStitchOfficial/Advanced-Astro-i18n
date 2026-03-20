@@ -37,7 +37,7 @@ function getNestedValue(obj: Record<string, unknown>, keyPath: string): unknown 
   let current: unknown = obj;
 
   for (const key of keys) {
-    if (current == null || typeof current !== "object" || Array.isArray(current)) {
+    if (current == null || typeof current !== "object") {
       return keyPath;
     }
     current = (current as Record<string, unknown>)[key];
