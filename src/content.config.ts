@@ -26,8 +26,7 @@ const blogsCollection = defineCollection({
 				.regex(
 					/^[a-z0-9]+(?:-[a-z0-9]+)*$/,
 					"Permalink must be lowercase alphanumeric with hyphens only (e.g. my-post-title)",
-				)
-				.optional(),
+				),
 		}),
 });
 

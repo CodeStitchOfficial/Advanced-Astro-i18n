@@ -49,12 +49,12 @@ collections:
       fields:
           - { label: "Title", name: "title", widget: "string", i18n: true }
           - {
-                label: "Slug",
+                label: "Permalink",
                 name: "permalink",
                 widget: "string",
                 i18n: true,
-                required: false,
-                hint: "URL-friendly identifier. Leave blank to auto-generate from title. Warning: changing the title without setting a slug will change the URL.",
+                required: true,
+                hint: "The URL slug for this post. Use lowercase letters, numbers, and hyphens only — no spaces or special characters. Example: my-post-title. Once published, avoid changing this or existing links will break.",
             }
           - {
                 label: "Description",
