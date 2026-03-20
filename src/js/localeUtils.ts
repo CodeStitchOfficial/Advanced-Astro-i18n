@@ -18,12 +18,12 @@ export function filterCollectionByLanguage<T extends { id: string }>(
 	return collection.filter((entry) => entry.id.startsWith(`${locale}/`));
 }
 
-/** Get the URL slug for a blog post. Uses the frontmatter slug if set, otherwise auto-generates from the title. */
+/** Get the URL slug for a blog post. Uses the frontmatter permalink if set, otherwise auto-generates from the title. */
 export function getPostSlug(post: {
-	data: { slug?: string; title: string };
+	data: { permalink?: string; title: string };
 }): string {
 	return (
-		post.data.slug ??
+		post.data.permalink ??
 		slugify(post.data.title, { lower: true, strict: true })
 	);
 }
