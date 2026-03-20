@@ -1,12 +1,11 @@
 ---
-defaultLocaleVersion: en/third-post-in-english
 title: Troisième article de blog en français
 description: Lorem markdownum Talia. Carinae equis.
 author: Code Stitch
 date: 2023-06-08T15:27:34.591Z
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Cuisine
-tags: ["post"]
+mappingKey: "post-3"
 ---
 ## Sucos Creatoi
 

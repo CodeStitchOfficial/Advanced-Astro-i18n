@@ -1,0 +1,31 @@
+{
+	"$schema": "https://aka.ms/codetour-schema",
+	"title": "Image Optimization Patterns",
+	"steps": [
+		{
+			"file": "src/pages/index.astro",
+			"description": "Above-fold images follow a simple two-step pattern. **Step 1**: import the image file from `@assets/images/` — Astro resolves the import to an `ImageMetadata` object at build time. **Step 2**: pass it as a prop to the component that needs it (`<Hero image={landingImage} />`). No extra processing calls needed.",
+			"line": 13
+		},
+		{
+			"file": "src/components/Hero/Hero.astro",
+			"description": "The Hero receives `image: ImageMetadata` as a prop and passes it directly to Astro's `<Picture>` component. The `priority` attribute is the key detail here — it tells Astro to emit a `<link rel=\"preload\">` tag in the `<head>` for this image, which prevents layout shift and improves LCP. `formats={[\"avif\", \"webp\"]}` generates both formats automatically; the browser picks the best one it supports.",
+			"line": 42
+		},
+		{
+			"file": "src/components/CSPicture/CSPicture.astro",
+			"description": "`CSPicture` is a thin wrapper around `<Picture>` for **background images in stitches that need wrapper HTML + absolute positioning**. It renders the `<picture>` element with `position: absolute` styles pre-applied so it fills its parent container as a background. Use it when a CodeStitch component expects a background image with a wrapping `<picture>` tag. It takes a single `src` (`ImageMetadata`) and `alt`.",
+			"line": 13
+		},
+		{
+			"file": "src/components/CTA/CTA.astro",
+			"description": "The CTA section uses `<CSPicture>` for its background image. One image (`ctaImage`) is imported from `@assets/images/CTA/` and passed as `src`. Storing images under `src/` (not `public/`) is what allows Astro to optimize them — images in `public/` are served as-is with no format conversion or resizing.",
+			"line": 8
+		},
+		{
+			"file": "src/components/Hero/Hero.astro",
+			"description": "## When to use which pattern\n\n| Pattern | Use case |\n|---|---|\n| Import → prop → `<Picture priority>` | Hero/above-fold images that need preloading |\n| `<CSPicture>` | Background images inside stitches that need absolute-positioned wrapper HTML |\n| `<Picture>` directly | Content images needing avif/webp format conversion |\n| `public/assets/` | Logos, SVGs, favicons — files served as-is |",
+			"line": 1
+		}
+	]
+}

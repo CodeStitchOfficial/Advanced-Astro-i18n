@@ -1,0 +1,31 @@
+{
+	"$schema": "https://aka.ms/codetour-schema",
+	"title": "Content Collections Deep Dive",
+	"steps": [
+		{
+			"file": "src/content.config.ts",
+			"description": "Content Collections are defined here using Astro's loader API. The **glob loader** scans all `.md` files under `src/content/blog/` (both locale subfolders). The **zod schema** validates frontmatter fields at build time. The `mappingKey` field is i18n-specific — it links equivalent posts across languages so the language switcher can navigate between them.",
+			"line": 8
+		},
+		{
+			"file": "src/content/blog/en/first-post-in-english.md",
+			"description": "English blog posts live in `src/content/blog/en/`. The **mappingKey** (`\"post-1\"`) pairs this post with its French counterpart `fr/premier-article-en-francais.md`. The **image** field references an asset from `src/assets/images/blog/` which Astro optimizes automatically. The markdown body below the frontmatter becomes the rendered post content.",
+			"line": 1
+		},
+		{
+			"file": "src/pages/blog/[...page].astro",
+			"description": "The English blog listing page uses **getCollection('blog')** and **filterCollectionByLanguage(allPosts, defaultLocale)** to show only English posts. The `[...page]` catch-all handles pagination at `/blog/`, `/blog/2/`, etc. The French equivalent at `src/pages/fr/blog/[...page].astro` filters for French posts and generates `/fr/blog/`, `/fr/blog/2/`, etc.",
+			"line": 14
+		},
+		{
+			"file": "src/pages/blog/[...slug].astro",
+			"description": "Dynamic route for individual blog posts.",
+			"line": 18
+		},
+		{
+			"file": "src/pages/blog/[...slug].astro",
+			"description": "After getting the post from props, **getBlogPostingSchema()** generates BlogPosting structured data (JSON-LD) for SEO. It's i18n-aware: the `inLanguage` field is set from the current locale. The schema is injected into the `<head>` via `slot=\"schema\"` on the script tag, which flows into Meta.astro's `<slot name=\"schema\" />` for page-specific structured data.",
+			"line": 35
+		}
+	]
+}

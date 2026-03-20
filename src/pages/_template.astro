@@ -1,0 +1,41 @@
+---
+/**
+ * _template.astro
+ *
+ * Use this file as a starting point for new English pages.
+ * Duplicate it, rename it, and add your content.
+ *
+ * To add this page to navigation:
+ * 1. Add the route key to src/data/navData.json
+ * 2. Add the translation key to src/config/routeTranslations.ts
+ * 3. Add the label to src/locales/en/common.json
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Banner from "@components/Banner/Banner.astro";
+import CTA from "@components/CTA/CTA.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import landingImage from "@assets/images/landing.jpg";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+	title="Page Title"
+	description="Meta description for the page"
+>
+	<!-- ============================================ -->
+	<!--                    LANDING                   -->
+	<!-- ============================================ -->
+
+	<Banner title="Page Title" image={landingImage} />
+
+	<!-- ============================================ -->
+	<!--            Add Your Sections Here            -->
+	<!-- ============================================ -->
+
+	<!-- Example: <SomeSectionComponent /> -->
+
+	<CTA />
+</BaseLayout>

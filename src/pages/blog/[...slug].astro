@@ -1,0 +1,82 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import { getLocaleFromUrl, filterCollectionByLanguage, getPostSlug } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import { defaultLocale } from "@config/siteSettings";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Banner from "@components/Banner/Banner.astro";
+import BlogFullArticle from "@components/BlogFullArticle/BlogFullArticle.astro";
+import FeaturedPost from "@components/FeaturedPost/FeaturedPost.astro";
+import { getBlogPostingSchema } from "@js/blogPostingSchema";
+
+import landingImage from "@assets/images/landing.jpg";
+
+export const getStaticPaths = (async () => {
+	const allPosts = await getCollection("blog");
+	const posts = filterCollectionByLanguage(allPosts, defaultLocale);
+
+	return posts.map((post) => ({
+		params: {
+			slug: getPostSlug(post),
+		},
+		props: { post },
+	}));
+}) satisfies GetStaticPaths;
+
+const { post } = Astro.props;
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const postUrl = new URL(Astro.url.pathname, Astro.site).href;
+const blogSchema = getBlogPostingSchema(post, locale, postUrl);
+---
+
+<BaseLayout
+    title={post.data.title}
+    description={post.data.description}
+
+>
+  <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
+
+  <Banner title={t("blog:landing")} image={landingImage}/>
+
+  <section class="main-content-wrapper">
+    <!--Main content -->
+    <div class="main-content">
+      <BlogFullArticle post={post} />
+    </div>
+    <FeaturedPost />
+  </section>
+</BaseLayout>
+
+<style lang="less">
+  /* Mobile - 360px */
+  @media only screen and (min-width: 0em) {
+    .main-content-wrapper {
+      padding: var(--sectionPadding);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: (50/16em);
+    }
+
+    .main-content {
+      // width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      row-gap: (50/16em);
+    }
+  }
+
+  /* Tablet - 1024px */
+  @media only screen and (min-width: 64em) {
+    .main-content-wrapper {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+</style>

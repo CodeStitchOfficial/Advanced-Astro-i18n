@@ -1,0 +1,114 @@
+---
+import { getImage } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import { BUSINESS, OG, SITE } from "@data/client";
+import { getLocalBusinessSchema } from "@js/localBusinessSchema.js";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocalizedPathname } from "@js/translationUtils";
+import { locales, localeMap } from "@config/siteSettings";
+
+interface Props {
+	title?: string; // Override default title
+	description?: string; // Override default description
+	heroImage?: ImageMetadata | undefined;
+}
+
+const { title = SITE.title, description = SITE.description, heroImage } = Astro.props;
+
+// Data
+const localBusinessSchema = getLocalBusinessSchema(Astro.url.origin);
+const canonical = Astro.url.href;
+
+// Detect landing pages (home page for any locale: "/" or "/fr/", etc.)
+const locale = getLocaleFromUrl(Astro.url);
+const isLandingPage = Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
+
+// Format page title with business name (and location if home page)
+const pageTitle = isLandingPage ? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}` : `${title} | ${BUSINESS.name}`;
+
+// Generate hreflang alternate links
+const hrefLangLinks = await Promise.all(
+	locales.map(async (l) => ({
+		hreflang: localeMap[l],
+		href: new URL(await getLocalizedPathname(l, Astro.url), Astro.site).href,
+	}))
+);
+
+// OG type is hardcoded since it rarely changes
+const ogType = "website";
+
+// Use page-specific values for OG tags
+const ogTitle = pageTitle;
+const ogDescription = description;
+
+// Social image logic - Priority: 1) Provided heroImage, 2) Default /assets/social.jpg
+let socialImage: string;
+
+if (heroImage) {
+	const optimizedImage = await getImage({
+		src: heroImage,
+		width: 1200,
+		height: 600,
+		format: "webp",
+	});
+	socialImage = Astro.url.origin + optimizedImage.src;
+} else {
+	// Default social image (static file in public/)
+	socialImage = Astro.url.origin + OG.image;
+}
+---
+
+<!-- LocalBusiness Schema (on ALL pages) - customize your JSON-LD structured data:
+     https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data  -->
+<script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
+
+<!-- Allow additional schemas from child layouts (e.g., BlogPosting for blog posts) -->
+<slot name="schema" />
+
+<!-- Page Title -->
+<title>{pageTitle}</title>
+
+<!-- Standard Meta Tags -->
+<meta charset="utf-8" />
+<meta name="description" content={description} />
+<meta name="web_author" content={SITE.author} />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="canonical" href={canonical} />
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Hreflang alternate links for SEO -->
+{hrefLangLinks.map(({ hreflang, href }) => (
+	<link rel="alternate" hreflang={hreflang} href={href} />
+))}
+<link rel="alternate" hreflang="x-default" href={hrefLangLinks[0]?.href} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:locale" content={OG.locale} />
+<meta property="og:url" content={canonical} />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={ogTitle} />
+<meta property="og:site_name" content={SITE.title} />
+<meta property="og:description" content={ogDescription} />
+<meta property="og:image" content={socialImage} />
+<meta content="1200" property="og:image:width" />
+<meta content="600" property="og:image:height" />
+<meta content="image/jpeg" property="og:image:type" />
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:domain" content={SITE.url.replace("https://", "")} />
+<meta property="twitter:url" content={canonical} />
+<meta name="twitter:title" content={ogTitle} />
+<meta name="twitter:description" content={ogDescription} />
+<meta name="twitter:image" content={socialImage} />
+
+<!--Favicons-->
+<!-- https://realfavicongenerator.net/ -->
+<link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96"/>
+<link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg"/>
+<link rel="shortcut icon" href="/assets/favicons/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png"/>
+<meta name="apple-mobile-web-app-title" content="Starter Kit"/>
+<link rel="manifest" href="/assets/favicons/site.webmanifest"/>
+

@@ -1,0 +1,203 @@
+---
+import { Image } from "astro:assets";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import starsSvg from "@assets/svgs/stars.svg";
+import profileSvg from "@assets/svgs/profile.svg";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+import enReviews from "@locales/en/reviews.json";
+import frReviews from "@locales/fr/reviews.json";
+
+const reviewsData = locale === "fr" ? frReviews : enReviews;
+const testimonials = reviewsData.testimonials;
+
+---
+
+<!-- ============================================ -->
+<!--                   Reviews                    -->
+<!-- ============================================ -->
+
+<section id="reviews">
+	<div class="cs-container">
+		<div class="cs-content">
+			<span class="cs-topper">{t("reviews:topper")}</span>
+			<h2 class="cs-title">{t("reviews:title")}</h2>
+			<p class="cs-text">
+				{t("reviews:p")}
+			</p>
+		</div>
+		<ul class="cs-card-group">
+			{testimonials && testimonials.map((item) => (
+				<li class="cs-item">
+					<Image class="cs-stars" src={starsSvg} alt="stars" width={96} height={16} loading="lazy" decoding="async" aria-hidden="true" />
+					<p class="cs-review">
+						{item.quote}
+					</p>
+					<div class="cs-flex-group">
+						<Image class="cs-profile" src={profileSvg} alt="profile" width={52} height={52} loading="lazy" decoding="async" aria-hidden="true" />
+						<span class="cs-name">{item.name}</span>
+						<span class="cs-job">{item.role}</span>
+					</div>
+				</li>
+			))}
+		</ul>
+	</div>
+</section>
+
+<style lang="less">
+	/*-- -------------------------- -->
+<---            Reviews          -->
+<--- -------------------------- -*/
+
+	/* Mobile - 360px */
+	@media only screen and (min-width: 0em) {
+		#reviews {
+			padding: var(--sectionPadding);
+
+			.cs-container {
+				width: 100%;
+				max-width: (1280/16rem);
+				margin: auto;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				/* 48px - 64px */
+				gap: clamp(3rem, 6vw, 4rem);
+			}
+
+			.cs-content {
+				text-align: center;
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.cs-title {
+				max-width: (700/16rem);
+			}
+
+			.cs-text {
+				max-width: (640/16rem);
+			}
+
+			.cs-card-group {
+				width: 100%;
+				margin: 0;
+				padding: 0;
+				display: grid;
+				grid-template-columns: 1fr;
+				/* 16px - 20px */
+				gap: clamp(1rem, 2.5vw, 1.25rem);
+				list-style: none;
+			}
+
+			.cs-item {
+				text-align: left;
+				list-style: none;
+				width: 100%;
+				/* 20px - 40px top & bottom */
+				/* 20px - 40px left & right */
+				padding: clamp(1.25rem, 3.15vw, 2.5rem);
+				background-color: #f7f7f7;
+				border-radius: (16/16rem);
+				/* prevents padding from affecting height and width */
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+				gap: (20/16rem);
+			}
+
+			.cs-stars {
+				width: (96/16rem);
+				height: auto;
+				display: block;
+			}
+
+			.cs-review {
+				/* 14px - 16px */
+				font-size: clamp(0.875rem, 1.5vw, 1rem);
+				line-height: 1.5em;
+				margin: 0;
+				color: var(--bodyTextColor);
+				flex: 1;
+			}
+
+			.cs-flex-group {
+				display: flex;
+				flex-wrap: wrap;
+				gap: (12/16rem);
+				align-items: center;
+			}
+
+			.cs-profile {
+				width: (52/16rem);
+				height: (52/16rem);
+				border-radius: 50%;
+				object-fit: cover;
+				display: block;
+			}
+
+			.cs-name {
+				/* 16px - 20px */
+				font-size: clamp(1rem, 1.5vw, 1.25rem);
+				font-weight: 700;
+				line-height: 1.2em;
+				color: var(--headerColor);
+				display: block;
+				width: 100%;
+			}
+
+			.cs-job {
+				font-size: (14/16rem);
+				line-height: 1.5em;
+				color: var(--bodyTextColor);
+				display: block;
+				width: 100%;
+			}
+		}
+	}
+
+	/* Tablet - 768px */
+	@media only screen and (min-width: 48em) {
+		#reviews {
+			.cs-card-group {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+	}
+
+	/* Desktop - 1024px */
+	@media only screen and (min-width: 64em) {
+		#reviews {
+			.cs-card-group {
+				grid-template-columns: repeat(3, 1fr);
+			}
+		}
+	}
+
+	/* Dark Mode */
+	@media only screen and (min-width: 0em) {
+		body.dark-mode {
+			#reviews {
+				.cs-item {
+					background-color: var(--medium);
+				}
+
+				.cs-review,
+				.cs-job {
+					color: var(--bodyTextColorWhite);
+					opacity: 0.8;
+				}
+
+				.cs-name {
+					color: var(--bodyTextColorWhite);
+				}
+			}
+		}
+	}
+</style>

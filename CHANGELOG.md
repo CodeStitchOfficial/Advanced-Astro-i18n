@@ -1,4 +1,108 @@
-# Advanced Astro v4 i18n
+# Advanced Astro v6 i18n
+
+## 3.0.0
+### Major changes
+- Migrated i18n system from `@astrolicious/i18n` to vanilla Astro i18n. The third-party integration has been removed entirely and replaced with a lightweight, self-contained utility layer.
+- Routing moved from `src/routes/` to `src/pages/`, with French pages living as full copies under `src/pages/fr/` (duplication over shared components, for maximum flexibility).
+- `prefixDefaultLocale: false` — English URLs stay clean (`/blog/...`), French gets the `/fr/` prefix.
+
+#### New files
+- `src/js/localeUtils.ts` — locale detection helpers
+- `src/js/translationUtils.ts` — `t()` translation function and `getLocalizedPathname()` for cross-locale URL resolution
+- `src/js/localePreference.ts` — browser language preference handling
+- `src/config/siteSettings.ts` — centralised site configuration
+- `src/config/routeTranslations.ts` — static route translation map + `localizedCollections` config
+- `src/components/LanguageSwitch/BrowserLanguageRedirect.astro` — redirects home page visitors to their preferred locale on first visit
+
+#### Blog slug translation (language switcher)
+- Added `mappingKey` field to the blog collection schema (`src/content.config.ts`) to link equivalent posts across locales
+- Added `mappingKey` frontmatter to all 8 blog posts (4 en + 4 fr pairs)
+- `getLocalizedPathname()` is now async — it scans content collections at build time, groups entries by `mappingKey`, and merges them with static route translations
+- Added `generateDynamicRouteTranslations()` to build full route maps from content collections
+- Updated `TwoLocalesSelect.astro`, `MultiLocalesSelect.astro`, and `BaseLayout.astro` to await async `getLocalizedPathname`
+- Switching languages on a blog post now correctly translates the slug (e.g. `/blog/fourth-post-in-english/` ↔ `/fr/blog/quatrieme-article-en-francais/`)
+
+#### Route translations
+- French project pages translated and renamed: `/projects/project-1/` → `/fr/projets/projet-1/`, `/projects/project-2/` → `/fr/projets/projet-2/`
+- All static route translations declared in `src/config/routeTranslations.ts`
+
+#### What should I do on my fork?
+1. **Remove `@astrolicious/i18n`**
+
+    ```bash
+    npm uninstall @astrolicious/i18n astro-integration-kit
+    ```
+
+2. **Add the new utility and config files** from `src/js/` and `src/config/`
+
+3. **Update path aliases in `tsconfig.json`**
+
+    ```json
+    {
+      "compilerOptions": {
+        "paths": {
+          "@js/*": ["src/js/*"],
+          "@config/*": ["src/config/*"]
+        }
+      }
+    }
+    ```
+
+4. **Recreate your pages under `src/pages/`**, duplicating them per locale under `src/pages/fr/`
+
+5. **Update your blog collection schema** (`src/content.config.ts`):
+    - Remove `tags: z.array(z.string())`
+    - Add `featured: z.boolean().optional()`
+    - Add `mappingKey` with slug-safe regex validation and `slug` (optional, for Decap):
+
+    ```ts
+    mappingKey: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
+    slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/).optional(),
+    ```
+
+    Then add a `mappingKey` value to the frontmatter of every blog post to link translated pairs.
+
+6. **Replace all `i18n:astro` / `@astrolicious/i18n` imports** with the new utilities:
+
+    ```diff
+    - import { getLocale, t } from "i18n:astro";
+    + import { getLocaleFromUrl } from "@js/localeUtils";
+    + import { t, getLocalizedPathname } from "@js/translationUtils";
+    ```
+
+7. **Update language switcher components** to `await getLocalizedPathname(...)` (it is now async)
+
+#### Astro v6 upgrade
+- Upgraded Astro to **v6**
+
+#### Decap CMS
+- Pre-configured Decap admin panel with **DecapBridge** backend
+- Localized slug patterns enforced in Decap via regex validation on `slug` and `mappingKey` fields
+- Remove Decap entirely with `npm run remove-decap`
+
+#### Utility scripts
+- **`npm run config-i18n`** — Interactive CLI to configure locales and i18n options
+- **`npm run create-page`** — Scaffolds a new page for all locales
+- **`npm run remove-demo`** — Removes demo/placeholder content
+- **`npm run remove-dark-mode`** — Removes dark mode components and styles
+- **`npm run test:scripts`** — Runs unit tests for the utility scripts
+
+#### Schema changes
+- `tags: z.array(z.string())` removed; replaced by `featured: z.boolean().optional()`
+- `slug` field added with slug-safe regex validation (for Decap compatibility)
+- `mappingKey` now also enforced with the same regex
+
+#### Other changes & fixes
+- Fixed FOUC (Flash of Unstyled Content)
+- Fixed OG image generation and meta `<title>` / `<description>` handling
+- Removed the preloading system (`getOptimizedImage`) — redundant with Astro's built-in optimization
+- Removed `StaticHeader` — not applicable to multilingual projects
+- Navigation labels now driven by `navData` (removed reliance on `common.json`)
+- Added JSON-LD schema markup
+- Code tours rewritten to reflect the v3 architecture
+- Fixed accessibility issue: anchors without `href`
+
+---
 
 ## 2.2.2
 ### Patch changes

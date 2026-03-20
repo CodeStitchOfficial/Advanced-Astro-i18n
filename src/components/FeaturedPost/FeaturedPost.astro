@@ -1,0 +1,162 @@
+---
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import { formatDate } from "@js/utils";
+import { getLocaleFromUrl, getPostSlug } from "@js/localeUtils";
+import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+const featuredPosts = await getCollection("blog", ({ id, data }) => {
+  return id.startsWith(locale) && data.featured === true;
+});
+
+---
+
+<div class="blog-sidebar">
+  <div class="blog-featured-group">
+    <span class="blog-header">{t("blog:featuredPosts")}</span>
+    {featuredPosts.length === 0 && <h2>{t("blog:noFeaturedPosts")}</h2>}
+    {
+      featuredPosts.map((post) => (
+        <a class="blog-feature" href={getLocalizedRoute(locale, `/blog/${getPostSlug(post)}`)}>
+          <Picture src={post.data.image} alt={post.data.imageAlt} width={60} formats={["avif", "webp"]} pictureAttributes={{ class: "blog-featureImage" }} decoding="async" />
+          <div class="content-group">
+            <h3 class="feature-h3">{post.data.title}</h3>
+            <span class="feature-date">{formatDate(post.data.date)}</span>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</div>
+
+<style lang="less">
+  /* Mobile - 360px */
+  @media only screen and (min-width: 0em) {
+    .blog-sidebar {
+      width: 100%;
+      max-width: (795/16em);
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      row-gap: (50/16em);
+
+      .blog-featured-group {
+        width: 100%;
+        padding: (35/16em) (30/16em);
+        border: 1px solid #ebebeb;
+        border-radius: (8/16em);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .blog-header {
+        font-size: (20/16em);
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: (30/16rem);
+        color: var(--headerColor);
+        display: block;
+        position: relative;
+
+        &:after {
+          content: "";
+          width: (50/16rem);
+          height: 3px;
+          margin: (16/16rem) auto;
+          background: var(--headerColor);
+          border-radius: (4/16rem);
+          display: block;
+          position: relative;
+        }
+      }
+
+      .blog-feature {
+        text-decoration: none;
+        width: 100%;
+        padding: (20/16rem) 0;
+        border-bottom: 1px solid #ebebeb;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        column-gap: (24/16em);
+
+        &:nth-of-type(1) {
+          padding-top: 0;
+        }
+
+        &:last-of-type {
+          padding-bottom: 0;
+          border: none;
+        }
+      }
+
+      .blog-featureImage {
+        width: (60/16em);
+        height: (60/16em);
+        border-radius: 50%;
+        display: block;
+        position: relative;
+        overflow: hidden;
+        flex: none;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+      }
+
+      .feature-h3 {
+        font-size: (15/16rem);
+        font-weight: 700;
+        line-height: 1.5em;
+        text-decoration: none;
+        margin: 0;
+        margin-bottom: (4/16rem);
+        color: var(--headerColor);
+        display: block;
+      }
+
+      .feature-date {
+        font-size: (14/16rem);
+        line-height: 1.5em;
+        color: var(--bodyTextColor);
+        display: block;
+      }
+    }
+  }
+
+  /* Tablet - 1024px */
+  @media only screen and (min-width: 64em) {
+    .blog-sidebar {
+      max-width: (360/16em);
+    }
+  }
+
+  /* Dark Mode */
+  @media only screen and (min-width: 0em) {
+    body.dark-mode {
+      .blog-sidebar {
+        .feature-h3,
+        .feature-date,
+        .blog-header {
+          color: #f7f7f7;
+        }
+        .blog-header {
+          &:after {
+            background: var(--primary);
+          }
+        }
+      }
+    }
+  }
+</style>

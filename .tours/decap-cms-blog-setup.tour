@@ -1,0 +1,36 @@
+{
+	"$schema": "https://aka.ms/codetour-schema",
+	"title": "Multilingual Blog System",
+	"steps": [
+		{
+			"file": "src/content.config.ts",
+			"description": "The blog collection uses Astro's glob loader to find all markdown files under `src/content/blog/`. Posts in both `en/` and `fr/` subfolders are loaded into a single collection. The **mappingKey** field in the zod schema is the key to linking posts across languages — give the same value (e.g. `\"post-1\"`) to the English and French versions of the same article.",
+			"line": 8
+		},
+		{
+			"file": "public/admin/config.yml",
+			"description": "This is the Decap CMS configuration file. Before your CMS will work, you **must replace** the placeholder credentials with your own:\n\n- **`repo`** — your GitHub repository in `owner/repo` format\n- **`auth_endpoint`** and **`auth_token_endpoint`** — your site-specific URLs from [DecapBridge](https://decapbridge.com) (each site gets unique endpoints)\n\nOther key settings:\n- **`media_folder`** is set to `src/assets/images/blog` so uploaded images are stored under `src/` where Astro can optimize them\n- **`featured`** is a boolean widget — it's a simple true/false checkbox, not a tag or array",
+			"line": 3
+		},
+		{
+			"file": "src/content/blog/en/first-post-in-english.md",
+			"description": "English blog posts live in `src/content/blog/en/`. The **mappingKey** (`\"post-1\"`) is what connects this post to its French equivalent. Each post can have completely different content — titles, body text, images — since they're independent files. Write your post in markdown below the `---` frontmatter fence.",
+			"line": 1
+		},
+		{
+			"file": "src/content/blog/fr/premier-article-en-francais.md",
+			"description": "French blog posts live in `src/content/blog/fr/`. This post shares **mappingKey** `\"post-1\"` with `en/first-post-in-english.md`. When a reader on `/blog/first-post-in-english/` switches to French, `getLocalizedPathname()` uses this mapping to redirect them to `/fr/blog/premier-article-en-francais/` instead of the homepage.",
+			"line": 1
+		},
+		{
+			"file": "src/pages/blog/[...page].astro",
+			"description": "The English blog listing page. **filterCollectionByLanguage(allPosts, defaultLocale)** filters to only `en/` prefixed entries. Posts are sorted by date and paginated. The French equivalent at `src/pages/fr/blog/[...page].astro` does the same for `fr/` entries, generating routes at `/fr/blog/`, `/fr/blog/2/`, etc.",
+			"line": 14
+		},
+		{
+			"file": "src/pages/blog/[...slug].astro",
+			"description": "Dynamic route for individual English blog post pages. The `slot=\"schema\"` pattern injects BlogPosting JSON-LD into the page `<head>` via Meta.astro for SEO. The French counterpart lives at `src/pages/fr/blog/[...slug].astro`.",
+			"line": 18
+		}
+	]
+}

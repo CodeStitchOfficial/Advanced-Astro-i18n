@@ -9,10 +9,9 @@
 			"1": "Kit Avancé Astro v5",
 			"2": "i18n"
 		},
-		"p1": "Ce kit avancé comprend un environnement Astro préconfiguré qui permet de réutiliser des composants, de centraliser les données et d'évoluer en fonction de la croissance de vos clients. Ce kit est spécialement conçu pour les clients souhaitant un site multi-langues et est donc configuré avec les outils d'internationalisation (i18n) d'Astro pour deux langues: anglais et français",
-		"p2": "Ce kit utilise astrolicious/i18n, qui n'est plus maintenu. Le package, ainsi que ce kit, devraient toujours fonctionner, mais soyez particulièrement prudent lors de la mise à jour des versions d'Astro.",
-		"cta1": "En savoir plus",
-		"cta2": "Écrivez-nous"
+		"p1": "Ce kit est spécialement conçu pour les clients souhaitant un site multi-langues et est donc configuré avec les outils d'internationalisation (i18n) d'Astro pour deux langues: anglais et français. Il contient également une intégration Decap CMS.",
+		"cta1": "GitHub",
+		"cta2": "CodeStitch"
 	},
 	"services": [
 		{
@@ -47,5 +46,26 @@
 		"topper": "Notre Portfolio",
 		"title": "In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet",
 		"cta": "Voir tous nos projets"
+	},
+	"testimonials": {
+		"topper": "Témoignages",
+		"title": "Ce Que Disent Nos Clients",
+		"items": [
+			{
+				"quote": "J'ai été émerveillé par la qualité du travail. L'équipe était professionnelle et a dépassé mes attentes. Hautement recommandé!",
+				"name": "Jean Dupont",
+				"role": "Propriétaire"
+			},
+			{
+				"quote": "Service exceptionnel du début à la fin. Ils ont communiqué clairement et livré exactement ce qui était promis.",
+				"name": "Marie Martin",
+				"role": "Chef d'entreprise"
+			},
+			{
+				"quote": "Le niveau d'artisanat était impressionnant. Ils ont traité ma maison comme si c'était la leur.",
+				"name": "Michel Bernard",
+				"role": "Gestionnaire de propriété"
+			}
+		]
 	}
 }

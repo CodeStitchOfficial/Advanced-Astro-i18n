@@ -3,7 +3,8 @@ title: Second blog post in English
 description: Lorem markdownum trabeati dicere deus.
 author: Code Stitch
 date: 2023-06-08T15:28:08.486Z
-tags: ["post", "featured"]
+featured: true
+mappingKey: "post-2"
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Kitchen
 ---

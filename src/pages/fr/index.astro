@@ -1,0 +1,26 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero/Hero.astro";
+import Services from "@components/Services/Services.astro";
+import SideBySide from "@components/SideBySide/SideBySide.astro";
+import SideBySideReverse from "@components/SideBySide/SideBySideReverse.astro";
+import Gallery from "@components/Gallery/Gallery.astro";
+import Testimonials from "@components/Testimonials/Testimonials.astro";
+import CTA from "@components/CTA/CTA.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import landingImage from "@assets/images/hero.jpg";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<BaseLayout title={t("home:layout.title")} description={t("home:layout.description")}>
+	<Hero image={landingImage} />
+	<Services />
+	<SideBySide />
+	<SideBySideReverse />
+	<Gallery />
+	<Testimonials />
+	<CTA />
+</BaseLayout>

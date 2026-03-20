@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Banner from "@components/Banner/Banner.astro";
+import Reviews from "@components/Reviews/Reviews.astro";
+import CTA from "@components/CTA/CTA.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import landingImage from "@assets/images/landing.jpg";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+	title={t("reviews:landing")}
+	description={t("reviews:p")}
+
+>
+	<!-- ============================================ -->
+	<!--                    LANDING                   -->
+	<!-- ============================================ -->
+
+	<Banner title={t("reviews:landing")} image={landingImage} />
+
+	<!-- ============================================ -->
+	<!--                   Reviews                    -->
+	<!-- ============================================ -->
+
+	<Reviews />
+
+	<CTA />
+</BaseLayout>

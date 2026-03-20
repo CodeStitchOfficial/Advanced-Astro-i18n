@@ -1,0 +1,36 @@
+{
+	"$schema": "https://aka.ms/codetour-schema",
+	"title": "Deployment Checklist",
+	"steps": [
+		{
+			"file": "astro.config.mjs",
+			"description": "Update the **site** URL to your actual production domain (e.g., `https://yourdomain.com`). This is critical for generating correct sitemaps, hreflang alternate links, canonical URLs, and Open Graph image URLs.",
+			"line": 6
+		},
+		{
+			"file": "src/data/client.ts",
+			"description": "Fill in all your client information here:\n- **SITE.url** must match your production domain exactly\n- **BUSINESS** details populate the footer, contact page, and LocalBusiness JSON-LD schema\n- **OG.image** is the default social share fallback — replace `public/assets/social.jpg` with a real 1200×630 image\n\nAlso verify `SITE.locale` and `OG.locale` match your primary language.",
+			"line": 1
+		},
+		{
+			"file": "src/config/routeTranslations.ts",
+			"description": "Verify all route translations are correct for your site. Each key maps an English route segment to its localized equivalent (e.g. `\"about\"` → `\"a-propos\"`). If you add new pages, add their translations here. The `localizedCollections` object tells the language switcher how to map blog post slugs between locales using `mappingKey` frontmatter.",
+			"line": 3
+		},
+		{
+			"file": "public/robots.txt",
+			"description": "Update the sitemap URL to match your production domain. Change the URL to `https://yourdomain.com/sitemap-index.xml`. This helps search engines discover and index all your pages including hreflang alternate versions.",
+			"line": 5
+		},
+		{
+			"file": "src/components/Meta/Meta.astro",
+			"description": "Replace the default favicons with your own. Use [RealFaviconGenerator.net](https://realfavicongenerator.net/) to generate all necessary favicon files and sizes, then replace the files in `/public/assets/favicons/`.\n\nAlso check the hreflang links generated here are correct by inspecting your live page source — look for `<link rel=\"alternate\" hreflang=\"...\">`.",
+			"line": 106
+		},
+		{
+			"file": "package.json",
+			"description": "Pre-launch script checklist:\n- `npm run build` — verify the site builds without TypeScript errors or broken imports\n- `npm run remove-demo` — strip all demo pages, section components, and images before going live\n- `npm run remove-dark-mode` — remove dark mode support if not needed (cleans up ThemeProvider and DarkMode components)\n\nAfter `remove-demo`, run `npm run dev` to verify both `/` and `/fr/` load correctly.",
+			"line": 6
+		}
+	]
+}

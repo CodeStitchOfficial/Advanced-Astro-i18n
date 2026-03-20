@@ -1,0 +1,51 @@
+{
+	"$schema": "https://aka.ms/codetour-schema",
+	"title": "i18n Routing & Translation System",
+	"steps": [
+		{
+			"file": "astro.config.mjs",
+			"description": "Astro's built-in i18n is configured here. **prefixDefaultLocale: false** means English (the default) uses clean URLs like `/about/` while French gets `/fr/a-propos/`. The `locales` array lists every supported language. To add a third language, add it here, then update `siteSettings.ts`, `routeTranslations.ts`, and add a new folder in `src/locales/`.",
+			"line": 7
+		},
+		{
+			"file": "src/config/siteSettings.ts",
+			"description": "This is the single source of truth for locale configuration. **locales** is a readonly tuple that drives type-safety across the whole codebase (`Locale` type). **languageSwitcherMap** controls what text appears on the language toggle buttons. **localeMap** maps short locale codes to full BCP 47 tags used in hreflang attributes.",
+			"line": 1
+		},
+		{
+			"file": "src/js/localeUtils.ts",
+			"description": "Three utility functions for working with locales:\n- **getLocaleFromUrl(url)** — reads the first URL path segment; returns `defaultLocale` if no locale prefix is found (since English has no prefix)\n- **filterCollectionByLanguage(collection, locale)** — filters blog posts to a specific language by checking the `en/` or `fr/` folder prefix in the entry ID.",
+			"line": 4
+		},
+		{
+			"file": "src/config/routeTranslations.ts",
+			"description": "Static route translations map English page names to their localized equivalents. `\"about\"` → `\"a-propos\"`, `\"reviews\"` → `\"avis\"`, etc. **getLocalizedRoute()** in `translationUtils.ts` uses this to generate locale-correct links throughout the site. The **localizedCollections** object enables the language switcher to translate blog post slugs dynamically using `mappingKey` frontmatter.",
+			"line": 3
+		},
+		{
+			"file": "src/js/translationUtils.ts",
+			"description": "**useTranslations(locale)** returns a `t(key)` function. Keys use a `namespace:path` format — `\"home:hero.title\"` loads `src/locales/{locale}/home.json` and returns the `hero.title` value. No namespace defaults to `common`. Translation files are loaded eagerly via Vite's `import.meta.glob` and cached per locale.",
+			"line": 57
+		},
+		{
+			"file": "src/js/translationUtils.ts",
+			"description": "**getLocalizedPathname(locale, url)** is the async language-switcher function. It reverse-translates the current URL back to neutral route segments, then forward-translates to the target locale. For example: `/fr/a-propos/` → `about` → `/about/` (switching to English). It also handles blog post slug translation via dynamic route mappings built from `mappingKey` frontmatter.",
+			"line": 178
+		},
+		{
+			"file": "src/components/Meta/Meta.astro",
+			"description": "The Meta component generates **hreflang alternate links** for SEO. For every locale, it calls `getLocalizedPathname()` to get the equivalent URL and outputs `<link rel=\"alternate\" hreflang=\"...\">`. The `x-default` tag points to the English version. This tells search engines that pages exist in multiple languages and which URL to show for each region.",
+			"line": 31
+		},
+		{
+			"file": "src/components/LanguageSwitch/BrowserLanguageRedirect.astro",
+			"description": "This component is placed only on the English homepage (`src/pages/index.astro`). It runs a small inline script that checks `navigator.language` — if the visitor's browser prefers French and they haven't chosen a language yet, it redirects to `/fr/`. A `localStorage` key prevents the redirect on return visits so users aren't forced back after manually switching.",
+			"line": 1
+		},
+		{
+			"file": "src/components/LanguageSwitch/TwoLocalesSelect.astro",
+			"description": "The language toggle UI component. It calls `getLocalizedPathname()` for each locale to compute where each button should link, then renders radio-button-style language options. A custom element (`<language-toggle>`) handles keyboard navigation (arrow keys) and saves the user's choice to `localStorage` so `BrowserLanguageRedirect` won't override it.",
+			"line": 10
+		}
+	]
+}

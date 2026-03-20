@@ -1,107 +1,68 @@
 ---
-import type { GetImageResult } from "astro";
 import { ClientRouter } from "astro:transitions";
-import I18nClient from "@astrolicious/i18n/components/I18nClient.astro";
-import I18nHead from "@astrolicious/i18n/components/I18nHead.astro";
 
-import { getHtmlAttrs, getLocales, t } from "i18n:astro";
-import client from "@data/client.json";
-import { trimArrSlashes, trimStringSlashes } from "@utils/utils";
-import ThemeProvider from "@components/TemplateComponents/ThemeProvider.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+import DynamicHeader from "@components/Header/DynamicHeader.astro";
+import Footer from "@components/Footer/Footer.astro";
+import Meta from "@components/Meta/Meta.astro";
 import "@styles/root.less";
 
 interface Props {
-	description: string;
 	title: string;
-	preloadedImage: GetImageResult;
+	description: string;
 }
 
-const { description, title, preloadedImage } = Astro.props as Props;
+const { description, title } = Astro.props as Props;
 
-const locales = getLocales();
-// Trimming "/" from the beginning and end to handle URLs with or without trailing slashes.
-const trimmedLocales = trimArrSlashes(locales);
-const trimmedPathname = trimStringSlashes(Astro.url.pathname);
-
-const isLandingPage = Astro.url.pathname === "/" || trimmedLocales.includes(trimmedPathname);
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
 ---
 
-<!-- A fully fleshed-out <head>, dynamically changing based on client.json and the page front matter -->
-<html {...getHtmlAttrs()}>
-	<!-- Automatically generates attributes -->
+<html lang={locale}>
 	<head>
-		<!-- i18n support -->
-		<I18nClient />
-
 		<!-- View Transitions support -->
 		<ClientRouter />
 
-		<!-- Preloads the image passed as a prop -->
-		<link rel="preload" href={preloadedImage.src} as="image" />
+		<!-- SEO Meta Tags -->
+		<Meta title={title} description={description}>
+			<slot name="schema" slot="schema" />
+		</Meta>
 
-		<!-- Standard meta tags -->
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta name="description" content={description} />
-		<meta name="keywords" content="" />
-		<link rel="canonical" href={`https://${client.domain}${Astro.url.pathname}`} />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-
-		<!-- automatically generates hreflang alternate links to improve SEO -->
-		<I18nHead />
-
-		<!--Social Media Display-->
-		<meta property="og:title" content={title} />
-		<meta property="og:description" content={description} />
-		<meta property="og:type" content="website" />
-		<meta property="og:url" content={`https://${client.domain}${Astro.url.pathname}`} />
-		<meta property="og:image" content="/assets/images/logo-small.png" />
-		<meta property="og:image:secure_url" content="/assets/images/logo-small.png" />
-
-		<!--Favicons-->
-		<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />
-		<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicons/favicon-32x32.png?v1" />
-		<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicons/favicon-16x16.png" />
-		<link rel="manifest" href="/assets/favicons/site.webmanifest" />
-		<meta name="msapplication-TileColor" content="#da532c" />
-		<meta name="theme-color" content="#ffffff" />
-
-		<!--For home page, use service keywords for the title, including location for SEO.
-        Other pages should just include the page name.
-        
-        EXAMPLE:
-        Home page - House Painting Contractors | Painters and Co. | TestCity, WA
-        About Page - About us | Painters and Co.
-        -->
-		<title>
-			{
-				isLandingPage
-					? `${title}
-            |
-            ${client.name}
-            |
-            ${client.address.city},
-            ${client.address.state}`
-					: `${title}
-                |
-                ${client.name}`
-			}
-		</title>
-
-		<!-- Dark / Light mode component -->
-		<ThemeProvider />
-
-		<!-- Navigation script -->
+		<!-- Sitewide Scripts -->
 		<script src="@assets/js/nav.js"></script>
+
+		<!-- FOUC prevention: applies dark-mode class before first paint.
+		     Reads cs-theme (set by ThemeSelect or DarkModeToggle) and falls
+		     back to the legacy "theme" key used by the Intermediate kit. -->
+		<script is:inline>
+			(function () {
+				var stored = localStorage.getItem("cs-theme");
+				var isDark;
+				if (stored === "dark") {
+					isDark = true;
+				} else if (stored === "light" || stored === "") {
+					isDark = false;
+				} else {
+					// Not set or any unexpected value — fall back to legacy key, then system pref
+					var legacy = localStorage.getItem("theme");
+					if (legacy === "dark") {
+						isDark = true;
+					} else if (legacy === "light") {
+						isDark = false;
+					} else {
+						isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+					}
+				}
+				if (isDark) document.body?.classList.add("dark-mode");
+			})();
+		</script>
 	</head>
 	<body>
-		<!--Screen reader skip main nav-->
+		<!-- Screen reader skip main nav -->
 		<a class="skip" aria-label="skip to main content" href="#main">{t("skipLink")}</a>
 
-		<Header />
+		<DynamicHeader />
 		<main id="main">
 			<slot />
 		</main>
@@ -109,8 +70,27 @@ const isLandingPage = Astro.url.pathname === "/" || trimmedLocales.includes(trim
 	</body>
 </html>
 
-{/* Inlined to avoid FOUC. Uses global scope from `ThemeProvider.astro` */}
+<!-- Re-apply theme after each View Transition page swap -->
 <script is:inline>
-	StarlightThemeProvider.getPreferredColorScheme();
-	StarlightThemeProvider.updatePickers();
+	document.addEventListener("astro:after-swap", function () {
+		var stored = localStorage.getItem("cs-theme");
+		var isDark;
+		if (stored === "dark") {
+			isDark = true;
+		} else if (stored === "light" || stored === "") {
+			isDark = false;
+		} else {
+			var legacy = localStorage.getItem("theme");
+			if (legacy === "dark") {
+				isDark = true;
+			} else if (legacy === "light") {
+				isDark = false;
+			} else {
+				isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			}
+		}
+		isDark
+			? document.body.classList.add("dark-mode")
+			: document.body.classList.remove("dark-mode");
+	});
 </script>

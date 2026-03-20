@@ -1,12 +1,11 @@
 ---
-defaultLocaleVersion: en/fourth-post-in-english
 title: Quatrieme article de blog en français
 description: Lorem markdownum Talia. Carinae equis.
 author: Code Stitch
 date: 2023-06-08T15:27:34.591Z
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Cuisine
-tags: ["post"]
+mappingKey: "post-4"
 ---
 ## Sucos Creatoi
 

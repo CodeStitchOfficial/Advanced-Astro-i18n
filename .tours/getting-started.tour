@@ -1,0 +1,31 @@
+{
+	"$schema": "https://aka.ms/codetour-schema",
+	"title": "Getting Started - Initial Configuration",
+	"steps": [
+		{
+			"file": "src/data/client.ts",
+			"description": "Start here! This file contains your site's core details. Update the business name, email, phone, and address in the **BUSINESS** object. The **SITE** object contains domain and description info used throughout for canonical URLs and meta tags. Don't forget to update your social image in **OG**.",
+			"line": 2
+		},
+		{
+			"file": "astro.config.mjs",
+			"description": "Update the **site** URL to your actual domain before deployment. This is used for generating the sitemap and canonical URLs. For local development, you can leave it as-is, but change it before going live.",
+			"line": 6
+		},
+		{
+			"file": "src/styles/root.less",
+			"description": "Want to change colors, fonts, or spacing? The CSS variables defined here control the look across all components. Change **--primary**, **--secondary**, **--headerColor**, etc. to customize your site's appearance. These variables are used throughout all CodeStitch components.",
+			"line": 85
+		},
+		{
+			"file": "src/components/Settings/Settings.astro",
+			"description": "## Header UI — Dark Mode & Language Switcher\n\n`Settings.astro` is where you swap the header's utility components. Just change the import to use a different component — no prop wiring needed.\n\n**Dark mode** — two options in `src/components/DarkMode/`:\n- `DarkModeToggle` — simple moon/sun button\n- `ThemeSelect` — three-way Light / Dark / Auto dropdown *(default)*\n\n**Language switcher** — two options in `src/components/LanguageSwitch/`:\n- `TwoLocalesSelect` — EN/FR button toggle, best for 2 locales *(default)*\n- `MultiLocalesSelect` — compact dropdown, best for 3+ locales\n\nTo remove either entirely, delete its line from the template.",
+			"line": 1
+		},
+		{
+			"file": "package.json",
+			"description": "Available commands:\n\n- **`config-i18n`** — interactive setup wizard: configure your locales, rename translated routes, and scaffold locale files. **Run this first** if you're customizing the i18n setup.\n- **`dev`** — start the dev server on localhost:4321\n- **`build`** — production build\n- **`preview`** — preview the production build locally\n- **`remove-demo`** — strip all demo pages, section components, and images before going live\n- **`remove-dark-mode`** — remove dark mode support if you don't need it\n- **`remove-decap`** — remove the Decap CMS integration\n- **`create-page`** — scaffold a new page with all locale variants",
+			"line": 5
+		}
+	]
+}

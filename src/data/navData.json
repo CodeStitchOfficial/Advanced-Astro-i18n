@@ -1,0 +1,72 @@
+[
+	{
+		"key": "home",
+		"url": "/",
+		"label": {
+			"en": "Home",
+			"fr": "Accueil"
+		},
+		"children": []
+	},
+	{
+		"key": "about",
+		"url": "/about",
+		"label": {
+			"en": "About",
+			"fr": "À propos"
+		},
+		"children": []
+	},
+	{
+		"key": "projects",
+		"label": {
+			"en": "Projects",
+			"fr": "Portfolio"
+		},
+		"children": [
+			{
+				"key": "project-1",
+				"url": "/projects/project-1/",
+				"label": {
+					"en": "Project 1",
+					"fr": "Projet 1"
+				}
+			},
+			{
+				"key": "project-2",
+				"url": "/projects/project-2/",
+				"label": {
+					"en": "Project 2",
+					"fr": "Projet 2"
+				}
+			}
+		]
+	},
+	{
+		"key": "blog",
+		"url": "/blog",
+		"label": {
+			"en": "Blog",
+			"fr": "Blog"
+		},
+		"children": []
+	},
+	{
+		"key": "reviews",
+		"url": "/reviews",
+		"label": {
+			"en": "Reviews",
+			"fr": "Avis"
+		},
+		"children": []
+	},
+	{
+		"key": "contact",
+		"url": "/contact",
+		"label": {
+			"en": "Contact",
+			"fr": "Contact"
+		},
+		"children": []
+	}
+]

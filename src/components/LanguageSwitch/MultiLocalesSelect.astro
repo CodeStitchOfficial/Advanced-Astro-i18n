@@ -1,0 +1,71 @@
+---
+// Adapted from Starlight's LanguageSelect - https://github.com/withastro/starlight/blob/15747325112c9fe43b8dfa4e986b95cf8e66af49/packages/starlight/components/LanguageSelect.astro
+// MIT License
+// Copyright (c) 2023 [Astro contributors](https://github.com/withastro/starlight/graphs/contributors)
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+import Select from "@components/Select/Select.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
+import { locales } from "@config/siteSettings";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+
+const options = await Promise.all(
+  locales.map(async (l) => ({
+    value: await getLocalizedPathname(l, Astro.url),
+    selected: l === locale,
+    label: t(`languageSelect.${l}`),
+  }))
+);
+---
+
+{
+	(
+		<starlight-lang-select>
+			<Select
+				icon="mdi--language"
+				label={locale}
+				value={locale}
+				options={options}
+				width="6em"
+			/>
+		</starlight-lang-select>
+	)
+}
+
+<script>
+	import { setLocalePreference } from "@js/localePreference";
+
+	class StarlightLanguageSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector("select");
+			if (select) {
+				select.addEventListener("change", (e) => {
+					if (e.currentTarget instanceof HTMLSelectElement) {
+						setLocalePreference(e.currentTarget.value);
+					window.location.pathname = e.currentTarget.value;
+					}
+				});
+			}
+		}
+	}
+	customElements.define("starlight-lang-select", StarlightLanguageSelect);
+</script>

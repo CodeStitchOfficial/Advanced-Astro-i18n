@@ -1,10 +1,10 @@
 ---
-defaultLocaleVersion: en/second-post-in-english
 title: Deuxième article de blog en français
 description: Lorem markdownum trabeati dicere deus.
 author: Code Stitch
 date: 2023-06-08T15:28:08.486Z
-tags: ["post", "featured"]
+featured: true
+mappingKey: "post-2"
 image: "@assets/images/blog/blog-cover.jpg"
 imageAlt: Cuisine
 ---
