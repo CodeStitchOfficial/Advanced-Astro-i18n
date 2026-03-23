@@ -12,6 +12,7 @@
 - [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Commands](#commands)
+- [Font Setup](#font-setup)
 - [Features](#features)
 - [Project Structure](#project-structure)
     - [Project Tree](#project-tree)
@@ -98,6 +99,26 @@ All commands are run from the root of the project, from a terminal:
 | `npm run remove-decap`     | Removes Decap CMS integration                |
 | `npm run create-page`      | Scaffolds a new page for all locales         |
 | `npm run test:scripts`     | Runs unit tests for the utility scripts      |
+
+### Font Setup
+
+This kit comes with Roboto font, you can replace it by removing the `@fontsource-variable/roboto` package and installing the font you prefer as the example below:
+
+1. Choose and install a font from [Fontsource](https://fontsource.org/):
+
+    `npm install @fontsource-variable/outfit`
+
+2. Update the name at this `astro.config.mjs` section:
+
+    ```json
+    {
+        provider: fontProviders.fontsource(),
+        // Should be the font name "Outfit", not the font-family "Outfit Variable"
+        name: "Outfit",
+    },
+    ```
+
+Optionally, you can use local, or other font providers. For more information refer to [Using custom fonts](https://docs.astro.build/en/guides/fonts/) at Astro docs.
 
 ## Features
 
