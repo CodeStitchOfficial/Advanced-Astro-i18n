@@ -1,12 +1,11 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import { Font } from "astro:assets";
-
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
+import Meta from "@components/Meta/Meta.astro";
 import DynamicHeader from "@components/Header/DynamicHeader.astro";
 import Footer from "@components/Footer/Footer.astro";
-import Meta from "@components/Meta/Meta.astro";
 import "@styles/root.less";
 
 interface Props {
@@ -26,6 +25,9 @@ const t = useTranslations(locale);
 		<Meta title={title} description={description}>
 			<slot name="schema" slot="schema" />
 		</Meta>
+
+		<!-- Astro custom Font API -->
+		<Font cssVariable="--font-primary" />
 
 		<!-- View Transitions support -->
 		<ClientRouter />
