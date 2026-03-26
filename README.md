@@ -12,6 +12,7 @@
 - [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Commands](#commands)
+- [Font Setup](#font-setup)
 - [Features](#features)
 - [Project Structure](#project-structure)
     - [Project Tree](#project-tree)
@@ -99,6 +100,26 @@ All commands are run from the root of the project, from a terminal:
 | `npm run create-page`      | Scaffolds a new page for all locales         |
 | `npm run test:scripts`     | Runs unit tests for the utility scripts      |
 
+### Font Setup
+
+This kit comes with Roboto font, you can replace it by removing the `@fontsource-variable/roboto` package and installing the font you prefer as the example below:
+
+1. Choose and install a font from [Fontsource](https://fontsource.org/):
+
+    `npm install @fontsource-variable/outfit`
+
+2. Update the name at this `astro.config.mjs` section:
+
+    ```json
+    {
+        provider: fontProviders.fontsource(),
+        // Should be the font name "Outfit", not the font-family "Outfit Variable"
+        name: "Outfit",
+    },
+    ```
+
+Optionally, you can use local, or other font providers. For more information refer to [Using custom fonts](https://docs.astro.build/en/guides/fonts/) at Astro docs.
+
 ## Features
 
 - Runs on **Astro v6**
@@ -172,7 +193,7 @@ All commands are run from the root of the project, from a terminal:
 
 ### Key Directories
 
-- **`public/`** — Static assets that won't be processed by Astro (Decap admin, fonts, favicons, `_redirects`, `robots.txt`).
+- **`public/`** — Static assets that won't be processed by Astro (Decap admin, favicons, `_redirects`, `robots.txt`).
 - **`src/components/`** — Reusable Astro components.
 - **`src/config/`** — i18n configuration: locale definitions (`siteSettings.ts`) and route translations (`routeTranslations.ts`).
 - **`src/content/blog/`** — Blog posts organized by locale (`en/`, `fr/`).
