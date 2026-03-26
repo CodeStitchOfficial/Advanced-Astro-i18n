@@ -21,15 +21,13 @@ const t = useTranslations(locale);
 
 <html lang={locale}>
 	<head>
-		<meta charset="utf-8" />
-
-		<!-- View Transitions support -->
-		<ClientRouter />
-
 		<!-- SEO Meta Tags -->
 		<Meta title={title} description={description}>
 			<slot name="schema" slot="schema" />
 		</Meta>
+
+		<!-- View Transitions support -->
+		<ClientRouter />
 
 		<!-- Sitewide Scripts -->
 		<script src="@assets/js/nav.js"></script>
