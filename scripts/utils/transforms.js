@@ -3,13 +3,10 @@
  * Extracted here to make them independently unit-testable.
  */
 
+import slugifyLib from "slugify";
+
 export function slugify(name) {
-	return name
-		.toLowerCase()
-		.replace(/[^a-z0-9\s-]/g, "")
-		.replace(/\s+/g, "-")
-		.replace(/-+/g, "-")
-		.replace(/^-+|-+$/g, "");
+	return slugifyLib(name, { lower: true, strict: true });
 }
 
 export function titleCase(name) {
