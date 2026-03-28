@@ -5,11 +5,9 @@
  *
  * Removes dark mode support from the Advanced Astro i18n kit.
  * This script:
- *   - Removes ThemeProvider component
- *   - Removes DarkMode components (MoonSun, ThemeSelect)
+ *   - Removes DarkMode components (DarkModeToggle, ThemeSelect)
  *   - Removes the dark mode toggle from Settings component
- *   - Removes the ThemeProvider import and usage from Meta component
- *   - Removes the inline dark mode script from BaseLayout
+ *   - Removes the inline dark mode scripts from BaseLayout
  *   - Sweeps all src .astro/.less/.css files for body.dark-mode CSS blocks
  *
  * Run with: npm run remove-dark-mode
@@ -153,25 +151,12 @@ function runRemoval() {
 	console.log("\nRemoving dark mode support...\n");
 
 	// ── Remove DarkMode components ────────────────────────────────────────────
-	remove("src/components/ThemeProvider");
 	remove("src/components/DarkMode");
 
 	// ── Update Settings to remove ThemeSelect import and usage ───────────────
 	const settingsPath = "src/components/Settings/Settings.astro";
 	replaceRegex(settingsPath, /import ThemeSelect from "@components\/DarkMode\/ThemeSelect\.astro";\r?\n/, "");
 	replaceRegex(settingsPath, /\t<ThemeSelect \/>\r?\n/, "");
-
-	// ── Remove ThemeProvider from Meta component ──────────────────────────────
-	replace(
-		"src/components/Meta/Meta.astro",
-		`import ThemeProvider from "@components/ThemeProvider/ThemeProvider.astro";\n`,
-		""
-	);
-	replace(
-		"src/components/Meta/Meta.astro",
-		"\n<!-- Dark / Light mode component -->\n<ThemeProvider />\n",
-		""
-	);
 
 	// ── Remove dark mode inline scripts from BaseLayout ──────────────────────
 	// FOUC prevention script (lives in <head>)

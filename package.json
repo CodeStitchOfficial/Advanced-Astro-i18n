@@ -1,7 +1,7 @@
 {
 	"name": "advanced-astro-i18n",
 	"type": "module",
-	"version": "3.0.1",
+	"version": "3.0.2",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -20,7 +20,9 @@
 		"astro": "^6.0.4",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.24",
-		"less": "^4.5.1",
+		"less": "^4.5.1"
+	},
+	"devDependencies": {
 		"slugify": "^1.6.8"
 	}
 }
