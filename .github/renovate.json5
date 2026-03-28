@@ -12,5 +12,4 @@
   labels: ["dependencies"],
   rangeStrategy: "bump",
   postUpdateOptions: ["npmDedupe"],
-  ignoreDeps: ["@astrolicious/i18n", "astro-integration-kit", "astro"],
 }
