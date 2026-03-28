@@ -1,5 +1,15 @@
 # Advanced Astro v6 i18n
 
+## 3.0.2
+
+### Patch changes
+
+- Migrated font loading to the Astro Fonts API; removed local font option in favour of Fontsource
+- Added `preload` to the primary font for faster first paint
+- Fixed `slugify()` edge case that could produce incorrect slugs when using diacritics (#53)
+- Fixed missing `<Font />` component import
+- Cleaned up `remove-dark-mode` script
+
 ## 3.0.1
 
 ### Patch changes
@@ -317,7 +327,8 @@ Refer to [Astro's documentation on Pagination](https://docs.astro.build/en/guide
 
 4.  **Breaking change: TypeScript configuration**
     <br> 📢 Reference: https://docs.astro.build/en/guides/upgrade-to/v5/#changed-typescript-configuration 1. Add the following `include` and `exclude` properties to your existing `tsconfig.json`:
-    ```
+
+    ````
     {
     "extends": "astro/tsconfigs/base",
     "include": [".astro/types.d.ts", "**/*"],
@@ -325,6 +336,7 @@ Refer to [Astro's documentation on Pagination](https://docs.astro.build/en/guide
     }
 
         ```
+    ````
 
 - Ensure that the other packages you may have added are up-to-date and compatible with Astro v5
 - Please refer to the [official Upgrade to v5 guide](https://docs.astro.build/en/guides/upgrade-to/v5/) if you run into any issues.
