@@ -15,9 +15,9 @@
 		"create-page": "node scripts/create-page.js"
 	},
 	"dependencies": {
-		"@astrojs/sitemap": "^3.7.1",
+		"@astrojs/sitemap": "^3.7.2",
 		"@fontsource-variable/roboto": "^5.2.10",
-		"astro": "^6.0.4",
+		"astro": "^6.0.8",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.4.24",
 		"less": "^4.5.1"
