@@ -19,10 +19,10 @@
 		"@fontsource-variable/roboto": "^5.2.10",
 		"astro": "^6.0.8",
 		"astro-icon": "^1.1.5",
-		"autoprefixer": "^10.4.24",
+		"autoprefixer": "^10.4.27",
 		"less": "^4.5.1"
 	},
 	"devDependencies": {
-		"slugify": "^1.6.8"
+		"slugify": "^1.6.9"
 	}
 }
