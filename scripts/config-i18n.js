@@ -566,6 +566,100 @@ async function patchContentFolders({ defaultLocale, newDefaultLocale, localesToA
 	}
 }
 
+// ─── Phase H: src/components/ ────────────────────────────────────────────────
+
+async function patchComponents({ localesToRemove, editOldDefaultToNewDefault, defaultLocale, newDefaultLocale }) {
+	const componentsDir = join(root, "src", "components");
+	if (!existsSync(componentsDir)) {
+		console.log("  Skipped src/components/ — directory not found");
+		return;
+	}
+
+	// Recursively find component files that may contain locale-specific imports
+	async function findComponentFiles(dir) {
+		const entries = await fs.readdir(dir, { withFileTypes: true });
+		const files = [];
+		for (const e of entries) {
+			const full = join(dir, e.name);
+			if (e.isDirectory()) files.push(...await findComponentFiles(full));
+			else if (/\.(astro|ts|tsx|js|jsx)$/.test(e.name)) files.push(full);
+		}
+		return files;
+	}
+
+	const files = await findComponentFiles(componentsDir);
+	let patchedCount = 0;
+
+	for (const filePath of files) {
+		let content = await fs.readFile(filePath, "utf-8");
+		if (!content.includes("@locales/")) continue;
+
+		let changed = false;
+
+		// Handle removed locales
+		for (const locale of localesToRemove) {
+			if (!content.includes(`@locales/${locale}/`)) continue;
+
+			// Capture variable names used in this locale's imports
+			const captureRe = new RegExp(`import (\\w+) from ["']@locales\\/${locale}\\/[^"']+["']`, "g");
+			const removedVarNames = [];
+			let m;
+			while ((m = captureRe.exec(content)) !== null) {
+				removedVarNames.push(m[1]);
+			}
+			if (removedVarNames.length === 0) continue;
+
+			// Remove entire import lines for this locale
+			content = content.replace(
+				new RegExp(`[ \\t]*import \\w+ from ["']@locales\\/${locale}\\/[^"']+["'];?[ \\t]*(?:\\r?\\n)?`, "g"),
+				"",
+			);
+			changed = true;
+
+			// Simplify ternary assignments that reference the removed variable
+			for (const removedVar of removedVarNames) {
+				// `= locale === "fr" ? frVar : enVar`  →  `= enVar`
+				content = content.replace(
+					new RegExp(`= locale === ["']${locale}["'] \\? ${removedVar} : (\\w+)`, "g"),
+					"= $1",
+				);
+				// `= locale === "fr" ? enVar : frVar`  →  `= enVar`
+				content = content.replace(
+					new RegExp(`= locale === ["']${locale}["'] \\? (\\w+) : ${removedVar}`, "g"),
+					"= $1",
+				);
+				// `= locale !== "fr" ? enVar : frVar`  →  `= enVar`
+				content = content.replace(
+					new RegExp(`= locale !== ["']${locale}["'] \\? (\\w+) : ${removedVar}`, "g"),
+					"= $1",
+				);
+			}
+		}
+
+		// Handle locale rename: update @locales/{old}/ → @locales/{new}/ in import paths
+		if (editOldDefaultToNewDefault && content.includes(`@locales/${defaultLocale}/`)) {
+			content = content.replace(
+				new RegExp(`@locales\\/${defaultLocale}\\/`, "g"),
+				`@locales/${newDefaultLocale}/`,
+			);
+			changed = true;
+		}
+
+		if (changed) {
+			// Clean up any double-blank lines left behind after import removal
+			content = content.replace(/\n{3,}/g, "\n\n");
+			await fs.writeFile(filePath, content, "utf-8");
+			const rel = filePath.replace(root + "/", "");
+			console.log(`  Patched ${rel}`);
+			patchedCount++;
+		}
+	}
+
+	if (patchedCount === 0) {
+		console.log("  No component files needed patching");
+	}
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function configI18n() {
@@ -734,6 +828,10 @@ async function configI18n() {
 	console.log("\nPhase G: src/content/...");
 	await patchContentFolders(ops);
 
+	// ── Phase H ───────────────────────────────────────────────────────────────
+	console.log("\nPhase H: src/components/...");
+	await patchComponents(ops);
+
 	// ── Create .i18n-configured marker ───────────────────────────────────────
 	try {
 		await fs.writeFile(join(root, ".i18n-configured"), JSON.stringify({ timestamp: new Date().toISOString(), version: "1" }, null, 2) + "\n", "utf-8");
@@ -751,9 +849,10 @@ async function configI18n() {
 	let step = 1;
 
 	if (isSingleLanguage) {
-		console.log(`${step++}. Components to update:`);
-		console.log("   - src/components/LanguageSwitch/TwoLocalesSelect.astro`");
-		console.log("   - src/components/LanguageSwitch/MultiLocalesSelect.astro`");
+		console.log(`${step++}. Components with locale-specific imports were auto-patched (Phase H).`);
+		console.log(`   Remaining manual updates:`);
+		console.log("   - src/components/LanguageSwitch/TwoLocalesSelect.astro");
+		console.log("   - src/components/LanguageSwitch/MultiLocalesSelect.astro");
 		console.log("   - src/components/Settings/Settings.astro (remove language switcher)");
 		console.log(`${step++}. Optional: Use wrapper functions from translationUtils:`);
 		console.log("   - getLocalizedRoute(locale, path) still works with single locale");
