@@ -17,6 +17,13 @@ try {
 	process.exit(0);
 } catch { /* proceed */ }
 
+try {
+	await fs.access(join(root, ".i18n-configured"));
+	console.log("i18n configuration has already been applied (.i18n-configured marker exists).");
+	console.log("To reconfigure, remove the .i18n-configured marker file and run again.");
+	process.exit(0);
+} catch { /* proceed */ }
+
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const LOCALE_RE = /^[a-z]{2}(-[A-Z]{2})?$/;
@@ -596,45 +603,65 @@ async function configI18n() {
 	console.log(`\nCurrent config: defaultLocale="${defaultLocale}", locales=[${currentLocales.join(", ")}], prefixDefaultLocale=${currentPrefixDefaultLocale}\n`);
 	console.log("NOTE: locale examples at https://github.com/cospired/i18n-iso-languages\n");
 
-	// ── Prompt 1: multiple languages? ─────────────────────────────────────────
-	const multiAnswer = (await ask("Do you plan to use multiple languages? (y/n): ")).trim().toLowerCase();
-	if (multiAnswer !== "y") {
-		rl.close();
-		console.log("\nExiting. No changes made.\n");
-		process.exit(0);
-	}
+	// ── Prompt 1: single language or multi? ──────────────────────────────────────
+	const singleLangAnswer = (await ask("Is this a single-language project? (y/n) [n]: ")).trim().toLowerCase();
+	const isSingleLanguage = singleLangAnswer === "y";
 
-	// ── Prompt 2: new default locale ──────────────────────────────────────────
 	let newDefaultLocale;
-	while (true) {
-		const answer = (await ask(`\nDefault locale? [${defaultLocale}]: `)).trim();
-		const val = answer === "" ? defaultLocale : answer.toLowerCase();
-		if (validateLocale(val)) { newDefaultLocale = val; break; }
-		console.log('  Invalid locale. Use a 2-letter code like "en", "fr", or "de".');
+	let newLocales;
+	let prefixDefaultLocale;
+
+	if (isSingleLanguage) {
+		// ── Single-language mode ──────────────────────────────────────────────
+		// Prompt for single language
+		while (true) {
+			const answer = (await ask(`\nSingle language code? [${defaultLocale}]: `)).trim();
+			const val = answer === "" ? defaultLocale : answer.toLowerCase();
+			if (validateLocale(val)) { newDefaultLocale = val; break; }
+			console.log('  Invalid locale. Use a 2-letter code like "en", "fr", or "de".');
+		}
+		newLocales = [newDefaultLocale];
+
+		// Single-language projects typically don't prefix the locale in URLs
+		prefixDefaultLocale = false;
+	} else {
+		// ── Multi-language mode ───────────────────────────────────────────────
+		// Prompt 2: new default locale
+		while (true) {
+			const answer = (await ask(`\nDefault locale? [${defaultLocale}]: `)).trim();
+			const val = answer === "" ? defaultLocale : answer.toLowerCase();
+			if (validateLocale(val)) { newDefaultLocale = val; break; }
+			console.log('  Invalid locale. Use a 2-letter code like "en", "fr", or "de".');
+		}
+
+		// Prompt 3: additional locales
+		let additionalLocales;
+		while (true) {
+			const answer = (await ask("Additional locales (comma-separated, e.g. fr, de): ")).trim();
+			if (!answer) { console.log("  Please enter at least one additional locale."); continue; }
+			const parsed = answer.split(",").map((l) => l.trim().toLowerCase()).filter(Boolean);
+			const invalid = parsed.filter((l) => !validateLocale(l));
+			if (invalid.length > 0) { console.log(`  Invalid: ${invalid.join(", ")}. Use 2-letter codes.`); continue; }
+			additionalLocales = parsed;
+			break;
+		}
+
+		// Build final locales list (default first, deduplicated)
+		newLocales = [...new Set([newDefaultLocale, ...additionalLocales])];
+
+		// Prompt 4: prefixDefaultLocale
+		const prefixPromptDefault = currentPrefixDefaultLocale ? "y" : "n";
+		const prefixAnswer = (await ask(`\nPrefix default locale in URLs? (/en/about vs /about) (y/n) [${prefixPromptDefault}]: `)).trim().toLowerCase();
+		prefixDefaultLocale = prefixAnswer === "" ? currentPrefixDefaultLocale : prefixAnswer === "y";
 	}
-
-	// ── Prompt 3: additional locales ──────────────────────────────────────────
-	let additionalLocales;
-	while (true) {
-		const answer = (await ask("Additional locales (comma-separated, e.g. fr, de): ")).trim();
-		if (!answer) { console.log("  Please enter at least one additional locale."); continue; }
-		const parsed = answer.split(",").map((l) => l.trim().toLowerCase()).filter(Boolean);
-		const invalid = parsed.filter((l) => !validateLocale(l));
-		if (invalid.length > 0) { console.log(`  Invalid: ${invalid.join(", ")}. Use 2-letter codes.`); continue; }
-		additionalLocales = parsed;
-		break;
-	}
-
-	// Build final locales list (default first, deduplicated)
-	const newLocales = [...new Set([newDefaultLocale, ...additionalLocales])];
-
-	// ── Prompt 4: prefixDefaultLocale ─────────────────────────────────────────
-	const prefixPromptDefault = currentPrefixDefaultLocale ? "y" : "n";
-	const prefixAnswer = (await ask(`\nPrefix default locale in URLs? (/en/about vs /about) (y/n) [${prefixPromptDefault}]: `)).trim().toLowerCase();
-	const prefixDefaultLocale = prefixAnswer === "" ? currentPrefixDefaultLocale : prefixAnswer === "y";
 
 	// ── Confirm ───────────────────────────────────────────────────────────────
 	console.log(`\nNew config:`);
+	if (isSingleLanguage) {
+		console.log(`  Mode:                 Single-language`);
+	} else {
+		console.log(`  Mode:                 Multi-language`);
+	}
 	console.log(`  defaultLocale:        "${newDefaultLocale}"`);
 	console.log(`  locales:              [${newLocales.join(", ")}]`);
 	console.log(`  prefixDefaultLocale:  ${prefixDefaultLocale}`);
@@ -648,6 +675,15 @@ async function configI18n() {
 	}
 
 	console.log();
+
+	// ── Create single-language marker if needed ───────────────────────────────
+	if (isSingleLanguage) {
+		try {
+			await fs.writeFile(join(root, ".i18n-single-language"), JSON.stringify({ locale: newDefaultLocale, version: "1" }, null, 2));
+		} catch (err) {
+			console.warn(`  Warning: Could not write .i18n-single-language marker: ${err.message}`);
+		}
+	}
 
 	// ── Determine operations ──────────────────────────────────────────────────
 	const { localesToAdd, localesToRemove, editOldDefaultToNewDefault } = determineOperations({
@@ -698,6 +734,13 @@ async function configI18n() {
 	console.log("\nPhase G: src/content/...");
 	await patchContentFolders(ops);
 
+	// ── Create .i18n-configured marker ───────────────────────────────────────
+	try {
+		await fs.writeFile(join(root, ".i18n-configured"), JSON.stringify({ timestamp: new Date().toISOString(), version: "1" }, null, 2) + "\n", "utf-8");
+	} catch (err) {
+		console.warn(`  Warning: Could not write .i18n-configured marker: ${err.message}`);
+	}
+
 	// ── Summary ───────────────────────────────────────────────────────────────
 	console.log("\n...done!\n");
 	console.log("=====================================");
@@ -706,10 +749,23 @@ async function configI18n() {
 
 	console.log("Next steps:");
 	let step = 1;
-	if (localesToAdd.length > 0) {
-		console.log(`${step++}. Translate strings in src/locales/${localesToAdd.join("/ and src/locales/")}/`);
-		console.log(`${step++}. Update route slugs in src/config/routeTranslations.ts`);
-		console.log(`${step++}. Review auto-generated localeMap values in src/config/siteSettings.ts`);
+
+	if (isSingleLanguage) {
+		console.log(`${step++}. Components to update:`);
+		console.log("   - src/components/LanguageSwitch/TwoLocalesSelect.astro`");
+		console.log("   - src/components/LanguageSwitch/MultiLocalesSelect.astro`");
+		console.log("   - src/components/Settings/Settings.astro (remove language switcher)");
+		console.log(`${step++}. Optional: Use wrapper functions from translationUtils:`);
+		console.log("   - getLocalizedRoute(locale, path) still works with single locale");
+		console.log("   - getLocalizedPathname(locale, url) still works with single locale");
+		console.log(`${step++}. Note: Keep locales array with single entry for internal consistency`);
+		console.log(`${step++}. Marker file created: .i18n-single-language and .i18n-configured`);
+	} else {
+		if (localesToAdd.length > 0) {
+			console.log(`${step++}. Translate strings in src/locales/${localesToAdd.join("/ and src/locales/")}/`);
+			console.log(`${step++}. Update route slugs in src/config/routeTranslations.ts`);
+			console.log(`${step++}. Review auto-generated localeMap values in src/config/siteSettings.ts`);
+		}
 	}
 	console.log(`${step++}. Run \`npm run dev\` to verify the site loads`);
 	console.log();

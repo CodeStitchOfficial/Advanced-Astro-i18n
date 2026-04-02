@@ -24,6 +24,11 @@ import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
 import { locales } from "@config/siteSettings";
 
+// Skip rendering if single-language project
+if (locales.length === 1) {
+	Astro.response.status = 200;
+}
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 
@@ -37,7 +42,7 @@ const options = await Promise.all(
 ---
 
 {
-	(
+	locales.length > 1 && (
 		<starlight-lang-select>
 			<Select
 				icon="mdi--language"

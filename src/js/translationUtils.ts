@@ -181,10 +181,31 @@ async function generateDynamicRouteTranslations(): Promise<RouteMap> {
 }
 
 /**
- * Switch a URL to another locale. Used by the language switcher and hreflang tags.
- * Takes the current URL and a target locale, returns the equivalent path in the target locale.
- * Now async because it needs to look up blog slug translations from content collections.
+ * For single-language projects: returns the single locale.
+ * Useful for template code that wants to call functions like getLocalizedRoute(getSingleLocale(), path)
  */
+export function getSingleLocale(): Locale {
+	if (locales.length !== 1) {
+		console.warn("getSingleLocale() called but project has multiple locales");
+	}
+	return locales[0];
+}
+
+/**
+ * For single-language projects: converts an absolute path to the current locale's localized version.
+ * In single-language mode, this is a no-op that just returns the path with trailing slash.
+ * In multi-language mode, use getLocalizedRoute() instead.
+ */
+export function getLocalizedRouteForCurrentLang(baseRoute: string): string {
+	if (locales.length === 1) {
+		const trimmed = baseRoute.replace(/^\/|\/$/g, "");
+		return trimmed === "" ? "/" : `/${trimmed}/`;
+	}
+	// Fallback to default locale for multi-language (should use getLocalizedRoute instead)
+	return getLocalizedRoute(defaultLocale, baseRoute);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 export async function getLocalizedPathname(
 	locale: Locale,
 	url: URL,
