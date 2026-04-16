@@ -5,12 +5,9 @@ import { getLocaleFromUrl, filterCollectionByLanguage, getPostSlug } from "@js/l
 import { useTranslations } from "@js/translationUtils";
 import { defaultLocale } from "@config/siteSettings";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/Banner/Banner.astro";
 import BlogFullArticle from "@components/BlogFullArticle/BlogFullArticle.astro";
 import FeaturedPost from "@components/FeaturedPost/FeaturedPost.astro";
 import { getBlogPostingSchema } from "@js/blogPostingSchema";
-
-import landingImage from "@assets/images/landing.jpg";
 
 export const getStaticPaths = (async () => {
 	const allPosts = await getCollection("blog");
@@ -38,8 +35,6 @@ const blogSchema = getBlogPostingSchema(post, locale, postUrl);
 
 >
   <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
-
-  <Banner title={t("blog:landing")} image={landingImage}/>
 
   <section class="main-content-wrapper">
     <!--Main content -->

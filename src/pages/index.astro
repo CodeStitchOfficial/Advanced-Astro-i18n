@@ -1,29 +1,34 @@
 ---
+// Utils
+import { getImage } from "astro:assets";
+
+// Components
 import BaseLayout from "@layouts/BaseLayout.astro";
+import BrowserLanguageRedirect from "@components/LanguageSwitch/BrowserLanguageRedirect.astro";
 import Hero from "@components/Hero/Hero.astro";
 import Services from "@components/Services/Services.astro";
 import SideBySide from "@components/SideBySide/SideBySide.astro";
-import SideBySideReverse from "@components/SideBySide/SideBySideReverse.astro";
-import Gallery from "@components/Gallery/Gallery.astro";
-import Testimonials from "@components/Testimonials/Testimonials.astro";
-import CTA from "@components/CTA/CTA.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-import BrowserLanguageRedirect from "@components/LanguageSwitch/BrowserLanguageRedirect.astro";
-import landingImage from "@assets/images/hero.jpg";
+import WhyChooseUs from "@components/WhyChooseUs/WhyChooseUs.astro";
+import SideBySide2 from "@components/SideBySide/SideBySide2.astro";
+import Pricing from "@components/Pricing/Pricing.astro";
+import Reviews from "@components/Reviews/Reviews.astro";
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+// Images
+import placeholderImg from "@assets/images/placeholder.jpg";
+
+const optimizedPlaceholder = await getImage({ src: placeholderImg, format: "webp" });
 ---
 
 <BrowserLanguageRedirect />
 
-<BaseLayout title={t("home:layout.title")} description={t("home:layout.description")}>
-	<Hero image={landingImage} />
-	<Services />
-	<SideBySide />
-	<SideBySideReverse />
-	<Gallery />
-	<Testimonials />
-	<CTA />
+<BaseLayout title="Welcome" description="Your new Astro site">
+	<main id="main">
+		<Hero image={optimizedPlaceholder} />
+		<Services />
+		<SideBySide />
+		<WhyChooseUs />
+		<SideBySide2 />
+		<Pricing />
+		<Reviews />
+	</main>
 </BaseLayout>

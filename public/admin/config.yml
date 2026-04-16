@@ -37,8 +37,8 @@ public_folder: "@assets/images/blog" # Same folder as above, but using a path al
 
 i18n:
     structure: multiple_folders
-    locales: [en, fr]
-    default_locale: en
+    locales: [nl]
+    default_locale: nl
 
 collections:
     - name: "blog"

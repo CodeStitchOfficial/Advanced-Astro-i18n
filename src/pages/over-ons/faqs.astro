@@ -1,0 +1,1016 @@
+---
+/**
+ * _template.astro
+ *
+ * Use this file as a starting point for new Dutch pages.
+ * Duplicate it, rename it, and add your content.
+ *
+ * To add this page to navigation:
+ * 1. Add the route key to src/data/navData.json
+ * 2. Add the translation key to src/config/routeTranslations.ts
+ * 3. Add the label to src/locales/nl/common.json
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getLocaleFromUrl } from "@js/localeUtils";
+import { useTranslations } from "@js/translationUtils";
+
+const locale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(locale);
+---
+
+<BaseLayout
+	title="Faqs"
+	description="Meta description for the page"
+>
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-843">
+    <div class="cs-container">
+        <span class="cs-int-title">Interior Page</span>
+    </div>
+    <!--Background Image-->
+    <picture class="cs-background" aria-hidden="true">
+        <!--Mobile Image-->
+        <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga-m.jpg">
+        <!--Tablet and above Image-->
+        <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg">
+        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg" alt="yoga" width="1280" height="568">
+    </picture>
+    <!--Change the svg path fill color to whatever color the section below is so you can match it and create the illusion it is all one piece-->
+    <svg class="cs-wave" width="1920" height="179" viewBox="0 0 1920 179" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1920 179V91.3463C1835.33 91.3463 1715.47 76.615 1549.2 32.9521C1299.48 -32.3214 1132.77 12.1006 947.32 61.5167C810.762 97.9044 664.042 137 466.533 137C331.607 137 256.468 123.447 188.082 111.113C130.974 100.812 78.5746 91.3609 0 91.3609V179H1920Z" fill="white"/>
+    </svg>
+</div>
+
+<!-- ============================================ -->
+<!--                    FAQ                       -->
+<!-- ============================================ -->
+
+<section id="faq-2066">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Frequently Asked Questions</span>
+            <h2 class="cs-title">Frequently Asked Questions</h2>
+            <p class="cs-text">
+                Orci eu lobortis elementum nibh tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Luctus accumsan tortor posuere ac ut consequat semper. Et pharetra pharetra massa massa ultricies mi quis.
+            </p>
+        </div>
+        <div class="cs-flex-group">
+            <div class="cs-button-group">
+                <button class="cs-option" data-filter="one">
+                    Dental Care
+                </button>
+                <button class="cs-option" data-filter="two">
+                    Cosmetic Dentistry
+                </button>
+                <button class="cs-option" data-filter="three">
+                    Dental Technology
+                </button>
+                <button class="cs-option" data-filter="four">
+                    Smile Care
+                </button>
+                <button class="cs-option" data-filter="five">
+                    Teeth Whitening
+                </button>
+            </div>
+            <div class="cs-wrapper">
+                <ul class="cs-faq-group" data-category="one">
+                    <!-- Active class added as default -->
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How often should I have dental check-ups and cleanings?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                        </p>
+
+
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What is the importance of fluoride treatments, and are they necessary for adults?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Are dental sealants only for children, or can adults benefit from them too?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How can I improve my at-home oral hygiene routine?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What are the early signs of gum disease, and how can I prevent it?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                        </p>
+                    </li>
+                </ul>
+                <ul class="cs-faq-group cs-hidden" data-category="two">
+                    <!-- Active class added as default -->
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How often should I have dental check-ups and cleanings?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What is the importance of fluoride treatments, and are they necessary for adults?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Are dental sealants only for children, or can adults benefit from them too?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How can I improve my at-home oral hygiene routine?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What are the early signs of gum disease, and how can I prevent it?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                        </p>
+                    </li>
+                </ul>
+                <ul class="cs-faq-group cs-hidden" data-category="three">
+                    <!-- Active class added as default -->
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How often should I have dental check-ups and cleanings?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What is the importance of fluoride treatments, and are they necessary for adults?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Are dental sealants only for children, or can adults benefit from them too?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How can I improve my at-home oral hygiene routine?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What are the early signs of gum disease, and how can I prevent it?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                        </p>
+                    </li>
+                </ul>
+                <ul class="cs-faq-group cs-hidden" data-category="four">
+                    <!-- Active class added as default -->
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How often should I have dental check-ups and cleanings?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What is the importance of fluoride treatments, and are they necessary for adults?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Are dental sealants only for children, or can adults benefit from them too?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How can I improve my at-home oral hygiene routine?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What are the early signs of gum disease, and how can I prevent it?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                        </p>
+                    </li>
+                </ul>
+                <ul class="cs-faq-group cs-hidden" data-category="five">
+                    <!-- Active class added as default -->
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How often should I have dental check-ups and cleanings?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What is the importance of fluoride treatments, and are they necessary for adults?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Are dental sealants only for children, or can adults benefit from them too?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                How can I improve my at-home oral hygiene routine?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                What are the early signs of gum disease, and how can I prevent it?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="cs-cta">
+            <div class="cs-flex">
+                <h3 class="cs-cta-title">Your Queries Not Listed Below</h3>
+                <p class="cs-cta-text">
+                    Orci eu lobortis elementum nibh tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo.
+                </p>
+            </div>
+            <a href="/contact" class="cs-button-solid">Submit Your Query</a>
+            <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/white-waves3.svg" alt="graphic" height="161" width="1920" loading="lazy" decoding="async">
+        </div>
+    </div>
+</section>
+
+
+</BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #banner-843 {
+        /* 175px - 260px top */
+        padding: clamp(10.9375rem, 20vw, 16.25rem) (16/16rem)
+            clamp(6.25rem, 14vw, 12vw);
+        /* clips svg wave from causing overflow issues */
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            gap: (16/16rem);
+        }
+
+        .cs-int-title {
+            /* 39px - 61px */
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            text-align: inherit;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+            position: relative;
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                /* background color overlay */
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: #1a1a1a;
+                opacity: 0.64;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                /* Makes img tag act as a background image */
+                object-fit: cover;
+            }
+        }
+
+        .cs-wave {
+            /* we're stretching the svg wider than the viewport so it's taller and has more of a presence */
+            width: (768/16rem);
+            height: auto;
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: -1px;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #banner-843 {
+        .cs-wave {
+            width: 100%;
+            left: 0;
+            transform: none;
+        }
+    }
+}
+
+/* Dark Mode */
+@media only screen and (min-width: 0rem) {
+    body.dark-mode {
+        #banner-843 {
+            .cs-wave {
+                path {
+                    fill: var(--dark);
+                }
+            }
+        }
+    }
+}
+
+/*-- -------------------------- -->
+<---            FAQ             -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #faq-2066 {
+        padding: var(--sectionPadding);
+        overflow: hidden;
+        position: relative;
+
+        .cs-container {
+            width: 100%;
+            max-width: (704/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 6vw, 4rem);
+            position: relative;
+            z-index: 1;
+        }
+
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: center;
+        }
+
+        .cs-flex-group {
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: (32/16rem);
+            position: relative;
+        }
+
+        .cs-button-group {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            align-content: flex-start;
+            flex-wrap: wrap;
+            gap: (12/16rem);
+            align-self: stretch;
+        }
+
+        .cs-option {
+            /* 16px - 20px */
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: 700;
+            /* 50px - 72px */
+            line-height: 1.2em;
+            /* prevents border from affecting height and width */
+            box-sizing: border-box;
+            padding: (12/16rem);
+            background-color: #fff;
+            color: var(--bodyTextColor);
+            border: 1px solid #bababa;
+            border-radius: (8/16rem);
+            position: relative;
+            z-index: 1;
+            transition: border-color 0.3s;
+
+            &:before {
+                /* background color */
+                content: "";
+                width: 100%;
+                height: 100%;
+                background: var(--primary);
+                opacity: 0;
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: opacity 0.3s;
+            }
+
+            &:hover {
+                &:hover {
+                    cursor: pointer;
+                    border-color: var(--primary);
+
+                    &:before {
+                        opacity: 0.1;
+                    }
+                }
+            }
+
+            &.cs-active {
+                color: var(--primary);
+                border-color: var(--primary);
+
+                &:before {
+                    opacity: 0.1;
+                }
+            }
+        }
+
+        .cs-wrapper {
+            position: relative;
+        }
+
+        .cs-faq-group {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: (8/16rem);
+            transform-style: preserve-3d;
+            perspective: 900px;
+            transition:
+                transform 0.7s,
+                opacity 0.3s,
+                visibility 0.5s,
+                top 0.3s,
+                left 0.3s;
+            /* makes the transfrom scaling orgin the top left corner, dictates the direction by which the scale transforms animate towards */
+            transform-origin: top;
+
+            &.cs-hidden {
+                /* prevents the mouse from interacting with it */
+                pointer-events: none;
+                /* hidden galleries have a 0 opacity, and we animate the opacity to 1 when they become active */
+                opacity: 0;
+                /* by using visibility:hidden instead of display:none, we can see the animations from the opacity and transforms, display:none won't render animations. */
+                visibility: hidden;
+                position: absolute;
+                /* this top and left value help control the animation, by setting it to position absolute and left 0, the FAQ won't fly off screen to the left, it will stop its position to be at the left edge of the .cs-flex-group (left: 0). Same for the bottom:0 value, the FAQ won't go past that position when it animates */
+                top: 0;
+                left: 0;
+                /* prevents the hidden galleries from overflowing the section, and makes a nice animations to transition to and from */
+                transform: scaleY(0);
+
+                .cs-faq-item {
+                    opacity: 0;
+                    transform: rotateX(270deg);
+                }
+            }
+        }
+
+        .cs-faq-item {
+            list-style: none;
+            width: 100%;
+            /* clips all corners of the button that overlap the rounded border */
+            overflow: hidden;
+            opacity: 1;
+            border-bottom: 1px solid #e8e8e8;
+            top: 0;
+            transform: rotateX(0deg);
+            transition:
+                transform 0.6s,
+                opacity 0.3s;
+
+            &:nth-of-type(2) {
+                transition-delay: 0.1s;
+            }
+            &:nth-of-type(3) {
+                transition-delay: 0.2s;
+            }
+            &:nth-of-type(4) {
+                transition-delay: 0.3s;
+            }
+            &:nth-of-type(5) {
+                transition-delay: 0.4s;
+            }
+            &:nth-of-type(6) {
+                transition-delay: 0.5s;
+            }
+            &:nth-of-type(7) {
+                transition-delay: 0.6s;
+            }
+            &:nth-of-type(8) {
+                transition-delay: 0.7s;
+            }
+            &:nth-of-type(9) {
+                transition-delay: 0.8s;
+            }
+            &:nth-of-type(10) {
+                transition-delay: 0.9s;
+            }
+
+            &:last-of-type {
+                border-bottom: none;
+            }
+
+            &.active {
+                .cs-button {
+                    color: var(--primary);
+                    &:before {
+                        background-color: var(--primary);
+                        transform: rotate(315deg);
+                    }
+                    &:after {
+                        background-color: var(--primary);
+                        transform: rotate(-315deg);
+                    }
+                }
+                .cs-item-p {
+                    height: auto;
+                    /* 20px - 24px bottom */
+                    /* 16px - 24px left & right */
+                    padding: 0 0 (24/16rem) 0;
+                    opacity: 1;
+                }
+            }
+        }
+
+        .cs-button {
+            /* 16px - 20px */
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            font-weight: bold;
+            line-height: 1.2em;
+            text-align: left;
+            width: 100%;
+            padding: (24/16rem) 0;
+            background-color: #fff;
+            color: var(--headerColor);
+            border: none;
+            display: block;
+            position: relative;
+            transition:
+                background-color 0.3s,
+                color 0.3s;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &:before {
+                /* left line */
+                content: "";
+                width: (8/16rem);
+                height: (2/16rem);
+                background-color: var(--headerColor);
+                opacity: 1;
+                border-radius: 50%;
+                display: block;
+                position: absolute;
+                top: 50%;
+                right: (24/16rem);
+                transform: rotate(45deg);
+                transition: transform 0.5s;
+                /* animate the transform from the left side of the x axis, and the center of the y */
+                transform-origin: left center;
+            }
+
+            &:after {
+                /* right line */
+                content: "";
+                width: (8/16rem);
+                height: (2/16rem);
+                background-color: var(--headerColor);
+                opacity: 1;
+                border-radius: 50%;
+                display: block;
+                position: absolute;
+                top: 50%;
+                right: (21/16rem);
+                transform: rotate(-45deg);
+                transition: transform 0.5s;
+                /* animate the transform from the right side of the x axis, and the center of the y */
+                transform-origin: right center;
+            }
+        }
+
+        .cs-button-text {
+            width: 80%;
+            display: block;
+        }
+
+        .cs-item-p {
+            /* 14px - 16px */
+            font-size: clamp(0.875rem, 1.5vw, 1rem);
+            line-height: 1.5em;
+            width: 90%;
+            height: 0;
+            margin: 0;
+            padding: 0;
+            /* clips the text so it doesn't show up */
+            overflow: hidden;
+            color: var(--bodyTextColor);
+            opacity: 0;
+            transition:
+                opacity 0.3s,
+                padding-bottom 0.3s;
+        }
+
+        .cs-cta {
+            text-align: center;
+            width: 100%;
+            margin: 0;
+            /* 32px - 40px */
+            padding: clamp(2rem, 4vw, 2.5rem);
+            border: 1px solid var(--primary);
+            border-radius: (16/16rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+
+            &:before {
+                content: "";
+                width: 100%;
+                height: 100%;
+                background: var(--primary);
+                opacity: 0.1;
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: opacity 0.3s;
+            }
+        }
+
+        .cs-flex {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cs-cta-title {
+            font-size: (31/16rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            margin: 0 0 (16/16rem) 0;
+            color: var(--headerColor);
+        }
+
+        .cs-cta-text {
+            font-size: (16/16rem);
+            line-height: 1.5em;
+            margin: 0 0 (32/16rem) 0;
+            color: var(--bodyTextColor);
+        }
+
+        .cs-button-solid {
+            font-size: (16/16rem);
+            font-weight: 700;
+            /* 46px - 56px */
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-align: center;
+            text-decoration: none;
+            min-width: (208/16rem);
+            margin: 0;
+            /* prevents padding from adding to the width */
+            box-sizing: border-box;
+            padding: 0 (32/16rem);
+            background-color: var(--primary);
+            color: #fff;
+            border-radius: (4/16rem);
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+
+            &:before {
+                content: '';
+                width: 0%;
+                height: 100%;
+                background: #000;
+                opacity: 1;
+                border-radius: (4/16rem);
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: width 0.3s;
+            }
+
+            &:hover {
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+
+        .cs-graphic {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            z-index: -1;
+            transform: translateX(-50%);
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #faq-2066 {
+        .cs-container {
+            max-width: (1280/16rem);
+        }
+
+        .cs-button-group {
+            flex-direction: row;
+        }
+    }
+}
+
+/* Small Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #faq-2066 {
+        .cs-option {
+            padding: (12/16rem) (24/16rem);
+        }
+
+        .cs-cta {
+            text-align: left;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: (64/16rem);
+        }
+
+        .cs-cta-text {
+            margin: 0;
+        }
+
+        .cs-button-solid {
+            flex-shrink: 0;
+        }
+    }
+}
+
+/* Dark Mode */
+@media only screen and (min-width: 0rem) {
+    body.dark-mode {
+        #faq-2066 {
+            background-color: var(--dark);
+
+            .cs-title,
+            .cs-item-p,
+            .cs-text {
+                color: var(--bodyTextColorWhite);
+            }
+
+            .cs-text, .cs-cta-text {
+                opacity: 0.8;
+            }
+
+            .cs-option {
+                background-color: transparent;
+                color: var(--bodyTextColorWhite);
+                border-color: rgba(255, 255, 255, 0.3);
+
+                &.cs-active, &:hover {
+                    color: var(--secondaryLight);
+                    border-color: var(--secondaryLight);
+                }
+            }
+
+            .cs-item {
+                border-color: rgba(255, 255, 255, .2);
+            }
+
+            .cs-faq-item {
+                transition: border-color .3s, transform .6s;
+                border-color: rgba(255, 255, 255, 0.3);
+                &.active {
+                    .cs-button {
+                        color: var(--secondaryLight);
+
+                        &:before,
+                        &:after {
+                            background-color: #fff;
+                        }
+                    }
+
+                    .cs-item-p {
+                        /* 20px - 24px */
+                        padding-top: clamp(1.25rem, 1.3vw, 1.5rem);
+                    }
+                }
+
+                &:nth-of-type(2) {
+                    transition-delay: 0.1s;
+                }
+                &:nth-of-type(3) {
+                    transition-delay: 0.2s;
+                }
+                &:nth-of-type(4) {
+                    transition-delay: 0.3s;
+                }
+                &:nth-of-type(5) {
+                    transition-delay: 0.4s;
+                }
+                &:nth-of-type(6) {
+                    transition-delay: 0.5s;
+                }
+                &:nth-of-type(7) {
+                    transition-delay: 0.6s;
+                }
+                &:nth-of-type(8) {
+                    transition-delay: 0.7s;
+                }
+                &:nth-of-type(9) {
+                    transition-delay: 0.8s;
+                }
+                &:nth-of-type(10) {
+                    transition-delay: 0.9s;
+                }
+
+                &:hover {
+                    transition: border-color 0.3s;
+                }
+            }
+
+            .cs-button {
+                background-color: var(--dark);
+                color: var(--bodyTextColorWhite);
+                &:before,
+                &:after {
+                    background-color: var(--bodyTextColorWhite);
+                }
+            }
+
+            .cs-cta-title, .cs-cta-text {
+                color: var(--bodyTextColorWhite);
+            }
+
+            .cs-graphic {
+                display: none;
+            }
+        }
+    }
+}
+
+</style>

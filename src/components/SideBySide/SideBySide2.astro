@@ -1,0 +1,207 @@
+---
+// SideBySide component from index.astro (#sbs section)
+
+// Utils
+import { Picture } from "astro:assets";
+
+// Images
+import construction from "@assets/images/services/construction.jpg";
+---
+
+<!-- ============================================ -->
+<!--                Side By Side                  -->
+<!-- ============================================ -->
+
+<section id="sbs-1010">
+    <div class="cs-container">
+        <div class="cs-image-group">
+            <picture class="cs-picture">
+                <!--Desktop-->
+                <source media="(min-width: 1024px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/SideBySide/beef2.jpg">
+                <!--Tablet-->
+                <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/SideBySide/beef2-tablet.jpg">
+                <!--Mobile-->
+                <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/SideBySide/beef2-m.jpg">
+                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/SideBySide/beef2.jpg" alt="beef" width="522" height="461" aria-hidden="true">
+            </picture>
+        </div>
+        <div class="cs-content">
+            <span class="cs-topper">Our Story</span>
+            <h2 class="cs-title">Who We Are</h2>
+            <p class="cs-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+                <!--Creates the space between p tags on mobile-->
+                <span class="cs-spacer"></span>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.
+            </p>
+            <a href="" class="cs-button-solid">Reserve Your Table</a>
+        </div>
+    </div>
+</section>
+
+
+<style lang="less">
+/*-- -------------------------- -->
+<---       Side By Side         -->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+    #sbs-1010 {
+        padding: var(--sectionPadding);
+        background-color: #1a1a1a;
+
+        .cs-container {
+            width: 100%;
+            /* changes to 1280px at desktop */
+            max-width: (800/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* 48px - 64px */
+            gap: clamp(3rem, 6vw, 4rem);
+        }
+
+        .cs-content {
+            /* set text align to left if content needs to be left aligned */
+            text-align: left;
+            width: 100%;
+            /* changes to 522px at desktop */
+            max-width: (578/16rem);
+            margin-top: (-16/16rem);
+            display: flex;
+            flex-direction: column;
+            /* centers content horizontally, set to flex-start to left align */
+            align-items: flex-start;
+        }
+
+        .cs-title,
+        .cs-text {
+            color: var(--bodyTextColorWhite);
+        }
+
+        .cs-text {
+            margin-bottom: (16/16rem);
+            opacity: 0.8;
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
+
+        .cs-spacer {
+            width: 100%;
+            /* 16px - 24px */
+            height: clamp(1rem, 3vw, 1.5rem);
+            display: block;
+        }
+
+        .cs-image-group {
+            width: 100%;
+        }
+
+        .cs-picture {
+            width: 100%;
+            height: (261/16rem);
+            border: 12px solid #fff;
+            border-radius: 0 2rem;
+            background-color: #fff;
+            display: block;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            position: relative;
+            transition: border-color .3s,transform .3s;
+
+            img {
+                border-radius: 0 1.25rem;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                transition: transform .3s;
+                /* makes it behave like a background image */
+                object-fit: cover;
+            }
+
+            &:hover {
+                border-color: var(--primary);
+                transform: scale(1.025);
+            }
+        }
+    }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 48rem) {
+    #sbs-1010 {
+        .cs-container {
+            align-items: flex-start;
+        }
+        .cs-flex-group {
+            flex-direction: row;
+        }
+
+        .cs-text {
+            columns: 2;
+            column-gap: (24/16rem);
+        }
+
+        .cs-spacer {
+            display: none;
+        }
+    }
+}
+
+/* Small Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+    #sbs-1010 {
+        .cs-container {
+            max-width: (1280/16rem);
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            /* 100px - 200px */
+            gap: clamp(6.25rem, 13vw, 12.5rem);
+        }
+
+        .cs-image-group {
+            max-width: (542/16rem);
+            display: flex;
+            justify-content: flex-end;
+            position: relative;
+        }
+
+        .cs-picture {
+            height: (460/16rem);
+            aspect-ratio: initial;
+        }
+
+        .cs-seal {
+            /* 104 - 190px */
+            width: clamp(6.5rem, 13vw, 11.875rem);
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            /* subtract 12px (.75rem) to account for the border */
+            right: ~"calc((clamp(6.5rem, 13vw, 11.875rem)*-.5) + -.75rem)";
+            transform: translateY(-50%);
+        }
+
+        .cs-content {
+            flex: none;
+            width: 54%;
+            max-width: (542/16rem);
+        }
+    }
+}
+
+/* Dark Mode */
+@media only screen and (min-width: 0rem) {
+    body.dark-mode {
+        #sbs-1010 {
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+    }
+}
+
+</style>

@@ -3,70 +3,83 @@
 		"key": "home",
 		"url": "/",
 		"label": {
-			"en": "Home",
-			"fr": "Accueil"
+			"nl": "Home",
+			"en": "Home"
 		},
 		"children": []
 	},
 	{
-		"key": "about",
-		"url": "/about",
+		"key": "over-ons",
+		"url": "/over-ons",
 		"label": {
-			"en": "About",
-			"fr": "À propos"
-		},
-		"children": []
-	},
-	{
-		"key": "projects",
-		"label": {
-			"en": "Projects",
-			"fr": "Portfolio"
-		},
+			"nl": "Over ons",
+			"en": "About us"
+			},
 		"children": [
 			{
-				"key": "project-1",
-				"url": "/projects/project-1/",
+				"key": "over-ons",
+				"url": "/over-ons",
 				"label": {
-					"en": "Project 1",
-					"fr": "Projet 1"
-				}
+					"nl": "Over ons",
+					"en": "About us"
+				},
+				"children": []
 			},
 			{
-				"key": "project-2",
-				"url": "/projects/project-2/",
+				"key": "faqs",
+				"url": "/over-ons/faqs",
 				"label": {
-					"en": "Project 2",
-					"fr": "Projet 2"
-				}
+					"nl": "Veelgestelde vragen",
+					"en": "Frequently asked questions"
+				},
+				"children": []
 			}
 		]
 	},
 	{
-		"key": "blog",
-		"url": "/blog",
+		"key": "diensten",
+		"url": "/diensten",
 		"label": {
-			"en": "Blog",
-			"fr": "Blog"
-		},
-		"children": []
+			"nl": "Diensten",
+			"en": "Services"
+			},
+		"children": [
+			{
+				"key": "web-development",
+				"url": "/diensten/web-development",
+				"label": {
+					"nl": "Webontwikkeling",
+					"en": "Web Development"
+				},
+				"children": []
+			},
+			{
+				"key": "seo",
+				"url": "/diensten/seo",
+				"label": {
+					"nl": "Zoekmachinemarketing",
+					"en": "SEO"
+				},
+				"children": []
+			}
+		]
 	},
 	{
-		"key": "reviews",
-		"url": "/reviews",
+		"key": "pricing",
+		"url": "/prijzen",
 		"label": {
-			"en": "Reviews",
-			"fr": "Avis"
-		},
+			"nl": "Prijzen",
+			"en": "Pricing"
+			},
 		"children": []
 	},
 	{
 		"key": "contact",
 		"url": "/contact",
 		"label": {
-			"en": "Contact",
-			"fr": "Contact"
-		},
+			"nl": "Contact",
+			"en": "Contact"
+			},
 		"children": []
 	}
 ]
