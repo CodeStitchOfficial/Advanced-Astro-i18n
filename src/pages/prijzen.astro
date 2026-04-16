@@ -1,22 +1,10 @@
 ---
-/**
- * _template.astro
- *
- * Use this file as a starting point for new Dutch pages.
- * Duplicate it, rename it, and add your content.
- *
- * To add this page to navigation:
- * 1. Add the route key to src/data/navData.json
- * 2. Add the translation key to src/config/routeTranslations.ts
- * 3. Add the label to src/locales/nl/common.json
- */
 import BaseLayout from "@layouts/BaseLayout.astro";
-
 ---
 
 <BaseLayout
-	title="Prijzen"
-	description="Meta description for the page"
+	title="Prijzen webdesign voor het MKB | nise.nl"
+	description="Bekijk de tarieven van nise.nl. Partner €150/maand of eenmalig vanaf €3.500. Inclusief hosting en onbeperkte aanpassingen. Geen aanbetaling."
 >
 <!-- ============================================ -->
 <!--                   Banner                     -->
@@ -24,7 +12,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
 <div id="banner-843">
     <div class="cs-container">
-        <span class="cs-int-title">Interior Page</span>
+        <h1 class="cs-int-title">Prijzen</h1>
     </div>
     <!--Background Image-->
     <picture class="cs-background" aria-hidden="true">
@@ -32,9 +20,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
         <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga-m.jpg">
         <!--Tablet and above Image-->
         <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg">
-        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg" alt="yoga" width="1280" height="568">
+        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg" alt="nise.nl tarieven webdesign" width="1280" height="568">
     </picture>
-    <!--Change the svg path fill color to whatever color the section below is so you can match it and create the illusion it is all one piece-->
     <svg class="cs-wave" width="1920" height="179" viewBox="0 0 1920 179" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M1920 179V91.3463C1835.33 91.3463 1715.47 76.615 1549.2 32.9521C1299.48 -32.3214 1132.77 12.1006 947.32 61.5167C810.762 97.9044 664.042 137 466.533 137C331.607 137 256.468 123.447 188.082 111.113C130.974 100.812 78.5746 91.3609 0 91.3609V179H1920Z" fill="white"/>
     </svg>
@@ -47,126 +34,126 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 <section id="pricing-357">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Pricing</span>
-            <h2 class="cs-title">It’s Easy to Get Started</h2>
+            <span class="cs-topper">Tarieven</span>
+            <h2 class="cs-title">Eenvoudig starten, zonder gedoe</h2>
             <p class="cs-text">
-                At Stitch Cleaning Service, let us help you solve problems so that you can focus on your mission. We support businesses through periods of expansion, succession.
+                Als klein bedrijf kennen we de drempel van een grote investering vooraf. Onze pakketten zijn zo opgezet dat iedereen kan starten — groot of klein budget.
             </p>
         </div>
         <ul class="cs-card-group">
-            <!-- Option 1 -->
+            <!-- Optie 1: Eenmalig -->
             <li class="cs-item">
-                <h3 class="cs-h3">Starter</h3>
+                <h3 class="cs-h3">Eenmalig</h3>
                 <p class="cs-item-text">
-                    Perfect to get started.
+                    Liever één keer betalen? Dat kan. Kies precies wat je nodig hebt.
                 </p>
                 <div class="cs-option-group">
-                    <span class="cs-price">$39<span class="cs-small">/month</span></span>
+                    <span class="cs-price">€3.500<span class="cs-small"> eenmalig</span></span>
                 </div>
-                <span class="cs-included">Package Includes</span>
+                <span class="cs-included">Inbegrepen</span>
                 <ul class="cs-ul">
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        All available starter feature
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Design &amp; development
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Home service 24/7
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Hosting €25/maand
                     </li>
                     <li class="cs-li cs-disabled">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Customer agent service
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Onbeperkte aanpassingen (+€50/mnd)
                     </li>
                     <li class="cs-li cs-disabled">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Professional cleaner
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Extra pagina's (+€150 per stuk)
                     </li>
                     <li class="cs-li cs-disabled">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        2 bed room cleaning
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Blog-module (+€300)
                     </li>
                     <li class="cs-li cs-disabled">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        2 bed, living room cleaning
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Google Business profiel review
                     </li>
                 </ul>
-                <a href="/basic.html" class="cs-button-solid">Get Started</a>
+                <a href="/contact/" class="cs-button-solid">Aan de slag</a>
             </li>
-            <!-- Option 2 -->
+            <!-- Optie 2: Partner (populair) -->
             <li class="cs-item cs-popular">
-                <h3 class="cs-h3">Starter</h3>
+                <h3 class="cs-h3">Partner</h3>
                 <p class="cs-item-text">
-                    Perfect to get started.
+                    Snel online zonder aanbetaling. Inclusief onbeperkte updates en dagelijkse support.
                 </p>
                 <div class="cs-option-group">
-                    <span class="cs-price">$69<span class="cs-small">/month</span></span>
+                    <span class="cs-price">€150<span class="cs-small">/maand</span></span>
                 </div>
-                <span class="cs-included">Package Includes</span>
+                <span class="cs-included">Inbegrepen</span>
                 <ul class="cs-ul">
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        All available starter feature
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Design &amp; development
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Home service 24/7
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Hosting inbegrepen
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Customer agent service
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Onbeperkte aanpassingen en updates
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Professional cleaner
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Tot 5 pagina's
                     </li>
-                    <li class="cs-li cs-disabled">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        2 bed room cleaning
+                    <li class="cs-li">
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Directe ondersteuning, elke werkdag
                     </li>
-                    <li class="cs-li cs-disabled">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        2 bed, living room cleaning
+                    <li class="cs-li">
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Google Business profiel review
                     </li>
                 </ul>
-                <a href="/basic.html" class="cs-button-solid">Get Started</a>
+                <a href="/contact/" class="cs-button-solid">Aan de slag</a>
             </li>
-            <!-- Option 3 -->
+            <!-- Optie 3: Partner Plus -->
             <li class="cs-item">
-                <h3 class="cs-h3">Starter</h3>
+                <h3 class="cs-h3">Partner Plus</h3>
                 <p class="cs-item-text">
-                    Perfect to get started.
+                    Meer pagina's, een blog en extra functionaliteit. Voor bedrijven die willen groeien.
                 </p>
                 <div class="cs-option-group">
-                    <span class="cs-price">$99<span class="cs-small">/month</span></span>
+                    <span class="cs-price">€250<span class="cs-small">/maand</span></span>
                 </div>
-                <span class="cs-included">Package Includes</span>
+                <span class="cs-included">Inbegrepen</span>
                 <ul class="cs-ul">
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        All available starter feature
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Alles uit Partner, plus:
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Home service 24/7
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Tot 10 pagina's
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Customer agent service
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Blog-module inbegrepen
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        Professional cleaner
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Één maatwerk feature of koppeling
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        2 bed room cleaning
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Redesign optie na 3 jaar
                     </li>
                     <li class="cs-li">
-                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="code stitch icon" width="20" height="20">
-                        2 bed, living room cleaning
+                        <img class="cs-li-img" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/Pricing/check-blue.svg" alt="vinkje" width="20" height="20">
+                        Google Business profiel review
                     </li>
                 </ul>
-                <a href="/basic.html" class="cs-button-solid">Get Started</a>
+                <a href="/contact/" class="cs-button-solid">Aan de slag</a>
             </li>
         </ul>
     </div>
@@ -179,53 +166,53 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 <section id="steps-1171">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Our Work Process</span>
-            <h2 class="cs-title">How To Get Started</h2>
+            <span class="cs-topper">Zo werkt het</span>
+            <h2 class="cs-title">Van kennismaking tot lancering</h2>
             <p class="cs-text">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Culpa libero sint hic accusantium exercitationem, voluptatem officia quaerat velit quis ullam?
+                Wij houden het simpel. Geen ingewikkeld intake-proces, geen weken wachten. In vier stappen staat jouw website online.
             </p>
         </div>
         <ul class="cs-card-group">
             <li class="cs-item">
                 <picture class="cs-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/lightbulb.svg" alt="icon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
+                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/lightbulb.svg" alt="icoon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
                 </picture>
-                <h3 class="cs-h3">Identify Issues</h3>
+                <h3 class="cs-h3">Kennismaking</h3>
                 <p class="cs-item-p">
-                    Extensible for web iterate process before meta services impact with employee engagement strategies.
+                    We bespreken je wensen, doelen en budget. Geen vrijblijvend praatje — we kijken direct wat het beste bij jou past.
                 </p>
             </li>
             <li class="cs-item">
                 <picture class="cs-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/puzzle.svg" alt="icon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
+                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/puzzle.svg" alt="icoon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
                 </picture>
-                <h3 class="cs-h3">Prepare Solution</h3>
+                <h3 class="cs-h3">Ontwerp</h3>
                 <p class="cs-item-p">
-                    Extensible for web iterate process before meta services impact with employee engagement strategies.
+                    We ontwerpen een website op maat. Jij geeft feedback, wij passen aan. Zo krijg je precies wat je voor ogen had.
                 </p>
             </li>
             <li class="cs-item">
                 <picture class="cs-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/gear.svg" alt="icon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
+                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/gear.svg" alt="icoon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
                 </picture>
-                <h3 class="cs-h3">Working On This</h3>
+                <h3 class="cs-h3">Bouw</h3>
                 <p class="cs-item-p">
-                    Extensible for web iterate process before meta services impact with employee engagement strategies.
+                    We bouwen de website in handgeschreven code. Geen WordPress, geen plugins — razendsnel en veilig van de grond af aan.
                 </p>
             </li>
             <li class="cs-item">
                 <picture class="cs-picture">
-                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/box.svg" alt="icon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
+                    <img class="cs-icon" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/box.svg" alt="icoon" width="40" height="40" loading="lazy" decoding="async" aria-hidden="true">
                 </picture>
-                <h3 class="cs-h3">Deliver On Hand</h3>
+                <h3 class="cs-h3">Lancering &amp; Support</h3>
                 <p class="cs-item-p">
-                    Extensible for web iterate process before meta services impact with employee engagement strategies.
+                    We lanceren jouw website en zijn er daarna nog steeds. Stuur een berichtje voor aanpassingen — wij regelen het.
                 </p>
             </li>
         </ul>
     </div>
-    <!--Tire Screech-->
-    <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/tire-mark.svg" alt="icon" width="840" height="357" loading="lazy" decoding="async" aria-hidden="true">
+    <!--Decoratief element-->
+    <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/tire-mark.svg" alt="" width="840" height="357" loading="lazy" decoding="async" aria-hidden="true">
 </section>
 
 
@@ -236,295 +223,171 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 <section id="faq-2066">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Frequently Asked Questions</span>
-            <h2 class="cs-title">Frequently Asked Questions</h2>
+            <span class="cs-topper">Veelgestelde vragen</span>
+            <h2 class="cs-title">Antwoorden op jouw vragen</h2>
             <p class="cs-text">
-                Orci eu lobortis elementum nibh tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Luctus accumsan tortor posuere ac ut consequat semper. Et pharetra pharetra massa massa ultricies mi quis.
+                Staat jouw vraag er niet tussen? Neem gerust contact op — we antwoorden altijd binnen één werkdag.
             </p>
         </div>
         <div class="cs-flex-group">
             <div class="cs-button-group">
-                <button class="cs-option" data-filter="one">
-                    Dental Care
+                <button class="cs-option cs-active" data-filter="one">
+                    Plannen &amp; Tarieven
                 </button>
                 <button class="cs-option" data-filter="two">
-                    Cosmetic Dentistry
+                    Websites
                 </button>
                 <button class="cs-option" data-filter="three">
-                    Dental Technology
-                </button>
-                <button class="cs-option" data-filter="four">
-                    Smile Care
-                </button>
-                <button class="cs-option" data-filter="five">
-                    Teeth Whitening
+                    Algemeen
                 </button>
             </div>
             <div class="cs-wrapper">
+                <!-- Categorie 1: Plannen & Tarieven -->
                 <ul class="cs-faq-group" data-category="one">
-                    <!-- Active class added as default -->
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
+                                Wat kost een website bij nise.nl?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
-                        </p>
-
-
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                            Je hebt twee opties. Het Partner-pakket kost €150 per maand — geen aanbetaling, inclusief hosting en onbeperkte aanpassingen. Het eenmalige pakket begint bij €3.500. Daarna betaal je €25 per maand voor hosting.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
+                                Wat zit er in het Partner-pakket?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                            Het Partner-pakket bevat design, development, hosting, onbeperkte aanpassingen, tot 5 pagina's, dagelijkse support en een Google Business profiel review. Alles voor één vast maandbedrag.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
+                                Wat is het verschil tussen Partner en Partner Plus?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                            Partner Plus biedt alles uit Partner, maar dan met tot 10 pagina's, een ingebouwde blog-module, één maatwerk feature of koppeling en een redesign-optie na 3 jaar. Ideaal voor bedrijven die willen groeien.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
+                                Is er een contract of minimale looptijd?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                            Er is geen langdurig contract. De maandelijkse abonnementen hebben een opzegtermijn van één maand. Je zit dus nooit vast aan een jarenlange verplichting.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Kan ik later overstappen van Eenmalig naar Partner?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Ja, dat kan. Heb je een eenmalige website laten bouwen en wil je daarna toch gebruik maken van onbeperkte aanpassingen? Dan kun je op elk moment overstappen naar het Partner-abonnement.
                         </p>
                     </li>
                 </ul>
+                <!-- Categorie 2: Websites -->
                 <ul class="cs-faq-group cs-hidden" data-category="two">
-                    <!-- Active class added as default -->
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
+                                Hoe lang duurt het om een website te bouwen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                            Een standaard website is doorgaans binnen twee tot vier weken online. De exacte doorlooptijd hangt af van hoe snel je feedback geeft en of je alle content aanlevert.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
+                                Zijn jullie websites mobielvriendelijk?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                            Ja, altijd. Elke website die we bouwen werkt perfect op mobiel, tablet en desktop. Responsief ontwerp is geen optie, maar standaard onderdeel van elk pakket.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
+                                Kan ik mijn website zelf bewerken?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                            Bij de Partner-pakketten hoef je dat niet zelf te doen. Stuur ons een berichtje en wij passen het aan. Wil je toch zelf content beheren? Dat kan op verzoek worden ingesteld.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
+                                Kunnen jullie mijn bestaande website overnemen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                            In de meeste gevallen wel. We kijken altijd eerst naar de huidige situatie. Als overname zinvol is, nemen we de inhoud en domeinnaam mee. Migratie van een bestaand domein is standaard inbegrepen.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
+                                Bouwen jullie ook webshops of applicaties?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                            Onze focus ligt op zakelijke websites voor het MKB. Voor eenvoudige webshops of maatwerk koppelingen neem je het Partner Plus-pakket. Complexe e-commerce projecten vallen buiten ons standaardaanbod — neem contact op voor een op maat offerte.
                         </p>
                     </li>
                 </ul>
+                <!-- Categorie 3: Algemeen -->
                 <ul class="cs-faq-group cs-hidden" data-category="three">
-                    <!-- Active class added as default -->
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
+                                Wat is handgemaakte code?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                            Handgemaakte code betekent dat we geen WordPress, Wix of andere website-bouwers gebruiken. We schrijven de HTML, CSS en JavaScript zelf. Het resultaat is een lichtere, snellere en veiligere website zonder onnodige ballast.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
+                                Doen jullie ook SEO?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                            Elke website bouwen we met technische SEO als basis: snelle laadtijden, correcte kopregel-structuur, meta-tags en mobielvriendelijkheid. Voor uitgebreide contentmarketing of linkbuilding werken we samen met gespecialiseerde partners.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
+                                Hoe snel reageren jullie op vragen of aanpassingen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                            We reageren altijd binnen één werkdag. Bij Partner-pakketten los je de meeste aanpassingen al binnen 24 uur op. We zijn bereikbaar via e-mail en WhatsApp.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
+                                Waar zijn jullie gevestigd?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
-                        </p>
-                    </li>
-                </ul>
-                <ul class="cs-faq-group cs-hidden" data-category="four">
-                    <!-- Active class added as default -->
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
-                        </p>
-                    </li>
-                </ul>
-                <ul class="cs-faq-group cs-hidden" data-category="five">
-                    <!-- Active class added as default -->
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                            nise.nl is een Nederlands bedrijf. We werken volledig remote en bedienen klanten door heel Nederland. Een kennismaking kan online plaatsvinden of op locatie als dat uitkomt.
                         </p>
                     </li>
                 </ul>
@@ -532,13 +395,13 @@ import BaseLayout from "@layouts/BaseLayout.astro";
         </div>
         <div class="cs-cta">
             <div class="cs-flex">
-                <h3 class="cs-cta-title">Your Queries Not Listed Below</h3>
+                <h3 class="cs-cta-title">Staat jouw vraag er niet tussen?</h3>
                 <p class="cs-cta-text">
-                    Orci eu lobortis elementum nibh tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo.
+                    Stuur ons een bericht. We beantwoorden elke vraag binnen één werkdag.
                 </p>
             </div>
-            <a href="/contact" class="cs-button-solid">Submit Your Query</a>
-            <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/white-waves3.svg" alt="graphic" height="161" width="1920" loading="lazy" decoding="async">
+            <a href="/contact/" class="cs-button-solid">Stel je vraag</a>
+            <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/white-waves3.svg" alt="" height="161" width="1920" loading="lazy" decoding="async" aria-hidden="true">
         </div>
     </div>
 </section>
@@ -547,30 +410,68 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 <!--                    CTA                       -->
 <!-- ============================================ -->
 
-<section id="cta-96">
-    <!-- Need this to create a stage for the stripes, and use overflow: hidden on
-            this container so the stripes don't overlap the sections above and below #cta -->
-    <div aria-hidden="true" class="cs-stripes"></div>
+<section id="cta-1071">
     <div class="cs-container">
-        <!-- Left Section -->
         <div class="cs-content">
-            <span class="cs-topper">Contact us</span>
-            <h2 class="cs-title">Ready To Get Started?</h2>
-            <p class="cs-text">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Egestas adipiscing nulla suspendisse bibendum arcu diam, pellentesque lorem. Amet hac et sed rhoncus magna. Nisl neque ut varius volutpat morbi.
-            </p>
-            <a class="cs-button-solid" aria-label="learn more about our programs" href="">Contact Us</a>
+            <div class="cs-flex">
+                <span class="cs-topper">Klaar voor de volgende stap?</span>
+                <h2 class="cs-title">Kies het pakket dat bij jou past</h2>
+            </div>
+            <div class="cs-button-box">
+                <a href="/contact/" class="cs-button-solid">Gratis kennismaking</a>
+                <a href="/diensten/" class="cs-button-transparent">Bekijk alle diensten</a>
+            </div>
         </div>
-        <!-- Right Section -->
-        <picture class="cs-picture">
-            <source media="(max-width: 600px)" srcset="https://csimg.nyc3.digitaloceanspaces.com/CTA/phone-m.jpg">
-            <source media="(min-width: 601px)" srcset="https://csimg.nyc3.digitaloceanspaces.com/CTA/phone.jpg">
-            <img aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.digitaloceanspaces.com/CTA/phone.jpg" alt="phone in hand" width="457" height="632">
-        </picture>
     </div>
+    <picture class="cs-background">
+        <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/mechanic3.jpg">
+        <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/mechanic3.jpg">
+        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/mechanic3.jpg" alt="nise.nl webdesign bureau" width="1280" height="568">
+    </picture>
 </section>
 
 </BaseLayout>
+
+<script>
+    // FAQ tab switching
+    const options = document.querySelectorAll('#faq-2066 .cs-option');
+    const faqGroups = document.querySelectorAll('#faq-2066 .cs-faq-group');
+
+    options.forEach(option => {
+        option.addEventListener('click', () => {
+            const filter = option.getAttribute('data-filter');
+
+            // Update active tab
+            options.forEach(o => o.classList.remove('cs-active'));
+            option.classList.add('cs-active');
+
+            // Show matching FAQ group, hide others
+            faqGroups.forEach(group => {
+                if (group.getAttribute('data-category') === filter) {
+                    group.classList.remove('cs-hidden');
+                } else {
+                    group.classList.add('cs-hidden');
+                }
+            });
+        });
+    });
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('#faq-2066 .cs-faq-item');
+
+    faqItems.forEach(item => {
+        const button = item.querySelector('.cs-button');
+        button.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            // Close all open items
+            faqItems.forEach(i => i.classList.remove('active'));
+            // Toggle clicked item
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+</script>
 
 <style lang="less">
 /*-- -------------------------- -->
@@ -765,7 +666,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
             &:before {
                 /* Most Popular Tag */
-                content: "Popular";
+                content: "Populair";
                 font-size: (14/16rem);
                 text-align: center;
                 line-height: (28/16rem);
@@ -1352,21 +1253,6 @@ import BaseLayout from "@layouts/BaseLayout.astro";
   #faq-2066 .cs-faq-item:nth-of-type(5) {
     transition-delay: 0.4s;
   }
-  #faq-2066 .cs-faq-item:nth-of-type(6) {
-    transition-delay: 0.5s;
-  }
-  #faq-2066 .cs-faq-item:nth-of-type(7) {
-    transition-delay: 0.6s;
-  }
-  #faq-2066 .cs-faq-item:nth-of-type(8) {
-    transition-delay: 0.7s;
-  }
-  #faq-2066 .cs-faq-item:nth-of-type(9) {
-    transition-delay: 0.8s;
-  }
-  #faq-2066 .cs-faq-item:nth-of-type(10) {
-    transition-delay: 0.9s;
-  }
   #faq-2066 .cs-faq-item:last-of-type {
     border-bottom: none;
   }
@@ -1592,21 +1478,6 @@ import BaseLayout from "@layouts/BaseLayout.astro";
   body.dark-mode #faq-2066 .cs-faq-item:nth-of-type(5) {
     transition-delay: 0.4s;
   }
-  body.dark-mode #faq-2066 .cs-faq-item:nth-of-type(6) {
-    transition-delay: 0.5s;
-  }
-  body.dark-mode #faq-2066 .cs-faq-item:nth-of-type(7) {
-    transition-delay: 0.6s;
-  }
-  body.dark-mode #faq-2066 .cs-faq-item:nth-of-type(8) {
-    transition-delay: 0.7s;
-  }
-  body.dark-mode #faq-2066 .cs-faq-item:nth-of-type(9) {
-    transition-delay: 0.8s;
-  }
-  body.dark-mode #faq-2066 .cs-faq-item:nth-of-type(10) {
-    transition-delay: 0.9s;
-  }
   body.dark-mode #faq-2066 .cs-faq-item:hover {
     transition: border-color 0.3s;
   }
@@ -1629,104 +1500,15 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 
 
 /*-- -------------------------- -->
-<---            CTA             -->
+<---          CTA (1071)        -->
 <--- -------------------------- -*/
 
-/* Mobile - 360px */
 @media only screen and (min-width: 0rem) {
-    #cta-96 {
+    #cta-1071 {
         padding: var(--sectionPadding);
+        background-color: var(--primary);
         position: relative;
         z-index: 1;
-        &:before {
-            /* black background on mobile */
-            content: "";
-            width: 100%;
-            height: 50%;
-            background: #1a1a1a;
-            opacity: 1;
-            position: absolute;
-            display: block;
-            bottom: 0;
-            left: 0;
-            z-index: -1;
-        }
-
-        .cs-stripes {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            /* prevent stripes from overlapping sections above and below */
-            overflow: hidden;
-            /* Makes it so your cursor acts like it doesn't exist */
-            pointer-events: none;
-
-            &:before {
-                /* Stripe 1 */
-                content: "";
-                width: (132/16rem);
-                height: (900/16rem);
-                background: -moz-linear-gradient(
-                    top,
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.45) 100%
-                ); /* FF3.6-15 */
-                background: -webkit-linear-gradient(
-                    top,
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.45) 100%
-                ); /* Chrome10-25,Safari5.1-6 */
-                background: linear-gradient(
-                    to bottom,
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.45) 100%
-                );
-                opacity: 0.08;
-                transform: rotate(-25deg);
-                position: absolute;
-                display: block;
-                top: (-150/16rem);
-                /* position in the middle, 50% from the left, no matter how wide
-                   the screen gets, it will be placed on the center line of the div */
-                left: 50%;
-                /* push X amount of pixels from this 50% midpoint */
-                margin-left: (-100/16rem);
-            }
-
-            &:after {
-                /* Stripe 2 */
-                content: "";
-                width: (132/16rem);
-                height: (1000/16rem);
-                background: -moz-linear-gradient(
-                    top,
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.45) 100%
-                ); /* FF3.6-15 */
-                background: -webkit-linear-gradient(
-                    top,
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.45) 100%
-                ); /* Chrome10-25,Safari5.1-6 */
-                background: linear-gradient(
-                    to bottom,
-                    rgba(255, 255, 255, 1) 0%,
-                    rgba(255, 255, 255, 0.45) 100%
-                );
-                opacity: 0.08;
-                transform: rotate(-25deg);
-                position: absolute;
-                display: block;
-                top: (-100/16rem);
-                /* position in the middle, 50% from the left, no matter how wide
-                   the screen gets, it will be placed on the center line of the div */
-                left: 50%;
-                /* push X amount of pixels from this 50% midpoint */
-                margin-left: (-240/16rem);
-            }
-        }
 
         .cs-container {
             width: 100%;
@@ -1735,39 +1517,140 @@ import BaseLayout from "@layouts/BaseLayout.astro";
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* 48px - 64px */
             gap: clamp(3rem, 6vw, 4rem);
         }
 
         .cs-content {
-            /* set text align to left or center if content needs to be aligned */
             text-align: center;
             width: 100%;
             display: flex;
             flex-direction: column;
-            /* aligns the content */
             align-items: center;
+            gap: clamp(3rem, 6vw, 4rem);
         }
+
+        .cs-flex { max-width: (630/16rem); }
+
+        .cs-topper { color: rgba(255, 255, 255, 0.7); }
 
         .cs-title {
+            margin: 0;
             color: var(--bodyTextColorWhite);
         }
 
-        .cs-text {
-            color: var(--bodyTextColorWhite);
-            margin-bottom: (32/16rem);
-            opacity: 0.8;
+        .cs-button-box {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: (16/16rem);
         }
 
-        .cs-picture {
-            width: 100%;
-            max-width: (457/16rem);
-            margin: auto;
+        .cs-button-solid {
+            font-size: (16/16rem);
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+            color: var(--primary);
+            min-width: (150/16rem);
+            padding: 0 (24/16rem);
+            background-color: #fff;
+            display: inline-block;
             position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+
+            &:before {
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 0%;
+                background: #000;
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: width 0.3s;
+            }
+
+            &:hover {
+                color: #fff;
+                &:before { width: 100%; }
+            }
+        }
+
+        .cs-button-transparent {
+            font-size: (16/16rem);
+            line-height: clamp(2.875rem, 5.5vw, 3.5rem);
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            margin: 0;
+            color: #fff;
+            min-width: (150/16rem);
+            padding: 0 (24/16rem);
+            background-color: transparent;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+            box-sizing: border-box;
+            transition: color 0.3s;
+
+            &:before {
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 0%;
+                background: #fff;
+                opacity: 1;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                transition: width 0.3s;
+            }
+
+            &:after {
+                content: "";
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: transparent;
+                box-sizing: border-box;
+                border: 1px solid #fff;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                pointer-events: none;
+            }
+
+            &:hover {
+                color: var(--primary);
+                &:before { width: 100%; }
+            }
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
             display: block;
-            /* moves it to the 1st position at the top */
-            order: -1;
-            aspect-ratio: 300/475;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: #1a1a1a;
+                opacity: 0.88;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
 
             img {
                 position: absolute;
@@ -1775,93 +1658,26 @@ import BaseLayout from "@layouts/BaseLayout.astro";
                 left: 0;
                 height: 100%;
                 width: 100%;
-                border-radius: (8/16rem) (8/16rem) 0 0;
                 object-fit: cover;
             }
         }
     }
 }
 
-/* Tablet - 768px */
-@media only screen and (min-width: 48rem) {
-    #cta-96 {
-        /* 144px - 225px - creates the white space above */
-        margin-top: clamp(9rem, 9.9vw, 14.0625rem);
-        padding-bottom: 0;
-        position: relative;
-        z-index: 1;
-        background-color: #1a1a1a;
-
-        &:before {
-            display: none;
-        }
-
-        .cs-stripes {
-            /* flips the element horizontally, creating a mirror of it's
-               original orientation */
-            transform: scaleX(-1);
-            &:before {
-                margin-left: (-120/16em);
-            }
-
-            &:after {
-                margin-left: (-255/16em);
-            }
-        }
-
-        .cs-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            position: relative;
-        }
-
+@media only screen and (min-width: 64rem) {
+    #cta-1071 {
         .cs-content {
             text-align: left;
-            width: 50%;
-            max-width: (630/16rem);
-            margin: 0;
-            /* 60px - 100px - this gives us the space on the bottom without padding  */
-            margin-bottom: clamp(3.75rem, 6.2vw, 6.25rem);
-            align-items: flex-start;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
-        .cs-picture {
-            width: 41vw;
-            max-width: (457/16rem);
-            /* height is a percentage of parent container height. When the cs-content height changes from extra text, the height of the image adjusts. Since the container is now longer/shorter, 150% of that height with also be longer/shorter */
-            height: clamp(145%, 44vw, 160%);
-            /* 500px - 578px */
-            max-height: clamp(31.25rem, 44vw, 36.125rem);
-            margin: 0;
-            /* position absolute so we can have the cs-content centered inside the black section and have it respond to different heights of the cs-content */
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            /* reset */
-            aspect-ratio: none;
+        .cs-button-box {
+            flex-wrap: nowrap;
+            align-items: center;
+            flex: none;
         }
     }
 }
-
-/* Small Desktop - 1024px */
-@media only screen and (min-width: 64rem) {
-    #cta-96 {
-        /* 144px - 200px */
-        margin-top: clamp(9em, 12.9vw, 12.5em);
-        .cs-stripes {
-            &:before {
-                margin-left: (-220/16rem);
-                width: (195/16rem);
-            }
-
-            &:after {
-                margin-left: (-430/16rem);
-                width: (194/16rem);
-            }
-        }
-    }
-}
-
 
 </style>
