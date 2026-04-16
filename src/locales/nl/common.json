@@ -1,59 +1,58 @@
 {
 	"home": "Home",
-	"about": "About",
-	"projects": "Projects",
+	"about": "Over ons",
+	"projects": "Projecten",
 	"project-1": "Project 1",
 	"project-2": "Project 2",
 	"blog": "Blog",
 	"contact": "Contact",
-	"theme-label": "Choisissez le thème",
-	"language-label": "Choisissez la langue",
+	"theme-label": "Kies thema",
+	"language-label": "Kies taal",
 	"languageSelect": {
-		"en": "English",
-		"fr": "French",
-		"instructions": "Use arrow keys to navigate, press Enter to select"
+		"nl": "Nederlands",
+		"instructions": "Gebruik pijltjestoetsen, druk Enter om te selecteren"
 	},
 	"themeSelect": {
-		"accessibleLabel": "Select Theme",
-		"light": "Light",
-		"dark": "Dark",
-		"auto": "Auto"
+		"accessibleLabel": "Selecteer thema",
+		"light": "Licht",
+		"dark": "Donker",
+		"auto": "Automatisch"
 	},
-	"quote": "Get Free Quote",
-	"estimate": "Get an estimate now",
+	"quote": "Gratis offerte",
+	"estimate": "Vraag een offerte aan",
 	"ctaComponent": {
-		"title": "Get it done",
-		"subtitle": "With us today",
-		"message": "Say something catchy, informative, and encouraging to click the button to go to the contact page. I like to add these to the bottom of all pages.",
-		"cta": "Get an estimate now",
+		"title": "Klaar om te starten?",
+		"subtitle": "Laten we kennismaken",
+		"message": "Geen verkooppraatje. Geen verplichtingen. Gewoon een eerlijk gesprek over wat jij nodig hebt.",
+		"cta": "Neem contact op",
 		"alt": ""
 	},
 	"about-page": {
-		"landing": "About",
-		"topper": "About",
-		"title": "About Company Title",
-		"p-1": "Our company was created In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p-2": "We believe that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p-3": "It's important In consequat tincidunt turpis sit amet imperdiet.",
-		"rank": "CEO-Founder",
-		"cta": "Our projects"
+		"landing": "Over ons",
+		"topper": "nise.nl",
+		"title": "Een menselijke aanpak voor digitale marketing",
+		"p-1": "Wij zijn nise.nl — een webbureau met één duidelijk doel: kleine en middelgrote bedrijven een professionele online aanwezigheid geven die ze verdienen.",
+		"p-2": "Na jaren te hebben gewerkt voor grote corporates zagen we een patroon: het MKB werd behandeld als bijzaak. Standaard templates, dure contracten en weinig persoonlijk contact.",
+		"p-3": "Wij doen het anders. Jij belt ons. Wij nemen op.",
+		"rank": "Oprichter",
+		"cta": "Onze projecten"
 	},
 	"footer": {
-		"information": "Information",
-		"services": "Services",
+		"information": "Informatie",
+		"services": "Diensten",
 		"contact": "Contact",
-		"click": "Click to email",
-		"p": "Extra content if you need it, if not you can delete this whole p tag. I usually do.",
-		"credit": "Designed and Hand Coded by "
+		"click": "Stuur ons een e-mail",
+		"p": "Handgemaakte websites voor het MKB — razendsnel, veilig en altijd up-to-date.",
+		"credit": "Ontworpen en gebouwd door "
 	},
 	"notFound": {
-		"pageNotFound": "404 - The page you're looking for does not exist.",
-		"linkText": "Back to homepage"
+		"pageNotFound": "404 — Deze pagina bestaat niet.",
+		"linkText": "Terug naar de homepage"
 	},
-	"skipLink": "Click To Skip To Main Content",
+	"skipLink": "Ga direct naar de inhoud",
 	"pagination": {
-		"previous": "Prev",
-		"next": "Next"
+		"previous": "Vorige",
+		"next": "Volgende"
 	},
-	"reviews": "Reviews"
+	"reviews": "Recensies"
 }

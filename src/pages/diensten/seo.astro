@@ -1,31 +1,347 @@
 ---
-/**
- * _template.astro
- *
- * Use this file as a starting point for new Dutch pages.
- * Duplicate it, rename it, and add your content.
- *
- * To add this page to navigation:
- * 1. Add the route key to src/data/navData.json
- * 2. Add the translation key to src/config/routeTranslations.ts
- * 3. Add the label to src/locales/nl/common.json
- */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
 ---
 
 <BaseLayout
-	title="SEO"
-	description="Meta description for the page"
+	title="SEO voor het MKB — hoger in Google zonder gedoe"
+	description="nise.nl zorgt voor een sterke technische SEO-basis bij elke website. Wil je ook hoger ranken voor specifieke zoekwoorden? Vraag naar onze SEO-diensten."
 >
-	<!-- ============================================ -->
-	<!--            Add Your Sections Here            -->
-	<!-- ============================================ -->
 
-	<!-- Example: <SomeSectionComponent /> -->
+<!-- ============================================ -->
+<!--                   Banner                     -->
+<!-- ============================================ -->
+
+<div id="banner-843">
+    <div class="cs-container">
+        <span class="cs-int-title">SEO</span>
+    </div>
+    <picture class="cs-background" aria-hidden="true">
+        <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga-m.jpg">
+        <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg">
+        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg" alt="SEO diensten nise.nl" width="1280" height="568">
+    </picture>
+    <svg class="cs-wave" width="1920" height="179" viewBox="0 0 1920 179" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M1920 179V91.3463C1835.33 91.3463 1715.47 76.615 1549.2 32.9521C1299.48 -32.3214 1132.77 12.1006 947.32 61.5167C810.762 97.9044 664.042 137 466.533 137C331.607 137 256.468 123.447 188.082 111.113C130.974 100.812 78.5746 91.3609 0 91.3609V179H1920Z" fill="white"/>
+    </svg>
+</div>
+
+<!-- ============================================ -->
+<!--                   SEO                        -->
+<!-- ============================================ -->
+
+<section id="sbs-about">
+    <div class="cs-container">
+        <div class="cs-image-group">
+            <picture class="cs-background">
+                <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg">
+                <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg">
+                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg" alt="SEO optimalisatie" width="605" height="690">
+            </picture>
+        </div>
+        <div class="cs-content">
+            <span class="cs-topper">Zoekmachineoptimalisatie</span>
+            <h2 class="cs-title">Gevonden worden door de juiste klanten</h2>
+            <p class="cs-text">
+                Elke website die wij bouwen heeft een sterke technische SEO-basis. Snelle laadtijden, correcte HTML-structuur, meta-tags, sitemap en mobielvriendelijk design — dat is de standaard, niet de uitzondering.
+            </p>
+            <p class="cs-text">
+                Wil je ook actief hoger ranken voor specifieke zoekwoorden? Dan bieden we aanvullende SEO-diensten aan. Denk aan zoekwoordenonderzoek, on-page optimalisatie, lokale SEO en linkbuilding.
+            </p>
+            <p class="cs-text">
+                Lokale SEO is voor veel MKB-bedrijven het meest waardevol. We zorgen dat jij wordt gevonden wanneer mensen in jouw regio zoeken naar wat jij aanbiedt.
+            </p>
+            <a href="/contact/" class="cs-button-solid">Bespreek jouw SEO-doelen</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--              SEO wat zit erin                -->
+<!-- ============================================ -->
+
+<section id="seo-included">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Standaard inbegrepen</span>
+            <h2 class="cs-title">Technische SEO bij elke website</h2>
+        </div>
+        <ul class="cs-card-group">
+            <li class="cs-item">
+                <h3 class="cs-h3">Razendsnel laden</h3>
+                <p class="cs-item-text">
+                    Google beloont snelle websites. Onze statische HTML scoort consequent perfect op Core Web Vitals.
+                </p>
+            </li>
+            <li class="cs-item">
+                <h3 class="cs-h3">Correcte HTML-structuur</h3>
+                <p class="cs-item-text">
+                    Semantische koppen, alt-teksten, gestructureerde data en interne links — allemaal correct ingesteld.
+                </p>
+            </li>
+            <li class="cs-item">
+                <h3 class="cs-h3">Meta-tags en sitemap</h3>
+                <p class="cs-item-text">
+                    Unieke title-tags, meta-descriptions, Open Graph en een automatische sitemap voor elke pagina.
+                </p>
+            </li>
+            <li class="cs-item">
+                <h3 class="cs-h3">Mobielvriendelijk</h3>
+                <p class="cs-item-text">
+                    Google indexeert op basis van mobiel. Onze websites zijn volledig responsief — op elk schermformaat.
+                </p>
+            </li>
+        </ul>
+    </div>
+</section>
 
 </BaseLayout>
+
+<style lang="less">
+/*-- -------------------------- -->
+<---          Banner            -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #banner-843 {
+        padding: clamp(10.9375rem, 20vw, 16.25rem) (16/16rem) clamp(6.25rem, 14vw, 12vw);
+        overflow: hidden;
+        position: relative;
+        z-index: 1;
+
+        .cs-container {
+            text-align: center;
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            gap: (16/16rem);
+        }
+
+        .cs-int-title {
+            font-size: clamp(2.4375rem, 6.4vw, 3.8125rem);
+            font-weight: 900;
+            line-height: 1.2em;
+            margin: 0;
+            color: var(--bodyTextColorWhite);
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+
+            &:before {
+                content: "";
+                position: absolute;
+                display: block;
+                height: 100%;
+                width: 100%;
+                background: #1a1a1a;
+                opacity: 0.64;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .cs-wave {
+            width: (768/16rem);
+            height: auto;
+            display: block;
+            position: absolute;
+            left: 50%;
+            bottom: -1px;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+    }
+}
+
+@media only screen and (min-width: 48rem) {
+    #banner-843 .cs-wave {
+        width: 100%;
+        left: 0;
+        transform: none;
+    }
+}
+
+@media only screen and (min-width: 0rem) {
+    body.dark-mode #banner-843 .cs-wave path {
+        fill: var(--dark);
+    }
+}
+
+/*-- -------------------------- -->
+<---        Side By Side        -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #sbs-about {
+        padding: var(--sectionPadding);
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(3rem, 6vw, 4rem);
+        }
+
+        .cs-image-group {
+            width: 100%;
+            max-width: (586/16rem);
+            height: (520/16rem);
+            border-radius: clamp(2rem, 4vw, 3rem);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cs-background {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+        }
+
+        .cs-content {
+            text-align: left;
+            width: 100%;
+            max-width: (630/16rem);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .cs-text {
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 64rem) {
+    #sbs-about .cs-container {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+    }
+
+    #sbs-about .cs-image-group {
+        height: auto;
+    }
+}
+
+@media only screen and (min-width: 0rem) {
+    body.dark-mode #sbs-about {
+        .cs-topper { color: var(--primary); }
+        .cs-title, .cs-text { color: var(--bodyTextColorWhite); }
+        .cs-text { opacity: 0.8; }
+    }
+}
+
+/*-- -------------------------- -->
+<---       SEO Inbegrepen       -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #seo-included {
+        padding: var(--sectionPadding);
+        background-color: #f7f7f7;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(3rem, 6vw, 4rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cs-card-group {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+            gap: clamp(1rem, 2vw, 1.25rem);
+        }
+
+        .cs-item {
+            list-style: none;
+            padding: clamp(1rem, 3vw, 1.5rem);
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: (16/16rem);
+            border: 1px solid #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-h3 {
+            font-size: (20/16rem);
+            font-weight: 700;
+            margin: 0;
+            color: var(--headerColor);
+        }
+
+        .cs-item-text {
+            font-size: (14/16rem);
+            line-height: 1.5em;
+            margin: 0;
+            color: var(--bodyTextColor);
+        }
+    }
+}
+
+@media only screen and (min-width: 0rem) {
+    body.dark-mode #seo-included {
+        background-color: var(--dark);
+
+        .cs-item {
+            background-color: rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .cs-title, .cs-h3 { color: var(--bodyTextColorWhite); }
+        .cs-item-text { color: var(--bodyTextColorWhite); opacity: 0.8; }
+    }
+}
+</style>

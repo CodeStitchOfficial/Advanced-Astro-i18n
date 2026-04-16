@@ -1,26 +1,10 @@
 ---
-/**
- * _template.astro
- *
- * Use this file as a starting point for new Dutch pages.
- * Duplicate it, rename it, and add your content.
- *
- * To add this page to navigation:
- * 1. Add the route key to src/data/navData.json
- * 2. Add the translation key to src/config/routeTranslations.ts
- * 3. Add the label to src/locales/nl/common.json
- */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
 ---
 
 <BaseLayout
-	title="Faqs"
-	description="Meta description for the page"
+	title="Veelgestelde vragen"
+	description="Antwoorden op de meest gestelde vragen over onze websites, pakketten en contracten. Transparant over prijzen, opzegging en wat er bij inbegrepen is."
 >
 <!-- ============================================ -->
 <!--                   Banner                     -->
@@ -28,7 +12,7 @@ const t = useTranslations(locale);
 
 <div id="banner-843">
     <div class="cs-container">
-        <span class="cs-int-title">Interior Page</span>
+        <span class="cs-int-title">Veelgestelde vragen</span>
     </div>
     <!--Background Image-->
     <picture class="cs-background" aria-hidden="true">
@@ -51,295 +35,191 @@ const t = useTranslations(locale);
 <section id="faq-2066">
     <div class="cs-container">
         <div class="cs-content">
-            <span class="cs-topper">Frequently Asked Questions</span>
-            <h2 class="cs-title">Frequently Asked Questions</h2>
+            <span class="cs-topper">FAQ</span>
+            <h2 class="cs-title">Veelgestelde vragen</h2>
             <p class="cs-text">
-                Orci eu lobortis elementum nibh tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo vel. Luctus accumsan tortor posuere ac ut consequat semper. Et pharetra pharetra massa massa ultricies mi quis.
+                Hieronder vind je antwoorden op de vragen die wij het vaakst krijgen. Staat jouw vraag er niet bij? Neem dan direct contact met ons op.
             </p>
         </div>
         <div class="cs-flex-group">
             <div class="cs-button-group">
-                <button class="cs-option" data-filter="one">
-                    Dental Care
+                <button class="cs-option cs-active" data-filter="one">
+                    Prijzen &amp; Contracten
                 </button>
                 <button class="cs-option" data-filter="two">
-                    Cosmetic Dentistry
+                    Websites
                 </button>
                 <button class="cs-option" data-filter="three">
-                    Dental Technology
-                </button>
-                <button class="cs-option" data-filter="four">
-                    Smile Care
-                </button>
-                <button class="cs-option" data-filter="five">
-                    Teeth Whitening
+                    Algemeen
                 </button>
             </div>
             <div class="cs-wrapper">
+                <!-- Categorie 1: Prijzen & Contracten -->
                 <ul class="cs-faq-group" data-category="one">
-                    <!-- Active class added as default -->
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
+                                Wat is het verschil tussen het Partner-abonnement en eenmalig betalen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
-                        </p>
-
-
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                            Het grootste verschil is de instapdrempel. Met het Partner-abonnement betaal je geen aanbetaling en start je voor €150 per maand — inclusief onbeperkte aanpassingen. Bij eenmalig betalen betaal je de volledige projectprijs vooraf en kies je zelf je extra opties. Wil je de site lang gebruiken en heb je zelden updates nodig? Dan kan eenmalig voordeliger uitpakken. Wil je lage startkosten en flexibiliteit? Dan is het Partner-abonnement de betere keuze.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
+                                Hoe lang loopt het Partner-abonnement?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                            Het abonnement heeft een minimale looptijd van 12 maanden. Daarna gaat het automatisch over op maand-tot-maand. Na die eerste 12 maanden kun je op elk moment opzeggen zonder opzegkosten. De website blijft onze eigendom — anders zou iedereen na één maand kunnen stoppen.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
+                                Kan ik onbeperkte aanpassingen krijgen bij eenmalig betalen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                            Ja. Je kunt onbeperkte aanpassingen toevoegen als een add-on van €50 per maand, met een minimale looptijd van 12 maanden.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
+                                Wat gebeurt er als ik voor het einde van de 12 maanden opzeg?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                            Dan ben je het resterende bedrag verschuldigd tot de volledige projectprijs (€3.500) minus wat je al hebt betaald. We bouwen op langdurige samenwerkingen — en willen dat onze klanten dat ook doen.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Blijft mijn domeinnaam van mij als ik stop?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Altijd. Je domeinnaam is van jou — we houden hem nooit gegijzeld. We regelen de verlenging en het beheer als onderdeel van onze dienst, maar het eigendom blijft bij jou.
+                        </p>
+                    </li>
+                    <li class="cs-faq-item">
+                        <button class="cs-button">
+                            <span class="cs-button-text">
+                                Is er een geld-terug-garantie?
+                            </span>
+                        </button>
+                        <p class="cs-item-p">
+                            Ja. Kunnen we geen design maken waar jij 100% tevreden over bent en wil je niet verder? Dan krijg je alles terug wat je hebt betaald. Zodra het design is goedgekeurd en de development start, zijn er geen terugbetalingen meer — tenzij wij daar anders over beslissen.
                         </p>
                     </li>
                 </ul>
+                <!-- Categorie 2: Websites -->
                 <ul class="cs-faq-group cs-hidden" data-category="two">
-                    <!-- Active class added as default -->
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
+                                Waarom bouwen jullie geen WordPress-websites?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                            WordPress werkt voor grote redacties die dagelijks content publiceren. Voor de meeste MKB-websites is het te zwaar. Het brengt onnodige complexiteit, beveiligingsrisico's en trage laadtijden met zich mee. Onze handgemaakte statische websites laden sneller, zijn veiliger en kosten minder onderhoud.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
+                                Hoe snel laadt een website van nise.nl?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                            Onze websites zijn gebouwd om perfecte Google PageSpeed-scores te halen — zowel op desktop als mobiel. Statische HTML heeft geen database-queries, geen server-side rendering en geen zware frameworks. Het resultaat: pagina's die in milliseconden laden.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
+                                Hoeveel pagina's zijn er inbegrepen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                            Het Partner-abonnement (€150/mnd) bevat tot 5 pagina's. Partner Plus (€250/mnd) bevat tot 10 pagina's. Bij het eenmalige pakket kost elke extra pagina boven de 5 een éénmalige bijdrage van €150. Voor de meeste kleine bedrijven zijn 5 pagina's ruim voldoende om een professionele online aanwezigheid op te bouwen.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
+                                Kan ik later upgraden naar een hoger pakket?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                            Ja, dat kan op elk moment — ook midden in je huidige looptijd. Upgraden naar een hoger pakket start een nieuwe periode van 12 maanden. De tijd die je al hebt opgebouwd telt pro rata mee voor eventuele redesign-opties.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
+                                Hoe werken aanpassingen en updates?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                            Stuur ons een e-mail of berichtje met wat je wilt aanpassen. Nieuwe tekst, een andere foto, gewijzigde openingstijden — wij regelen het. Je hoeft zelf geen CMS te leren of in te loggen. Bij het Partner-abonnement zijn onbeperkte aanpassingen standaard inbegrepen.
                         </p>
                     </li>
                 </ul>
+                <!-- Categorie 3: Algemeen -->
                 <ul class="cs-faq-group cs-hidden" data-category="three">
-                    <!-- Active class added as default -->
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
+                                Voor welke bedrijven werken jullie?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
+                            We werken met zelfstandigen, lokale bedrijven en groeiende MKB-organisaties die een betrouwbare website willen zonder de kosten en onpersoonlijkheid van grote bureaus. Of je nu loodgieter, adviseur, kapper of webshop-eigenaar bent: als je een website wilt die gewoon werkt, zijn wij de juiste partner.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
+                                Hoe lang duurt het om een website te bouwen?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
+                            Een standaard website van 5 pagina's bouwen we doorgaans in 2 tot 4 weken op. Dit is afhankelijk van hoe snel jij feedback geeft op het design. Wij werken gestructureerd: eerst design, dan goedkeuring, dan development.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
+                                Kan ik jullie direct bereiken als ik iets nodig heb?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
+                            Ja. Je belt of mailt ons direct. Geen ticketsysteem, geen callcenter, geen geautomatiseerde antwoorden. Wij nemen op — elke werkdag.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
+                                Zorgen jullie ook voor SEO?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
+                            Elke website die wij bouwen heeft een sterke technische SEO-basis: snelle laadtijden, correcte HTML-structuur, meta-tags, sitemap en mobielvriendelijk design. Wil je ook actief hoger ranken voor specifieke zoekwoorden? Dan bieden we aanvullende SEO-diensten aan. Kijk op onze <a href="/diensten/seo/">SEO-pagina</a> voor meer informatie.
                         </p>
                     </li>
                     <li class="cs-faq-item">
                         <button class="cs-button">
                             <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
+                                Wat als ik al een bestaande website heb?
                             </span>
                         </button>
                         <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
-                        </p>
-                    </li>
-                </ul>
-                <ul class="cs-faq-group cs-hidden" data-category="four">
-                    <!-- Active class added as default -->
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
-                        </p>
-                    </li>
-                </ul>
-                <ul class="cs-faq-group cs-hidden" data-category="five">
-                    <!-- Active class added as default -->
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How often should I have dental check-ups and cleanings?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            We recommend dental check-ups and cleanings every six months for most patients. However, some individuals may need more frequent visits based on their oral health needs.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What is the importance of fluoride treatments, and are they necessary for adults?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Fluoride treatments help strengthen tooth enamel and prevent decay. While especially important for children, adults can also benefit, particularly those at higher risk for cavities.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                Are dental sealants only for children, or can adults benefit from them too?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            While commonly used for children, adults can also benefit from dental sealants, especially those prone to cavities or with deep grooves in their teeth.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                How can I improve my at-home oral hygiene routine?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            To maintain optimal oral health, follow these essential practices: Brush your teeth twice daily for two minutes using fluoride toothpaste and a soft-bristled brush. Floss once a day to clean between teeth where brushing can't reach. Consider using an antimicrobial mouthwash after brushing and flossing. Maintain a healthy diet low in sugary and acidic foods, and drink plenty of water to rinse away food particles. Visit your dentist regularly for checkups and cleanings, replace your toothbrush every few months, and avoid smoking. These habits will help prevent cavities, gum disease, and other oral health issues while promoting overall well-being.
-                        </p>
-                    </li>
-                    <li class="cs-faq-item">
-                        <button class="cs-button">
-                            <span class="cs-button-text">
-                                What are the early signs of gum disease, and how can I prevent it?
-                            </span>
-                        </button>
-                        <p class="cs-item-p">
-                            Early signs of gum disease include red, swollen, or bleeding gums. Prevention includes regular brushing, flossing, and professional cleanings.
+                            Geen probleem. We kunnen je bestaande website vervangen door een nieuwe, snellere versie. Bestaande content, teksten en afbeeldingen nemen we over. We zorgen ook voor de juiste redirects zodat je geen posities in Google verliest.
                         </p>
                     </li>
                 </ul>
@@ -347,19 +227,21 @@ const t = useTranslations(locale);
         </div>
         <div class="cs-cta">
             <div class="cs-flex">
-                <h3 class="cs-cta-title">Your Queries Not Listed Below</h3>
+                <h3 class="cs-cta-title">Staat jouw vraag er niet bij?</h3>
                 <p class="cs-cta-text">
-                    Orci eu lobortis elementum nibh tellus. Vulputate eu scelerisque felis imperdiet proin fermentum leo.
+                    Neem direct contact met ons op. We beantwoorden je vraag snel en zonder omwegen.
                 </p>
             </div>
-            <a href="/contact" class="cs-button-solid">Submit Your Query</a>
-            <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/white-waves3.svg" alt="graphic" height="161" width="1920" loading="lazy" decoding="async">
+            <a href="/contact/" class="cs-button-solid">Stel je vraag</a>
+            <img class="cs-graphic" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Graphics/white-waves3.svg" alt="grafisch element" height="161" width="1920" loading="lazy" decoding="async">
         </div>
     </div>
 </section>
 
+<script src="@assets/js/faq.js"></script>
 
 </BaseLayout>
+
 
 <style lang="less">
 /*-- -------------------------- -->

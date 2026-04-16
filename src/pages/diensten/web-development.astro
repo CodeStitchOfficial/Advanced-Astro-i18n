@@ -1,26 +1,10 @@
 ---
-/**
- * _template.astro
- *
- * Use this file as a starting point for new Dutch pages.
- * Duplicate it, rename it, and add your content.
- *
- * To add this page to navigation:
- * 1. Add the route key to src/data/navData.json
- * 2. Add the translation key to src/config/routeTranslations.ts
- * 3. Add the label to src/locales/nl/common.json
- */
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
 ---
 
 <BaseLayout
-	title="Web Development"
-	description="Meta description for the page"
+	title="Webdesign voor het MKB — handgemaakte websites zonder WordPress"
+	description="nise.nl bouwt handgemaakte websites voor kleine en middelgrote bedrijven. Geen WordPress, geen page builders — razendsnel, veilig en volledig op maat."
 >
 <!-- ============================================ -->
 <!--                   Banner                     -->
@@ -28,17 +12,13 @@ const t = useTranslations(locale);
 
 <div id="banner-843">
     <div class="cs-container">
-        <span class="cs-int-title">Interior Page</span>
+        <span class="cs-int-title">Webdesign</span>
     </div>
-    <!--Background Image-->
     <picture class="cs-background" aria-hidden="true">
-        <!--Mobile Image-->
         <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga-m.jpg">
-        <!--Tablet and above Image-->
         <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg">
-        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg" alt="yoga" width="1280" height="568">
+        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images%2FPeople%2Fyoga.jpg" alt="webdesign bureau nise.nl" width="1280" height="568">
     </picture>
-    <!--Change the svg path fill color to whatever color the section below is so you can match it and create the illusion it is all one piece-->
     <svg class="cs-wave" width="1920" height="179" viewBox="0 0 1920 179" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M1920 179V91.3463C1835.33 91.3463 1715.47 76.615 1549.2 32.9521C1299.48 -32.3214 1132.77 12.1006 947.32 61.5167C810.762 97.9044 664.042 137 466.533 137C331.607 137 256.468 123.447 188.082 111.113C130.974 100.812 78.5746 91.3609 0 91.3609V179H1920Z" fill="white"/>
     </svg>
@@ -52,67 +32,111 @@ const t = useTranslations(locale);
     <div class="cs-container">
         <div class="cs-image-group">
             <picture class="cs-background">
-                <!--Mobile Image-->
                 <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg">
-                <!--Tablet and above Image-->
                 <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg">
-                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg" alt="people" width="605" height="690">
+                <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/People/people10.jpg" alt="team nise.nl aan het werk" width="605" height="690">
             </picture>
             <div class="cs-box">
-                <img class="cs-box-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/gear-white.svg" alt="people" width="60" height="60">
+                <img class="cs-box-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/gear-white.svg" alt="icoon" width="60" height="60">
                 <span class="cs-desc">
-                    We’ve Over 26 Years of Experience
+                    Geen WordPress. Handgemaakte code.
                 </span>
             </div>
         </div>
         <div class="cs-content">
-            <span class="cs-topper">WHy choose us</span>
-            <h2 class="cs-title">Why Choose Our Professional Digital Solutions</h2>
+            <span class="cs-topper">Webdesign voor het MKB</span>
+            <h2 class="cs-title">Een website die écht werkt voor jouw bedrijf</h2>
             <p class="cs-text">
-                On the other hand, we denounce with righteous indignation dislike men who areso beguiled and demoralized by the charms of pleasure moment blinded by desire that they cannot foresee
+                De meeste websites voor het MKB zijn traag, onveilig en moeilijk te onderhouden. Dat komt door WordPress. Wij bouwen anders: elke website schrijven wij van de grond af aan in schone code — geen plugins, geen page builders, geen onnodige ballast.
+            </p>
+            <p class="cs-text">
+                Het resultaat is een website die razendsnel laadt, uitstekend scoort in Google en geen technisch beheer vereist. Jij belt ons voor aanpassingen. Wij regelen het dezelfde dag.
             </p>
             <ul class="cs-card-group">
                 <li class="cs-item">
                     <h3 class="cs-h3">
-                        <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/trophy.svg" alt="icon" width="32" height="32">
-                        Quality Services
+                        <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/trophy.svg" alt="icoon" width="32" height="32">
+                        Razendsnel geladen
                     </h3>
                     <p class="cs-item-text">
-                        There are many variations of but the majority is simply free suffered.
+                        Statische HTML heeft geen database en geen server-side rendering. Pagina’s laden in milliseconden — ook op mobiel.
                     </p>
                 </li>
                 <li class="cs-item">
                     <h3 class="cs-h3">
-                        <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/circle-check.svg" alt="icon" width="32" height="32">
-                        Quality Services
+                        <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/circle-check.svg" alt="icoon" width="32" height="32">
+                        Veilig en onderhoudsvriendelijk
                     </h3>
                     <p class="cs-item-text">
-                        There are many variations of but the majority is simply free suffered.
+                        Geen CMS betekent geen beveiligingslekken, geen plugin-updates en geen downtime door een WordPress-update die misgaat.
                     </p>
                 </li>
             </ul>
             <ul class="cs-ul">
                 <li class="cs-li">
-                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="checkmark" width="24" height="24">
-                    Digital Solutions Provider Agency
+                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="vinkje" width="24" height="24">
+                    Maatwerk design — geen standaard templates
                 </li>
                 <li class="cs-li">
-                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="checkmark" width="24" height="24">
-                    Unicode, UTF8 & Character Sets The Ultimate Guide
+                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="vinkje" width="24" height="24">
+                    Volledig responsief op alle schermformaten
                 </li>
                 <li class="cs-li">
-                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="checkmark" width="24" height="24">
-                    WordPress Guides For The Advanced Beginner
+                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="vinkje" width="24" height="24">
+                    SEO-geoptimaliseerd — technisch én inhoudelijk
                 </li>
                 <li class="cs-li">
-                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="checkmark" width="24" height="24">
-                    Digital Clean Checklist Prepared New Year
+                    <img class="cs-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/black-check.svg" alt="vinkje" width="24" height="24">
+                    Onbeperkte aanpassingen via het Partner-abonnement
                 </li>
             </ul>
-            <a href="" class="cs-button-solid">Discover More</a>
+            <a href="/contact/" class="cs-button-solid">Gratis kennismaking</a>
         </div>
     </div>
     <div class="cs-bubbles" aria-hidden="true"></div>
+</section>
+
+<!-- ============================================ -->
+<!--              Voor wie werken wij             -->
+<!-- ============================================ -->
+
+<section id="wd-clients">
+    <div class="cs-container">
+        <div class="cs-content">
+            <span class="cs-topper">Voor wie</span>
+            <h2 class="cs-title">Wij werken met bedrijven die online willen groeien</h2>
+            <p class="cs-text">
+                Onze klanten zijn zelfstandigen, lokale ondernemers en groeiende MKB-bedrijven. Ze willen een professionele website zonder de kosten van een groot bureau. Ze willen directe communicatie — geen accountmanager als tussenpersoon.
+            </p>
+            <p class="cs-text">
+                Of je nu loodgieter, adviseur, kapper of eigenaar van een lokale winkel bent: als jij online gevonden wilt worden, zijn wij de juiste partner.
+            </p>
+            <a href="/contact/" class="cs-button-solid">Kom kennismaken</a>
+        </div>
+        <ul class="cs-card-group">
+            <li class="cs-item">
+                <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/trophy.svg" alt="icoon" width="40" height="40">
+                <h3 class="cs-h3">Zelfstandigen</h3>
+                <p class="cs-item-text">
+                    Een professionele online aanwezigheid zonder grote investering vooraf. Start voor €150 per maand.
+                </p>
+            </li>
+            <li class="cs-item">
+                <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/circle-check.svg" alt="icoon" width="40" height="40">
+                <h3 class="cs-h3">Lokale bedrijven</h3>
+                <p class="cs-item-text">
+                    Klanten in jouw regio bereiken via lokale SEO en een website die vertrouwen uitstraalt.
+                </p>
+            </li>
+            <li class="cs-item">
+                <img class="cs-h3-icon" aria-hidden="true" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Icons/trophy.svg" alt="icoon" width="40" height="40">
+                <h3 class="cs-h3">Groeiende MKB</h3>
+                <p class="cs-item-text">
+                    Meer pagina’s, een blog en maatwerk functionaliteiten. Via Partner Plus schaalt jouw site mee.
+                </p>
+            </li>
+        </ul>
+    </div>
 </section>
 
 </BaseLayout>
@@ -615,6 +639,119 @@ const t = useTranslations(locale);
                 }
             }
         }
+    }
+}
+
+/*-- -------------------------- -->
+<---         Voor wie           -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0rem) {
+    #wd-clients {
+        padding: var(--sectionPadding);
+        background-color: #f7f7f7;
+
+        .cs-container {
+            width: 100%;
+            max-width: (1280/16rem);
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: clamp(3rem, 6vw, 4rem);
+        }
+
+        .cs-content {
+            text-align: center;
+            width: 100%;
+            max-width: (630/16rem);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cs-text {
+            margin-bottom: (16/16rem);
+            &:last-of-type {
+                margin-bottom: (32/16rem);
+            }
+        }
+
+        .cs-card-group {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(15.625rem, 1fr));
+            gap: clamp(1rem, 2vw, 1.25rem);
+        }
+
+        .cs-item {
+            list-style: none;
+            padding: clamp(1.25rem, 3vw, 2rem);
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: (16/16rem);
+            border: 1px solid #e8e8e8;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: (12/16rem);
+        }
+
+        .cs-h3 {
+            font-size: (20/16rem);
+            line-height: 1.2em;
+            font-weight: 700;
+            margin: 0;
+            color: var(--headerColor);
+        }
+
+        .cs-h3-icon {
+            width: (40/16rem);
+            height: auto;
+        }
+
+        .cs-item-text {
+            font-size: (14/16rem);
+            line-height: 1.5em;
+            margin: 0;
+            color: var(--bodyTextColor);
+        }
+    }
+}
+
+@media only screen and (min-width: 64rem) {
+    #wd-clients .cs-container {
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: space-between;
+    }
+
+    #wd-clients .cs-content {
+        text-align: left;
+        align-items: flex-start;
+        flex: none;
+        max-width: (400/16rem);
+    }
+
+    #wd-clients .cs-card-group {
+        grid-template-columns: 1fr;
+        max-width: (720/16rem);
+    }
+}
+
+@media only screen and (min-width: 0rem) {
+    body.dark-mode #wd-clients {
+        background-color: var(--dark);
+
+        .cs-item {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .cs-title, .cs-text, .cs-h3, .cs-item-text { color: var(--bodyTextColorWhite); }
+        .cs-text, .cs-item-text { opacity: 0.8; }
     }
 }
 
