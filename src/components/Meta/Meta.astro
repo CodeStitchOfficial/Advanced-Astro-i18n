@@ -8,23 +8,43 @@ import { getLocalizedPathname } from "@js/translationUtils";
 import { locales, localeMap } from "@config/siteSettings";
 
 interface Props {
-	title?: string; // Override default title
-	description?: string; // Override default description
+	title?: string;
+	description?: string;
 	heroImage?: ImageMetadata | undefined;
+	/** "website" for regular pages, "article" for blog posts */
+	ogType?: "website" | "article";
+	/** ISO 8601 date string – only used when ogType="article" */
+	publishedTime?: string;
+	/** ISO 8601 date string – only used when ogType="article" */
+	modifiedTime?: string;
+	/** Author name – only used when ogType="article" */
+	articleAuthor?: string;
 }
 
-const { title = SITE.title, description = SITE.description, heroImage } = Astro.props;
+const {
+	title = SITE.title,
+	description = SITE.description,
+	heroImage,
+	ogType = "website",
+	publishedTime,
+	modifiedTime,
+	articleAuthor,
+} = Astro.props;
 
 // Data
 const localBusinessSchema = getLocalBusinessSchema(Astro.url.origin);
-const canonical = Astro.url.href;
+
+// Canonical URL: strip query params to prevent UTM-tracking duplicates
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
 // Detect landing pages (home page for any locale: "/" or "/fr/", etc.)
 const locale = getLocaleFromUrl(Astro.url);
 const isLandingPage = Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
 
 // Format page title with business name (and location if home page)
-const pageTitle = isLandingPage ? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}` : `${title} | ${BUSINESS.name}`;
+const pageTitle = isLandingPage
+	? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}`
+	: `${title} | ${BUSINESS.name}`;
 
 // Generate hreflang alternate links
 const hrefLangLinks = await Promise.all(
@@ -34,26 +54,25 @@ const hrefLangLinks = await Promise.all(
 	}))
 );
 
-// OG type is hardcoded since it rarely changes
-const ogType = "website";
-
 // Use page-specific values for OG tags
 const ogTitle = pageTitle;
 const ogDescription = description;
 
 // Social image logic - Priority: 1) Provided heroImage, 2) Default /assets/social.jpg
+// JPEG format for broadest social platform compatibility
 let socialImage: string;
+let ogImageWidth = "1200";
+let ogImageHeight = "630";
 
 if (heroImage) {
 	const optimizedImage = await getImage({
 		src: heroImage,
 		width: 1200,
-		height: 600,
-		format: "webp",
+		height: 630,
+		format: "jpeg",
 	});
 	socialImage = Astro.url.origin + optimizedImage.src;
 } else {
-	// Default social image (static file in public/)
 	socialImage = Astro.url.origin + OG.image;
 }
 ---
@@ -74,6 +93,8 @@ if (heroImage) {
 <meta name="web_author" content={SITE.author} />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<!-- Allow large snippets and images in search results -->
+<meta name="robots" content="max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
 <link rel="canonical" href={canonical} />
 <link rel="sitemap" href="/sitemap-index.xml" />
 
@@ -91,9 +112,20 @@ if (heroImage) {
 <meta property="og:site_name" content={SITE.title} />
 <meta property="og:description" content={ogDescription} />
 <meta property="og:image" content={socialImage} />
-<meta content="1200" property="og:image:width" />
-<meta content="600" property="og:image:height" />
+<meta content={ogImageWidth} property="og:image:width" />
+<meta content={ogImageHeight} property="og:image:height" />
 <meta content="image/jpeg" property="og:image:type" />
+
+<!-- Article-specific Open Graph tags (only rendered for blog posts) -->
+{ogType === "article" && publishedTime && (
+	<meta property="article:published_time" content={publishedTime} />
+)}
+{ogType === "article" && modifiedTime && (
+	<meta property="article:modified_time" content={modifiedTime} />
+)}
+{ogType === "article" && articleAuthor && (
+	<meta property="article:author" content={articleAuthor} />
+)}
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -111,4 +143,3 @@ if (heroImage) {
 <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png"/>
 <meta name="apple-mobile-web-app-title" content="Starter Kit"/>
 <link rel="manifest" href="/assets/favicons/site.webmanifest"/>
-

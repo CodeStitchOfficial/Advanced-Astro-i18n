@@ -1,6 +1,22 @@
 import { defineConfig, fontProviders } from "astro/config";
+import { execSync } from "child_process";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
+
+/**
+ * Returns the last git commit date for a given file path.
+ * Falls back to undefined if git is unavailable or the file has no history.
+ */
+function gitLastmod(filePath) {
+	try {
+		const log = execSync(`git log -1 --format="%cI" -- "${filePath}"`, {
+			encoding: "utf-8",
+		}).trim();
+		return log ? new Date(log) : undefined;
+	} catch {
+		return undefined;
+	}
+}
 
 export default defineConfig({
 	site: "https://www.yourwebsite.com", // update me!
@@ -16,6 +32,27 @@ export default defineConfig({
 		icon(),
 		sitemap({
 			filter: (page) => !page.includes("/admin"),
+			serialize(item) {
+				// Derive a relative file path from the page URL to look up git history.
+				// Pages without a matching file simply get no lastmod.
+				try {
+					const url = new URL(item.url);
+					let pathname = url.pathname.replace(/\/$/, "") || "/index";
+					const candidates = [
+						`src/pages${pathname}.astro`,
+						`src/pages${pathname}/index.astro`,
+					];
+					for (const candidate of candidates) {
+						const lastmod = gitLastmod(candidate);
+						if (lastmod) {
+							return { ...item, lastmod };
+						}
+					}
+				} catch {
+					// ignore
+				}
+				return item;
+			},
 		}),
 	],
 	fonts: [

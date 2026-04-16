@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from "astro:transitions";
 import { Font } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
 import Meta from "@components/Meta/Meta.astro";
@@ -11,9 +12,15 @@ import "@styles/root.less";
 interface Props {
 	title: string;
 	description: string;
+	heroImage?: ImageMetadata | undefined;
+	ogType?: "website" | "article";
+	publishedTime?: string;
+	modifiedTime?: string;
+	articleAuthor?: string;
 }
 
-const { description, title } = Astro.props as Props;
+const { description, title, heroImage, ogType, publishedTime, modifiedTime, articleAuthor } =
+	Astro.props as Props;
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
@@ -22,7 +29,15 @@ const t = useTranslations(locale);
 <html lang={locale}>
 	<head>
 		<!-- SEO Meta Tags -->
-		<Meta title={title} description={description}>
+		<Meta
+			title={title}
+			description={description}
+			heroImage={heroImage}
+			ogType={ogType}
+			publishedTime={publishedTime}
+			modifiedTime={modifiedTime}
+			articleAuthor={articleAuthor}
+		>
 			<slot name="schema" slot="schema" />
 		</Meta>
 

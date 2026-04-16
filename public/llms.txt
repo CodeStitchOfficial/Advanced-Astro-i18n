@@ -1,0 +1,17 @@
+# nise.nl
+
+> Nise.nl — webdesign en webdevelopment voor het MKB.
+
+## Inhoud
+
+- [Home](https://www.nise.nl/): Overzicht van diensten en propositie
+- [Web Development](https://www.nise.nl/diensten/web-development/): Maatwerk websites en webapplicaties
+- [SEO](https://www.nise.nl/diensten/seo/): Zoekmachineoptimalisatie
+- [Prijzen](https://www.nise.nl/prijzen/): Tarieven en pakketten
+- [Over ons](https://www.nise.nl/over-ons/): Achtergrond en werkwijze
+- [Blog](https://www.nise.nl/blog/): Artikelen over webdesign, development en SEO
+- [Contact](https://www.nise.nl/contact/): Contactgegevens en formulier
+
+## Technologie
+
+Gebouwd met Astro (statisch gegenereerd), gehost op een CDN. Geen database, geen server-side rendering.

@@ -2,7 +2,6 @@
 import type { GetStaticPaths } from "astro";
 import { getCollection } from "astro:content";
 import { getLocaleFromUrl, filterCollectionByLanguage, getPostSlug } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
 import { defaultLocale } from "@config/siteSettings";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import BlogFullArticle from "@components/BlogFullArticle/BlogFullArticle.astro";
@@ -23,16 +22,20 @@ export const getStaticPaths = (async () => {
 
 const { post } = Astro.props;
 const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
 
 const postUrl = new URL(Astro.url.pathname, Astro.site).href;
 const blogSchema = getBlogPostingSchema(post, locale, postUrl);
+
+const publishedTime = post.data.date ? new Date(post.data.date).toISOString() : undefined;
 ---
 
 <BaseLayout
-    title={post.data.title}
-    description={post.data.description}
-
+	title={post.data.title}
+	description={post.data.description}
+	heroImage={post.data.image}
+	ogType="article"
+	publishedTime={publishedTime}
+	articleAuthor={post.data.author}
 >
   <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
 
