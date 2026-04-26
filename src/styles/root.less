@@ -1,27 +1,106 @@
-/* CODESTITCH STYLES, RESET, HEADER/NAVIGATION AND FOOTER */
-
 /*-- -------------------------- -->
-<---        Core Styles         -->
+<---         CSS Reset          -->
 <--- -------------------------- -*/
 
-/* CodeStitch Root and Helpers */
+/* Modern CSS Reset - Based on Josh Comeau's reset */
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+	margin: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		interpolate-size: allow-keywords;
+	}
+}
+
+body {
+	/* 4. Add accessible line-height */
+	line-height: 1.5;
+	/* 5. Improve text rendering */
+	-webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+	text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+	isolation: isolate;
+}
+
+/*-- -------------------------- -->
+<---       CSS Variables        -->
+<--- -------------------------- -*/
+
 @media only screen and (min-width: 0em) {
 	:root {
-		--primary: #c00065;
-		--primaryLight: #8c5363;
-		--secondary: #302321;
-		--secondaryLight: #423432;
+		// Website colors — gebaseerd op joshwcomeau.com kleurenschema
+		--primary: #ff1981;
+		--primaryLight: #ff5ca8;
+		--primaryDark: #d4006e;
+		--secondary: #4242fa;
+		--secondaryLight: #809fff;
 		--headerColor: #1a1a1a;
-		--bodyTextColor: #4e4b66;
-		--bodyTextColorWhite: #fafbfc;
+		--bodyTextColor: #4a4b68;
+		--bodyTextColorWhite: #e3e6e8;
 
-		/* dark mode colors */
-		--primaryDark: #fab0c6;
-		--dark: #1d1715;
-		--medium: #1d1715;
-		--accent: #460b05;
-		--grey: hsl(224, 14%, 16%);
-		--light: hsl(230, 20%, 94%);
+		// Dark mode colors — joshwcomeau.com dark palette
+		--dark: #0d0f12;
+		--medium: #1a1f23;
+		--accent: #272e35;
+		--grey: hsl(210, 15%, 16%);
+		--light: hsl(210, 25%, 96%);
 
 		/* 13px - 16px */
 		--topperFontSize: clamp(0.8125rem, 1.6vw, 1rem);
@@ -31,131 +110,183 @@
 
 		/* 60px - 100px top and bottom */
 		--sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
-	}
 
-	// Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
-	.cs-topper {
-		font-size: var(--topperFontSize);
-		font-weight: 700;
-		line-height: 1.2em;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		color: var(--primaryLight);
-		display: block;
+		--headerFont: var(--font-cal-sans), Arial, sans-serif;
+		--bodyFont: var(--font-inter), Arial, sans-serif;
+		--accentFont: var(--font-funnel-display), var(--font-cal-sans), Arial, sans-serif;
 	}
+}
 
-	.cs-title {
-		font-size: var(--headerFontSize);
-		font-weight: 900;
-		line-height: 1.2em;
-		margin: 0 auto (16/16rem);
-		color: var(--headerColor);
-		position: relative;
+/*-- -------------------------- -->
+<---     Base Element Styles    -->
+<--- -------------------------- -*/
+
+body,
+html {
+	font-family: var(--bodyFont);
+	font-size: 100%;
+	color: var(--bodyTextColor);
+}
+
+body {
+	transition: background-color 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--headerColor);
+}
+
+p,
+li,
+a {
+	font-size: (16/16rem);
+	line-height: 1.5em;
+	color: var(--primary);
+}
+
+p,
+li {
+	color: var(--bodyTextColor);
+}
+
+a,
+button {
+	&:hover {
+		cursor: pointer;
 	}
+}
 
-	.cs-text {
-		font-size: var(--bodyFontSize);
-		line-height: 1.5em;
-		width: 100%;
-		margin: 0 auto;
-		color: var(--bodyTextColor);
-	}
+/*-- -------------------------- -->
+<---   Typography Helpers       -->
+<--- -------------------------- -*/
 
-	// Button - can be replaced using CodeStitch's "Button" Stitches
+// Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
+.cs-topper {
+	font-family: var(--accentFont);
+	color: var(--secondary);
+	font-size: var(--topperFontSize);
+	font-weight: 700;
+	line-height: 1.2em;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	display: block;
+}
+
+.cs-title {
+	font-size: var(--headerFontSize);
+	font-weight: 900;
+	line-height: 1.2em;
+	margin: 0 auto (16/16rem);
+	font-family: var(--headerFont);
+	color: var(--headerColor);
+	position: relative;
+}
+
+.cs-text {
+	font-size: var(--bodyFontSize);
+	line-height: 1.5em;
+	width: 100%;
+	margin: 0 auto;
+	color: var(--bodyTextColor);
+}
+
+/*-- -------------------------- -->
+<---    Component Classes       -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0em) {
 	.cs-button-solid {
-		font-size: (16/16rem);
-		font-weight: bold;
-		line-height: (50/16em);
-		text-align: center;
-		text-transform: uppercase;
-		text-decoration: none;
-		width: auto;
-		height: (50/16rem);
-		padding: 0 (30/16rem);
-
-		// Transition Properties
-		color: var(--light);
 		background-color: var(--primary);
+		border-radius: .25rem 1.875rem .25rem;
+		color: #fff;
 		display: inline-block;
+		font-family: var(--headerFont);
+		font-size: 1rem;
+		line-height: 3.5rem;
+		margin: 0;
+		overflow: hidden;
+		padding: 0 2.625rem;
 		position: relative;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+		transition: color .3s;
 		z-index: 1;
-		transition: color 0.3s;
-		transition-delay: 0.1s;
-
-		&:hover {
-			color: #fff;
-			&:before {
-				width: 100%;
-			}
-		}
-
-		&:before {
-			content: "";
-
-			//Transition properties
-			width: 0;
-			height: 100%;
-			background-color: #000;
-			opacity: 1;
-			display: block;
-			position: absolute;
-			top: 0;
-			left: 0;
-			z-index: -1;
-			transition: width 0.3s;
-		}
-	}
-}
-
-/* Dark mode general styles */
-@media only screen and (min-width: 0em) {
-	body.dark-mode {
-		background-color: var(--dark);
-
-		/* Fallback text color */
-		p,
-		li,
-		h1,
-		h2,
-		h3,
-		h4,
-		h5,
-		h6 {
-			color: #fff;
-		}
-
-		.cs-topper {
-			color: var(--primaryDark);
-		}
-
-		.cs-reviewer {
-			color: var(--bodyTextColorWhite);
-		}
-	}
-}
-
-/* Fonts and general styles */
-@media only screen and (min-width: 0em) {
-	body,
-	html {
-		font-family: var(--font-primary);
-		font-size: 100%;
-		margin: 0;
-		padding: 0;
-		color: var(--bodyTextColor);
-		overflow-x: hidden;
 	}
 
-	*,
-	*:before,
-	*:after {
-		margin: 0;
-		box-sizing: border-box;
-		padding: 0;
+	.cs-button-solid:before {
+		background: #fff;
+		content: "";
+		display: block;
+		height: 100%;
+		left: 0;
+		opacity: 1;
+		position: absolute;
+		top: 0;
+		transition: width .3s;
+		width: 0;
+		z-index: -1;
 	}
 
-	body {
-		transition: background-color 0.3s;
+	.cs-button-solid:hover {
+		color: var(--primary);
+	}
+
+	.cs-button-solid:hover:before {
+		width: 100%;
+	}
+
+	.cs-button-solid.cs-button-light {
+		color: #fff;
+	}
+
+	.cs-button-solid.cs-button-light:before {
+		background: var(--primaryDark);
+	}
+
+	.cs-button-outline {
+		border: 2px solid #000;
+		color: #000;
+		display: inline-block;
+		font-size: 1rem;
+		font-weight: 700;
+		line-height: 1em;
+		padding: 1rem 2rem;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+		transition: color .3s;
+		transition-delay: .1s;
+		width: auto;
+		z-index: 1;
+	}
+
+	.cs-button-outline:hover {
+		color: #fff;
+	}
+
+	.cs-button-outline:hover:before {
+		width: 100%;
+	}
+
+	.cs-button-outline:before {
+		background-color: #000;
+		content: "";
+		display: block;
+		height: 100%;
+		left: 0;
+		opacity: 1;
+		position: absolute;
+		top: 0;
+		transition: width .3s;
+		width: 0;
+		z-index: -1;
 	}
 
 	.container {
@@ -164,61 +295,91 @@
 		position: relative;
 	}
 
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		margin: 0;
-		color: var(--headerColor);
-	}
-
-	p,
-	li,
-	a {
-		font-size: (16/16rem);
-		line-height: 1.5em;
-		margin: 0;
-	}
-
-	p,
-	li {
-		color: #353535;
-	}
-
-	a,
-	button {
-		&:hover {
-			cursor: pointer;
-		}
-	}
-
-	// Hidden Screen reader skip nav button
+	// Skip to main content link - accessible to keyboard users and screen readers
 	.skip {
-		opacity: 0;
 		position: absolute;
 		top: 0;
 		left: 0;
-		z-index: -1111111;
+		transform: translateY(-100%);
+		z-index: 10001; // Above header (10000)
+		opacity: 0;
+		overflow: hidden;
+		transition: transform 0.3s, opacity 0.3s;
+
+		&:focus {
+			transform: translateY(0);
+			opacity: 1;
+			padding: 1rem 1.5rem;
+			background-color: var(--primary);
+			color: var(--headerColor);
+			text-decoration: none;
+			font-weight: 700;
+			outline: 2px solid var(--primary);
+			outline-offset: 2px;
+		}
 	}
 }
 
-/* Reset Margins */
-@media only screen and (min-width: 1024px) {
-	body,
-	html {
-		margin: 0;
-		padding: 0;
+/*-- -------------------------- -->
+<---    Dark Mode Styles        -->
+<--- -------------------------- -*/
+
+@media only screen and (min-width: 0em) {
+	body.dark-mode {
+		background-color: var(--dark);
+		color: var(--bodyTextColorWhite);
+
+		p,
+		li {
+			color: var(--bodyTextColorWhite);
+		}
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			color: #f2f5f7;
+		}
+
+		.cs-topper {
+			color: var(--primary);
+		}
+
+		.cs-title {
+			color: #f2f5f7;
+		}
+
+		.cs-text {
+			color: var(--bodyTextColorWhite);
+		}
+
+		.cs-reviewer {
+			color: var(--bodyTextColorWhite);
+		}
+
+		a:not(.cs-button-solid):not(.cs-button-outline) {
+			color: var(--secondaryLight);
+		}
 	}
 }
 
-/* Scale full website with the viewport width */
-@media only screen and (min-width: 2000px) {
-	body,
-	html {
-		font-size: 0.85vw;
-	}
+/*-- -------------------------- -->
+<---      Utility Classes       -->
+<--- -------------------------- -*/
+
+// Prevents icons from shrinking in flex containers
+[data-icon] {
+	flex-shrink: 0;
+}
+
+.cs-hide-on-mobile {
+	display: none;
+}
+
+.cs-hide-on-desktop {
+	display: block;
 }
 
 .sr-only {
@@ -239,4 +400,27 @@
 
 .cs-shown {
 	display: flex;
+}
+
+/*-- -------------------------- -->
+<---   Responsive Adjustments   -->
+<--- -------------------------- -*/
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 64rem) {
+	.cs-hide-on-mobile {
+		display: block;
+	}
+
+	.cs-hide-on-desktop {
+		display: none;
+	}
+}
+
+/* Scale full website with the viewport width */
+@media only screen and (min-width: 2000px) {
+	body,
+	html {
+		font-size: 0.85vw;
+	}
 }

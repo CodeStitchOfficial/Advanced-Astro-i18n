@@ -1,0 +1,58 @@
+{
+	"home": "Home",
+	"about": "Over ons",
+	"projects": "Projecten",
+	"project-1": "Project 1",
+	"project-2": "Project 2",
+	"blog": "Blog",
+	"contact": "Contact",
+	"theme-label": "Kies thema",
+	"language-label": "Kies taal",
+	"languageSelect": {
+		"nl": "Nederlands",
+		"instructions": "Gebruik pijltjestoetsen, druk Enter om te selecteren"
+	},
+	"themeSelect": {
+		"accessibleLabel": "Selecteer thema",
+		"light": "Licht",
+		"dark": "Donker",
+		"auto": "Automatisch"
+	},
+	"quote": "Gratis offerte",
+	"estimate": "Vraag een offerte aan",
+	"ctaComponent": {
+		"title": "Klaar om te starten?",
+		"subtitle": "Laten we kennismaken",
+		"message": "Geen verkooppraatje. Geen verplichtingen. Gewoon een eerlijk gesprek over wat jij nodig hebt.",
+		"cta": "Neem contact op",
+		"alt": ""
+	},
+	"about-page": {
+		"landing": "Over ons",
+		"topper": "nise.nl",
+		"title": "Een menselijke aanpak voor digitale marketing",
+		"p-1": "Wij zijn nise.nl — een webbureau met één duidelijk doel: kleine en middelgrote bedrijven een professionele online aanwezigheid geven die ze verdienen.",
+		"p-2": "Na jaren te hebben gewerkt voor grote corporates zagen we een patroon: het MKB werd behandeld als bijzaak. Standaard templates, dure contracten en weinig persoonlijk contact.",
+		"p-3": "Wij doen het anders. Jij belt ons. Wij nemen op.",
+		"rank": "Oprichter",
+		"cta": "Onze projecten"
+	},
+	"footer": {
+		"information": "Informatie",
+		"services": "Diensten",
+		"contact": "Contact",
+		"click": "Stuur ons een e-mail",
+		"p": "Handgemaakte websites voor het MKB — razendsnel, veilig en altijd up-to-date.",
+		"credit": "Ontworpen en gebouwd door "
+	},
+	"notFound": {
+		"pageNotFound": "404 — Deze pagina bestaat niet.",
+		"linkText": "Terug naar de homepage"
+	},
+	"skipLink": "Ga direct naar de inhoud",
+	"pagination": {
+		"previous": "Vorige",
+		"next": "Volgende"
+	},
+	"reviews": "Recensies"
+}

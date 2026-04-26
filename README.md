@@ -240,6 +240,61 @@ To add a new locale manually (e.g. Spanish `es`):
 5. **`src/config/routeTranslations.ts`** — add `es` entries for each translated route segment
 6. **`src/content/blog/es/`** — add translated blog posts with matching `mappingKey` values
 
+### Using a single language
+
+This kit supports single-language projects where a language switcher is not needed. When configured for a single language:
+
+- **No language prefix** — all pages are served at the root (e.g., `/about/`, not `/en/about/`)
+- **No language switcher** — the language switcher components automatically hide
+- **All i18n utilities still work** — translation functions and route helpers work unchanged
+- **Easy upgrade path** — convert to multi-language later without rewriting code
+
+#### Setting up a single-language project
+
+Run the interactive configuration:
+
+```bash
+npm run config-i18n
+```
+
+When prompted, select "single-language project" and provide your language code (e.g., `en`, `nl`, `de`). The script will:
+
+1. Update `astro.config.mjs` with your locale and set `prefixDefaultLocale: false`
+2. Create `.i18n-single-language` marker file to track single-language mode
+3. Provide next steps for removing demo content
+
+#### Single-language utility functions
+
+For single-language projects, `translationUtils.ts` provides simplified helpers:
+
+- **`getSingleLocale()`** — returns the single configured locale
+- **`getLocalizedRouteForCurrentLang(path)`** — a simplified version of `getLocalizedRoute()` for single-language use
+
+Example:
+
+```astro
+---
+import { getSingleLocale, getLocalizedRouteForCurrentLang } from "@js/translationUtils";
+
+const locale = getSingleLocale();
+const aboutUrl = getLocalizedRouteForCurrentLang("/about");
+---
+
+<a href={aboutUrl}>About</a>
+```
+
+All existing i18n functions (`getLocalizedRoute`, `getLocalizedPathname`, `useTranslations`) continue to work as-is.
+
+#### Upgrading from single to multi-language
+
+To convert a single-language project to multi-language:
+
+1. Run `npm run config-i18n` and select "multi-language project"
+2. Follow the prompts to specify additional locales
+3. The `.i18n-single-language` marker file will be removed
+4. Add page files and translations for the new locales following the [multi-language structure](#page-structure)
+
+For more details, see `SINGLE_LANGUAGE.md` in the project root.
 
 ### Page Structure
 

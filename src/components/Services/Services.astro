@@ -1,149 +1,438 @@
 ---
-import { Picture } from "astro:assets";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-import service1 from "@assets/svgs/service1.svg";
-import service2 from "@assets/svgs/service2.svg";
-import service3 from "@assets/svgs/service3.svg";
-
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+// Utils
+import { Icon } from 'astro-icon/components';
 ---
 
 <!-- ============================================ -->
 <!--                  Services                    -->
 <!-- ============================================ -->
 
-<section id="services" class="services">
-	<div class="card">
-		<Picture src={service1} alt="appliance" width={48} formats={["avif", "webp"]} aria-hidden="true" decoding="async" />
-		<h2>{t("home:services.0.heading")}</h2>
-		<p>
-			{t("home:services.0.p")}
-		</p>
-	</div>
-	<div class="card">
-		<Picture src={service2} alt="appliance" width={48} formats={["avif", "webp"]} aria-hidden="true" decoding="async" />
-		<h2>{t("home:services.1.heading")}</h2>
-		<p>
-			{t("home:services.1.p")}
-		</p>
-	</div>
-	<div class="card">
-		<Picture src={service3} alt="appliance" width={48} formats={["avif", "webp"]} aria-hidden="true" decoding="async" />
-		<h2>{t("home:services.2.heading")}</h2>
-		<p>
-			{t("home:services.2.p")}
-		</p>
-	</div>
+<section id="services-2279">
+    <div class="cs-container">
+        <!-- Left Content Section-->
+        <div class="cs-content">
+            <span class="cs-topper">Wat wij doen</span>
+            <h2 class="cs-title">Nooit meer zorgen over je website</h2>
+        </div>
+        <ul class="cs-card-group">
+            <li class="cs-item">
+                <picture class="cs-icon-wrapper">
+                    <img class="cs-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/shield.svg" alt="icoon" width="40" height="40">
+                </picture>
+                <h3 class="cs-h3">Razendsnel geladen</h3>
+                <p class="cs-item-text">
+                    Laadsnelheid bepaalt of bezoekers blijven. Onze handgemaakte websites scoren consistent perfect op Google PageSpeed — zonder zware frameworks.
+                </p>
+                <a href="/diensten/web-development/" class="cs-link">
+                    Meer lezen
+                    <img class="cs-arrow" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/upper-right-black-arrow.svg" alt="icoon" width="20" height="20">
+                </a>
+                <picture class="cs-background">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg" alt="website" width="480" height="425">
+                </picture>
+            </li>
+            <li class="cs-item">
+                <picture class="cs-icon-wrapper">
+                    <img class="cs-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/phone.svg" alt="icoon" width="40" height="40">
+                </picture>
+                <h3 class="cs-h3">Volledig responsief</h3>
+                <p class="cs-item-text">
+                    Twee derde van al het webverkeer komt van mobiele apparaten. Jouw site ziet er op elke schermgrootte scherp en professioneel uit.
+                </p>
+                <a href="/diensten/web-development/" class="cs-link">
+                    Meer lezen
+                    <img class="cs-arrow" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/upper-right-black-arrow.svg" alt="icoon" width="20" height="20">
+                </a>
+                <picture class="cs-background">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg" alt="responsive design" width="480" height="425">
+                </picture>
+            </li>
+            <li class="cs-item">
+                <picture class="cs-icon-wrapper">
+                    <img class="cs-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/magnifying-glass.svg" alt="icoon" width="40" height="40">
+                </picture>
+                <h3 class="cs-h3">SEO-geoptimaliseerd</h3>
+                <p class="cs-item-text">
+                    Gevonden worden in Google begint met een snelle, goed gebouwde website. Wij zorgen voor de technische basis en helpen je hoger te ranken.
+                </p>
+                <a href="/diensten/seo/" class="cs-link">
+                    Meer lezen
+                    <img class="cs-arrow" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/upper-right-black-arrow.svg" alt="icoon" width="20" height="20">
+                </a>
+                <picture class="cs-background">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg" alt="SEO" width="480" height="425">
+                </picture>
+            </li>
+            <li class="cs-item">
+                <picture class="cs-icon-wrapper">
+                    <img class="cs-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/tools.svg" alt="icoon" width="40" height="40">
+                </picture>
+                <h3 class="cs-h3">Onbeperkt aanpassingen</h3>
+                <p class="cs-item-text">
+                    Nieuwe openingstijden, een extra dienst of een andere foto? Stuur ons een berichtje. Wij regelen het, jij focust op je klanten.
+                </p>
+                <a href="/contact/" class="cs-link">
+                    Aan de slag
+                    <img class="cs-arrow" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/upper-right-black-arrow.svg" alt="icoon" width="20" height="20">
+                </a>
+                <picture class="cs-background">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg" alt="onderhoud" width="480" height="425">
+                </picture>
+            </li>
+            <li class="cs-item">
+                <picture class="cs-icon-wrapper">
+                    <img class="cs-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/lock.svg" alt="icoon" width="40" height="40">
+                </picture>
+                <h3 class="cs-h3">Veilig en betrouwbaar</h3>
+                <p class="cs-item-text">
+                    Statische websites hebben geen database om te hacken. Geen plugins met beveiligingslekken. Geen nachtmerrie op maandagochtend.
+                </p>
+                <a href="/contact/" class="cs-link">
+                    Aan de slag
+                    <img class="cs-arrow" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/upper-right-black-arrow.svg" alt="icoon" width="20" height="20">
+                </a>
+                <picture class="cs-background">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg" alt="beveiliging" width="480" height="425">
+                </picture>
+            </li>
+            <li class="cs-item">
+                <picture class="cs-icon-wrapper">
+                    <img class="cs-icon" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/person.svg" alt="icoon" width="40" height="40">
+                </picture>
+                <h3 class="cs-h3">Persoonlijk contact</h3>
+                <p class="cs-item-text">
+                    Geen callcenters, geen ticketsystemen. Je belt of mailt direct met ons. Wij zijn er elke werkdag voor je klaar.
+                </p>
+                <a href="/contact/" class="cs-link">
+                    Neem contact op
+                    <img class="cs-arrow" loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/Icons/upper-right-black-arrow.svg" alt="icoon" width="20" height="20">
+                </a>
+                <picture class="cs-background">
+                    <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/construction1.jpg" alt="persoonlijk contact" width="480" height="425">
+                </picture>
+            </li>
+        </ul>
+    </div>
+    <!--Waves Background-->
+    <picture class="cs-accent">
+        <source media="(max-width: 600px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/brush-strokes.jpg">
+        <source media="(min-width: 601px)" srcset="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/brush-strokes.jpg">
+        <img loading="lazy" decoding="async" src="https://csimg.nyc3.cdn.digitaloceanspaces.com/Images/MISC/brush-strokes.jpg" alt="brush strokes" width="1920" height="331" aria-hidden="true">
+    </picture>
 </section>
 
+
 <style lang="less">
-	/*-- -------------------------- -->
-<---          Services          -->
-<--- -------------------------- -*/
+@media only screen and (min-width: 0rem) {
+    #services-2279 {
+        padding: var(--sectionPadding);
+        position: relative;
+        z-index: 1;
+    }
+    #services-2279:before {
+        background-color: #001200;
+        content: "";
+        display: block;
+        height: clamp(37.5rem,70vw,42rem);
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition: background-color .3s;
+        width: 100%;
+        z-index: -1;
+    }
+    #services-2279 .cs-container {
+        gap: clamp(3rem,6vw,4rem);
+        margin: auto;
+        max-width: 34.375rem;
+    }
+    #services-2279 .cs-container,
+    #services-2279 .cs-content {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    #services-2279 .cs-content {
+        max-width: 50rem;
+        text-align: center;
+    }
+    #services-2279 .cs-content .cs-text {
+        color: var(--bodyTextColorWhite);
+        margin-bottom: 1em;
+    }
+    #services-2279 .cs-title {
+        color: var(--bodyTextColorWhite);
+        margin: 0 0 .5em;
+        max-width: 18ch;
+    }
 
-	/* Mobile */
-	@media only screen and (min-width: 0em) {
-		.services {
-			width: 90%;
-			max-width: (1320/16em);
-			margin: auto;
-			margin-top: (-167/16em);
-			margin-bottom: (50/16em);
-			padding: (50/16em) (20/16em);
-			background: #fff;
-			box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.05);
-			border-top: (6/16em) solid var(--primary);
-			border-radius: (5/16em);
-			position: relative;
-			z-index: 100;
-			.card {
-				width: 100%;
-				max-width: (357/16em);
-				margin: auto;
-				margin-bottom: (50/16em);
-				display: block;
-				&:last-of-type {
-					margin-bottom: 0;
-				}
+    #services-2279 .cs-text {
+        opacity: .8;
+    }
+    #services-2279 .cs-card-group {
+        display: grid;
+        gap: clamp(.5rem,2vw,1.25rem);
+        grid-template-columns: repeat(12,1fr);
+        margin: 0;
+        padding: 0;
+        width: 100%;
+    }
+    #services-2279 .cs-item {
+        --itemPadding: clamp(1.5rem,3.5vw,3rem);
+        align-items: flex-start;
+        background-color: #fff;
+        border: 1px solid #e7e7e8;
+        border-radius:0 2rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        grid-column: span 12;
+        grid-row: span 1;
+        justify-content: center;
+        list-style: none;
+        margin: 0;
+        padding: var(--itemPadding);
+        position: relative;
+        text-align: left;
+        width: 100%;
+        z-index: 1;
+    }
+    #services-2279 .cs-item:hover .cs-h3,
+    #services-2279 .cs-item:hover .cs-item-text,
+    #services-2279 .cs-item:hover .cs-link {
+        color: var(--bodyTextColorWhite);
+    }
+    #services-2279 .cs-item:hover .cs-item-text {
+        opacity: .9;
+    }
+    #services-2279 .cs-item:hover .cs-icon-wrapper {
+        border-radius: 50% 0;
+        transform: rotate(90deg);
+    }
+    #services-2279 .cs-item:hover .cs-icon {
+        transform: rotate(-90deg);
+    }
+    #services-2279 .cs-item:hover .cs-arrow {
+        filter: grayscale(1) brightness(10000%);
+    }
+    #services-2279 .cs-item:hover .cs-background {
+        opacity: 1;
+    }
+    #services-2279 .cs-icon-wrapper {
+        align-items: center;
+        background-color: #fff;
+        bottom: var(--itemPadding);
+        display: flex;
+        height: clamp(3rem,7vw,6.25rem);
+        justify-content: center;
+        margin: 0;
+        overflow: hidden;
+        position: absolute;
+        right: var(--itemPadding);
+        transition: transform .5s,border-radius .5s;
+        width: clamp(3rem,7vw,6.25rem);
+        z-index: 1;
+    }
+    #services-2279 .cs-icon-wrapper:before {
+        background: var(--primary);
+        content: "";
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: .1;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+    }
+    #services-2279 .cs-icon {
+        height: auto;
+        transition: transform .5s;
+        width: clamp(1.5rem,4vw,3rem);
+    }
+    #services-2279 .cs-h3 {
+        align-items: center;
+        color: var(--headerColor);
+        display: flex;
+        font-size: clamp(1.25rem,2.5vw,1.5625rem);
+        gap: 1rem;
+        line-height: 1.2em;
+        margin: 0 0 .75rem;
+        position: relative;
+        text-align: inherit;
+        z-index: 1;
+    }
+    #services-2279 .cs-h3:before {
+        background: var(--primary);
+        content: "";
+        display: block;
+        height: .5rem;
+        opacity: 1;
+        width: .5rem;
+    }
+    #services-2279 .cs-item-text {
+        color: var(--bodyTextColor);
+        font-size: 1rem;
+        line-height: 1.5em;
+        margin: 0 0 clamp(3.5rem,8vw,6.75rem);
+        max-width: 18.75rem;
+        padding: 0;
+    }
+    #services-2279 .cs-link {
+        color: var(--headerColor);
+        display: inline-flex;
+        font-family: var(--headerFont);
+        font-size: 1rem;
+        gap: .75rem;
+        justify-content: space-between;
+        line-height: 1.2em;
+        margin: 0;
+        padding: 0 0 .375rem;
+        position: relative;
+        text-decoration: none;
+        text-transform: uppercase;
+        transition: color .3s;
+    }
+    #services-2279 .cs-link:hover .cs-arrow {
+        transform: rotate(45deg);
+    }
+    #services-2279 .cs-link:before {
+        background: currentColor;
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 1px;
+        left: 0;
+        opacity: 1;
+        position: absolute;
+        width: 100%;
+    }
+    #services-2279 .cs-arrow {
+        display: block;
+        height: auto;
+        transition: transform .3s;
+        width: 1.25rem;
+    }
+    #services-2279 .cs-background {
+        border-radius: 0 2rem;
+        opacity: 0;
+        overflow: hidden;
+        transition: opacity .3s;
+        z-index: -1;
+    }
+    #services-2279 .cs-background,
+    #services-2279 .cs-background:before {
+        display: block;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    #services-2279 .cs-background:before {
+        background: var(--dark);
+        content: "";
+        opacity: .84;
+        z-index: 1;
+    }
+    #services-2279 .cs-background img {
+        height: 100%;
+        left: 0;
+        -o-object-fit: cover;
+        object-fit: cover;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+    #services-2279 .cs-accent {
+        display: block;
+        height: 21.6875rem;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -1;
+    }
+    #services-2279 .cs-accent:before {
+        background: #111418;
+        content: "";
+        display: block;
+        height: 100%;
+        left: 0;
+        opacity: 1;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: -2;
+    }
+    #services-2279 .cs-accent img {
+        height: 100%;
+        left: 0;
+        mix-blend-mode: soft-light;
+        -o-object-fit: cover;
+        object-fit: cover;
+        opacity: .24;
+        position: absolute;
+        top: 0;
+        width: 100%;
+    }
+}
 
-				picture {
-					width: (88/16em);
-					height: (88/16em);
-					margin: auto;
-					margin-bottom: (23/16em);
-					background: var(--primary);
-					border-radius: 50%;
-					display: flex;
-					justify-content: center;
-					align-items: center;
+@media only screen and (min-width: 48rem) {
+    #services-2279 .cs-container {
+        max-width:80rem;
+    }
+    #services-2279 .cs-container .cs-text {
+        text-align: left;
+    }
+    #services-2279 .cs-item {
+        grid-column: span 6;
+        justify-content: flex-start;
+    }
+    #services-2279 .cs-link {
+        margin-top: auto;
+    }
+}
 
-					img {
-						width: (48/16em);
-						height: (48/16em);
-					}
-				}
-				h2 {
-					font-size: (32/16em);
-					font-weight: 700;
-					line-height: 27/20em;
-					text-align: center;
-					margin-bottom: 13/20em;
-					color: #1a1a1a;
-				}
-				p {
-					line-height: 24/18em;
-					text-align: center;
-					width: 100%;
-					opacity: 0.7;
-				}
-			}
-		}
-	}
+@media only screen and (min-width: 64rem) {
+    #services-2279 .cs-item {
+        grid-column:span 4;
+    }
+    #services-2279 .cs-accent {
+        height: clamp(27.1875rem,41vw,32.875rem);
+    }
+}
 
-	/* Inbetween */
-	@media only screen and (min-width: 768px) {
-		.services {
-			font-size: ~"min(1.8vw, 1em)";
-			width: 98%;
-			display: flex;
-			justify-content: space-between;
-			align-items: flex-start;
+@media only screen and (min-width: 0rem) {
+    body.dark-mode #services-2279:before {
+        background-color:#000c00;
+    }
+    body.dark-mode #services-2279 .cs-item {
+        background-color: var(--dark);
+        border-color: hsla(0,0%,100%,.2);
+    }
+    body.dark-mode #services-2279 .cs-item:hover .cs-icon-wrapper:before {
+        background-color: var(--primary);
+        opacity: .9;
+    }
+    body.dark-mode #services-2279 .cs-h3,
+    body.dark-mode #services-2279 .cs-item-text,
+    body.dark-mode #services-2279 .cs-link {
+        color: var(--bodyTextColorWhite);
+    }
+    body.dark-mode #services-2279 .cs-icon-wrapper {
+        background-color: var(--dark);
+    }
+    body.dark-mode #services-2279 .cs-icon-wrapper:before {
+        background-color: #000;
+        opacity: .3;
+        transition: background-color .3s,opacity .3s;
+    }
+    body.dark-mode #services-2279 .cs-arrow,
+    body.dark-mode #services-2279 .cs-icon {
+        filter: grayscale(1) brightness(10000%);
+    }
+}
 
-			.card {
-				max-width: (325/16em);
-				margin: 0;
-			}
-		}
-	}
-
-	/* Large Desktop */
-	@media only screen and (min-width: 1300px) {
-		.services {
-			padding: (50/16em) (80/16em);
-
-			.card {
-				max-width: (357/16em);
-			}
-		}
-	}
-
-	/* Dark mode */
-	@media only screen and (min-width: 0em) {
-		body.dark-mode {
-			#services {
-				background: var(--medium);
-
-				picture {
-					background: var(--primaryDark);
-				}
-
-				h2 {
-					font-weight: bold;
-					color: #fff;
-				}
-			}
-		}
-	}
 </style>
