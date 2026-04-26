@@ -12,7 +12,6 @@
 - [Overview](#overview)
 - [Getting Started](#getting-started)
 - [Commands](#commands)
-- [Font Setup](#font-setup)
 - [Features](#features)
 - [Project Structure](#project-structure)
     - [Project Tree](#project-tree)
@@ -100,26 +99,6 @@ All commands are run from the root of the project, from a terminal:
 | `npm run create-page`      | Scaffolds a new page for all locales         |
 | `npm run test:scripts`     | Runs unit tests for the utility scripts      |
 
-### Font Setup
-
-This kit comes with Roboto font, you can replace it by removing the `@fontsource-variable/roboto` package and installing the font you prefer as the example below:
-
-1. Choose and install a font from [Fontsource](https://fontsource.org/):
-
-    `npm install @fontsource-variable/outfit`
-
-2. Update the name at this `astro.config.mjs` section:
-
-    ```json
-    {
-        provider: fontProviders.fontsource(),
-        // Should be the font name "Outfit", not the font-family "Outfit Variable"
-        name: "Outfit",
-    },
-    ```
-
-Optionally, you can use local, or other font providers. For more information refer to [Using custom fonts](https://docs.astro.build/en/guides/fonts/) at Astro docs.
-
 ## Features
 
 - Runs on **Astro v6**
@@ -128,6 +107,7 @@ Optionally, you can use local, or other font providers. For more information ref
 - Dark mode (removable via `npm run remove-dark-mode`)
 - Optional Decap CMS integration (removable via `npm run remove-decap`)
 - Astro's `<ClientRouter />` integration for view transitions
+- Astro Fonts API
 - Astro's content collections to supercharge your Astro pages and content
 - Automatic sitemap generation at build time
 - [CodeStitch](https://codestitch.app/) HTML and CSS blocks to build the UI
@@ -239,7 +219,6 @@ To add a new locale manually (e.g. Spanish `es`):
 4. **`src/pages/es/`** — create translated page files mirroring `src/pages/fr/`
 5. **`src/config/routeTranslations.ts`** — add `es` entries for each translated route segment
 6. **`src/content/blog/es/`** — add translated blog posts with matching `mappingKey` values
-
 
 ### Page Structure
 

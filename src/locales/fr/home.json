@@ -6,7 +6,7 @@
 	"hero": {
 		"topper": "Kit Avancé",
 		"title": {
-			"1": "Kit Avancé Astro v5",
+			"1": "Kit Avancé Astro v6",
 			"2": "i18n"
 		},
 		"p1": "Ce kit est spécialement conçu pour les clients souhaitant un site multi-langues et est donc configuré avec les outils d'internationalisation (i18n) d'Astro pour deux langues: anglais et français. Il contient également une intégration Decap CMS.",
