@@ -3,6 +3,11 @@ import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
 import { locales, languageSwitcherMap } from "@config/siteSettings";
 
+// Skip rendering if single-language project
+if (locales.length === 1) {
+	Astro.response.status = 200;
+}
+
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 const uid = Math.random().toString(36).slice(2, 7);
@@ -17,57 +22,61 @@ const languageOptions = await Promise.all(
 );
 ---
 
-<language-toggle>
-  <div
-    class="language-toggle"
-    role="radiogroup"
-    aria-label={t("language-label")}
-    aria-describedby={`language-instructions-${uid}`}
-  >
-    <span id={`language-instructions-${uid}`} class="visually-hidden">
-      {t("languageSelect.instructions")}
-    </span>
-    <div class="toggle-track">
-      {
-        languageOptions.map((option) => (
-          <>
-            <input
-              type="radio"
-              class="language-check"
-              name="language-selector"
-              id={`lang-${uid}-${option.locale}`}
-              value={option.locale}
-              data-href={option.href}
-              autocomplete="off"
-              checked={locale === option.locale}
-            />
-            <label
-              class:list={[
-                "language-option",
-                { "is-selected": locale === option.locale },
-              ]}
-              for={`lang-${uid}-${option.locale}`}
-              lang={option.locale}
-              data-locale={option.locale}
-            >
-              <span class="language-code" aria-hidden="true">
-                {option.code}
-              </span>
-              <span class="visually-hidden">{option.label}</span>
-            </label>
-          </>
-        ))
-      }
-    </div>
-    <div
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-      class="visually-hidden language-status"
-    >
-    </div>
-  </div>
-</language-toggle>
+{
+	locales.length > 1 && (
+		<language-toggle>
+		  <div
+		    class="language-toggle"
+		    role="radiogroup"
+		    aria-label={t("language-label")}
+		    aria-describedby={`language-instructions-${uid}`}
+		  >
+		    <span id={`language-instructions-${uid}`} class="visually-hidden">
+		      {t("languageSelect.instructions")}
+		    </span>
+		    <div class="toggle-track">
+		      {
+		        languageOptions.map((option) => (
+		          <>
+		            <input
+		              type="radio"
+		              class="language-check"
+		              name="language-selector"
+		              id={`lang-${uid}-${option.locale}`}
+		              value={option.locale}
+		              data-href={option.href}
+		              autocomplete="off"
+		              checked={locale === option.locale}
+		            />
+		            <label
+		              class:list={[
+		                "language-option",
+		                { "is-selected": locale === option.locale },
+		              ]}
+		              for={`lang-${uid}-${option.locale}`}
+		              lang={option.locale}
+		              data-locale={option.locale}
+		            >
+		              <span class="language-code" aria-hidden="true">
+		                {option.code}
+		              </span>
+		              <span class="visually-hidden">{option.label}</span>
+		            </label>
+		          </>
+		        ))
+		      }
+		    </div>
+		    <div
+		      role="status"
+		      aria-live="polite"
+		      aria-atomic="true"
+		      class="visually-hidden language-status"
+		    >
+		    </div>
+		  </div>
+		</language-toggle>
+	)
+}
 
 <script>
   import { setLocalePreference } from "@js/localePreference";

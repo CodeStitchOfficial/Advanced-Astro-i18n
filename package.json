@@ -11,6 +11,7 @@
 		"remove-demo": "node scripts/remove-demo.js",
 		"remove-dark-mode": "node scripts/remove-dark-mode.js",
 		"remove-decap": "node scripts/remove-decap.js",
+		"remove-i18n": "node scripts/remove-i18n.js",
 		"config-i18n": "node scripts/config-i18n.js",
 		"create-page": "node scripts/create-page.js"
 	},
