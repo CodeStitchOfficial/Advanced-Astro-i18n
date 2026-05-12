@@ -1,6 +1,15 @@
 import { locales, defaultLocale, type Locale } from "@config/siteSettings";
 import slugify from "slugify";
 
+/** Resolve a nav label that may be a plain string or a locale-keyed record. */
+export function resolveNavLabel(
+	label: string | Partial<Record<Locale, string>>,
+	locale: Locale,
+): string {
+	if (typeof label === "string") return label;
+	return label[locale] ?? label[defaultLocale] ?? Object.values(label)[0] ?? "";
+}
+
 /** Extract locale from a URL pathname. Returns defaultLocale if no locale prefix found. */
 export function getLocaleFromUrl(url: URL): Locale {
 	const [, segment] = url.pathname.split("/");

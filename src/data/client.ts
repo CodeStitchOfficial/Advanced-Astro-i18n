@@ -1,10 +1,12 @@
+import { defaultLocale, localeMap } from "@config/siteSettings";
+
 export const SITE = {
 	title: "Code Stitch Web Designs",
 	tagline: "Pixel Perfect Websites",
 	description: "Meta description for the page",
 	url: "https://www.codestitch.app",
 	author: "Code Stitch",
-	locale: "en",
+	locale: defaultLocale,
 };
 
 export const BUSINESS = {
@@ -28,6 +30,6 @@ export const BUSINESS = {
 };
 
 export const OG = {
-	locale: "en_US",
+	locale: localeMap[defaultLocale].replace("-", "_"),
 	image: "/assets/social.jpg",
 };

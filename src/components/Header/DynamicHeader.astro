@@ -2,7 +2,7 @@
 import navData from "@data/navData.json";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import { getLocaleFromUrl } from "@js/localeUtils";
+import { getLocaleFromUrl, resolveNavLabel } from "@js/localeUtils";
 import { getLocalizedRoute } from "@js/translationUtils";
 import Settings from "@components/Settings/Settings.astro";
 import logoBlack from "@assets/svgs/logo-black.svg";
@@ -37,7 +37,7 @@ const locale = getLocaleFromUrl(Astro.url);
 								{entry.children?.length > 0 ? (
 									// If entry has children in navData.json, create a button and a dropdown icon
 									<button aria-expanded="false" aria-controls={`submenu-${entry.key}`} class:list={["cs-li-link cs-dropdown-button", { "cs-active": Astro.url.pathname.includes(entry.url) }]}>
-										{entry.label[locale]}
+										{resolveNavLabel(entry.label, locale)}
 										<Icon name="mdi--caret" class="cs-drop-icon" />
 									</button>
 								) : (
@@ -52,7 +52,7 @@ const locale = getLocaleFromUrl(Astro.url);
 										]}
 										aria-current={Astro.url.pathname === getLocalizedRoute(locale,entry.url) ? "page" : undefined}
 									>
-										{entry.label[locale]}
+										{resolveNavLabel(entry.label, locale)}
 									</a>
 								)}
 
@@ -62,7 +62,7 @@ const locale = getLocaleFromUrl(Astro.url);
 										{entry.children.map((child: any) => (
 											<li class="cs-drop-li">
 												<a href={getLocalizedRoute(locale,child.url)} class="cs-li-link cs-drop-link" aria-current={Astro.url.pathname === getLocalizedRoute(locale,child.url) ? "page" : undefined}>
-													{child.label[locale]}
+													{resolveNavLabel(child.label, locale)}
 												</a>
 											</li>
 										))}

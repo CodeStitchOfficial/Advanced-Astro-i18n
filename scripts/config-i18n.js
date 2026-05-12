@@ -17,13 +17,6 @@ try {
 	process.exit(0);
 } catch { /* proceed */ }
 
-try {
-	await fs.access(join(root, ".i18n-configured"));
-	console.log("i18n configuration has already been applied (.i18n-configured marker exists).");
-	console.log("To reconfigure, remove the .i18n-configured marker file and run again.");
-	process.exit(0);
-} catch { /* proceed */ }
-
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
 const LOCALE_RE = /^[a-z]{2}(-[A-Z]{2})?$/;
@@ -660,6 +653,312 @@ async function patchComponents({ localesToRemove, editOldDefaultToNewDefault, de
 	}
 }
 
+// ─── Phase I: single-language strip ──────────────────────────────────────────
+
+/** Load all translation messages for a locale into a flat "namespace:key.path" → value map.
+ * Keys without a colon in t() calls default to the "common" namespace (mirrors translationUtils.ts). */
+async function loadLocaleMessages(locale) {
+	const localeDir = join(root, "src", "locales", locale);
+	const messages = {};
+
+	let files;
+	try {
+		files = await fs.readdir(localeDir);
+	} catch {
+		console.warn(`  Warning: Could not read locale directory: ${localeDir}`);
+		return messages;
+	}
+
+	for (const file of files) {
+		if (!file.endsWith(".json")) continue;
+		const namespace = file.slice(0, -5);
+		let data;
+		try {
+			data = JSON.parse(await fs.readFile(join(localeDir, file), "utf-8"));
+		} catch (e) {
+			console.warn(`  Warning: Could not parse ${file}: ${e.message}`);
+			continue;
+		}
+
+		function flattenInto(obj, prefix) {
+			for (const [k, v] of Object.entries(obj)) {
+				const keyPath = prefix ? `${prefix}.${k}` : k;
+				messages[`${namespace}:${keyPath}`] = v;
+				if (v && typeof v === "object" && !Array.isArray(v)) {
+					flattenInto(v, keyPath);
+				}
+			}
+		}
+		flattenInto(data, "");
+	}
+
+	return messages;
+}
+
+/** Recursively collect .astro/.ts/.tsx/.js files under dir, skipping paths that contain any entry in skipPaths. */
+async function walkSrc(dir, skipPaths = []) {
+	const results = [];
+	let entries;
+	try {
+		entries = await fs.readdir(dir, { withFileTypes: true });
+	} catch {
+		return results;
+	}
+	for (const entry of entries) {
+		const fullPath = join(dir, entry.name);
+		const normalized = fullPath.replace(/\\/g, "/");
+		if (entry.isDirectory()) {
+			if (!skipPaths.some((s) => normalized === s || normalized.endsWith("/" + s) || normalized.includes("/" + s + "/"))) {
+				results.push(...(await walkSrc(fullPath, skipPaths)));
+			}
+		} else if (/\.(astro|ts|tsx|js)$/.test(entry.name)) {
+			results.push(fullPath);
+		}
+	}
+	return results;
+}
+
+/** Remove unused named imports from a specific import path.
+ * Removes the entire import statement if all named imports become unused. */
+function pruneNamedImport(content, fromPath, namesToCheck) {
+	const escaped = fromPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+	const importRe = new RegExp(`^import\\s+\\{([^}]*)\\}\\s+from\\s+["']${escaped}["'];?`, "m");
+	const match = importRe.exec(content);
+	if (!match) return content;
+
+	const importedNames = match[1].split(",").map((n) => n.trim()).filter(Boolean);
+	const contentWithoutImport = content.slice(0, match.index) + content.slice(match.index + match[0].length);
+
+	const remaining = importedNames.filter((name) => {
+		if (!namesToCheck.includes(name)) return true;
+		return new RegExp(`\\b${name}\\b`).test(contentWithoutImport);
+	});
+
+	if (remaining.length === 0) {
+		return content.replace(match[0] + "\n", "").replace(match[0], "");
+	}
+	if (remaining.length < importedNames.length) {
+		return content.replace(match[0], `import { ${remaining.join(", ")} } from "${fromPath}";`);
+	}
+	return content;
+}
+
+async function stripMetaHreflang() {
+	const metaPath = join(root, "src", "components", "Meta", "Meta.astro");
+	if (!existsSync(metaPath)) return;
+
+	let content = await fs.readFile(metaPath, "utf-8");
+	const original = content;
+
+	// Remove frontmatter hrefLangLinks block
+	content = content.replace(
+		/\n\/\/ Generate hreflang alternate links\nconst hrefLangLinks = await Promise\.all\([\s\S]*?\n\);\n/,
+		"\n",
+	);
+
+	// Remove template hreflang comment + map expression + x-default link
+	content = content.replace(
+		/\n<!-- Hreflang alternate links for SEO -->\n\{hrefLangLinks\.map[\s\S]*?\)}\n<link rel="alternate" hreflang="x-default"[^\n]*\n/,
+		"\n",
+	);
+
+	// Remove now-unused imports
+	content = pruneNamedImport(content, "@js/translationUtils", ["getLocalizedPathname"]);
+	content = pruneNamedImport(content, "@config/siteSettings", ["locales", "localeMap"]);
+	content = content.replace(/\n{3,}/g, "\n\n");
+
+	if (content !== original) {
+		await fs.writeFile(metaPath, content, "utf-8");
+		console.log("  patched: src/components/Meta/Meta.astro (removed hreflang)");
+	}
+}
+
+async function stripSettingsLanguageSwitcher() {
+	const settingsPath = join(root, "src", "components", "Settings", "Settings.astro");
+	if (!existsSync(settingsPath)) return;
+
+	let content = await fs.readFile(settingsPath, "utf-8");
+	const original = content;
+
+	content = content.replace(/^import TwoLocalesSelect from ["'][^"']+["'];?\r?\n?/m, "");
+	content = content.replace(/^\t*<TwoLocalesSelect \/>\r?\n?/m, "");
+	content = content.replace(/\n{3,}/g, "\n\n");
+
+	if (content !== original) {
+		await fs.writeFile(settingsPath, content, "utf-8");
+		console.log("  patched: src/components/Settings/Settings.astro (removed language switcher)");
+	}
+}
+
+async function stripIndexBrowserRedirect() {
+	const indexPath = join(root, "src", "pages", "index.astro");
+	if (!existsSync(indexPath)) return;
+
+	let content = await fs.readFile(indexPath, "utf-8");
+	const original = content;
+
+	content = content.replace(/^import BrowserLanguageRedirect from ["'][^"']+["'];?\r?\n?/m, "");
+	content = content.replace(/^\r?\n?<BrowserLanguageRedirect \/>\r?\n?/m, "");
+	content = content.replace(/\n{3,}/g, "\n\n");
+
+	if (content !== original) {
+		await fs.writeFile(indexPath, content, "utf-8");
+		console.log("  patched: src/pages/index.astro (removed BrowserLanguageRedirect)");
+	}
+}
+
+/** Strip all i18n artefacts from src/ for a single-language project.
+ * Returns true if the strip ran, false if the user skipped it. */
+async function stripSingleLanguage(locale) {
+	console.log("\n⚠  Single-language strip will:");
+	console.log("     • replace all t() calls with literal content from your locale JSON files");
+	console.log("     • remove locale routing helpers from every page");
+	console.log("     • delete the language switcher components");
+	console.log("     • remove hreflang tags from Meta.astro");
+	console.log("\n   This cannot be automatically reversed. Use git if you need to go back.");
+
+	const warnRl = readline.createInterface({ input: process.stdin, output: process.stdout });
+	const warnAsk = (q) => new Promise((resolve) => warnRl.question(q, resolve));
+	const proceed = (await warnAsk("   Proceed? (y/n): ")).trim().toLowerCase();
+	warnRl.close();
+
+	if (proceed !== "y") {
+		console.log("   Skipping Phase I. i18n artefacts remain in source files.");
+		return false;
+	}
+
+	if (!existsSync(join(root, ".demo-removed"))) {
+		console.warn("\n  ⚠  Consider running `npm run remove-demo` first for a cleaner result.");
+	}
+
+	console.log("\nPhase I: stripping i18n artefacts...\n");
+
+	// I-A: Load locale messages
+	const messages = await loadLocaleMessages(locale);
+	console.log(`  Loaded ${Object.keys(messages).length} translation keys from src/locales/${locale}/\n`);
+
+	// I-B: Walk src/ files, skipping src/js/ (leave utility files untouched)
+	const srcDir = join(root, "src");
+	const skipJs = join(root, "src", "js").replace(/\\/g, "/");
+	const files = await walkSrc(srcDir, [skipJs]);
+
+	for (const filePath of files) {
+		let content = await fs.readFile(filePath, "utf-8");
+		const original = content;
+		const rel = filePath.replace(root, "").replace(/\\/g, "/");
+
+		const neededJsonImports = new Set();
+
+		// 1. Replace getLocalizedRoute(locale, X) → X
+		content = content.replace(
+			/getLocalizedRoute\(\s*locale\s*,\s*([^)]+?)\s*\)/g,
+			(_, path) => path.trim(),
+		);
+
+		// 2. Replace resolveNavLabel(X, locale) → X
+		content = content.replace(
+			/resolveNavLabel\(\s*([^,]+?)\s*,\s*locale\s*\)/g,
+			(_, label) => label.trim(),
+		);
+
+		// 3. Replace t("key") — string values inlined, arrays/objects → JSON import reference
+		content = content.replace(
+			/\bt(?:<(?:[^<>]|<[^<>]*>)*>)?\("([^"]+)"\)/g,
+			(match, rawKey) => {
+				// Mirror translationUtils.ts: no colon → "common" namespace
+				let namespace = "common";
+				let keyPath = rawKey;
+				const colonIdx = rawKey.indexOf(":");
+				if (colonIdx !== -1) {
+					namespace = rawKey.slice(0, colonIdx);
+					keyPath = rawKey.slice(colonIdx + 1);
+				}
+
+				const value = messages[`${namespace}:${keyPath}`];
+				if (value === undefined) {
+					console.warn(`  Warning: missing key "${rawKey}" in ${rel}`);
+					return match;
+				}
+				if (typeof value === "string") {
+					return JSON.stringify(value);
+				}
+				// Complex value: reference JSON file directly
+				neededJsonImports.add(namespace);
+				const bracketPath = keyPath.split(".").map((k) => `["${k}"]`).join("");
+				return `${namespace}Json${bracketPath}`;
+			},
+		);
+
+		// 4. Inject JSON imports for complex values into frontmatter (or top of TS/JS file)
+		if (neededJsonImports.size > 0) {
+			const importLines = [...neededJsonImports]
+				.map((ns) => `import ${ns}Json from "@locales/${locale}/${ns}.json";`)
+				.join("\n");
+			if (content.startsWith("---")) {
+				const fmClose = content.indexOf("\n---", 3);
+				if (fmClose !== -1) content = content.slice(0, fmClose) + "\n" + importLines + content.slice(fmClose);
+			} else {
+				content = importLines + "\n" + content;
+			}
+		}
+
+		// 5. Remove `const t = useTranslations(locale)` if no t() calls remain
+		if (!/\bt(?:<[^>]*>)?\s*\(/.test(content)) {
+			content = content.replace(/^\s*const t = useTranslations\(locale\);?\r?\n?/m, "");
+		}
+
+		// 6. Remove `const locale = getLocaleFromUrl(Astro.url)` if locale is no longer referenced
+		const withoutLocaleDecl = content.replace(
+			/^\s*const locale = getLocaleFromUrl\(Astro\.url\);?\r?\n?/m,
+			"",
+		);
+		if (!/\blocale\b/.test(withoutLocaleDecl)) content = withoutLocaleDecl;
+
+		// 7. Prune orphaned i18n imports
+		content = pruneNamedImport(content, "@js/localeUtils", ["getLocaleFromUrl", "resolveNavLabel", "getLocalizedPathname"]);
+		content = pruneNamedImport(content, "@js/translationUtils", ["useTranslations", "getLocalizedRoute", "getLocalizedPathname"]);
+
+		// 8. Simplify attr={"string"} → attr="string"
+		content = content.replace(/=\{("(?:[^"\\]|\\.)*")\}/g, "=$1");
+
+		// 9. Collapse 3+ blank lines → 2
+		content = content.replace(/\n{3,}/g, "\n\n");
+
+		if (content !== original) {
+			await fs.writeFile(filePath, content, "utf-8");
+			console.log(`  patched: ${rel}`);
+		}
+	}
+
+	// I-C: Targeted edits for known files whose structure is stable
+	await stripMetaHreflang();
+	await stripSettingsLanguageSwitcher();
+	await stripIndexBrowserRedirect();
+
+	// I-D: Delete now-unused files
+	const langSwitchDir = join(root, "src", "components", "LanguageSwitch");
+	if (existsSync(langSwitchDir)) {
+		await fs.rm(langSwitchDir, { recursive: true, force: true });
+		console.log("  deleted: src/components/LanguageSwitch/");
+	}
+	const localePreferencePath = join(root, "src", "js", "localePreference.ts");
+	if (existsSync(localePreferencePath)) {
+		await fs.unlink(localePreferencePath);
+		console.log("  deleted: src/js/localePreference.ts");
+	}
+
+	// I-E: Update marker with strip timestamp
+	try {
+		await fs.writeFile(
+			join(root, ".i18n-single-language"),
+			JSON.stringify({ locale, strippedAt: new Date().toISOString(), version: "1" }, null, 2) + "\n",
+		);
+	} catch { /* ignore */ }
+
+	console.log("\n  Phase I complete.");
+	return true;
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function configI18n() {
@@ -676,6 +975,22 @@ async function configI18n() {
 		if (lineQueue.length > 0) return Promise.resolve(lineQueue.shift());
 		return new Promise((resolve) => waiters.push(resolve));
 	};
+
+	// ── Reconfiguration guard ─────────────────────────────────────────────────
+	let wasAlreadyConfigured = false;
+	try {
+		await fs.access(join(root, ".i18n-configured"));
+		wasAlreadyConfigured = true;
+	} catch { /* first run */ }
+
+	if (wasAlreadyConfigured) {
+		const answer = (await ask("i18n was already configured (.i18n-configured exists). Reconfigure? (y/n) [n]: ")).trim().toLowerCase();
+		if (answer !== "y") {
+			console.log("Aborted. No files were changed.");
+			rl.close();
+			process.exit(0);
+		}
+	}
 
 	// ── Read current config ───────────────────────────────────────────────────
 	const current = readI18nConfig(root);
@@ -832,9 +1147,19 @@ async function configI18n() {
 	console.log("\nPhase H: src/components/...");
 	await patchComponents(ops);
 
+	// ── Phase I (single-language only) ────────────────────────────────────────
+	let phaseIStripped = false;
+	if (isSingleLanguage) {
+		phaseIStripped = await stripSingleLanguage(newDefaultLocale);
+	}
+
 	// ── Create .i18n-configured marker ───────────────────────────────────────
 	try {
-		await fs.writeFile(join(root, ".i18n-configured"), JSON.stringify({ timestamp: new Date().toISOString(), version: "1" }, null, 2) + "\n", "utf-8");
+		await fs.writeFile(
+			join(root, ".i18n-configured"),
+			JSON.stringify({ timestamp: new Date().toISOString(), locale: newDefaultLocale, locales: newLocales, version: "1" }, null, 2) + "\n",
+			"utf-8",
+		);
 	} catch (err) {
 		console.warn(`  Warning: Could not write .i18n-configured marker: ${err.message}`);
 	}
@@ -849,16 +1174,16 @@ async function configI18n() {
 	let step = 1;
 
 	if (isSingleLanguage) {
-		console.log(`${step++}. Components with locale-specific imports were auto-patched (Phase H).`);
-		console.log(`   Remaining manual updates:`);
-		console.log("   - src/components/LanguageSwitch/TwoLocalesSelect.astro");
-		console.log("   - src/components/LanguageSwitch/MultiLocalesSelect.astro");
-		console.log("   - src/components/Settings/Settings.astro (remove language switcher)");
-		console.log(`${step++}. Optional: Use wrapper functions from translationUtils:`);
-		console.log("   - getLocalizedRoute(locale, path) still works with single locale");
-		console.log("   - getLocalizedPathname(locale, url) still works with single locale");
-		console.log(`${step++}. Note: Keep locales array with single entry for internal consistency`);
-		console.log(`${step++}. Marker file created: .i18n-single-language and .i18n-configured`);
+		if (phaseIStripped) {
+			console.log(`${step++}. All i18n artefacts have been stripped from src/ (Phase I).`);
+			console.log(`${step++}. Update content in src/locales/${newDefaultLocale}/ to customise your text.`);
+			console.log(`${step++}. Check src/data/navData.json — use plain string labels (not locale objects).`);
+			console.log(`   Note: src/js/localeUtils.ts and src/js/translationUtils.ts remain as unused`);
+			console.log(`   utilities. Delete them once you\'re satisfied everything works.`);
+		} else {
+			console.log(`${step++}. i18n artefacts were NOT stripped (Phase I skipped).`);
+			console.log(`   Run npm run config-i18n again and confirm the strip if you want a clean setup.`);
+		}
 	} else {
 		if (localesToAdd.length > 0) {
 			console.log(`${step++}. Translate strings in src/locales/${localesToAdd.join("/ and src/locales/")}/`);
