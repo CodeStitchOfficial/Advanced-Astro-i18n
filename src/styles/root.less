@@ -31,6 +31,45 @@
 
 		/* 60px - 100px top and bottom */
 		--sectionPadding: clamp(3.75rem, 7.82vw, 6.25rem) 1rem;
+
+		/* ---------- Eye Care of Lehi design tokens ---------- */
+
+		/* Colors */
+		--color-primary: #5b2d8e;
+		--color-primary-dark: #3e1f6b;
+		--color-primary-light: #7b4db8;
+		--color-secondary: #1a73b8;
+		--color-secondary-dark: #0f4f82;
+		--color-accent: #00b4d8;
+		--color-accent-dark: #0090ad;
+		--color-dark: #0d1b2a;
+		--color-text: #1c1c2e;
+		--color-text-light: #4a4a6a;
+		--color-bg-light: #f8f9ff;
+		--color-white: #ffffff;
+
+		/* Typography */
+		--font-body: var(--font-primary);
+		--base-font-size: 16px;
+		--base-line-height: 1.6;
+
+		/* Spacing scale */
+		--spacing-xs: 0.5rem;
+		--spacing-sm: 1rem;
+		--spacing-md: 2rem;
+		--spacing-lg: 4rem;
+		--spacing-xl: 8rem;
+
+		/* Border radius */
+		--radius-sm: 6px;
+		--radius-md: 12px;
+		--radius-lg: 24px;
+		--radius-pill: 999px;
+
+		/* Shadows */
+		--shadow-sm: 0 2px 8px rgba(91, 45, 142, 0.08);
+		--shadow-md: 0 8px 32px rgba(91, 45, 142, 0.12);
+		--shadow-lg: 0 24px 64px rgba(91, 45, 142, 0.16);
 	}
 
 	// Text styles - can be replaced using CodeStitch's "Content Flair" Stitches
@@ -139,7 +178,8 @@
 	body,
 	html {
 		font-family: var(--font-primary);
-		font-size: 100%;
+		font-size: var(--base-font-size);
+		line-height: var(--base-line-height);
 		margin: 0;
 		padding: 0;
 		color: var(--bodyTextColor);
@@ -171,6 +211,7 @@
 	h5,
 	h6 {
 		margin: 0;
+		font-family: var(--font-heading);
 		color: var(--headerColor);
 	}
 

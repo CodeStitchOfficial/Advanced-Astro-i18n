@@ -6,7 +6,7 @@ export default defineConfig({
 	site: "https://www.yourwebsite.com", // update me!
 	i18n: {
 		defaultLocale: "en",
-		locales: ["en", "fr"],
+		locales: ["en", "es"],
 		routing: {
 			prefixDefaultLocale: false,
 		},
@@ -20,18 +20,26 @@ export default defineConfig({
 				defaultLocale: "en",
 				locales: {
 					en: "en-US",
-					fr: "fr-FR",
+					es: "es-ES",
 				},
 			},
 		}),
 	],
 	fonts: [
 		{
-			provider: fontProviders.fontsource(),
-			name: "Roboto",
+			provider: fontProviders.google(),
+			name: "Inter",
 			cssVariable: "--font-primary",
 			fallbacks: ["Arial", "sans-serif"],
-			weights: [400, 700, 900],
+			weights: [400, 500, 600, 700],
+			styles: ["normal"],
+		},
+		{
+			provider: fontProviders.google(),
+			name: "Plus Jakarta Sans",
+			cssVariable: "--font-heading",
+			fallbacks: ["Arial", "sans-serif"],
+			weights: [600, 700, 800],
 			styles: ["normal"],
 		},
 	],

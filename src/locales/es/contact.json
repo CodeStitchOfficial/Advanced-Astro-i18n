@@ -1,0 +1,16 @@
+{
+    "landing": "Contact",
+    "topper": "Contact",
+    "title": "Get in touch",
+    "p-1": "Tell us Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ridiculus elementum ullamcorper ipsum porttitor aliquam. Id magna urna ultrices odio pulvinar. Sed ut.",
+    "form": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "how": "How did you find us?",
+        "message": "Message",
+        "message-placeholder": "I'd be interested in...",
+        "address": "Address"
+    },
+    "cta": "Submit message"
+}
