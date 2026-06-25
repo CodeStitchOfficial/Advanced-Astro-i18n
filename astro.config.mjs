@@ -35,4 +35,5 @@ export default defineConfig({
 			styles: ["normal"],
 		},
 	],
+	compressHTML: true,
 });

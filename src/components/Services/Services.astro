@@ -1,36 +1,35 @@
 ---
-import { Picture } from "astro:assets";
 import { getLocaleFromUrl } from "@js/localeUtils";
 import { useTranslations } from "@js/translationUtils";
-import service1 from "@assets/svgs/service1.svg";
-import service2 from "@assets/svgs/service2.svg";
-import service3 from "@assets/svgs/service3.svg";
+import { Icon } from "astro-icon/components";
 
 const locale = getLocaleFromUrl(Astro.url);
 const t = useTranslations(locale);
 ---
 
-<!-- ============================================ -->
-<!--                  Services                    -->
-<!-- ============================================ -->
-
 <section id="services" class="services">
 	<div class="card">
-		<Picture src={service1} alt="appliance" width={48} formats={["avif", "webp"]} aria-hidden="true" decoding="async" />
+		<picture>
+			<Icon name="service1" width="48" height="48" aria-hidden="true" />
+		</picture>
 		<h2>{t("home:services.0.heading")}</h2>
 		<p>
 			{t("home:services.0.p")}
 		</p>
 	</div>
 	<div class="card">
-		<Picture src={service2} alt="appliance" width={48} formats={["avif", "webp"]} aria-hidden="true" decoding="async" />
+		<picture>
+			<Icon name="service2" width="48" height="48" aria-hidden="true" />
+		</picture>
 		<h2>{t("home:services.1.heading")}</h2>
 		<p>
 			{t("home:services.1.p")}
 		</p>
 	</div>
 	<div class="card">
-		<Picture src={service3} alt="appliance" width={48} formats={["avif", "webp"]} aria-hidden="true" decoding="async" />
+		<picture>
+			<Icon name="service3" width="48" height="48" aria-hidden="true" />
+		</picture>
 		<h2>{t("home:services.2.heading")}</h2>
 		<p>
 			{t("home:services.2.p")}
@@ -39,10 +38,6 @@ const t = useTranslations(locale);
 </section>
 
 <style lang="less">
-	/*-- -------------------------- -->
-<---          Services          -->
-<--- -------------------------- -*/
-
 	/* Mobile */
 	@media only screen and (min-width: 0em) {
 		.services {
