@@ -1,7 +1,13 @@
 {
 	"name": "advanced-astro-i18n",
 	"type": "module",
-	"version": "3.0.2",
+	"version": "4.0.0",
+	"description": "An Astro v7 starter kit with built-in i18n (English & French), five pre-built pages, a Decap CMS blog, LESS preprocessing, dark mode, SEO (Open Graph, JSON-LD, sitemap), Astro image optimization, and View Transitions. While this starter kit was built for CodeStitch users and agency owners in mind, it can be used with your OWN HTML and CSS.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/CodeStitchOfficial/Advanced-Astro-i18n"
+	},
+	"homepage": "https://advanced-astro-kit-i18n.netlify.app",
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -15,13 +21,33 @@
 		"create-page": "node scripts/create-page.js"
 	},
 	"dependencies": {
-		"@astrojs/sitemap": "^3.7.2",
-		"astro": "^6.3.3",
+		"@astrojs/sitemap": "^3.7.3",
+		"astro": "^7.0.3",
 		"astro-icon": "^1.1.5",
 		"autoprefixer": "^10.5.0",
 		"less": "^4.6.4"
 	},
 	"devDependencies": {
 		"slugify": "^1.6.9"
-	}
+	},
+	"keywords": [
+		"withastro",
+		"astro-theme",
+		"starter",
+		"starter-kit",
+		"i18n",
+		"internationalization",
+		"multilingual",
+		"blog",
+		"cms",
+		"decap-cms",
+		"netlify",
+		"view-transitions",
+		"css",
+		"less",
+		"ui",
+		"image",
+		"seo",
+		"performance"
+	]
 }

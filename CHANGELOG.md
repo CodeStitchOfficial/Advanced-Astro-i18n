@@ -1,4 +1,14 @@
-# Advanced Astro v6 i18n
+# Advanced Astro v7 i18n
+
+## 4.0.0
+
+### Major changes
+
+#### Astro v7 upgrade
+
+- Upgraded Astro to **v7**
+
+---
 
 ## 3.0.2
 

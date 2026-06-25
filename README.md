@@ -1,4 +1,4 @@
-<h3 align="center">Advanced Astro v6 - i18n</h3>
+<h3 align="center">Advanced Astro v7 - i18n</h3>
 
 <p align="center">
   This Astro advanced kit includes a pre-configured multi-language setup, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, offering a fantastic introduction to the advantages of a Static Site Generator, complete with LESS preprocessing and a blog powered by Astro's content collections.
@@ -45,7 +45,7 @@
 
 ## Overview
 
-This Advanced kit includes a pre-configured [Astro](https://www.astro.build) environment, which allows for repeated components, centralized data and greater room to scale as your clients grow. The kit runs **Astro v6** with internationalization powered by [Astro's built-in i18n routing](https://docs.astro.build/en/guides/internationalization/) and a set of custom utility functions to create a multilingual website, scalable to as many languages as necessary. The blog is powered by Decap CMS and Astro's Content Collections.
+This Advanced kit includes a pre-configured [Astro](https://www.astro.build) environment, which allows for repeated components, centralized data and greater room to scale as your clients grow. The kit runs **Astro v7** with internationalization powered by [Astro's built-in i18n routing](https://docs.astro.build/en/guides/internationalization/) and a set of custom utility functions to create a multilingual website, scalable to as many languages as necessary. The blog is powered by Decap CMS and Astro's Content Collections.
 
 An example website has also been provided, with easy substitution of website sections possible through the use of [CodeStitch's vanilla component library](https://codestitch.app/). This kit aims to get any project off the ground in as little time as possible, with deployment being possible in as little as two minutes.
 
@@ -101,7 +101,7 @@ All commands are run from the root of the project, from a terminal:
 
 ## Features
 
-- Runs on **Astro v6**
+- Runs on **Astro v7**
 - i18n setup ready to go with Astro's built-in i18n routing and custom utilities
 - Browser language redirect on the home page
 - Dark mode (removable via `npm run remove-dark-mode`)
