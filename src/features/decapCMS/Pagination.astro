@@ -12,7 +12,7 @@ const { prev: prevUrl, next: nextUrl } = url;
 
 {
   (prevUrl || nextUrl) && (
-    <nav role="navigation" aria-label="Pagination">
+    <nav role="navigation" aria-label={content.common.pagination.label}>
       <ul class="pagination--group">
         {prevUrl && (
           <li>

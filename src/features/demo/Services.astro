@@ -1,10 +1,6 @@
 ---
-import { Picture } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import { getSiteContext } from "@js/getSiteContext";
-
-import service1 from "@assets/svgs/service1.svg";
-import service2 from "@assets/svgs/service2.svg";
-import service3 from "@assets/svgs/service3.svg";
 
 const { content } = await getSiteContext(Astro.url);
 ---
@@ -12,42 +8,27 @@ const { content } = await getSiteContext(Astro.url);
 <!-- ============================================ --><!--                  Services                    --><!-- ============================================ -->
 <section id="services" class="services">
   <div class="card">
-    <Picture
-      src={service1}
-      alt="appliance"
-      width={48}
-      formats={["avif", "webp"]}
-      aria-hidden="true"
-      decoding="async"
-    />
+    <div class="icon-badge">
+      <Icon name="service1" width={48} height={48} aria-hidden="true" />
+    </div>
     <h2>{content.home.services[0].heading}</h2>
     <p>
       {content.home.services[0].p}
     </p>
   </div>
   <div class="card">
-    <Picture
-      src={service2}
-      alt="appliance"
-      width={48}
-      formats={["avif", "webp"]}
-      aria-hidden="true"
-      decoding="async"
-    />
+    <div class="icon-badge">
+      <Icon name="service2" width={48} height={48} aria-hidden="true" />
+    </div>
     <h2>{content.home.services[1].heading}</h2>
     <p>
       {content.home.services[1].p}
     </p>
   </div>
   <div class="card">
-    <Picture
-      src={service3}
-      alt="appliance"
-      width={48}
-      formats={["avif", "webp"]}
-      aria-hidden="true"
-      decoding="async"
-    />
+    <div class="icon-badge">
+      <Icon name="service3" width={48} height={48} aria-hidden="true" />
+    </div>
     <h2>{content.home.services[2].heading}</h2>
     <p>
       {content.home.services[2].p}
@@ -85,7 +66,7 @@ const { content } = await getSiteContext(Astro.url);
           margin-bottom: 0;
         }
 
-        picture {
+        .icon-badge {
           width: (88/16em);
           height: (88/16em);
           margin: auto;
@@ -96,7 +77,7 @@ const { content } = await getSiteContext(Astro.url);
           justify-content: center;
           align-items: center;
 
-          img {
+          svg {
             width: (48/16em);
             height: (48/16em);
           }
@@ -152,7 +133,7 @@ const { content } = await getSiteContext(Astro.url);
       #services {
         background: var(--medium);
 
-        picture {
+        .icon-badge {
           background: var(--primaryDark);
         }
 

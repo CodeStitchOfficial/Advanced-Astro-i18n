@@ -1,8 +1,6 @@
 ---
-import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import { getSiteContext } from "@js/getSiteContext";
-import starsSvg from "@assets/svgs/stars.svg";
-import profileSvg from "@assets/svgs/profile.svg";
 
 const { content } = await getSiteContext(Astro.url);
 
@@ -25,26 +23,20 @@ const testimonials = content.home.testimonials.items as Array<{
         testimonials &&
           testimonials.map((item) => (
             <li class="cs-item">
-              <Image
+              <Icon
                 class="cs-stars"
-                src={starsSvg}
-                alt="stars"
+                name="stars"
                 width={96}
                 height={16}
-                loading="lazy"
-                decoding="async"
                 aria-hidden="true"
               />
               <p class="cs-review">{item.quote}</p>
               <div class="cs-flex-group">
-                <Image
+                <Icon
                   class="cs-profile"
-                  src={profileSvg}
-                  alt="profile"
+                  name="profile"
                   width={52}
                   height={52}
-                  loading="lazy"
-                  decoding="async"
                   aria-hidden="true"
                 />
                 <span class="cs-name">{item.name}</span>
