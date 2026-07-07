@@ -95,10 +95,11 @@ function runScript(scriptName) {
         console.log(`Running ${scriptName}...`);
         console.log(`━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`);
 
-        const child = spawn("npm", ["run", scriptName], {
-            stdio: "inherit",
-            shell: true,
-        });
+        const child = spawn(
+            process.execPath,
+            [join(root, "scripts", `${scriptName}.js`)],
+            { stdio: "inherit" }
+        );
 
         child.on("close", (code) => {
             if (code === 0) {
@@ -141,6 +142,15 @@ async function main() {
         });
     }
 
+    const i18nAction = actions.find((a) => a.key === "i18n");
+    let configLocalesNow = false;
+    if (i18nAction && !i18nAction.remove) {
+        configLocalesNow = await askQuestion(
+            rl,
+            "\nWould you like to configure your locales now?"
+        );
+    }
+
     console.log("\nSummary\n");
 
     for (const action of actions) {
@@ -173,16 +183,13 @@ async function main() {
     }
     await disableFeatureFlag(root, "setup");
 
-    const i18nAction = actions.find((a) => a.key === "i18n");
-    if (i18nAction && !i18nAction.remove) {
-        const rl2 = readline.createInterface({ input: process.stdin, output: process.stdout });
-        const configNow = await new Promise((resolve) =>
-            rl2.question("\nWould you like to configure your locales now? (y/n): ", (a) => {
-                rl2.close();
-                resolve(a.trim().toLowerCase() === "y");
-            })
-        );
-        if (configNow) await runScript("config-i18n");
+    if (configLocalesNow) {
+        try {
+            await runScript("config-i18n");
+        } catch (error) {
+            console.error(`\n❌ ${error.message}`);
+            process.exit(1);
+        }
     }
 
     console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
