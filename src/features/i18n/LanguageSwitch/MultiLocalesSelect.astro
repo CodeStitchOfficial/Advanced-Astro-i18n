@@ -20,18 +20,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 import Select from "@components/Select/Select.astro";
-import { useTranslations, getLocalizedPathname } from "@js/translationUtils";
-import { locales } from "src/features/i18n/siteSettingsteSettings";
+import { getLocalizedPathname } from "../routing/getLocalizedPathname";
+import { locales } from "../i18nConfig";
 import { getSiteContext } from "@js/getSiteContext";
 
-const { locale } = await getSiteContext(Astro.url);
-const t = useTranslations(locale);
+const { locale, content } = await getSiteContext(Astro.url);
 
 const options = await Promise.all(
   locales.map(async (l) => ({
     value: await getLocalizedPathname(l, Astro.url),
     selected: l === locale,
-    label: t(`languageSelect.${l}`),
+    label: content.common.languageSelect[l],
   })),
 );
 ---
@@ -41,7 +40,7 @@ const options = await Promise.all(
     <starlight-lang-select>
       <Select
         icon="mdi--language"
-        label={locale}
+        label={content.common["language-label"]}
         value={locale}
         options={options}
         width="6em"

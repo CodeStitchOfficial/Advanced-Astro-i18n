@@ -51,7 +51,11 @@
 		"linkText": "Retourner à la page d'accueil"
 	},
 	"skipLink": "Cliquez pour accéder au contenu principal.",
+	"backToHome": "Retour à l'accueil",
+	"mobileMenuToggle": "Basculer le menu mobile",
+	"darkModeToggle": "Basculer le mode sombre",
 	"pagination": {
+		"label": "Pagination",
 		"previous": "Préc.",
 		"next": "Suiv."
 	},

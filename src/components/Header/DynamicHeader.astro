@@ -1,27 +1,26 @@
 ---
 import navData from "@data/navData.json";
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
 import { getRoute } from "@js/routes";
 import Settings from "@components/Settings/Settings.astro";
-import logoBlack from "@assets/svgs/logo-black.svg";
 import { getSiteContext } from "@js/getSiteContext";
 import type { NavItem } from "src/typescript/global";
 
-const { locale } = await getSiteContext(Astro.url);
+const { locale, content } = await getSiteContext(Astro.url);
 ---
 
 <header id="cs-navigation">
   <div class="cs-container">
-    <a href={getRoute(locale, "/")} class="cs-logo" aria-label="back to home">
-      <Image
-        src={logoBlack}
-        alt="logo"
+    <a
+      href={getRoute(locale, "/")}
+      class="cs-logo"
+      aria-label={content.common.backToHome}
+    >
+      <Icon
+        name="logo-black"
         width={210}
         height={29}
         aria-hidden="true"
-        decoding="async"
-        priority
       />
     </a>
 
@@ -31,7 +30,7 @@ const { locale } = await getSiteContext(Astro.url);
         id="mobile-menu-toggle"
         aria-expanded="false"
         aria-controls="cs-expanded-ul"
-        aria-label="mobile menu toggle"
+        aria-label={content.common.mobileMenuToggle}
       >
         <div class="cs-box" aria-hidden="true">
           <span class="cs-line cs-line1" aria-hidden="true"></span>
@@ -227,7 +226,7 @@ const { locale } = await getSiteContext(Astro.url);
         align-items: center;
         z-index: 10;
 
-        img {
+        svg {
           width: 100%;
           height: 100%;
           /* ensures the image never overflows the container. It stays contained within it's width and height and expands to fill it then stops once it reaches an edge */
@@ -791,7 +790,7 @@ const { locale } = await getSiteContext(Astro.url);
         align-items: center;
         z-index: 100;
 
-        img {
+        svg {
           width: 100%;
           height: 100%;
           /* ensures the image never overflows the container. It stays contained within it's width and height and expands to fill it then stops once it reaches an edge */
