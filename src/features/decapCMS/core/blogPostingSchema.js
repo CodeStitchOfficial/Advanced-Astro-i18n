@@ -1,4 +1,5 @@
-import { SITE, BUSINESS, OG } from "@data/client";
+import { BUSINESS } from "@data/client";
+import { SITE, OG } from "@data/siteConfig";
 
 /**
  * Generates a BlogPosting JSON-LD schema object for a blog post.

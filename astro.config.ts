@@ -1,7 +1,7 @@
 import { defineConfig, fontProviders } from "astro/config";
 import icon from "astro-icon";
 import sitemap from "@astrojs/sitemap";
-import { SITE } from "./src/data/client";
+import { SITE } from "./src/data/siteConfig";
 
 export default defineConfig({
 	site: SITE.url,
