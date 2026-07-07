@@ -84,6 +84,24 @@ async function moveItem(sourcePath, destPath, label) {
 }
 
 /**
+ * Swaps a blog-aware i18n file for its no-blog fallback, if one is shipped.
+ * Silently skips if the fallback isn't present (e.g. i18n was already removed).
+ */
+async function replaceNoBlog(relativeFilePath) {
+	const noBlogPath = join(root, `${relativeFilePath}.no-blog.ts`);
+	const targetPath = join(root, `${relativeFilePath}.ts`);
+
+	try {
+		await fs.access(noBlogPath);
+	} catch {
+		return;
+	}
+
+	await moveItem(targetPath, join(destinationDir, `${relativeFilePath}.ts`), "Blog-aware getLocalizedPathname (dynamic)");
+	await fs.rename(noBlogPath, targetPath);
+}
+
+/**
  * Sweeps all files looking for imports pointing to features/decapCMS or blog routing
  */
 async function scanForReferences(removedBlogContent) {
@@ -184,6 +202,7 @@ async function removeDecapCMS() {
 			join(destinationDir, "src", "features", "i18n", "collections", "generateDynamicRouteTranslations.ts"),
 			"Dynamic Route Translations handler"
 		);
+		await replaceNoBlog("src/features/i18n/routing/getLocalizedPathname");
 
 		// Remove dedicated layout locales translations
 		await moveItem(blogLocaleEn, join(destinationDir, "src", "locales", "en", "blog.json"), "English Blog Locale definitions");
