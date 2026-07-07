@@ -115,23 +115,9 @@ async function scanForReferences(removedBlogContent) {
 }
 
 async function cleanupContentConfig() {
-	console.log("\n⚙️  Cleaning up src/content.config.ts...");
+	console.log("\n⚙️  Removing src/content.config.ts...");
 	const contentConfigPath = join(root, "src", "content.config.ts");
-
-	try {
-		await fs.access(contentConfigPath);
-		let content = await fs.readFile(contentConfigPath, "utf-8");
-
-		if (content.includes("blog:")) {
-			// Remove collection assignment
-			content = content.replace(/const\s+blogsCollection\s*=\s*defineCollection\([^)]*\);?\n*/s, "");
-			content = content.replace(/\s*blog\s*:\s*blogsCollection\s*,?\s*/g, "");
-			content = content.replace(/,(\s*)\}/g, "$1}");
-
-			await fs.writeFile(contentConfigPath, content, "utf-8");
-			console.log("✅ Removed blog collection configurations from content.config.ts");
-		}
-	} catch { }
+	await moveItem(contentConfigPath, join(destinationDir, "src", "content.config.ts"), "Content collections config");
 }
 
 async function cleanupNavData() {
