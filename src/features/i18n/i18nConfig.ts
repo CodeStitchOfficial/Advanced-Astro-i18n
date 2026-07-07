@@ -9,10 +9,6 @@ export const localeMap = {
   fr: "fr-FR",
 };
 
-export function toOgLocale(hreflang: string): string {
-  return hreflang.replace("-", "_");
-}
-
 export const languageSwitcherMap = {
   en: "EN",
   fr: "FR",

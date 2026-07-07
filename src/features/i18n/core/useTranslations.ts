@@ -1,4 +1,4 @@
-import type { Locale } from "../../../data/i18nConfig";
+import type { Locale } from "../i18nConfig";
 import { loadNamespace } from "./loadNamespace";
 import { getNestedValue } from "./getNestedValue";
 

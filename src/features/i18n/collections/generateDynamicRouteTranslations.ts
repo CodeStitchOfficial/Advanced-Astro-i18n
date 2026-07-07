@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
-import type { Locale } from "../../../data/i18nConfig";
-import { locales, defaultLocale } from "../../../data/i18nConfig";
-import { localizedCollections } from "../../../data/i18nConfig";
+import type { Locale } from "../i18nConfig";
+import { locales, defaultLocale } from "../i18nConfig";
+import { localizedCollections } from "../i18nConfig";
 import { getPostSlug } from "../../decapCMS/core/blogUtils";
 import { routeTranslations } from "../routeTranslations";
 

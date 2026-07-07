@@ -1,4 +1,4 @@
-import { locales, localeMap } from "@data/i18nConfig";
+import { locales, localeMap } from "./i18nConfig";
 import { getLocalizedPathname } from "./routing/getLocalizedPathname";
 
 export async function getHrefLangLinks(url: URL) {

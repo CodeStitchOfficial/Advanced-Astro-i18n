@@ -148,9 +148,6 @@ async function runRemoval() {
 
     // 2. Remove (Move) i18n-owned directories
     removeDirectory(path.join(root, "src/features/i18n"));
-    moveToDeletedBackup(
-        path.join(root, "src/data/i18nConfig.ts")
-    );
     removeDirectory(path.join(root, "src/pages/fr"));
     removeDirectory(path.join(root, "src/locales/fr"));
     cleanupNavData();

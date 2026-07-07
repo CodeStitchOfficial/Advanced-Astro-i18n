@@ -3,7 +3,8 @@ import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { BUSINESS } from "@data/client";
 import { OG, SITE } from "@data/siteConfig";
-import { localeMap, toOgLocale, type Locale } from "@data/i18nConfig";
+import { localeMap, type Locale } from "../../features/i18n/i18nConfig";
+import { toOgLocale } from "../../features/i18n/localeUtils";
 import { getLocalBusinessSchema } from "@js/localBusinessSchema.js";
 
 interface Props {

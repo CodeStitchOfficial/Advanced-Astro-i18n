@@ -1,4 +1,4 @@
-import type { Locale } from "../../../data/i18nConfig";
+import type { Locale } from "../i18nConfig";
 
 const cache: Record<string, Record<string, unknown>> = {};
 

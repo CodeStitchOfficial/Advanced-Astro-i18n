@@ -1,7 +1,7 @@
 import { getRelativeLocaleUrl } from "astro:i18n";
-import type { Locale } from "../../../data/i18nConfig";
-import { locales } from "../../../data/i18nConfig";
-import { defaultLocale } from "../../../data/i18nConfig";
+import type { Locale } from "../i18nConfig";
+import { locales } from "../i18nConfig";
+import { defaultLocale } from "../i18nConfig";
 import { routeTranslations } from "../routeTranslations";
 
 export async function getLocalizedPathname(
