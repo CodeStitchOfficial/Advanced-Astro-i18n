@@ -162,9 +162,5 @@ async function runRemoval() {
         /import\s+TwoLocalesSelect\s+from\s+["'][^"']*TwoLocalesSelect\.astro["'];?\r?\n/g, /\s*<TwoLocalesSelect\s*\/>\r?\n?/g,
     ]);
 
-    removeFromFile("src/pages/index.astro", [
-        /import\s+BrowserLanguageRedirect\s+from\s+["'][^"']*BrowserLanguageRedirect\.astro["'];?\r?\n/g, /\s*<BrowserLanguageRedirect\s*\/>\r?\n?/g,
-    ]);
-
     console.log("\n✔ i18n removal complete. Originals backed up to scripts/deleted/");
 }

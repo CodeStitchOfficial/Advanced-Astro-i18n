@@ -38,13 +38,8 @@
 			"line": 31
 		},
 		{
-			"file": "src/components/LanguageSwitch/BrowserLanguageRedirect.astro",
-			"description": "This component is placed only on the English homepage (`src/pages/index.astro`). It runs a small inline script that checks `navigator.language` — if the visitor's browser prefers French and they haven't chosen a language yet, it redirects to `/fr/`. A `localStorage` key prevents the redirect on return visits so users aren't forced back after manually switching.",
-			"line": 1
-		},
-		{
 			"file": "src/components/LanguageSwitch/TwoLocalesSelect.astro",
-			"description": "The language toggle UI component. It calls `getLocalizedPathname()` for each locale to compute where each button should link, then renders radio-button-style language options. A custom element (`<language-toggle>`) handles keyboard navigation (arrow keys) and saves the user's choice to `localStorage` so `BrowserLanguageRedirect` won't override it.",
+			"description": "The language toggle UI component. It calls `getLocalizedPathname()` for each locale to compute where each button should link, then renders radio-button-style language options. A custom element (`<language-toggle>`) handles keyboard navigation (arrow keys) and saves the user's choice to `localStorage`.",
 			"line": 10
 		}
 	]

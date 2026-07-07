@@ -27,7 +27,6 @@
     - [Generating Localized URLs](#generating-localized-urls)
     - [Localizing Route Slugs](#localizing-route-slugs)
     - [Localizing Blog Post Slugs](#localizing-blog-post-slugs)
-    - [Browser Language Redirect](#browser-language-redirect)
     - [Language Switcher Components](#language-switcher-components)
 - [Content Management & Blog](#content-management--blog)
     - [Content Collections](#content-collections)
@@ -86,32 +85,31 @@ Next, you can run any of the CLI commands below to help you shape the kit accord
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                    | Action                                       |
-| :------------------------- | :------------------------------------------- |
-| `npm install`              | Installs dependencies                        |
-| `npm run dev`              | Starts local dev server at `localhost:4321`  |
-| `npm run build`            | Build your production site to `./dist/`      |
-| `npm run preview`          | Preview your build locally, before deploying |
-| `npm run setup-project`    | Interactively choose which features to keep/remove, then configure locales |
-| `npm run create-page`      | Scaffolds a new page for all locales         |
+| Command                 | Action                                                                     |
+| :---------------------- | :------------------------------------------------------------------------- |
+| `npm install`           | Installs dependencies                                                      |
+| `npm run dev`           | Starts local dev server at `localhost:4321`                                |
+| `npm run build`         | Build your production site to `./dist/`                                    |
+| `npm run preview`       | Preview your build locally, before deploying                               |
+| `npm run setup-project` | Interactively choose which features to keep/remove, then configure locales |
+| `npm run create-page`   | Scaffolds a new page for all locales                                       |
 
 #### Setup & configuration scripts
 
 `npm run setup-project` is the main onboarding command: it asks which optional features to keep (i18n, Decap CMS, demo content, dark mode) and, if i18n is kept, offers to configure your locales right after. Under the hood it calls the scripts below — they're not exposed as `npm run` commands, but you can also run them directly at any time (e.g. to reconfigure locales later):
 
-| Command                             | Action                                       |
-| :----------------------------------- | :------------------------------------------- |
-| `node scripts/config-i18n.js`       | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
-| `node scripts/remove-i18n.js`       | Permanently removes the i18n system           |
-| `node scripts/remove-decap.js`      | Removes Decap CMS integration                 |
-| `node scripts/remove-demo.js`       | Removes demo/placeholder content              |
-| `node scripts/remove-dark-mode.js`  | Removes dark mode components and styles       |
+| Command                            | Action                                                                                |
+| :--------------------------------- | :------------------------------------------------------------------------------------ |
+| `node scripts/config-i18n.js`      | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
+| `node scripts/remove-i18n.js`      | Permanently removes the i18n system                                                   |
+| `node scripts/remove-decap.js`     | Removes Decap CMS integration                                                         |
+| `node scripts/remove-demo.js`      | Removes demo/placeholder content                                                      |
+| `node scripts/remove-dark-mode.js` | Removes dark mode components and styles                                               |
 
 ## Features
 
 - Runs on **Astro v6**
 - i18n setup ready to go with Astro's built-in i18n routing and custom utilities
-- Browser language redirect on the home page
 - Dark mode (removable via `node scripts/remove-dark-mode.js`)
 - Optional Decap CMS integration (removable via `node scripts/remove-decap.js`)
 - Astro's `<ClientRouter />` integration for view transitions
@@ -418,15 +416,6 @@ mappingKey: "post-1"
 ```
 
 The `mappingKey` value (`"post-1"`) connects these posts. The `getLocalizedPathname()` function uses this to resolve the correct slug when switching locales — for example, `/blog/first-post-in-english/` ↔ `/fr/blog/premier-article-en-francais/`.
-
-### Browser Language Redirect
-
-The home page (`/`) automatically redirects visitors to their preferred locale based on the browser's primary language. For example, a visitor whose browser is set to French will be redirected to `/fr/`.
-
-- The redirect only applies to the **home page**, not other pages.
-- Once a user manually switches languages via the language switcher, a `locale-preference` key is stored in `localStorage` and the auto-redirect is disabled.
-
-**To disable this feature**, remove the `<BrowserLanguageRedirect />` component and its import from `src/pages/index.astro`.
 
 ### Language Switcher Components
 
