@@ -478,25 +478,22 @@ async function patchPagesFolders({
 		// else: true → true, locale change: no page folder moves required (config only)
 	}
 
-	// ── Step 2: Remove non-default locale folders (skipping already-handled) ──
-	for (const locale of localesToRemove) {
-		if (handledLocales.has(locale)) continue;
-		const src = join(pagesDir, locale);
-		if (!existsSync(src)) continue;
-		await fs.mkdir(deletedDir, { recursive: true });
-		const dest = join(deletedDir, `pages-${locale}`);
-		if (existsSync(dest)) await fs.rm(dest, { recursive: true });
-		await fs.rename(src, dest);
-		console.log(`  Moved src/pages/${locale}/ → scripts/deleted/pages-${locale}/`);
-	}
-
-	// ── Step 3: Add new non-default locale folders ────────────────────────────
+	// ── Step 2: Add new non-default locale folders ────────────────────────────
 	// Find a template locale (prefer a locale that was already non-default and stays non-default)
 	let templateLocale = null;
-	for (const locale of [...currentLocales, defaultLocale]) {
+	const templateCandidates = [...currentLocales, defaultLocale];
+	for (const locale of templateCandidates) {
 		if (locale === newDefaultLocale) continue;
 		if (localesToRemove.includes(locale)) continue;
 		if (existsSync(join(pagesDir, locale))) { templateLocale = locale; break; }
+	}
+	// Fallback: allow copying from a locale being removed if it's the only option
+	// (must run before Step 3 removes it below)
+	if (!templateLocale) {
+		for (const locale of templateCandidates) {
+			if (locale === newDefaultLocale) continue;
+			if (existsSync(join(pagesDir, locale))) { templateLocale = locale; break; }
+		}
 	}
 
 	for (const locale of localesToAdd) {
@@ -517,6 +514,18 @@ async function patchPagesFolders({
 		} else {
 			console.log(`  ⚠️  Could not scaffold src/pages/${locale}/ — no existing locale folder to copy from`);
 		}
+	}
+
+	// ── Step 3: Remove non-default locale folders (skipping already-handled) ──
+	for (const locale of localesToRemove) {
+		if (handledLocales.has(locale)) continue;
+		const src = join(pagesDir, locale);
+		if (!existsSync(src)) continue;
+		await fs.mkdir(deletedDir, { recursive: true });
+		const dest = join(deletedDir, `pages-${locale}`);
+		if (existsSync(dest)) await fs.rm(dest, { recursive: true });
+		await fs.rename(src, dest);
+		console.log(`  Moved src/pages/${locale}/ → scripts/deleted/pages-${locale}/`);
 	}
 }
 
