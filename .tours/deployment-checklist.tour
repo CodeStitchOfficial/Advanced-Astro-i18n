@@ -9,7 +9,12 @@
 		},
 		{
 			"file": "src/data/client.ts",
-			"description": "Fill in all your client information here:\n- **SITE.url** must match your production domain exactly\n- **BUSINESS** details populate the footer, contact page, and LocalBusiness JSON-LD schema\n- **OG.image** is the default social share fallback — replace `public/assets/social.jpg` with a real 1200×630 image\n\nAlso verify `SITE.locale` and `OG.locale` match your primary language.",
+			"description": "Fill in all your business information here — **BUSINESS** details populate the footer, contact page, and LocalBusiness JSON-LD schema.",
+			"line": 1
+		},
+		{
+			"file": "src/data/siteConfig.ts",
+			"description": "Fill in your site/SEO config:\n- **SITE.url** must match your production domain exactly\n- **OG.image** is the default social share fallback — replace `public/assets/social.jpg` with a real 1200×630 image\n\n`og:locale` and `og:locale:alternate` are now derived automatically per-page from the active locale (see `Meta.astro`), so there's no locale field to set here.",
 			"line": 1
 		},
 		{

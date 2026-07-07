@@ -138,6 +138,7 @@ All commands are run from the root of the project, from a terminal:
 │   │       └── fr/
 │   ├── data/
 │   │   ├── client.ts
+│   │   ├── siteConfig.ts
 │   │   └── navData.json
 │   ├── icons/
 │   ├── js/
@@ -536,6 +537,7 @@ Before going live, confirm the following are updated for your client's project:
 
 - **`astro.config.mjs`** — set the `site` field to your production URL
 - **`src/data/client.ts`** — fill in business name, address, phone, email, and social links
+- **`src/data/siteConfig.ts`** — fill in site title, description, production URL, and social share image
 - **`public/robots.txt`** — update the `Sitemap` URL to your production domain
 - **`public/assets/favicons/`** — replace placeholder favicons with the client's branding
 - **`public/admin/config.yml`** — complete the DecapBridge setup (see below) and set `site_url` to the production URL

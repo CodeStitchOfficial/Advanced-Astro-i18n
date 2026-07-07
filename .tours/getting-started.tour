@@ -4,8 +4,13 @@
 	"steps": [
 		{
 			"file": "src/data/client.ts",
-			"description": "Start here! This file contains your site's core details. Update the business name, email, phone, and address in the **BUSINESS** object. The **SITE** object contains domain and description info used throughout for canonical URLs and meta tags. Don't forget to update your social image in **OG**.",
+			"description": "Start here! Update the business name, email, phone, and address in the **BUSINESS** object.",
 			"line": 2
+		},
+		{
+			"file": "src/data/siteConfig.ts",
+			"description": "Site/SEO config lives here. The **SITE** object contains domain and description info used throughout for canonical URLs and meta tags. Don't forget to update your social image in **OG**.",
+			"line": 1
 		},
 		{
 			"file": "astro.config.mjs",
