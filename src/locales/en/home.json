@@ -9,7 +9,7 @@
 			"1": "Advanced Astro v6",
 			"2": "i18n"
 		},
-		"p1": "This kit is specially designed for customers who want a multi-language site, and is therefore configured with Astro's internationalization tools (i18n) for two languages: English and French. It also includes a Decap CMS integration.",
+		"p1": "Ships bilingual out of the box — English and French, powered by Astro's i18n routing — with Decap CMS built in for the blog. Don't need multiple languages? Strip i18n, or any other feature, out with a single script.",
 		"cta1": "GitHub",
 		"cta2": "CodeStitch"
 	},
