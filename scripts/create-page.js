@@ -22,13 +22,17 @@ const i18nEnabled = !i18nDisabled;
 
 function readClientData() {
 	const clientPath = join(root, "src", "data", "client.ts");
-	if (!existsSync(clientPath)) return null;
-	const content = readFileSync(clientPath, "utf8");
-	const nameMatch = content.match(/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/);
-	const titleMatch = content.match(/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/);
+	const siteConfigPath = join(root, "src", "data", "siteConfig.ts");
+	const businessName = existsSync(clientPath)
+		? readFileSync(clientPath, "utf8").match(/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/)?.[1] ?? null
+		: null;
+	const siteTitle = existsSync(siteConfigPath)
+		? readFileSync(siteConfigPath, "utf8").match(/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/)?.[1] ?? null
+		: null;
+	if (!businessName && !siteTitle) return null;
 	return {
-		businessName: nameMatch?.[1] ?? null,
-		siteTitle: titleMatch?.[1] ?? null,
+		businessName,
+		siteTitle,
 	};
 }
 

@@ -67,9 +67,7 @@ const { content, lang, alternates, locale } = await getSiteContext(Astro.url);
   </head>
   <body>
     <!-- Screen reader skip main nav -->
-    <a class="skip" aria-label="skip to main content" href="#main"
-      >{content.common.skipLink}</a
-    >
+    <a class="skip" href="#main">{content.common.skipLink}</a>
 
     <DynamicHeader />
     <main id="main">

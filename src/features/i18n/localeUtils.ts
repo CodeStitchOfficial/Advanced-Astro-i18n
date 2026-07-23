@@ -1,4 +1,4 @@
-import { locales, defaultLocale, type Locale } from "@data/i18nConfig";
+import { locales, defaultLocale, type Locale } from "./i18nConfig";
 
 /** Filter a content collection array to entries whose ID starts with the given locale prefix. */
 export function filterCollectionByLanguage<T extends { id: string }>(
@@ -15,4 +15,9 @@ export function getLocaleFromUrl(url: URL): Locale {
     return segment as Locale;
   }
   return defaultLocale;
+}
+
+/** Convert a BCP-47 hyphenated locale code (e.g. "en-US") to Open Graph's underscore format (e.g. "en_US"). */
+export function toOgLocale(hreflang: string): string {
+  return hreflang.replace("-", "_");
 }

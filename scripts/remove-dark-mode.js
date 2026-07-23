@@ -11,7 +11,7 @@
  *   - Sweeps all src .astro/.less/.css files for body.dark-mode CSS blocks
  *   - Disables the darkMode feature flag
  *
- * Run with: npm run remove-dark-mode
+ * Run with: node scripts/remove-dark-mode.js
  */
 
 import { existsSync, rmSync, readFileSync, writeFileSync, readdirSync } from "fs";

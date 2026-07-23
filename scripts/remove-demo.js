@@ -158,12 +158,12 @@ async function removeDemoReferences(componentNames) {
 		for (const component of componentNames) {
 
 			const importRegex = new RegExp(
-				`^\\s*import\\s+${escapeRegex(component)}\\s+from\\s+["'][^"']+["'];?\\r?\\n`,
+				`^[ \\t]*import\\s+${escapeRegex(component)}\\s+from\\s+["'][^"']+["'];?\\r?\\n`,
 				"gm"
 			);
 
 			const usageRegex = new RegExp(
-				`^\\s*<${escapeRegex(component)}\\b[\\s\\S]*?\\/>\\s*\\r?\\n?`,
+				`^[ \\t]*<${escapeRegex(component)}\\b[\\s\\S]*?\\/>[ \\t]*\\r?\\n?`,
 				"gm"
 			);
 
@@ -174,7 +174,7 @@ async function removeDemoReferences(componentNames) {
 		// Remove demo asset imports
 		for (const asset of demoAssets) {
 			const assetRegex = new RegExp(
-				`^\\s*import\\s+.*?from\\s+["'][^"']*${escapeRegex(asset)}[^"']*["'];?\\r?\\n`,
+				`^[ \\t]*import\\s+.*?from\\s+["'][^"']*${escapeRegex(asset)}[^"']*["'];?\\r?\\n`,
 				"gm"
 			);
 

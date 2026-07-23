@@ -1,5 +1,5 @@
 import navData from "@data/navData.json";
-import type { Locale } from "../../data/i18nConfig.ts";
+import type { Locale } from "./i18nConfig.ts";
 
 type NavItem = {
   key: string;

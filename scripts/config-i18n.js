@@ -158,7 +158,7 @@ async function patchAstroConfig({ defaultLocale, newDefaultLocale, newLocales, p
 // ─── Phase B: i18nConfig.ts ───────────────────────────────────────────────────
 
 async function patchSiteSettings({ defaultLocale, newDefaultLocale, newLocales, localesToAdd, localesToRemove, editOldDefaultToNewDefault }) {
-	const settingsPath = join(root, "src", "data", "i18nConfig.ts");
+	const settingsPath = join(root, "src", "features", "i18n", "i18nConfig.ts");
 	try {
 		let content = await fs.readFile(settingsPath, "utf-8");
 
@@ -200,7 +200,7 @@ async function patchSiteSettings({ defaultLocale, newDefaultLocale, newLocales, 
 		}
 
 		await fs.writeFile(settingsPath, content, "utf-8");
-		console.log("  Patched src/data/i18nConfig.ts");
+		console.log("  Patched src/features/i18n/i18nConfig.ts");
 	} catch (err) {
 		console.error(`  Error patching i18nConfig.ts: ${err.message}`);
 	}
@@ -478,25 +478,22 @@ async function patchPagesFolders({
 		// else: true → true, locale change: no page folder moves required (config only)
 	}
 
-	// ── Step 2: Remove non-default locale folders (skipping already-handled) ──
-	for (const locale of localesToRemove) {
-		if (handledLocales.has(locale)) continue;
-		const src = join(pagesDir, locale);
-		if (!existsSync(src)) continue;
-		await fs.mkdir(deletedDir, { recursive: true });
-		const dest = join(deletedDir, `pages-${locale}`);
-		if (existsSync(dest)) await fs.rm(dest, { recursive: true });
-		await fs.rename(src, dest);
-		console.log(`  Moved src/pages/${locale}/ → scripts/deleted/pages-${locale}/`);
-	}
-
-	// ── Step 3: Add new non-default locale folders ────────────────────────────
+	// ── Step 2: Add new non-default locale folders ────────────────────────────
 	// Find a template locale (prefer a locale that was already non-default and stays non-default)
 	let templateLocale = null;
-	for (const locale of [...currentLocales, defaultLocale]) {
+	const templateCandidates = [...currentLocales, defaultLocale];
+	for (const locale of templateCandidates) {
 		if (locale === newDefaultLocale) continue;
 		if (localesToRemove.includes(locale)) continue;
 		if (existsSync(join(pagesDir, locale))) { templateLocale = locale; break; }
+	}
+	// Fallback: allow copying from a locale being removed if it's the only option
+	// (must run before Step 3 removes it below)
+	if (!templateLocale) {
+		for (const locale of templateCandidates) {
+			if (locale === newDefaultLocale) continue;
+			if (existsSync(join(pagesDir, locale))) { templateLocale = locale; break; }
+		}
 	}
 
 	for (const locale of localesToAdd) {
@@ -517,6 +514,18 @@ async function patchPagesFolders({
 		} else {
 			console.log(`  ⚠️  Could not scaffold src/pages/${locale}/ — no existing locale folder to copy from`);
 		}
+	}
+
+	// ── Step 3: Remove non-default locale folders (skipping already-handled) ──
+	for (const locale of localesToRemove) {
+		if (handledLocales.has(locale)) continue;
+		const src = join(pagesDir, locale);
+		if (!existsSync(src)) continue;
+		await fs.mkdir(deletedDir, { recursive: true });
+		const dest = join(deletedDir, `pages-${locale}`);
+		if (existsSync(dest)) await fs.rm(dest, { recursive: true });
+		await fs.rename(src, dest);
+		console.log(`  Moved src/pages/${locale}/ → scripts/deleted/pages-${locale}/`);
 	}
 }
 
@@ -599,7 +608,7 @@ async function configI18n() {
 	// ── Read current config ───────────────────────────────────────────────────
 	const current = readI18nConfig(root);
 	if (!current) {
-		console.error("Could not read i18n config from src/data/i18nConfig.ts. Exiting.");
+		console.error("Could not read i18n config from src/features/i18n/i18nConfig.ts. Exiting.");
 		rl.close();
 		process.exit(1);
 	}
@@ -721,7 +730,7 @@ async function configI18n() {
 	if (localesToAdd.length > 0) {
 		console.log(`${step++}. Translate strings in src/locales/${localesToAdd.join("/ and src/locales/")}/`);
 		console.log(`${step++}. Add translated URL slugs for each new locale in src/data/navData.json`);
-		console.log(`${step++}. Review auto-generated localeMap values in src/data/i18nConfig.ts`);
+		console.log(`${step++}. Review auto-generated localeMap values in src/features/i18n/i18nConfig.ts`);
 	}
 	console.log(`${step++}. Run \`npm run dev\` to verify the site loads`);
 	console.log();

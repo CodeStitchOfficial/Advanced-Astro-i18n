@@ -148,9 +148,6 @@ async function runRemoval() {
 
     // 2. Remove (Move) i18n-owned directories
     removeDirectory(path.join(root, "src/features/i18n"));
-    moveToDeletedBackup(
-        path.join(root, "src/data/i18nConfig.ts")
-    );
     removeDirectory(path.join(root, "src/pages/fr"));
     removeDirectory(path.join(root, "src/locales/fr"));
     cleanupNavData();
@@ -163,10 +160,6 @@ async function runRemoval() {
     // 4. Clean up imports and component usages
     removeFromFile("src/components/Settings/Settings.astro", [
         /import\s+TwoLocalesSelect\s+from\s+["'][^"']*TwoLocalesSelect\.astro["'];?\r?\n/g, /\s*<TwoLocalesSelect\s*\/>\r?\n?/g,
-    ]);
-
-    removeFromFile("src/pages/index.astro", [
-        /import\s+BrowserLanguageRedirect\s+from\s+["'][^"']*BrowserLanguageRedirect\.astro["'];?\r?\n/g, /\s*<BrowserLanguageRedirect\s*\/>\r?\n?/g,
     ]);
 
     console.log("\n✔ i18n removal complete. Originals backed up to scripts/deleted/");

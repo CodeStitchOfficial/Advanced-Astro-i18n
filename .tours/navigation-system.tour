@@ -4,22 +4,22 @@
 	"steps": [
 		{
 			"file": "src/data/navData.json",
-			"description": "`navData.json` controls your site's navigation. Each entry has four possible fields:\n\n- **`key`** — unique identifier (not displayed; used internally)\n- **`url`** — the English path without locale prefix (e.g. `\"/about\"`); `<DynamicHeader />` applies `getLocalizedRoute()` automatically so French visitors get `/fr/a-propos`\n- **`label`** — **an object with a key per locale**: `{ \"en\": \"About\", \"fr\": \"À propos\" }` — this is the text rendered in the nav bar\n- **`children`** — optional array of sub-entries (same shape) for dropdown menus\n\nAdd, remove, or modify entries here to change your site's navigation structure.",
+			"description": "`navData.json` controls your site's navigation. Each entry has:\n\n- **`key`** — internal ID (also used for route translation elsewhere)\n- **`urls`** — the translated path per locale: `{ \"en\": \"/about\", \"fr\": \"/a-propos\" }`\n- **`label`** — the nav text per locale: `{ \"en\": \"About\", \"fr\": \"À propos\" }`\n- **`children`** — optional sub-entries (same shape) for dropdown menus\n\nAdd, remove, or edit entries here to change the site's navigation — and the same `urls` data automatically makes that page locale-aware everywhere else in the site.",
 			"line": 2
 		},
 		{
 			"file": "src/components/Header/DynamicHeader.astro",
-			"description": "The `<DynamicHeader />` component imports navData.json and loops through each nav item. It checks if an item has children - if yes, it renders as a dropdown (li.cs-li.cs-dropdown). If no children, it renders as a regular link. The current page gets the **.cs-active** class automatically based on URL matching.",
+			"description": "`<DynamicHeader />` loops through `navData.json` and renders each entry — a dropdown if it has children, a plain link otherwise. The current page gets highlighted automatically via URL matching.",
 			"line": 45
 		},
 		{
 			"file": "src/components/Settings/Settings.astro",
-			"description": "`Settings.astro` is the header's utility bar — it renders the language switcher and dark mode toggle side by side. This is the file to edit when you want to swap or remove either component.\n\n**To swap the dark mode toggle**, replace the import and JSX tag. Two options live in `src/components/DarkMode/`:\n- `DarkModeToggle` — simple moon/sun button\n- `ThemeSelect` — three-way Light / Dark / Auto dropdown\n\n**To swap the language switcher**, replace the import and JSX tag. Two options live in `src/components/LanguageSwitch/`:\n- `TwoLocalesSelect` — EN/FR button toggle\n- `MultiLocalesSelect` — compact dropdown for 3+ locales\n\nThis component appears twice in `DynamicHeader` — once inside the mobile slide-out panel (`cs-shown`) and once in the desktop nav bar (`cs-hidden`). Edits here apply to both breakpoints automatically.",
+			"description": "`Settings.astro` renders the language switcher and dark mode toggle side by side — swap either by changing its import (options live in `src/features/darkmode/` and `src/features/i18n/LanguageSwitch/`). It's used twice in `DynamicHeader` (mobile panel + desktop bar), so one edit updates both.",
 			"line": 1
 		},
 		{
 			"file": "src/assets/js/nav.js",
-			"description": "`nav.js` holds the script that adds interactivity to the navigation: **Mobile menu toggle** (hamburger button), **Dropdown accessibility** (keyboard navigation with Enter/Escape), and **Focus management**. It's wrapped in the `'astro:page-load'` event to work with Astro's View Transitions — this ensures the script re-runs after each client-side navigation. Paste your CodeStitch JS here.",
+			"description": "Adds the nav's interactivity: mobile menu toggle, dropdown keyboard navigation, and focus management. Wrapped in `astro:page-load` so it keeps working after Astro's View Transitions. Paste your CodeStitch JS here.",
 			"line": 1
 		}
 	]

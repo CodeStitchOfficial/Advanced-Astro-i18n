@@ -14,7 +14,6 @@
 			"@styles/*": ["src/styles/*"],
 			"@components/*": ["src/components/*"],
 			"@js/*": ["src/js/*"],
-			"@config/*": ["src/config/*"],
 			"@locales/*": ["src/locales/*"]
 		},
 		"incremental": true,

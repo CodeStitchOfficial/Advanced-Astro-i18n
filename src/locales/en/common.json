@@ -51,7 +51,11 @@
 		"linkText": "Back to homepage"
 	},
 	"skipLink": "Click To Skip To Main Content",
+	"backToHome": "Back to home",
+	"mobileMenuToggle": "Mobile menu toggle",
+	"darkModeToggle": "Toggle dark mode",
 	"pagination": {
+		"label": "Pagination",
 		"previous": "Prev",
 		"next": "Next"
 	},

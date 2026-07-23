@@ -1,18 +1,16 @@
 ---
 import { getSiteContext } from "@js/getSiteContext";
-import { useTranslations } from "../core/useTranslations";
 import { getLocalizedPathname } from "../routing/getLocalizedPathname";
-import { languageSwitcherMap, locales } from "@data/i18nConfig";
+import { languageSwitcherMap, locales } from "../i18nConfig";
 
-const { locale } = await getSiteContext(Astro.url);
-const t = useTranslations(locale);
+const { locale, content } = await getSiteContext(Astro.url);
 const uid = Math.random().toString(36).slice(2, 7);
 
 const languageOptions = await Promise.all(
   locales.map(async (l) => ({
     locale: l,
     href: await getLocalizedPathname(l, Astro.url),
-    label: t(`languageSelect.${l}`),
+    label: content.common.languageSelect[l],
     code: languageSwitcherMap[l],
   })),
 );
@@ -22,11 +20,11 @@ const languageOptions = await Promise.all(
   <div
     class="language-toggle"
     role="radiogroup"
-    aria-label={t("language-label")}
+    aria-label={content.common["language-label"]}
     aria-describedby={`language-instructions-${uid}`}
   >
     <span id={`language-instructions-${uid}`} class="visually-hidden">
-      {t("languageSelect.instructions")}
+      {content.common.languageSelect.instructions}
     </span>
     <div class="toggle-track">
       {

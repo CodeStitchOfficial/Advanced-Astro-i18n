@@ -1,7 +1,8 @@
 ---
-import { Image } from "astro:assets";
-import moonSvg from "@assets/svgs/moon.svg";
-import sunSvg from "@assets/svgs/sun.svg";
+import { Icon } from "astro-icon/components";
+import { getSiteContext } from "@js/getSiteContext";
+
+const { content } = await getSiteContext(Astro.url);
 ---
 
 <style lang="less">
@@ -99,9 +100,9 @@ import sunSvg from "@assets/svgs/sun.svg";
   }
 </style>
 
-<button class="dark-mode-toggle" aria-label="dark mode toggle" aria-pressed="false">
-  <Image class="cs-moon" aria-hidden="true" src={moonSvg} alt="moon" width={15} height={15} decoding="async" />
-  <Image class="cs-sun" aria-hidden="true" src={sunSvg} alt="sun" width={15} height={15} decoding="async" />
+<button class="dark-mode-toggle" aria-label={content.common.darkModeToggle} aria-pressed="false">
+  <Icon class="cs-moon" aria-hidden="true" name="moon" width={15} height={15} />
+  <Icon class="cs-sun" aria-hidden="true" name="sun" width={15} height={15} />
 </button>
 
 <script>

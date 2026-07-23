@@ -61,6 +61,18 @@
     ]
   },
   {
+    "key": "blog",
+    "urls": {
+      "en": "/blog",
+      "fr": "/blog"
+    },
+    "label": {
+      "en": "Blog",
+      "fr": "Blog"
+    },
+    "children": []
+  },
+  {
     "key": "reviews",
     "urls": {
       "en": "/reviews",
