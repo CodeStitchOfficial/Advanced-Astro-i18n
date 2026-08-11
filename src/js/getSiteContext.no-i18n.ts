@@ -9,5 +9,7 @@ export async function getSiteContext(url: URL) {
     lang: "en",
     content,
     alternates: [],
+    currentHreflang: "en-US",
+    ogLocale: "en_US",
   };
 }

@@ -15,7 +15,8 @@ interface Props {
 
 const { description, title } = Astro.props as Props;
 
-const { content, lang, alternates, locale } = await getSiteContext(Astro.url);
+const { content, lang, alternates, locale, currentHreflang, ogLocale } =
+  await getSiteContext(Astro.url);
 ---
 
 <html lang={lang}>
@@ -25,6 +26,8 @@ const { content, lang, alternates, locale } = await getSiteContext(Astro.url);
       title={title}
       description={description}
       locale={locale}
+      currentHreflang={currentHreflang}
+      ogLocale={ogLocale}
       alternates={alternates}
     >
       <slot name="schema" slot="schema" />

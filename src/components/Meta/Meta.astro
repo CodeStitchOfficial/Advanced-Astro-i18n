@@ -3,15 +3,17 @@ import { getImage } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import { BUSINESS } from "@data/client";
 import { OG, SITE } from "@data/siteConfig";
-import { localeMap, type Locale } from "../../features/i18n/i18nConfig";
-import { toOgLocale } from "../../features/i18n/localeUtils";
 import { getLocalBusinessSchema } from "@js/localBusinessSchema.js";
 
 interface Props {
 	title?: string;
 	description?: string;
 	heroImage?: ImageMetadata;
-	locale: Locale;
+	locale: string;
+	// og:locale (e.g. "en_US") and the active page's BCP-47 hreflang (e.g. "en-US"),
+	// precomputed by getSiteContext so this component doesn't need to know about i18n
+	currentHreflang: string;
+	ogLocale: string;
 	alternates?: {
 		hreflang: string;
 		href: string;
@@ -23,17 +25,14 @@ const {
 	description = SITE.description,
 	heroImage,
 	locale,
+	currentHreflang,
+	ogLocale,
 	alternates = [],
 } = Astro.props;
 
 // Data
 const localBusinessSchema = getLocalBusinessSchema(Astro.url.origin, locale);
 const canonical = Astro.url.href;
-
-// og:locale is derived from the active page locale (BCP-47 hyphenated in
-// localeMap, converted to Open Graph's underscore format here)
-const currentHreflang = localeMap[locale];
-const ogLocale = toOgLocale(currentHreflang ?? "en-US");
 const [defaultAlternate] = alternates;
 
 // Detect landing pages (home page for any locale: "/" or "/fr/", etc.)
@@ -119,7 +118,7 @@ if (heroImage) {
 		.map((a) => (
 			<meta
 				property="og:locale:alternate"
-				content={toOgLocale(a.hreflang)}
+				content={a.hreflang.replace("-", "_")}
 			/>
 		))
 }
