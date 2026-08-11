@@ -623,7 +623,16 @@ async function configI18n() {
 	} catch { /* keep false */ }
 
 	console.log(`\nCurrent config: defaultLocale="${defaultLocale}", locales=[${currentLocales.join(", ")}], prefixDefaultLocale=${currentPrefixDefaultLocale}\n`);
-	console.log("NOTE: locale examples at https://github.com/cospired/i18n-iso-languages\n");
+	console.log("\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+	console.log(" Current i18n configuration");
+	console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+	console.log(`Default locale:        ${defaultLocale}`);
+	console.log(`Locales:               ${currentLocales.join(", ")}`);
+	console.log(`Prefix default locale: ${currentPrefixDefaultLocale ? "yes" : "no"}`);
+	console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+
+	console.log("Locale examples:");
+	console.log("https://github.com/cospired/i18n-iso-languages\n");
 
 	// ── Prompt 1: new default locale ─────────────────────────────────────────
 	let newDefaultLocale;
