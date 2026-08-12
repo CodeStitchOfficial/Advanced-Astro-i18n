@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import readline from "readline";
 import { removeObjectKey } from "./utils/transforms.js";
 import { readI18nConfig } from "./utils/read-i18n-config.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
@@ -659,9 +660,11 @@ async function configI18n() {
 	const newLocales = [...new Set([newDefaultLocale, ...additionalLocales])];
 
 	// ── Prompt 4: prefixDefaultLocale ─────────────────────────────────────────
-	const prefixPromptDefault = currentPrefixDefaultLocale ? "y" : "n";
-	const prefixAnswer = (await ask(`\nPrefix default locale in URLs? (/en/about vs /about) (y/n) [${prefixPromptDefault}]: `)).trim().toLowerCase();
-	const prefixDefaultLocale = prefixAnswer === "" ? currentPrefixDefaultLocale : prefixAnswer === "y";
+	const prefixDefaultLocale = await askYesNo(
+		ask,
+		"\nPrefix default locale in URLs? (/en/about vs /about)",
+		currentPrefixDefaultLocale,
+	);
 
 	// ── Confirm ───────────────────────────────────────────────────────────────
 	console.log(`\nNew config:`);
@@ -669,10 +672,10 @@ async function configI18n() {
 	console.log(`  locales:              [${newLocales.join(", ")}]`);
 	console.log(`  prefixDefaultLocale:  ${prefixDefaultLocale}`);
 
-	const confirm = (await ask("\nProceed? (y/n): ")).trim().toLowerCase();
+	const confirm = await askYesNo(ask, "\nProceed?", false);
 	rl.close();
 
-	if (confirm !== "y") {
+	if (!confirm) {
 		console.log("Aborted. No files were changed.");
 		return;
 	}

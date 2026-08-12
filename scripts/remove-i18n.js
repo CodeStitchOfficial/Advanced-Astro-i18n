@@ -8,6 +8,7 @@ import {
     disableFeatureFlag,
 } from "./utils/feature-flags.js";
 import { readI18nConfig } from "./utils/read-i18n-config.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const root = process.cwd();
 const backupRootDir = path.join(root, "scripts/deleted");
@@ -19,20 +20,23 @@ if (checkFeatureFlagBeforeRun(root, "i18n", "i18n")) {
 
 // ─── Confirmation prompt ──────────────────────────────────────────────────────
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const ask = (q) => new Promise((resolve) => rl.question(q, resolve));
 
-rl.question(
+const proceed = await askYesNo(
+    ask,
     "\n⚠️  This will permanently disable and remove i18n support from the project.\n" +
     "Files will be backed up to 'scripts/deleted/'.\n\n" +
-    "Proceed? (y/n): ",
-    (answer) => {
-        rl.close();
-        if (answer.trim().toLowerCase() !== "y") {
-            console.log("Aborted. No files were changed.");
-            process.exit(0);
-        }
-        runRemoval();
-    }
+    "Proceed?",
+    false,
 );
+rl.close();
+
+if (!proceed) {
+    console.log("Aborted. No files were changed.");
+    process.exit(0);
+}
+
+await runRemoval();
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 

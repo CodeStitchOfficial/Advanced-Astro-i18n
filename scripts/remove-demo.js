@@ -19,6 +19,7 @@ import {
 	checkFeatureFlagBeforeRun,
 	disableFeatureFlag,
 } from "./utils/feature-flags.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
@@ -81,7 +82,7 @@ async function ask(question) {
 
 	rl.close();
 
-	return answer.trim().toLowerCase();
+	return answer;
 }
 
 async function discoverDemoComponents() {
@@ -231,11 +232,13 @@ async function scanForRemainingReferences(componentNames) {
 
 async function removeDemo() {
 
-	const confirm = await ask(
-		"\nThis will permanently remove all demo content.\n\nContinue? (y/n): "
+	const confirm = await askYesNo(
+		ask,
+		"\nThis will permanently remove all demo content.\n\nContinue?",
+		false,
 	);
 
-	if (confirm !== "y") {
+	if (!confirm) {
 		console.log("\nCancelled.");
 		return;
 	}

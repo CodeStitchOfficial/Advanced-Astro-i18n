@@ -22,6 +22,7 @@ import {
 	checkFeatureFlagBeforeRun,
 	disableFeatureFlag,
 } from "./utils/feature-flags.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
@@ -36,20 +37,21 @@ const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 });
+const ask = (q) => new Promise((resolve) => rl.question(q, resolve));
 
-rl.question(
-	"\n⚠️  This will permanently remove dark mode support from the project.\n\nProceed? (y/n): ",
-	(answer) => {
-		rl.close();
-
-		if (answer.trim().toLowerCase() !== "y") {
-			console.log("Aborted. No files were changed.");
-			process.exit(0);
-		}
-
-		runRemoval();
-	}
+const proceed = await askYesNo(
+	ask,
+	"\n⚠️  This will permanently remove dark mode support from the project.\n\nProceed?",
+	false,
 );
+rl.close();
+
+if (!proceed) {
+	console.log("Aborted. No files were changed.");
+	process.exit(0);
+}
+
+await runRemoval();
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function remove(relPath) {

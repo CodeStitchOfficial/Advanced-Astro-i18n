@@ -8,6 +8,7 @@ import {
 	checkFeatureFlagBeforeRun,
 	disableFeatureFlag,
 } from "./utils/feature-flags.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
@@ -176,7 +177,9 @@ async function cleanupNavData() {
 
 async function removeDecapCMS() {
 	const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-	const confirm = await new Promise(r => rl.question("Are you sure you want to completely rip out Decap CMS? (y/n): ", a => r(a.toLowerCase() === 'y')));
+	const ask = (q) => new Promise((resolve) => rl.question(q, resolve));
+
+	const confirm = await askYesNo(ask, "Are you sure you want to completely rip out Decap CMS?", false);
 
 	if (!confirm) {
 		console.log("Cancelled.");
@@ -184,7 +187,8 @@ async function removeDecapCMS() {
 		return;
 	}
 
-	const clearBlog = await new Promise(r => rl.question("Do you also want to delete all blog content, UI features, and localized translations? (y/n): ", a => { rl.close(); r(a.toLowerCase() === 'y') }));
+	const clearBlog = await askYesNo(ask, "Do you also want to delete all blog content, UI features, and localized translations?", false);
+	rl.close();
 
 	// Execute Administration Module removal
 	await moveItem(adminSourcePath, join(destinationDir, "public", "admin"), "Admin dashboard settings");

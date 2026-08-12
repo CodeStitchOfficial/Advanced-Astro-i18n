@@ -8,6 +8,7 @@ import {
     checkFeatureFlagBeforeRun,
     disableFeatureFlag,
 } from "./utils/feature-flags.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const root = process.cwd();
 
@@ -72,23 +73,6 @@ const FEATURES = [
     },
 ];
 
-function askQuestion(rl, question, defaultYes = true) {
-    const suffix = " (y/n): ";
-
-    return new Promise((resolve) => {
-        rl.question(question + suffix, (answer) => {
-            const value = answer.trim().toLowerCase();
-
-            if (!value) {
-                resolve(defaultYes);
-                return;
-            }
-
-            resolve(value === "y" || value === "yes");
-        });
-    });
-}
-
 function runScript(scriptName) {
     return new Promise((resolve, reject) => {
         console.log(`\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`);
@@ -122,6 +106,7 @@ async function main() {
         input: process.stdin,
         output: process.stdout,
     });
+    const ask = (q) => new Promise((resolve) => rl.question(q, resolve));
 
     const actions = [];
 
@@ -131,8 +116,8 @@ async function main() {
             continue;
         }
 
-        const keep = await askQuestion(
-            rl,
+        const keep = await askYesNo(
+            ask,
             `Keep ${feature.label}?`
         );
 
@@ -145,8 +130,8 @@ async function main() {
     const i18nAction = actions.find((a) => a.key === "i18n");
     let configLocalesNow = false;
     if (i18nAction && !i18nAction.remove) {
-        configLocalesNow = await askQuestion(
-            rl,
+        configLocalesNow = await askYesNo(
+            ask,
             "\nWould you like to configure your locales now?"
         );
     }
@@ -159,8 +144,8 @@ async function main() {
         );
     }
 
-    const proceed = await askQuestion(
-        rl,
+    const proceed = await askYesNo(
+        ask,
         "\nProceed with these changes?"
     );
 
