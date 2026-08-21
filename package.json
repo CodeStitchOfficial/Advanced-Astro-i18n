@@ -9,7 +9,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "create-page": "node scripts/create-page.js",
-    "setup-project": "node scripts/setup-project.js"
+    "setup-project": "node scripts/setup-project.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
@@ -19,6 +21,8 @@
     "less": "^4.6.4"
   },
   "devDependencies": {
+    "prettier": "^3.9.6",
+    "prettier-plugin-astro": "^0.14.1",
     "slugify": "^1.6.9"
   }
 }
