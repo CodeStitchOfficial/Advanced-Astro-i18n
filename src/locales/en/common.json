@@ -6,8 +6,8 @@
 	"project-2": "Project 2",
 	"blog": "Blog",
 	"contact": "Contact",
-	"theme-label": "Choisissez le thème",
-	"language-label": "Choisissez la langue",
+	"theme-label": "Select theme",
+	"language-label": "Select language",
 	"languageSelect": {
 		"en": "English",
 		"fr": "French",
@@ -28,13 +28,13 @@
 		"cta": "Get an estimate now",
 		"alt": ""
 	},
-	"about-page": {
+	"aboutPage": {
 		"landing": "About",
 		"topper": "About",
 		"title": "About Company Title",
-		"p-1": "Our company was created In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p-2": "We believe that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p-3": "It's important In consequat tincidunt turpis sit amet imperdiet.",
+		"p1": "Our company was created In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p2": "We believe that In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p3": "It's important In consequat tincidunt turpis sit amet imperdiet.",
 		"rank": "CEO-Founder",
 		"cta": "Our projects"
 	},
@@ -51,7 +51,11 @@
 		"linkText": "Back to homepage"
 	},
 	"skipLink": "Click To Skip To Main Content",
+	"backToHome": "Back to home",
+	"mobileMenuToggle": "Mobile menu toggle",
+	"darkModeToggle": "Toggle dark mode",
 	"pagination": {
+		"label": "Pagination",
 		"previous": "Prev",
 		"next": "Next"
 	},

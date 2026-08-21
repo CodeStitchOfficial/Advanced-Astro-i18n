@@ -1,0 +1,133 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	id?: string; // optional id for the button
+	href?: string; // the href to go to, ex "/posts/"
+	arrow?: "left" | "right" | "none"; // position of the arrow, if any
+	class?: string; // any additional classes
+	rel?: "prev" | "next"; // for <a> tags, ex "prev" or "next"
+	rest?: any; // catch-all for any additional parameters, such as "aria-label"
+}
+
+const { id, href, arrow = "none", class: className, rel, ...rest } = Astro.props as Props;
+---
+
+<!-- /* Customized cs-button-6 stitch */ -->
+{href ? (
+	<a id={id} class:list={[className, "cs-button-6"]} href={href} rel={rel} {...rest}>
+		{
+			arrow === "left" && (
+				<Icon name="arrow" class="cs-icon arrow-left" aria-hidden="true" width={24} height={24} />
+			)
+		}
+		<slot />
+		{
+			arrow === "right" && (
+				<Icon name="arrow" class="cs-icon arrow-right" aria-hidden="true" width={24} height={24} />
+			)
+		}
+	</a>
+) : (
+	<span id={id} class:list={[className, "cs-button-6"]} aria-disabled="true" {...rest}>
+		{
+			arrow === "left" && (
+				<Icon name="arrow" class="cs-icon arrow-left" aria-hidden="true" width={24} height={24} />
+			)
+		}
+		<slot />
+		{
+			arrow === "right" && (
+				<Icon name="arrow" class="cs-icon arrow-right" aria-hidden="true" width={24} height={24} />
+			)
+		}
+	</span>
+)}
+
+<style lang="less">
+	.cs-button-6 {
+		text-align: center;
+		font-size: (16/16rem);
+		/* 46px - 56px */
+		line-height: clamp(2.875rem, 8vw, 3.5rem);
+		text-decoration: none;
+		font-weight: 700;
+		margin: auto;
+		color: #1a1a1a;
+		padding: 0 (24/16rem);
+		border-radius: (8/16rem);
+		background-color: #fff;
+		border: 2px solid #1a1a1a;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: (24/16rem);
+		position: relative;
+		overflow: hidden;
+		z-index: 1;
+		transition: color 0.3s;
+
+		&:before {
+			content: "";
+			width: (6/16rem);
+			height: 100%;
+			background: var(--primary);
+			opacity: 1;
+			position: absolute;
+			display: block;
+			bottom: 0;
+			left: 0;
+			transition: width 0.3s;
+			z-index: -1;
+		}
+
+		.cs-icon {
+			width: (24/16rem);
+			height: auto;
+
+			&.arrow-left {
+				transform: rotate(180deg);
+			}
+
+			path {
+				transition: fill 0.3s;
+				fill: currentColor;
+			}
+		}
+
+		/* we need to style the disabled state */
+		&:not(.disabled) {
+			&:hover {
+				color: #fff;
+
+				&:before {
+					width: 100%;
+				}
+			}
+		}
+
+		&.disabled {
+			cursor: not-allowed;
+			opacity: 0.25;
+		}
+
+		[rel="next"] {
+			flex-direction: row-reverse;
+		}
+	}
+
+	/* Dark Mode */
+	@media only screen and (min-width: 0em) {
+		body.dark-mode {
+			.cs-button-6 {
+				background-color: var(--grey);
+				color: var(--light);
+				.cs-icon {
+					path {
+						fill: #fff;
+					}
+				}
+			}
+		}
+	}
+</style>

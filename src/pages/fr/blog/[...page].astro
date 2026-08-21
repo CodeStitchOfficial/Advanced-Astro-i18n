@@ -1,38 +1,40 @@
 ---
 import type { GetStaticPaths, Page } from "astro";
-import { getCollection } from "astro:content";
-import { getLocaleFromUrl, filterCollectionByLanguage } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-import { defaultLocale } from "@config/siteSettings";
+import { getSiteContext } from "@js/getSiteContext";
+import { getBlogPosts } from "src/features/decapCMS/core/getBlogPosts";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA/CTA.astro";
-import Banner from "@components/Banner/Banner.astro";
-import BlogPreview from "@components/BlogPreview/BlogPreview.astro";
-import Pagination from "@components/Pagination/Pagination.astro";
+import Banner from "src/features/demo/Banner.astro";
+import BlogPreview from "src/features/decapCMS/BlogPreview.astro";
+import Pagination from "src/features/decapCMS/Pagination.astro";
+import CTA from "src/features/demo/CTA.astro";
+import landingImage from "@assets/images/landing.jpg";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const allPosts = await getCollection("blog");
-	const frPosts = filterCollectionByLanguage(allPosts, "fr");
-	const sortedPosts = frPosts.sort((a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf());
+	const locale = "fr";
+	const frPosts = await getBlogPosts(locale);
+	const sortedPosts = frPosts.sort(
+		(a, b) =>
+			new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+	);
 
 	return paginate(sortedPosts, {
 		pageSize: 3,
 	});
 }) satisfies GetStaticPaths;
 
-import landingImage from "@assets/images/landing.jpg";
-
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+const { content } = await getSiteContext(Astro.url);
 const { page } = Astro.props as { page: Page };
 ---
 
-<BaseLayout title={t("blog:landing")} description="Meta description for the page">
+<BaseLayout
+	title={content.blog.landing}
+	description="Meta description for the page"
+>
 	<!-- ============================================ -->
 	<!--                    LANDING                   -->
 	<!-- ============================================ -->
 
-	<Banner title={t("blog:landing")} image={landingImage} />
+	<Banner title={content.blog.landing} image={landingImage} />
 
 	<!-- ============================================ -->
 	<!--                    Blog                      -->
@@ -42,8 +44,8 @@ const { page } = Astro.props as { page: Page };
 		<div class="cs-container">
 			<div class="cs-content">
 				<div class="cs-content-flex">
-					<span class="cs-topper">{t("blog:topper")}</span>
-					<h2 class="cs-title">{t("blog:title")}</h2>
+					<span class="cs-topper">{content.blog.topper}</span>
+					<h2 class="cs-title">{content.blog.title}</h2>
 				</div>
 			</div>
 			<ul class="cs-card-group">

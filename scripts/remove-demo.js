@@ -3,245 +3,316 @@
 /**
  * remove-demo.js
  *
- * Removes demo/placeholder content from the Advanced Astro i18n kit.
- * This script removes demo pages, section components, images, and resets
- * navData.json and both locale index pages to a minimal welcome state.
- *
- * Supports both English and French locale content.
- *
- * Run with: npm run remove-demo
+ * Removes the demo feature from the project while preserving
+ * any user customizations. Unlike previous versions, this script
+ * never overwrites pages or layouts—it only removes demo-specific
+ * files and references.
  */
 
-import { existsSync, rmSync, readFileSync, writeFileSync, mkdirSync, readdirSync } from "fs";
-import { join, dirname } from "path";
+import { promises as fs } from "fs";
+import { join, dirname, relative, basename } from "path";
 import { fileURLToPath } from "url";
 import readline from "readline";
+
+import { collectFiles } from "./utils/collect-files.js";
+import {
+	checkFeatureFlagBeforeRun,
+	disableFeatureFlag,
+} from "./utils/feature-flags.js";
+import { askYesNo } from "./utils/prompt.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
 
-// ─── Guard: already run? ──────────────────────────────────────────────────────
-const markerPath = join(root, ".demo-removed");
-if (existsSync(markerPath)) {
-	console.log("Demo content has already been removed (.demo-removed marker exists).");
+if (checkFeatureFlagBeforeRun(root, "demo", "Demo Content")) {
 	process.exit(0);
 }
 
-// ─── Confirmation prompt ──────────────────────────────────────────────────────
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+const DEMO = {
+	featureDir: join(root, "src", "features", "demo"),
 
-rl.question(
-	"\n⚠️  This will permanently remove all demo content from the project.\n" +
-	"This includes demo pages, section components, and placeholder images.\n\n" +
-	"Proceed? (y/n): ",
-	(answer) => {
-		rl.close();
-		if (answer.trim().toLowerCase() !== "y") {
-			console.log("Aborted. No files were changed.");
-			process.exit(0);
-		}
-		runRemoval();
-	}
-);
+	assets: [
+		join(root, "src", "assets", "images", "hero.jpg"),
+		join(root, "src", "assets", "images", "hero-m.jpg"),
+		join(root, "src", "assets", "images", "construction.jpg"),
+		join(root, "src", "assets", "images", "portfolio"),
+		join(root, "src", "assets", "images", "CTA"),
+	],
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-function collectAstroFiles(dir, results = []) {
-	if (!existsSync(dir)) return results;
-	for (const entry of readdirSync(dir, { withFileTypes: true })) {
-		const full = join(dir, entry.name);
-		if (entry.isDirectory()) collectAstroFiles(full, results);
-		else if (entry.name.endsWith(".astro")) results.push(full);
+	pages: [
+		join(root, "src", "pages", "about.astro"),
+		join(root, "src", "pages", "reviews.astro"),
+		join(root, "src", "pages", "projects"),
+
+		join(root, "src", "pages", "fr", "a-propos.astro"),
+		join(root, "src", "pages", "fr", "avis.astro"),
+		join(root, "src", "pages", "fr", "projets"),
+	],
+
+	navKeys: new Set([
+		"about",
+		"projects",
+		"reviews",
+	]),
+};
+
+async function exists(path) {
+	try {
+		await fs.access(path);
+		return true;
+	} catch {
+		return false;
 	}
-	return results;
 }
 
-function remove(relPath) {
-	const abs = join(root, relPath);
-	if (existsSync(abs)) {
-		rmSync(abs, { recursive: true, force: true });
-		console.log(`  removed  ${relPath}`);
+async function removeItem(path) {
+	if (!(await exists(path))) return;
+	await fs.rm(path, { recursive: true, force: true });
+}
+
+async function ask(question) {
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout,
+	});
+
+	const answer = await new Promise(resolve =>
+		rl.question(question, resolve)
+	);
+
+	rl.close();
+
+	return answer;
+}
+
+async function discoverDemoComponents() {
+	if (!(await exists(DEMO.featureDir))) return [];
+
+	const files = await fs.readdir(DEMO.featureDir);
+
+	return files
+		.filter(file => file.endsWith(".astro"))
+		.map(file => basename(file, ".astro"));
+}
+
+function removeNavEntries(items, keys) {
+	return items
+		.filter(item => !keys.has(item.key))
+		.map(item => ({
+			...item,
+			children: Array.isArray(item.children)
+				? removeNavEntries(item.children, keys)
+				: [],
+		}));
+}
+
+async function cleanupNavigation() {
+	const navPath = join(root, "src", "data", "navData.json");
+
+	if (!(await exists(navPath))) return;
+
+	try {
+		const nav = JSON.parse(await fs.readFile(navPath, "utf8"));
+
+		const cleaned = removeNavEntries(nav, DEMO.navKeys);
+
+		await fs.writeFile(
+			navPath,
+			JSON.stringify(cleaned, null, 2) + "\n",
+			"utf8"
+		);
+
+		console.log("✅ Updated navigation");
+	}
+	catch (err) {
+		console.error(`❌ Failed updating navData.json: ${err.message}`);
 	}
 }
 
-function write(relPath, content) {
-	const abs = join(root, relPath);
-	mkdirSync(dirname(abs), { recursive: true });
-	writeFileSync(abs, content, "utf8");
-	console.log(`  updated  ${relPath}`);
+function escapeRegex(str) {
+	return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
-function sweepDemoReferences() {
-	const srcDir = join(root, "src");
-	const files = collectAstroFiles(srcDir);
+async function removeDemoReferences(componentNames) {
+	console.log("\n🔍 Cleaning Astro files...\n");
 
-	const importPatterns = [
-		/^import \w+ from "@components\/(Banner|CTA|Hero|Services|SideBySide|Gallery|Testimonials|Reviews)\/.+?";\n/gm,
-		/^import \w+ from "@assets\/images\/landing\.jpg";\n/gm,
-		/^import \w+ from "@assets\/images\/hero\.jpg";\n/gm,
-		/^import \w+ from "@assets\/images\/CTA\/cabinets2\.jpg";\n/gm,
-	];
+	const files = [];
+	await collectFiles(files, join(root, "src"));
 
-	const usagePatterns = [
-		/^\s*<Banner[^/]*\/>\n/gm,
-		/^\s*<(CTA|Hero|Services|SideBySide|SideBySideReverse|Gallery|Testimonials|Reviews) \/>\n/gm,
+	let updated = 0;
+
+	const demoAssets = [
+		"hero",
+		"hero-m",
+		"construction",
+		"portfolio",
+		"CTA",
 	];
 
 	for (const file of files) {
-		let src = readFileSync(file, "utf8").replace(/\r\n/g, "\n");
-		const original = src;
+		if (!file.endsWith(".astro")) continue;
 
-		for (const pattern of importPatterns) src = src.replace(pattern, "");
-		for (const pattern of usagePatterns) src = src.replace(pattern, "");
-		src = src.replace(/\n{3,}/g, "\n\n");
+		let source = await fs.readFile(file, "utf8");
+		const original = source;
 
-		if (src !== original) {
-			writeFileSync(file, src, "utf8");
-			const rel = file.replace(root + "/", "").replace(root + "\\", "");
-			console.log(`  swept    ${rel}`);
+		// Remove imports and usages for every discovered component
+		for (const component of componentNames) {
+
+			const importRegex = new RegExp(
+				`^[ \\t]*import\\s+${escapeRegex(component)}\\s+from\\s+["'][^"']+["'];?\\r?\\n`,
+				"gm"
+			);
+
+			const usageRegex = new RegExp(
+				`^[ \\t]*<${escapeRegex(component)}\\b[\\s\\S]*?\\/>[ \\t]*\\r?\\n?`,
+				"gm"
+			);
+
+			source = source.replace(importRegex, "");
+			source = source.replace(usageRegex, "");
+		}
+
+		// Remove demo asset imports
+		for (const asset of demoAssets) {
+			const assetRegex = new RegExp(
+				`^[ \\t]*import\\s+.*?from\\s+["'][^"']*${escapeRegex(asset)}[^"']*["'];?\\r?\\n`,
+				"gm"
+			);
+
+			source = source.replace(assetRegex, "");
+		}
+
+		source = source.replace(/\n{3,}/g, "\n\n");
+
+		if (source !== original) {
+			await fs.writeFile(file, source, "utf8");
+			updated++;
 		}
 	}
+
+	console.log(`\n✅ Updated ${updated} Astro file(s).`);
 }
 
-// ─── Main ─────────────────────────────────────────────────────────────────────
-function runRemoval() {
-	console.log("\nRemoving demo content...\n");
+async function scanForRemainingReferences(componentNames) {
+	console.log("\n🔎 Scanning for remaining demo references...\n");
 
-	// ── Demo pages (both locales) ─────────────────────────────────────────────
-	[
-		"src/pages/about.astro",
-		"src/pages/reviews.astro",
-		"src/pages/projects",
-		"src/pages/fr/a-propos.astro",
-		"src/pages/fr/avis.astro",
-		"src/pages/fr/projets",
-	].forEach(remove);
+	const files = [];
+	await collectFiles(files, join(root, "src"));
 
-	// ── Demo section components ───────────────────────────────────────────────
-	[
-		"src/components/Hero",
-		"src/components/Services",
-		"src/components/SideBySide",
-		"src/components/Gallery",
-		"src/components/Testimonials",
-		"src/components/Reviews",
-		"src/components/Banner",
-		"src/components/CTA",
-	].forEach(remove);
+	const names = componentNames.join("|");
 
-	// ── Demo images ───────────────────────────────────────────────────────────
-	[
-		"src/assets/images/hero.jpg",
-		"src/assets/images/hero-m.jpg",
-		"src/assets/images/landing.jpg",
-		"src/assets/images/cabinets2.jpg",
-		"src/assets/images/construction.jpg",
-		"src/assets/images/portfolio",
-		"src/assets/images/CTA",
-	].forEach(remove);
-
-	// ── Reset navData.json to home-only ───────────────────────────────────────
-	write(
-		"src/data/navData.json",
-		JSON.stringify(
-			[
-				{ key: "home", url: "/", label: { en: "Home", fr: "Accueil" }, children: [] },
-				{ key: "contact", url: "/contact", label: { en: "Contact", fr: "Contact" }, children: [] },
-			],
-			null,
-			"\t"
-		) + "\n"
+	const regex = new RegExp(
+		`features\\\\/demo|features/demo|${names}`,
+		"i"
 	);
 
-	// ── Reset EN index.astro ──────────────────────────────────────────────────
-	write(
-		"src/pages/index.astro",
-		`---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-import BrowserLanguageRedirect from "@components/LanguageSwitch/BrowserLanguageRedirect.astro";
+	const matches = [];
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
----
+	for (const file of files) {
+		const content = await fs.readFile(file, "utf8");
 
-<BrowserLanguageRedirect />
+		if (regex.test(content)) {
+			matches.push(relative(root, file));
+		}
+	}
 
-<BaseLayout title="Welcome" description="Welcome to our website">
-	<section style="padding: 8rem 1rem; text-align: center;">
-		<h1>Welcome</h1>
-		<p>Your new site is ready. Start building!</p>
-		<a href="/contact" style="display:inline-block; margin-top:1rem; padding:0.75rem 1.5rem; background:var(--primary); color:#fff; text-decoration:none; border-radius:4px;">Contact Us</a>
-	</section>
-</BaseLayout>
-`
+	if (matches.length === 0) {
+		console.log("✅ No remaining demo references found.");
+		return;
+	}
+
+	console.log(
+		"\n⚠ Remaining demo references:\n"
 	);
 
-	// ── Reset FR index.astro ──────────────────────────────────────────────────
-	write(
-		"src/pages/fr/index.astro",
-		`---
-import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
----
-
-<BaseLayout title="Bienvenue" description="Bienvenue sur notre site web">
-	<section style="padding: 8rem 1rem; text-align: center;">
-		<h1>Bienvenue</h1>
-		<p>Votre nouveau site est prêt. Commencez à construire !</p>
-		<a href="/fr/contact" style="display:inline-block; margin-top:1rem; padding:0.75rem 1.5rem; background:var(--primary); color:#fff; text-decoration:none; border-radius:4px;">Nous contacter</a>
-	</section>
-</BaseLayout>
-`
-	);
-
-	// ── Update _template.astro files (remove Banner/CTA/landingImage) ────────
-	for (const tpl of ["src/pages/_template.astro", "src/pages/fr/_template.astro"]) {
-		const abs = join(root, tpl);
-		if (!existsSync(abs)) continue;
-		let src = readFileSync(abs, "utf8").replace(/\r\n/g, "\n");
-		// Remove imports
-		src = src.replace(/import Banner from "@components\/Banner\/Banner\.astro";\n/, "");
-		src = src.replace(/import CTA from "@components\/CTA\/CTA\.astro";\n/, "");
-		src = src.replace(/import landingImage from "@assets\/images\/landing\.jpg";\n/, "");
-		// Remove Banner comment block + usage
-		src = src.replace(/\t<!-- =+[^]*?LANDING[^]*?=+ -->\n\n\t<Banner[^\n]+\/>\n\n/, "");
-		// Remove CTA usage
-		src = src.replace(/\t<CTA \/>\n/, "");
-		// Collapse extra blank lines
-		src = src.replace(/\n{3,}/g, "\n\n");
-		writeFileSync(abs, src, "utf8");
-		console.log(`  updated  ${tpl}`);
+	for (const file of matches) {
+		console.log(`   - ${file}`);
 	}
-
-	// ── Reset contact pages from cleaned template ─────────────────────────────
-	const enTplPath = join(root, "src/pages/_template.astro");
-	const frTplPath = join(root, "src/pages/fr/_template.astro");
-
-	if (existsSync(enTplPath)) {
-		const tpl = readFileSync(enTplPath, "utf8").replaceAll("Page Title", "Contact");
-		write("src/pages/contact.astro", tpl);
-	}
-	if (existsSync(frTplPath)) {
-		const tpl = readFileSync(frTplPath, "utf8").replaceAll("Titre de la page", "Contact");
-		write("src/pages/fr/contact.astro", tpl);
-	}
-
-	// ── Sweep surviving pages for leftover demo references ───────────────────
-	sweepDemoReferences();
-
-	// ── Create .demo-removed marker ───────────────────────────────────────────
-	writeFileSync(markerPath, new Date().toISOString() + "\n", "utf8");
-
-	console.log("\nDone! Demo content has been removed.");
-	console.log("The .demo-removed marker file has been created to prevent re-running.");
-	console.log("\nNext steps:");
-	console.log("  1. Run `npm run dev` to verify the site still loads");
-	console.log("  2. Update src/data/client.ts with your client's information");
-	console.log("  3. Update src/locales/ with real translations");
-	console.log("  4. Build your new pages and components\n");
 }
+
+async function removeDemo() {
+
+	const confirm = await askYesNo(
+		ask,
+		"\nThis will permanently remove all demo content.\n\nContinue?",
+		false,
+	);
+
+	if (!confirm) {
+		console.log("\nCancelled.");
+		return;
+	}
+
+	console.log("\nDiscovering demo components...\n");
+
+	const demoComponents = await discoverDemoComponents();
+
+	console.log(
+		`Found ${demoComponents.length} demo component(s).`
+	);
+	console.log("\nRemoving demo pages...\n");
+
+	for (const page of DEMO.pages) {
+		await removeItem(page);
+	}
+
+	console.log("\nRemoving demo assets...\n");
+
+	for (const asset of DEMO.assets) {
+		await removeItem(asset);
+	}
+
+	console.log();
+
+	await cleanupNavigation();
+
+	console.log();
+
+	// Remove imports and component usage while the feature
+	// still exists to avoid temporary broken imports.
+	await removeDemoReferences(demoComponents);
+
+	console.log("\nRemoving demo feature...\n");
+
+	await removeItem(DEMO.featureDir);
+
+	console.log();
+
+	await scanForRemainingReferences(demoComponents);
+	console.log();
+
+	await disableFeatureFlag(root, "demo");
+
+	console.log("✅ Disabled Demo feature flag.");
+
+	console.log(`
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 Demo content successfully removed!
+
+The following actions were completed:
+
+ • Removed demo feature module
+ • Removed demo pages
+ • Removed demo assets
+ • Cleaned navigation entries
+ • Removed demo imports
+ • Removed demo component usage
+ • Disabled the Demo feature flag
+
+Next recommended steps:
+
+  npm run dev
+
+Verify the site still builds correctly.
+Any remaining references (if any) were listed above.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+`);
+}
+
+removeDemo().catch(error => {
+	console.error("\n❌ Demo removal failed.\n");
+	console.error(error);
+	process.exit(1);
+});

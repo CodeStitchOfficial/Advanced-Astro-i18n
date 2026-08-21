@@ -111,7 +111,6 @@
 - **`npm run create-page`** — Scaffolds a new page for all locales
 - **`npm run remove-demo`** — Removes demo/placeholder content
 - **`npm run remove-dark-mode`** — Removes dark mode components and styles
-- **`npm run test:scripts`** — Runs unit tests for the utility scripts
 
 #### Schema changes
 

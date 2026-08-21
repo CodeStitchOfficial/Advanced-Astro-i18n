@@ -4,27 +4,32 @@
 	"steps": [
 		{
 			"file": "src/data/client.ts",
-			"description": "Start here! This file contains your site's core details. Update the business name, email, phone, and address in the **BUSINESS** object. The **SITE** object contains domain and description info used throughout for canonical URLs and meta tags. Don't forget to update your social image in **OG**.",
+			"description": "Update the business name, email, phone, address and other business details here. This object is used in <Footer /> for example",
 			"line": 2
 		},
 		{
-			"file": "astro.config.mjs",
+			"file": "src/data/siteConfig.ts",
+			"description": "Site/SEO config lives here. The **SITE** object contains domain and description info used throughout for canonical URLs and meta tags. Don't forget to update your social image in **OG**.",
+			"line": 1
+		},
+		{
+			"file": "astro.config.ts",
 			"description": "Update the **site** URL to your actual domain before deployment. This is used for generating the sitemap and canonical URLs. For local development, you can leave it as-is, but change it before going live.",
-			"line": 6
+			"line": 7
 		},
 		{
 			"file": "src/styles/root.less",
 			"description": "Want to change colors, fonts, or spacing? The CSS variables defined here control the look across all components. Change **--primary**, **--secondary**, **--headerColor**, etc. to customize your site's appearance. These variables are used throughout all CodeStitch components.",
-			"line": 85
+			"line": 10
 		},
 		{
 			"file": "src/components/Settings/Settings.astro",
-			"description": "## Header UI — Dark Mode & Language Switcher\n\n`Settings.astro` is where you swap the header's utility components. Just change the import to use a different component — no prop wiring needed.\n\n**Dark mode** — two options in `src/components/DarkMode/`:\n- `DarkModeToggle` — simple moon/sun button\n- `ThemeSelect` — three-way Light / Dark / Auto dropdown *(default)*\n\n**Language switcher** — two options in `src/components/LanguageSwitch/`:\n- `TwoLocalesSelect` — EN/FR button toggle, best for 2 locales *(default)*\n- `MultiLocalesSelect` — compact dropdown, best for 3+ locales\n\nTo remove either entirely, delete its line from the template.",
+			"description": "Swap the header's dark mode toggle or language switcher by changing the import here — no prop wiring needed.\n\n- Dark mode: `DarkModeToggle` (simple button) or `ThemeSelect` (Light/Dark/Auto dropdown, default) in `src/features/darkmode/`\n- Language switcher: `TwoLocalesSelect` (default) or `MultiLocalesSelect` in `src/features/i18n/LanguageSwitch/`\n\nDelete a line entirely to remove that feature from the header.",
 			"line": 1
 		},
 		{
 			"file": "package.json",
-			"description": "Available commands:\n\n- **`config-i18n`** — interactive setup wizard: configure your locales, rename translated routes, and scaffold locale files. **Run this first** if you're customizing the i18n setup.\n- **`dev`** — start the dev server on localhost:4321\n- **`build`** — production build\n- **`preview`** — preview the production build locally\n- **`remove-demo`** — strip all demo pages, section components, and images before going live\n- **`remove-dark-mode`** — remove dark mode support if you don't need it\n- **`remove-decap`** — remove the Decap CMS integration\n- **`create-page`** — scaffold a new page with all locale variants",
+			"description": "Key commands:\n\n- `npm run dev` — start the dev server\n- `npm run setup-project` — choose which features to keep (i18n, CMS, demo, dark mode) and configure locales\n- `npm run create-page` — scaffold a new page for every locale\n\nNeed to reconfigure or remove something later? Run the matching script directly, e.g. `node scripts/remove-i18n.js` or `node scripts/config-i18n.js`.",
 			"line": 5
 		}
 	]

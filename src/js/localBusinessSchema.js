@@ -1,6 +1,7 @@
-import { SITE, BUSINESS } from "@data/client";
+import { BUSINESS } from "@data/client";
+import { SITE } from "@data/siteConfig";
 
-export function getLocalBusinessSchema(origin) {
+export function getLocalBusinessSchema(origin, locale) {
 	const sameAs = [];
 	if (BUSINESS.socials?.facebook) sameAs.push(BUSINESS.socials.facebook);
 	if (BUSINESS.socials?.instagram) sameAs.push(BUSINESS.socials.instagram);
@@ -22,6 +23,6 @@ export function getLocalBusinessSchema(origin) {
 			postalCode: BUSINESS.address.zip,
 		},
 		sameAs: sameAs,
-		inLanguage: SITE.locale,
+		inLanguage: locale,
 	};
 }
