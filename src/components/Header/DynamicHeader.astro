@@ -11,17 +11,8 @@ const { locale, content } = await getSiteContext(Astro.url);
 
 <header id="cs-navigation">
   <div class="cs-container">
-    <a
-      href={getRoute(locale, "/")}
-      class="cs-logo"
-      aria-label={content.common.backToHome}
-    >
-      <Icon
-        name="logo-black"
-        width={210}
-        height={29}
-        aria-hidden="true"
-      />
+    <a href={getRoute(locale, "/")} class="cs-logo" aria-label={content.common.backToHome}>
+      <Icon name="logo-black" width={210} height={29} aria-hidden="true" />
     </a>
 
     <nav class="cs-nav" role="navigation">
@@ -44,16 +35,10 @@ const { locale, content } = await getSiteContext(Astro.url);
           {
             navData.map((entry: NavItem) => {
               const entryUrl = entry.urls?.[locale] ?? entry.urls?.en ?? "/";
-              const entryLabel =
-                entry.label?.[locale] ?? entry.label?.en ?? entry.key;
+              const entryLabel = entry.label?.[locale] ?? entry.label?.en ?? entry.key;
 
               return (
-                <li
-                  class:list={[
-                    "cs-li",
-                    { "cs-dropdown": entry.children?.length > 0 },
-                  ]}
-                >
+                <li class:list={["cs-li", { "cs-dropdown": entry.children?.length > 0 }]}>
                   {entry.children?.length ? (
                     <button
                       aria-expanded="false"
@@ -61,9 +46,7 @@ const { locale, content } = await getSiteContext(Astro.url);
                       class:list={[
                         "cs-li-link cs-dropdown-button",
                         {
-                          "cs-active": Astro.url.pathname.includes(
-                            getRoute(locale, entryUrl),
-                          ),
+                          "cs-active": Astro.url.pathname.includes(getRoute(locale, entryUrl)),
                         },
                       ]}
                     >
@@ -76,14 +59,11 @@ const { locale, content } = await getSiteContext(Astro.url);
                       class:list={[
                         "cs-li-link",
                         {
-                          "cs-active":
-                            Astro.url.pathname === getRoute(locale, entryUrl),
+                          "cs-active": Astro.url.pathname === getRoute(locale, entryUrl),
                         },
                       ]}
                       aria-current={
-                        Astro.url.pathname === getRoute(locale, entryUrl)
-                          ? "page"
-                          : undefined
+                        Astro.url.pathname === getRoute(locale, entryUrl) ? "page" : undefined
                       }
                     >
                       {entryLabel}
@@ -93,10 +73,8 @@ const { locale, content } = await getSiteContext(Astro.url);
                   {entry.children?.length ? (
                     <ul id={`submenu-${entry.key}`} class="cs-drop-ul">
                       {entry.children.map((child: NavItem) => {
-                        const childUrl =
-                          child.urls?.[locale] ?? child.urls?.en ?? "/";
-                        const childLabel =
-                          child.label?.[locale] ?? child.label?.en ?? child.key;
+                        const childUrl = child.urls?.[locale] ?? child.urls?.en ?? "/";
+                        const childLabel = child.label?.[locale] ?? child.label?.en ?? child.key;
 
                         const localizedRoute = getRoute(locale, childUrl);
 
@@ -108,14 +86,11 @@ const { locale, content } = await getSiteContext(Astro.url);
                                 "cs-li-link",
                                 "cs-drop-link",
                                 {
-                                  "cs-active":
-                                    Astro.url.pathname === localizedRoute,
+                                  "cs-active": Astro.url.pathname === localizedRoute,
                                 },
                               ]}
                               aria-current={
-                                Astro.url.pathname === localizedRoute
-                                  ? "page"
-                                  : undefined
+                                Astro.url.pathname === localizedRoute ? "page" : undefined
                               }
                             >
                               {childLabel}

@@ -31,11 +31,7 @@ const blogSchema = getBlogPostingSchema(post, locale, postUrl);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <script
-    type="application/ld+json"
-    slot="schema"
-    set:html={JSON.stringify(blogSchema)}
-  />
+  <script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)} />
 
   <Banner title={content.blog.landing} image={landingImage} />
 

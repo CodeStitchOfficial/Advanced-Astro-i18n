@@ -4,10 +4,7 @@ import { locales } from "../i18nConfig";
 import { defaultLocale } from "../i18nConfig";
 import { routeTranslations } from "../routeTranslations";
 
-export async function getLocalizedPathname(
-  locale: Locale,
-  url: URL,
-): Promise<string> {
+export async function getLocalizedPathname(locale: Locale, url: URL): Promise<string> {
   const pathname = url.pathname;
   const segments = pathname.split("/").filter(Boolean);
 
@@ -28,9 +25,7 @@ export async function getLocalizedPathname(
 
   const targetRoutes = routeTranslations[locale] || {};
 
-  const mapped = neutralSegments.map(
-    (seg) => targetRoutes[reverseMap[seg]] ?? seg,
-  );
+  const mapped = neutralSegments.map((seg) => targetRoutes[reverseMap[seg]] ?? seg);
 
   return getRelativeLocaleUrl(locale, mapped.join("/"));
 }

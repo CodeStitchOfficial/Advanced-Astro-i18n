@@ -20,10 +20,7 @@ const featuredPosts = await getCollection("blog", ({ id, data }) => {
     {featuredPosts.length === 0 && <h2>{content.blog.noFeaturedPosts}</h2>}
     {
       featuredPosts.map((post) => (
-        <a
-          class="blog-feature"
-          href={getRoute(locale, `/blog/${getPostSlug(post)}`)}
-        >
+        <a class="blog-feature" href={getRoute(locale, `/blog/${getPostSlug(post)}`)}>
           <Picture
             src={post.data.image}
             alt={post.data.imageAlt}

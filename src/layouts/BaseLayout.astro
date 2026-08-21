@@ -15,8 +15,9 @@ interface Props {
 
 const { description, title } = Astro.props as Props;
 
-const { content, lang, alternates, locale, currentHreflang, ogLocale } =
-  await getSiteContext(Astro.url);
+const { content, lang, alternates, locale, currentHreflang, ogLocale } = await getSiteContext(
+  Astro.url,
+);
 ---
 
 <html lang={lang}>
@@ -99,8 +100,6 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
         isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       }
     }
-    isDark
-      ? document.body.classList.add("dark-mode")
-      : document.body.classList.remove("dark-mode");
+    isDark ? document.body.classList.add("dark-mode") : document.body.classList.remove("dark-mode");
   });
 </script>

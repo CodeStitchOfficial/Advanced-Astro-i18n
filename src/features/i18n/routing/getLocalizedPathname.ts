@@ -3,10 +3,7 @@ import type { Locale } from "../i18nConfig";
 import { locales, defaultLocale } from "../i18nConfig";
 import { generateDynamicRouteTranslations } from "../collections/generateDynamicRouteTranslations";
 
-export async function getLocalizedPathname(
-  locale: Locale,
-  url: URL,
-): Promise<string> {
+export async function getLocalizedPathname(locale: Locale, url: URL): Promise<string> {
   const allRoutes = await generateDynamicRouteTranslations();
 
   const pathname = url.pathname;
@@ -37,9 +34,7 @@ export async function getLocalizedPathname(
   }
 
   // Per-segment fallback for simple static routes
-  const mapped = neutralSegments.map(
-    (seg) => targetRoutes[reverseMap[seg]] ?? seg,
-  );
+  const mapped = neutralSegments.map((seg) => targetRoutes[reverseMap[seg]] ?? seg);
 
   return getRelativeLocaleUrl(locale, mapped.join("/"));
 }

@@ -22,22 +22,10 @@ const testimonials = content.reviews.testimonials;
         testimonials &&
           testimonials.map((item) => (
             <li class="cs-item">
-              <Icon
-                class="cs-stars"
-                name="stars"
-                width={96}
-                height={16}
-                aria-hidden="true"
-              />
+              <Icon class="cs-stars" name="stars" width={96} height={16} aria-hidden="true" />
               <p class="cs-review">{item.quote}</p>
               <div class="cs-flex-group">
-                <Icon
-                  class="cs-profile"
-                  name="profile"
-                  width={52}
-                  height={52}
-                  aria-hidden="true"
-                />
+                <Icon class="cs-profile" name="profile" width={52} height={52} aria-hidden="true" />
                 <span class="cs-name">{item.name}</span>
                 <span class="cs-job">{item.role}</span>
               </div>

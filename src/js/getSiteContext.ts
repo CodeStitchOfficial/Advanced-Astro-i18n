@@ -6,10 +6,7 @@ import { localeMap } from "../features/i18n/i18nConfig";
 export async function getSiteContext(url: URL) {
   const locale = getLocaleFromUrl(url);
 
-  const [content, alternates] = await Promise.all([
-    getContent(locale),
-    getHrefLangLinks(url),
-  ]);
+  const [content, alternates] = await Promise.all([getContent(locale), getHrefLangLinks(url)]);
 
   // og:locale is derived from the active page locale (BCP-47 hyphenated in
   // localeMap, converted to Open Graph's underscore format here)

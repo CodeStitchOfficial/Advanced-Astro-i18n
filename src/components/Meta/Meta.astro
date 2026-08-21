@@ -6,28 +6,28 @@ import { OG, SITE } from "@data/siteConfig";
 import { getLocalBusinessSchema } from "@js/localBusinessSchema.js";
 
 interface Props {
-	title?: string;
-	description?: string;
-	heroImage?: ImageMetadata;
-	locale: string;
-	// og:locale (e.g. "en_US") and the active page's BCP-47 hreflang (e.g. "en-US"),
-	// precomputed by getSiteContext so this component doesn't need to know about i18n
-	currentHreflang: string;
-	ogLocale: string;
-	alternates?: {
-		hreflang: string;
-		href: string;
-	}[];
+  title?: string;
+  description?: string;
+  heroImage?: ImageMetadata;
+  locale: string;
+  // og:locale (e.g. "en_US") and the active page's BCP-47 hreflang (e.g. "en-US"),
+  // precomputed by getSiteContext so this component doesn't need to know about i18n
+  currentHreflang: string;
+  ogLocale: string;
+  alternates?: {
+    hreflang: string;
+    href: string;
+  }[];
 }
 
 const {
-	title = SITE.title,
-	description = SITE.description,
-	heroImage,
-	locale,
-	currentHreflang,
-	ogLocale,
-	alternates = [],
+  title = SITE.title,
+  description = SITE.description,
+  heroImage,
+  locale,
+  currentHreflang,
+  ogLocale,
+  alternates = [],
 } = Astro.props;
 
 // Data
@@ -37,13 +37,12 @@ const [defaultAlternate] = alternates;
 
 // Detect landing pages (home page for any locale: "/" or "/fr/", etc.)
 
-const isLandingPage =
-	Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
+const isLandingPage = Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
 
 // Format page title with business name (and location if home page)
 const pageTitle = isLandingPage
-	? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}`
-	: `${title} | ${BUSINESS.name}`;
+  ? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}`
+  : `${title} | ${BUSINESS.name}`;
 
 // OG type is hardcoded since it rarely changes
 const ogType = "website";
@@ -56,16 +55,16 @@ const ogDescription = description;
 let socialImage: string;
 
 if (heroImage) {
-	const optimizedImage = await getImage({
-		src: heroImage,
-		width: 1200,
-		height: 630,
-		format: "jpeg",
-	});
-	socialImage = Astro.url.origin + optimizedImage.src;
+  const optimizedImage = await getImage({
+    src: heroImage,
+    width: 1200,
+    height: 630,
+    format: "jpeg",
+  });
+  socialImage = Astro.url.origin + optimizedImage.src;
 } else {
-	// Default social image (static file in public/)
-	socialImage = Astro.url.origin + OG.image;
+  // Default social image (static file in public/)
+  socialImage = Astro.url.origin + OG.image;
 }
 ---
 
@@ -81,11 +80,7 @@ if (heroImage) {
 
 <!-- LocalBusiness Schema (on ALL pages) - customize your JSON-LD structured data:
      https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data  -->
-<script
-	is:inline
-	type="application/ld+json"
-	set:html={JSON.stringify(localBusinessSchema)}
-/>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} />
 
 <!-- Allow additional schemas from child layouts (e.g., BlogPosting for blog posts) -->
 <slot name="schema" />
@@ -94,33 +89,16 @@ if (heroImage) {
 <title>{pageTitle}</title>
 
 <!-- Hreflang alternate links for SEO -->
-{
-	alternates.map(({ hreflang, href }) => (
-		<link rel="alternate" hreflang={hreflang} href={href} />
-	))
-}
+{alternates.map(({ hreflang, href }) => <link rel="alternate" hreflang={hreflang} href={href} />)}
 
-{
-	defaultAlternate && (
-		<link
-			rel="alternate"
-			hreflang="x-default"
-			href={defaultAlternate.href}
-		/>
-	)
-}
+{defaultAlternate && <link rel="alternate" hreflang="x-default" href={defaultAlternate.href} />}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:locale" content={ogLocale} />
 {
-	alternates
-		.filter((a) => a.hreflang !== currentHreflang)
-		.map((a) => (
-			<meta
-				property="og:locale:alternate"
-				content={a.hreflang.replace("-", "_")}
-			/>
-		))
+  alternates
+    .filter((a) => a.hreflang !== currentHreflang)
+    .map((a) => <meta property="og:locale:alternate" content={a.hreflang.replace("-", "_")} />)
 }
 <meta property="og:url" content={canonical} />
 <meta property="og:type" content={ogType} />
@@ -142,18 +120,9 @@ if (heroImage) {
 
 <!--Favicons-->
 <!-- https://realfavicongenerator.net/ -->
-<link
-	rel="icon"
-	type="image/png"
-	href="/assets/favicons/favicon-96x96.png"
-	sizes="96x96"
-/>
+<link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" />
 <link rel="shortcut icon" href="/assets/favicons/favicon.ico" />
-<link
-	rel="apple-touch-icon"
-	sizes="180x180"
-	href="/assets/favicons/apple-touch-icon.png"
-/>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Starter Kit" />
 <link rel="manifest" href="/assets/favicons/site.webmanifest" />

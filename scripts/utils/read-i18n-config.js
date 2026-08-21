@@ -6,21 +6,21 @@ import { join } from "path";
  * Returns { defaultLocale, locales } or null if the file can't be parsed.
  */
 export function readI18nConfig(root) {
-	const settingsPath = join(root, "src", "features", "i18n", "i18nConfig.ts");
-	if (!existsSync(settingsPath)) return null;
+  const settingsPath = join(root, "src", "features", "i18n", "i18nConfig.ts");
+  if (!existsSync(settingsPath)) return null;
 
-	const content = readFileSync(settingsPath, "utf8");
+  const content = readFileSync(settingsPath, "utf8");
 
-	const defaultLocaleMatch = content.match(/defaultLocale[^=]*=\s*["']([^"']+)["']/);
-	const localesMatch = content.match(/locales\s*=\s*\[([^\]]+)\]/);
+  const defaultLocaleMatch = content.match(/defaultLocale[^=]*=\s*["']([^"']+)["']/);
+  const localesMatch = content.match(/locales\s*=\s*\[([^\]]+)\]/);
 
-	if (!defaultLocaleMatch || !localesMatch) return null;
+  if (!defaultLocaleMatch || !localesMatch) return null;
 
-	return {
-		defaultLocale: defaultLocaleMatch[1],
-		locales: localesMatch[1]
-			.split(",")
-			.map((l) => l.trim().replace(/["']/g, ""))
-			.filter(Boolean),
-	};
+  return {
+    defaultLocale: defaultLocaleMatch[1],
+    locales: localesMatch[1]
+      .split(",")
+      .map((l) => l.trim().replace(/["']/g, ""))
+      .filter(Boolean),
+  };
 }

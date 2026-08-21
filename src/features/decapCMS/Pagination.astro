@@ -71,7 +71,10 @@ const { prev: prevUrl, next: nextUrl } = url;
     width: 100%;
     margin: 2em 0;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 50px minmax(0, 1fr); /* prev-button | current | next-button */
+    grid-template-columns: minmax(0, 1fr) 50px minmax(
+        0,
+        1fr
+      ); /* prev-button | current | next-button */
     justify-items: center;
     align-items: center;
     gap: 1em;
@@ -87,10 +90,7 @@ const { prev: prevUrl, next: nextUrl } = url;
 
   @media only screen and (min-width: 64em) {
     .pagination--group {
-      grid-template-columns: repeat(
-        auto-fit,
-        minmax(min(min-content, 100%), 1fr)
-      );
+      grid-template-columns: repeat(auto-fit, minmax(min(min-content, 100%), 1fr));
     }
   }
 

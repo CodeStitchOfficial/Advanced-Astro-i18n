@@ -22,120 +22,119 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
-	label: string;
-	value: string;
-	icon: Parameters<typeof Icon>[0]['name'];
-	width?: string;
-	options: Array<{
-		label: string;
-		value: string;
-		selected: boolean;
-	}>;
+  label: string;
+  value: string;
+  icon: Parameters<typeof Icon>[0]["name"];
+  width?: string;
+  options: Array<{
+    label: string;
+    value: string;
+    selected: boolean;
+  }>;
 }
-const { width, label, icon, value, options } = Astro.props
+const { width, label, icon, value, options } = Astro.props;
 ---
 
 <label style={`--select-width: ${width}`}>
-	<span class="sr-only">{label}</span>
-	<Icon name={icon} class="icon label-icon" />
-	<select value={value}>
-		{
-			options.map(({ value, selected, label }) => (
-				<option value={value} selected={selected} set:html={label} />
-			))
-		}
-	</select>
-	<Icon name="mdi--caret" class="icon caret" />
+  <span class="sr-only">{label}</span>
+  <Icon name={icon} class="icon label-icon" />
+  <select value={value}>
+    {
+      options.map(({ value, selected, label }) => (
+        <option value={value} selected={selected} set:html={label} />
+      ))
+    }
+  </select>
+  <Icon name="mdi--caret" class="icon caret" />
 </label>
 
 <style lang="less">
-	label {
-		--label-icon-size: 0.875rem;
-		--caret-size: 1.25rem;
-		position: relative;
-		display: flex;
-		align-items: center;
-		gap: 0.25rem;
-		font-size: 1rem;
-		position: relative;
-		&:hover {
-			&:before {
-				width: 100%;
-			}
-		}
+  label {
+    --label-icon-size: 0.875rem;
+    --caret-size: 1.25rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 1rem;
+    position: relative;
+    &:hover {
+      &:before {
+        width: 100%;
+      }
+    }
 
-		&:before {
-			/* active state underline */
-			content: "";
-			width: 0%;
-			height: 2px;
-			background: var(--primary);
-			opacity: 1;
-			display: block;
-			position: absolute;
-			bottom: 0.25rem;
-			left: 0;
-			transition: width 0.3s;
-		}
-	}
+    &:before {
+      /* active state underline */
+      content: "";
+      width: 0%;
+      height: 2px;
+      background: var(--primary);
+      opacity: 1;
+      display: block;
+      position: absolute;
+      bottom: 0.25rem;
+      left: 0;
+      transition: width 0.3s;
+    }
+  }
 
-	.icon {
-		position: absolute;
-		top: 50%;
-		transform: translateY(-50%);
-		pointer-events: none;
-		color: inherit;
-		width: (15/16rem);
-	}
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: inherit;
+    width: (15/16rem);
+  }
 
-	.label-icon {
-		font-size: var(--label-icon-size);
-		inset-inline-start: 0;
-	}
+  .label-icon {
+    font-size: var(--label-icon-size);
+    inset-inline-start: 0;
+  }
 
-	.caret {
-		transform: rotate(180deg) translateY(50%);
-		transition: 0.3s;
-		inset-inline-end: 0;
-	}
+  .caret {
+    transform: rotate(180deg) translateY(50%);
+    transition: 0.3s;
+    inset-inline-end: 0;
+  }
 
-	select {
-		font-size: clamp(1rem, 2.5vw, 1.5rem);
-		border: 0;
-		padding-block: 0.625rem;
-		padding-inline: calc(var(--label-icon-size) + 0.25rem)
-			calc(var(--caret-size) + 0.25rem);
-		background-color: transparent;
-		text-overflow: ellipsis;
-		color: inherit;
-		cursor: pointer;
-		appearance: none;
-	}
+  select {
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    border: 0;
+    padding-block: 0.625rem;
+    padding-inline: calc(var(--label-icon-size) + 0.25rem) calc(var(--caret-size) + 0.25rem);
+    background-color: transparent;
+    text-overflow: ellipsis;
+    color: inherit;
+    cursor: pointer;
+    appearance: none;
+  }
 
-	option {
-		background-color: var(--light);
-		color: var(--grey);
-	}
+  option {
+    background-color: var(--light);
+    color: var(--grey);
+  }
 
-	@media only screen and (min-width: 64rem) {
-		select {
-			font-size: clamp(0.875rem, 1vw, 1rem);
-		}
-	}
+  @media only screen and (min-width: 64rem) {
+    select {
+      font-size: clamp(0.875rem, 1vw, 1rem);
+    }
+  }
 
-	/* Dark Mode */
-	body.dark-mode {
-		label {
-			color: var(--bodyTextColorWhite);
-			&:before {
-				background-color: var(--primaryLight);
-			}
-		}
+  /* Dark Mode */
+  body.dark-mode {
+    label {
+      color: var(--bodyTextColorWhite);
+      &:before {
+        background-color: var(--primaryLight);
+      }
+    }
 
-		option {
-			background-color: var(--grey);
-			color: var(--light);
-			padding: 1rem;
-		}
-	}
+    option {
+      background-color: var(--grey);
+      color: var(--light);
+      padding: 1rem;
+    }
+  }
 </style>
