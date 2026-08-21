@@ -16,9 +16,7 @@ export async function generateDynamicRouteTranslations() {
     merged[locale] = { ...routeTranslations[locale] };
   }
 
-  for (const [collectionName, collectionLocales] of Object.entries(
-    localizedCollections,
-  )) {
+  for (const [collectionName, collectionLocales] of Object.entries(localizedCollections)) {
     const entries = await getCollection(collectionName as "blog");
 
     const groups: Record<string, Record<Locale, string>> = {};

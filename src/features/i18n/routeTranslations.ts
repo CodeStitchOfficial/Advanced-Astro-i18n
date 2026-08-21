@@ -7,10 +7,7 @@ type NavItem = {
   children?: NavItem[];
 };
 
-function buildRoutes(
-  items: NavItem[],
-  result: Record<string, Record<string, string>> = {},
-) {
+function buildRoutes(items: NavItem[], result: Record<string, Record<string, string>> = {}) {
   for (const item of items) {
     for (const [locale, url] of Object.entries(item.urls)) {
       result[locale] ??= {};
@@ -26,7 +23,6 @@ function buildRoutes(
   return result;
 }
 
-export const routeTranslations: Record<
-  Locale,
-  Record<string, string>
-> = buildRoutes(navData as NavItem[]);
+export const routeTranslations: Record<Locale, Record<string, string>> = buildRoutes(
+  navData as NavItem[],
+);

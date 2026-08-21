@@ -1,71 +1,71 @@
 {
-	"layout": {
-		"title": "Sites Internet au pixel près !",
-		"description": "Meta description pour la page"
-	},
-	"hero": {
-		"topper": "Kit Avancé",
-		"title": {
-			"1": "Kit Avancé Astro v6",
-			"2": "i18n"
-		},
-		"p1": "Livré bilingue dès le départ — anglais et français, propulsé par le routage i18n d'Astro — avec Decap CMS intégré pour le blog. Pas besoin de plusieurs langues ? Retirez l'i18n, ou toute autre fonctionnalité, en une seule commande.",
-		"cta1": "GitHub",
-		"cta2": "CodeStitch"
-	},
-	"services": [
-		{
-			"heading": "Service 1",
-			"p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
-		},
-		{
-			"heading": "Service 2",
-			"p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
-		},
-		{
-			"heading": "Service 3",
-			"p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
-		}
-	],
-	"about": {
-		"topper": "À propos",
-		"title": "À propos de Nom de la société",
-		"p1": "Notre société a été In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p2": "Nous croyons fermement que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
-		"rank": "PDG",
-		"cta": "En savoir plus sur Nom de la Société"
-	},
-	"extra": {
-		"topper": "SEO Ranking",
-		"title": "Parler d'un mot-clé de service principal",
-		"p1": "Nom de la société est spécialisée en In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p2": "Les statistiques montrent que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per."
-	},
-	"portfolio": {
-		"topper": "Notre Portfolio",
-		"title": "In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet",
-		"cta": "Voir tous nos projets"
-	},
-	"testimonials": {
-		"topper": "Témoignages",
-		"title": "Ce Que Disent Nos Clients",
-		"items": [
-			{
-				"quote": "J'ai été émerveillé par la qualité du travail. L'équipe était professionnelle et a dépassé mes attentes. Hautement recommandé!",
-				"name": "Jean Dupont",
-				"role": "Propriétaire"
-			},
-			{
-				"quote": "Service exceptionnel du début à la fin. Ils ont communiqué clairement et livré exactement ce qui était promis.",
-				"name": "Marie Martin",
-				"role": "Chef d'entreprise"
-			},
-			{
-				"quote": "Le niveau d'artisanat était impressionnant. Ils ont traité ma maison comme si c'était la leur.",
-				"name": "Michel Bernard",
-				"role": "Gestionnaire de propriété"
-			}
-		]
-	}
+  "layout": {
+    "title": "Sites Internet au pixel près !",
+    "description": "Meta description pour la page"
+  },
+  "hero": {
+    "topper": "Kit Avancé",
+    "title": {
+      "1": "Kit Avancé Astro v6",
+      "2": "i18n"
+    },
+    "p1": "Livré bilingue dès le départ — anglais et français, propulsé par le routage i18n d'Astro — avec Decap CMS intégré pour le blog. Pas besoin de plusieurs langues ? Retirez l'i18n, ou toute autre fonctionnalité, en une seule commande.",
+    "cta1": "GitHub",
+    "cta2": "CodeStitch"
+  },
+  "services": [
+    {
+      "heading": "Service 1",
+      "p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
+    },
+    {
+      "heading": "Service 2",
+      "p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
+    },
+    {
+      "heading": "Service 3",
+      "p": "Parlez du service à l'aide de mots-clés que les gens rechercheront. Faites 1 à 2 phrases."
+    }
+  ],
+  "about": {
+    "topper": "À propos",
+    "title": "À propos de Nom de la société",
+    "p1": "Notre société a été In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+    "p2": "Nous croyons fermement que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+    "p3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
+    "rank": "PDG",
+    "cta": "En savoir plus sur Nom de la Société"
+  },
+  "extra": {
+    "topper": "SEO Ranking",
+    "title": "Parler d'un mot-clé de service principal",
+    "p1": "Nom de la société est spécialisée en In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+    "p2": "Les statistiques montrent que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per."
+  },
+  "portfolio": {
+    "topper": "Notre Portfolio",
+    "title": "In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet",
+    "cta": "Voir tous nos projets"
+  },
+  "testimonials": {
+    "topper": "Témoignages",
+    "title": "Ce Que Disent Nos Clients",
+    "items": [
+      {
+        "quote": "J'ai été émerveillé par la qualité du travail. L'équipe était professionnelle et a dépassé mes attentes. Hautement recommandé!",
+        "name": "Jean Dupont",
+        "role": "Propriétaire"
+      },
+      {
+        "quote": "Service exceptionnel du début à la fin. Ils ont communiqué clairement et livré exactement ce qui était promis.",
+        "name": "Marie Martin",
+        "role": "Chef d'entreprise"
+      },
+      {
+        "quote": "Le niveau d'artisanat était impressionnant. Ils ont traité ma maison comme si c'était la leur.",
+        "name": "Michel Bernard",
+        "role": "Gestionnaire de propriété"
+      }
+    ]
+  }
 }

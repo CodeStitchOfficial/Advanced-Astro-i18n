@@ -1,135 +1,131 @@
 #markdown-content {
-    margin-top: (16/16em);
-    padding-top: (25/16em);
-    border-top: 1px solid #ebebeb;
+  margin-top: (16/16em);
+  padding-top: (25/16em);
+  border-top: 1px solid #ebebeb;
 
-    h1 {
-        font-size: 2.25rem;
-        font-weight: 700;
-        line-height: 1.75em;
-        margin-bottom: 1rem;
-        color: var(--headerColor);
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1.75em;
+    margin-bottom: 1rem;
+    color: var(--headerColor);
+  }
+
+  h2 {
+    font-size: (28/16rem);
+    font-weight: 700;
+    line-height: 1.5em;
+    margin-bottom: (16/16rem);
+    color: var(--headerColor);
+  }
+
+  h3 {
+    font-size: (24/16rem);
+    font-weight: 700;
+    line-height: 1.5em;
+    margin-bottom: (16/16rem);
+    color: var(--headerColor);
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: (20/16rem);
+    font-weight: 700;
+    line-height: 1.5em;
+    margin-bottom: (16/16rem);
+    color: var(--headerColor);
+  }
+
+  p {
+    font-size: (16/16rem);
+    line-height: 1.6em;
+    margin: 0;
+    margin-bottom: (16/16rem);
+    color: var(--bodyTextColor);
+  }
+
+  a {
+    font-size: inherit;
+    text-decoration: underline;
+    color: var(--secondary);
+  }
+
+  ul,
+  ol {
+    margin: 0;
+    margin: (16/16rem) 0;
+    padding-left: (40/16rem);
+
+    li {
+      font-size: (16/16rem);
+      line-height: 1.6em;
+      list-style: circle;
+      margin-bottom: (16/16rem);
+      color: var(--bodyTextColor);
     }
+  }
 
-    h2 {
-        font-size: (28/16rem);
-        font-weight: 700;
-        line-height: 1.5em;
-        margin-bottom: (16/16rem);
-        color: var(--headerColor);
-    }
-
-    h3 {
-        font-size: (24/16rem);
-        font-weight: 700;
-        line-height: 1.5em;
-        margin-bottom: (16/16rem);
-        color: var(--headerColor);
-    }
-
-    h4,
-    h5,
-    h6 {
-        font-size: (20/16rem);
-        font-weight: 700;
-        line-height: 1.5em;
-        margin-bottom: (16/16rem);
-        color: var(--headerColor);
-    }
-
-    p {
-        font-size: (16/16rem);
-        line-height: 1.6em;
-        margin: 0;
-        margin-bottom: (16/16rem);
-        color: var(--bodyTextColor);
-    }
-
-    a {
-        font-size: inherit;
-        text-decoration: underline;
-        color: var(--secondary);
-    }
-
-    ul,
-    ol {
-        margin: 0;
-        margin: (16/16rem) 0;
-        padding-left: (40/16rem);
-
-        li {
-            font-size: (16/16rem);
-            line-height: 1.6em;
-            list-style: circle;
-            margin-bottom: (16/16rem);
-            color: var(--bodyTextColor);
-        }
-    }
-
-    img {
-        width: 100%;
-        height: auto;
-        margin: (16/16rem) 0;
-        border-radius: (8/16rem);
-        display: block;
-    }
+  img {
+    width: 100%;
+    height: auto;
+    margin: (16/16rem) 0;
+    border-radius: (8/16rem);
+    display: block;
+  }
 }
 
 /* Dark Mode */
 body.dark-mode {
-    .recent-articles {
+  .recent-articles {
+    .blog-h1,
+    .blog-desc,
+    .blog-author,
+    .blog-date {
+      color: #f7f7f7;
+    }
+  }
 
-        .blog-h1,
-        .blog-desc,
-        .blog-author,
-        .blog-date {
-            color: #f7f7f7;
-        }
+  .blog-sidebar {
+    .feature-h3,
+    .feature-date,
+    .blog-header {
+      color: #f7f7f7;
     }
 
-    .blog-sidebar {
+    .blog-header {
+      &:after {
+        background: var(--primary);
+      }
+    }
+  }
 
-        .feature-h3,
-        .feature-date,
-        .blog-header {
-            color: #f7f7f7;
-        }
-
-        .blog-header {
-            &:after {
-                background: var(--primary);
-            }
-        }
+  .blog-article {
+    .blog-h1,
+    .blog-author,
+    .blog-date {
+      color: #f7f7f7;
     }
 
-    .blog-article {
+    #markdown-content {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        color: var(--light);
+      }
 
-        .blog-h1,
-        .blog-author,
-        .blog-date {
-            color: #f7f7f7;
-        }
+      p,
+      li {
+        color: var(--light);
+        opacity: 0.8;
+      }
 
-        #markdown-content {
-
-            h1,
-            h2,
-            h3,
-            h4,
-            h5,
-            h6 {
-                color: var(--light);
-            }
-
-            p,
-            li {
-                color: var(--light);
-                opacity: 0.8;
-            }
-
-            a {
-                color: var(--primary);
-            }
-        }
+      a {
+        color: var(--primary);
+      }
     }
+  }
 }

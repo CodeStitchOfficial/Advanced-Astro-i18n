@@ -10,22 +10,17 @@ import { getSiteContext } from "@js/getSiteContext";
 const { content } = await getSiteContext(Astro.url);
 ---
 
-{
-  /* Icon templates — referenced by updatePickers() to swap the select widget's icon */
-}
+{/* Icon templates — referenced by updatePickers() to swap the select widget's icon */}
 <template id="theme-icons">
   <Icon name="mdi--sun" class="light" />
   <Icon name="mdi--moon" class="dark" />
   <Icon name="mdi--laptop" class="auto" />
 </template>
 
-{
-  /* Inlined to expose window.StarlightThemeProvider before the custom element upgrades */
-}
+{/* Inlined to expose window.StarlightThemeProvider before the custom element upgrades */}
 <script is:inline>
   window.StarlightThemeProvider = (() => {
-    const storedTheme =
-      typeof localStorage !== "undefined" && localStorage.getItem("cs-theme");
+    const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("cs-theme");
     return {
       updatePickers(theme = storedTheme || "auto") {
         document.querySelectorAll("cs-theme-select").forEach((picker) => {
@@ -76,16 +71,11 @@ const { content } = await getSiteContext(Astro.url);
     theme === "auto" || theme === "dark" || theme === "light" ? theme : "auto";
 
   const loadTheme = (): Theme =>
-    parseTheme(
-      typeof localStorage !== "undefined" && localStorage.getItem(storageKey),
-    );
+    parseTheme(typeof localStorage !== "undefined" && localStorage.getItem(storageKey));
 
   function storeTheme(theme: Theme): void {
     if (typeof localStorage !== "undefined") {
-      localStorage.setItem(
-        storageKey,
-        theme === "light" || theme === "dark" ? theme : "",
-      );
+      localStorage.setItem(storageKey, theme === "light" || theme === "dark" ? theme : "");
     }
   }
 
@@ -103,13 +93,9 @@ const { content } = await getSiteContext(Astro.url);
     StarlightThemeProvider.updatePickers(theme);
     storeTheme(theme);
     if (theme === "auto") {
-      getPreferredColorScheme() === "light"
-        ? disableDarkMode()
-        : enableDarkMode();
+      getPreferredColorScheme() === "light" ? disableDarkMode() : enableDarkMode();
     } else {
-      localStorage.getItem(storageKey) === "light"
-        ? disableDarkMode()
-        : enableDarkMode();
+      localStorage.getItem(storageKey) === "light" ? disableDarkMode() : enableDarkMode();
     }
   }
 

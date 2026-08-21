@@ -1,8 +1,8 @@
 {
-	"landing": "Blog",
-	"topper": "Informations et articles",
-	"title": "Nouvelles fraîchement sorties de la presse.",
-	"featuredPosts": "La sélection",
-	"noFeaturedPosts": "Pas d'articles disponibles",
-	"readMore": "Lire l'article"
+  "landing": "Blog",
+  "topper": "Informations et articles",
+  "title": "Nouvelles fraîchement sorties de la presse.",
+  "featuredPosts": "La sélection",
+  "noFeaturedPosts": "Pas d'articles disponibles",
+  "readMore": "Lire l'article"
 }

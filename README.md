@@ -11,38 +11,38 @@
 
 - [Overview](#overview)
 - [Getting Started](#getting-started)
-    - [Using the Github template](#using-the-github-template)
-    - [Using the CLI](#using-the-cli)
-    - [Quickstart](#quickstart)
-    - [Set up your project](#set-up-your-project)
-    - [Essential files to configure](#essential-files-to-configure)
-    - [Commands](#commands)
+  - [Using the Github template](#using-the-github-template)
+  - [Using the CLI](#using-the-cli)
+  - [Quickstart](#quickstart)
+  - [Set up your project](#set-up-your-project)
+  - [Essential files to configure](#essential-files-to-configure)
+  - [Commands](#commands)
 - [Features](#features)
 - [Project Structure](#project-structure)
-    - [Project Tree](#project-tree)
-    - [Key Directories](#key-directories)
+  - [Project Tree](#project-tree)
+  - [Key Directories](#key-directories)
 - [i18n System](#i18n-system)
-    - [Overview and Config](#overview-and-config)
-    - [Adding or changing locales](#adding-or-changing-locales)
-    - [Page Structure](#page-structure)
-    - [Configuration Files](#configuration-files)
-    - [Translation Files and Namespaces](#translation-files-and-namespaces)
-    - [Using Translations](#using-translations)
-    - [Generating Localized URLs](#generating-localized-urls)
-    - [Localizing Route Slugs](#localizing-route-slugs)
-    - [Localizing Blog Post Slugs](#localizing-blog-post-slugs)
-    - [Language Switcher Components](#language-switcher-components)
+  - [Overview and Config](#overview-and-config)
+  - [Adding or changing locales](#adding-or-changing-locales)
+  - [Page Structure](#page-structure)
+  - [Configuration Files](#configuration-files)
+  - [Translation Files and Namespaces](#translation-files-and-namespaces)
+  - [Using Translations](#using-translations)
+  - [Generating Localized URLs](#generating-localized-urls)
+  - [Localizing Route Slugs](#localizing-route-slugs)
+  - [Localizing Blog Post Slugs](#localizing-blog-post-slugs)
+  - [Language Switcher Components](#language-switcher-components)
 - [Content Management & Blog](#content-management--blog)
-    - [Content Collections](#content-collections)
-    - [Configuring the CMS](#configuring-the-cms)
-    - [i18n Blog Structure](#i18n-blog-structure)
-    - [Accessing the Dashboard](#accessing-the-dashboard)
-    - [Featured Posts](#featured-posts)
-    - [Styling the Preview Pane](#styling-the-preview-pane)
-    - [Local Backend Setup](#local-backend-setup)
+  - [Content Collections](#content-collections)
+  - [Configuring the CMS](#configuring-the-cms)
+  - [i18n Blog Structure](#i18n-blog-structure)
+  - [Accessing the Dashboard](#accessing-the-dashboard)
+  - [Featured Posts](#featured-posts)
+  - [Styling the Preview Pane](#styling-the-preview-pane)
+  - [Local Backend Setup](#local-backend-setup)
 - [Deployment](#deployment)
-    - [Pre-Deployment Checklist](#pre-deployment-checklist)
-    - [Setting Up Decap CMS with DecapBridge](#setting-up-decap-cms-with-decapbridge)
+  - [Pre-Deployment Checklist](#pre-deployment-checklist)
+  - [Setting Up Decap CMS with DecapBridge](#setting-up-decap-cms-with-decapbridge)
 - [Acknowledgments](#acknowledgments)
 - [Conclusion](#conclusion)
 
@@ -107,15 +107,15 @@ This is the main onboarding command: it asks which optional features to keep (i1
 
 Once you've run `setup-project`, these are the files most projects need to personalize before writing any new code:
 
-| File | What to update |
-| ---- | --------------- |
-| `src/data/client.ts` | Business name, email, phone, address (`BUSINESS` object) |
-| `src/data/siteConfig.ts` | Domain, description, social share image (`SITE`, `OG`) |
-| `astro.config.ts` | `site` — your production domain |
-| `src/styles/root.less` | Brand colors/fonts via CSS variables (`--primary`, `--secondary`, `--headerColor`, etc.) |
-| `src/components/Settings/Settings.astro` | Swap or remove the dark-mode toggle / language switcher |
-| `src/data/navData.json` | Nav links, and per-locale translated paths if i18n is kept |
-| `public/admin/config.yml` | Decap CMS repo + DecapBridge auth endpoints, if keeping the CMS |
+| File                                     | What to update                                                                           |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `src/data/client.ts`                     | Business name, email, phone, address (`BUSINESS` object)                                 |
+| `src/data/siteConfig.ts`                 | Domain, description, social share image (`SITE`, `OG`)                                   |
+| `astro.config.ts`                        | `site` — your production domain                                                          |
+| `src/styles/root.less`                   | Brand colors/fonts via CSS variables (`--primary`, `--secondary`, `--headerColor`, etc.) |
+| `src/components/Settings/Settings.astro` | Swap or remove the dark-mode toggle / language switcher                                  |
+| `src/data/navData.json`                  | Nav links, and per-locale translated paths if i18n is kept                               |
+| `public/admin/config.yml`                | Decap CMS repo + DecapBridge auth endpoints, if keeping the CMS                          |
 
 See [Pre-Deployment Checklist](#pre-deployment-checklist) for the full list to double-check right before going live (production domain, favicons, sitemap, etc.).
 
@@ -123,19 +123,19 @@ See [Pre-Deployment Checklist](#pre-deployment-checklist) for the full list to d
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                 | Action                                                                     |
-| ----------------------- | -------------------------------------------------------------------------- |
-| `npm install`           | Installs dependencies                                                      |
-| `npm run dev`           | Starts local dev server at `localhost:4321`                                |
-| `npm run build`         | Build your production site to `./dist/`                                    |
-| `npm run preview`       | Preview your build locally, before deploying                               |
-| `npm run setup-project` | Interactively choose which features to keep/remove, then configure locales |
-| `npm run create-page` | Scaffolds a new page for all locales |
-| `node scripts/config-i18n.js` | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
-| `node scripts/remove-i18n.js` | Permanently removes the i18n system |
-| `node scripts/remove-decap.js` | Removes Decap CMS integration |
-| `node scripts/remove-demo.js` | Removes demo/placeholder content |
-| `node scripts/remove-dark-mode.js` | Removes dark mode components and styles |
+| Command                            | Action                                                                                |
+| ---------------------------------- | ------------------------------------------------------------------------------------- |
+| `npm install`                      | Installs dependencies                                                                 |
+| `npm run dev`                      | Starts local dev server at `localhost:4321`                                           |
+| `npm run build`                    | Build your production site to `./dist/`                                               |
+| `npm run preview`                  | Preview your build locally, before deploying                                          |
+| `npm run setup-project`            | Interactively choose which features to keep/remove, then configure locales            |
+| `npm run create-page`              | Scaffolds a new page for all locales                                                  |
+| `node scripts/config-i18n.js`      | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
+| `node scripts/remove-i18n.js`      | Permanently removes the i18n system                                                   |
+| `node scripts/remove-decap.js`     | Removes Decap CMS integration                                                         |
+| `node scripts/remove-demo.js`      | Removes demo/placeholder content                                                      |
+| `node scripts/remove-dark-mode.js` | Removes dark mode components and styles                                               |
 
 ## Features
 
@@ -312,12 +312,12 @@ JSON files for each locale must have the **same structure and keys** — only th
 
 ```json
 {
-	"ctaComponent": {
-		"title": "Get It Done",
-		"subtitle": "With Us Today",
-		"message": "Say something encouraging...",
-		"cta": "Get a Quote"
-	}
+  "ctaComponent": {
+    "title": "Get It Done",
+    "subtitle": "With Us Today",
+    "message": "Say something encouraging...",
+    "cta": "Get a Quote"
+  }
 }
 ```
 
@@ -325,12 +325,12 @@ JSON files for each locale must have the **same structure and keys** — only th
 
 ```json
 {
-	"ctaComponent": {
-		"title": "Confiez votre projet",
-		"subtitle": "à nos experts",
-		"message": "Dites quelque chose d'accrocheur...",
-		"cta": "Obtenir un devis"
-	}
+  "ctaComponent": {
+    "title": "Confiez votre projet",
+    "subtitle": "à nos experts",
+    "message": "Dites quelque chose d'accrocheur...",
+    "cta": "Obtenir un devis"
+  }
 }
 ```
 
@@ -378,9 +378,9 @@ Adding a page with a translated slug is a 3-step combo:
 
 ```json
 {
-	"key": "my-page",
-	"urls": { "en": "/my-page", "fr": "/ma-page" },
-	"label": { "en": "My Page", "fr": "Ma Page" }
+  "key": "my-page",
+  "urls": { "en": "/my-page", "fr": "/ma-page" },
+  "label": { "en": "My Page", "fr": "Ma Page" }
 }
 ```
 
@@ -455,9 +455,9 @@ The CMS mirrors this kit's bilingual blog structure. In `config.yml`, the i18n b
 
 ```yaml
 i18n:
-    structure: multiple_folders
-    locales: [en, fr]
-    default_locale: en
+  structure: multiple_folders
+  locales: [en, fr]
+  default_locale: en
 ```
 
 This maps to `src/content/blog/en/` and `src/content/blog/fr/` on disk. When an editor creates a post, Decap saves language variants into the corresponding locale folder automatically.
@@ -488,7 +488,7 @@ To run Decap CMS locally without deploying (useful for content entry during deve
 ```yaml
 local_backend: true
 backend:
-    # ... rest of your backend config
+  # ... rest of your backend config
 ```
 
 2. Install the required packages:
@@ -569,14 +569,14 @@ DecapBridge will generate a backend configuration snippet. This kit is pre-confi
 ```yaml
 # PKCE format (used in this kit)
 backend:
-    name: git-gateway
-    repo: your-github-username/your-repo-name
-    branch: main
-    auth_type: pkce
-    base_url: https://auth.decapbridge.com
-    auth_endpoint: /sites/<your-site-id>/pkce
-    auth_token_endpoint: /sites/<your-site-id>/token
-    gateway_url: https://gateway.decapbridge.com
+  name: git-gateway
+  repo: your-github-username/your-repo-name
+  branch: main
+  auth_type: pkce
+  base_url: https://auth.decapbridge.com
+  auth_endpoint: /sites/<your-site-id>/pkce
+  auth_token_endpoint: /sites/<your-site-id>/token
+  gateway_url: https://gateway.decapbridge.com
 ```
 
 > [!NOTE]

@@ -14,9 +14,7 @@ import { getRoute } from "@js/routes";
 <BaseLayout title={title} description={title}>
   <section id="int-hero">
     <h1>{title}</h1>
-    <a href={getRoute(locale, "/")} class="cs-button-solid"
-      >{content.common.notFound.linkText}</a
-    >
+    <a href={getRoute(locale, "/")} class="cs-button-solid">{content.common.notFound.linkText}</a>
     <Picture
       src={landingImage}
       formats={["avif", "webp"]}

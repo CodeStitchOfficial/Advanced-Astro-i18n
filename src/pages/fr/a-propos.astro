@@ -12,10 +12,7 @@ import CTA from "src/features/demo/CTA.astro";
 const { content } = await getSiteContext(Astro.url);
 ---
 
-<BaseLayout
-  title={content.common.aboutPage.landing}
-  description="Meta description for the page"
->
+<BaseLayout title={content.common.aboutPage.landing} description="Meta description for the page">
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->

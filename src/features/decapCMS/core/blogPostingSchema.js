@@ -8,32 +8,32 @@ import { SITE, OG } from "@data/siteConfig";
  * @param {string} postUrl - The full URL of the post
  */
 export function getBlogPostingSchema(post, locale, postUrl) {
-	const { title, description, date, author, image } = post.data;
+  const { title, description, date, author, image } = post.data;
 
-	return {
-		"@context": "https://schema.org",
-		"@type": "BlogPosting",
-		mainEntityOfPage: {
-			"@type": "WebPage",
-			"@id": postUrl,
-		},
-		headline: title,
-		description: description ?? SITE.description,
-		image: image ? `${SITE.url}${image.src}` : `${SITE.url}${OG.image}`,
-		author: {
-			"@type": "Person",
-			name: author ?? BUSINESS.name,
-		},
-		publisher: {
-			"@type": "Organization",
-			name: BUSINESS.name,
-			logo: {
-				"@type": "ImageObject",
-				url: `${SITE.url}${BUSINESS.logo}`,
-			},
-		},
-		datePublished: date ? new Date(date).toISOString() : undefined,
-		inLanguage: locale,
-		url: postUrl,
-	};
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": postUrl,
+    },
+    headline: title,
+    description: description ?? SITE.description,
+    image: image ? `${SITE.url}${image.src}` : `${SITE.url}${OG.image}`,
+    author: {
+      "@type": "Person",
+      name: author ?? BUSINESS.name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: BUSINESS.name,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE.url}${BUSINESS.logo}`,
+      },
+    },
+    datePublished: date ? new Date(date).toISOString() : undefined,
+    inLanguage: locale,
+    url: postUrl,
+  };
 }

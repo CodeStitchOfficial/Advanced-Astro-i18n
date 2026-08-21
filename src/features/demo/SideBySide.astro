@@ -60,9 +60,7 @@ const { locale, content } = await getSiteContext(Astro.url);
           height="77"
         />
       </div>
-      <a href={getRoute(locale, "/about")} class="cs-button-solid"
-        >{content.home.about.cta}</a
-      >
+      <a href={getRoute(locale, "/about")} class="cs-button-solid">{content.home.about.cta}</a>
     </div>
   </div>
 </section>

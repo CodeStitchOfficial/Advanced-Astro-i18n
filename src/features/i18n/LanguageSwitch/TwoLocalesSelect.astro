@@ -41,10 +41,7 @@ const languageOptions = await Promise.all(
               checked={locale === option.locale}
             />
             <label
-              class:list={[
-                "language-option",
-                { "is-selected": locale === option.locale },
-              ]}
+              class:list={["language-option", { "is-selected": locale === option.locale }]}
               for={`lang-${uid}-${option.locale}`}
               lang={option.locale}
               data-locale={option.locale}
@@ -73,9 +70,7 @@ const languageOptions = await Promise.all(
 
   class LanguageToggle extends HTMLElement {
     connectedCallback() {
-      const radios = Array.from(
-        this.querySelectorAll(".language-check"),
-      ) as HTMLInputElement[];
+      const radios = Array.from(this.querySelectorAll(".language-check")) as HTMLInputElement[];
       const statusElement = this.querySelector(".language-status");
 
       radios.forEach((radio, i, arr) => {
@@ -101,12 +96,9 @@ const languageOptions = await Promise.all(
         radio.addEventListener("change", () => {
           if (radio.checked) {
             const labelText =
-              radio.nextElementSibling?.querySelector(
-                ".visually-hidden",
-              )?.textContent;
+              radio.nextElementSibling?.querySelector(".visually-hidden")?.textContent;
 
-            if (statusElement && labelText)
-              statusElement.textContent = `${labelText} selected`;
+            if (statusElement && labelText) statusElement.textContent = `${labelText} selected`;
 
             setLocalePreference(radio.value);
             window.location.href = radio.dataset.href || "/";
