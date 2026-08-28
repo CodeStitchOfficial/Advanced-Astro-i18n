@@ -1,13 +1,11 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import { join } from "path";
 import readline from "readline";
 import { slugify, titleCase, insertIntoLocaleBlock } from "./utils/transforms.js";
 import { readI18nConfig } from "./utils/read-i18n-config.js";
 import { checkFeatureFlagBeforeRun } from "./utils/feature-flags.js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
+const root = process.cwd();
 
 
 const i18nDisabled = checkFeatureFlagBeforeRun(

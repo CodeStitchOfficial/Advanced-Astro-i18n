@@ -1,6 +1,5 @@
 import { readFileSync, promises as fs } from "fs";
 import { join, dirname } from "path";
-import { fileURLToPath } from "url";
 import readline from "readline";
 import { collectFiles } from "./utils/collect-files.js";
 import { readI18nConfig } from "./utils/read-i18n-config.js";
@@ -10,8 +9,7 @@ import {
 } from "./utils/feature-flags.js";
 import { askYesNo } from "./utils/prompt.js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
+const root = process.cwd();
 
 
 if (checkFeatureFlagBeforeRun(root, "cms", "Decap CMS")) {

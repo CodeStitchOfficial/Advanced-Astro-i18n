@@ -5,8 +5,7 @@
  */
 
 import { promises as fs } from "fs";
-import { join, dirname, relative, basename } from "path";
-import { fileURLToPath } from "url";
+import { join, relative, basename } from "path";
 import readline from "readline";
 
 import { collectFiles } from "./utils/collect-files.js";
@@ -16,8 +15,7 @@ import {
 } from "./utils/feature-flags.js";
 import { askYesNo } from "./utils/prompt.js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
+const root = process.cwd();
 
 if (checkFeatureFlagBeforeRun(root, "demo", "Demo Content")) {
 	process.exit(0);

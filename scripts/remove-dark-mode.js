@@ -7,8 +7,7 @@
  */
 
 import { existsSync, rmSync, readFileSync, writeFileSync, readdirSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import { join } from "path";
 import readline from "readline";
 import {
 	checkFeatureFlagBeforeRun,
@@ -16,8 +15,7 @@ import {
 } from "./utils/feature-flags.js";
 import { askYesNo } from "./utils/prompt.js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
+const root = process.cwd();
 
 // ─── Guard: already run? ──────────────────────────────────────────────────────
 if (checkFeatureFlagBeforeRun(root, "darkMode", "Dark Mode")) {
