@@ -6,7 +6,7 @@
 	"hero": {
 		"topper": "Advanced Kit",
 		"title": {
-			"1": "Advanced Astro v6",
+			"1": "Advanced Astro v7",
 			"2": "i18n"
 		},
 		"p1": "Ships bilingual out of the box — English and French, powered by Astro's i18n routing — with Decap CMS built in for the blog. Don't need multiple languages? Strip i18n, or any other feature, out with a single script.",

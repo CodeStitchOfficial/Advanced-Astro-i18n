@@ -6,7 +6,7 @@
 	"hero": {
 		"topper": "Kit Avancé",
 		"title": {
-			"1": "Kit Avancé Astro v6",
+			"1": "Kit Avancé Astro v7",
 			"2": "i18n"
 		},
 		"p1": "Livré bilingue dès le départ — anglais et français, propulsé par le routage i18n d'Astro — avec Decap CMS intégré pour le blog. Pas besoin de plusieurs langues ? Retirez l'i18n, ou toute autre fonctionnalité, en une seule commande.",

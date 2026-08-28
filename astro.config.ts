@@ -13,6 +13,7 @@ export default defineConfig({
 		},
 	},
 	trailingSlash: "always",
+	compressHTML: true,
 	integrations: [
 		icon(),
 		sitemap({

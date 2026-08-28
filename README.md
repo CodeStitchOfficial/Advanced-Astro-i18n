@@ -1,4 +1,4 @@
-<h3 align="center">Advanced Astro v6 - i18n</h3>
+<h3 align="center">Advanced Astro v7 - i18n</h3>
 
 <p align="center">
   This Astro starter kit ships bilingual (English/French) by default, with several pages built from CodeStitch components, a blog powered by Astro's content collections, and Decap CMS pre-wired for content editing. Every optional piece — i18n, the CMS, dark mode, demo content — can be stripped out with one interactive script, so the same kit works just as well for single-language projects as multilingual ones.
@@ -49,7 +49,7 @@
 
 ## Overview
 
-This kit runs on **Astro v6** with reusable components and centralized data, giving you room to scale as a client's site grows. It ships bilingual by default, with internationalization powered by [Astro's built-in i18n routing](https://docs.astro.build/en/guides/internationalization/), scalable to as many locales as you need. The blog runs on Decap CMS and Astro's Content Collections.
+This kit runs on **Astro v7** with reusable components and centralized data, giving you room to scale as a client's site grows. It ships bilingual by default, with internationalization powered by [Astro's built-in i18n routing](https://docs.astro.build/en/guides/internationalization/), scalable to as many locales as you need. The blog runs on Decap CMS and Astro's Content Collections.
 
 Every optional feature (i18n, Decap CMS, dark mode, demo content) can be removed with an interactive script (see [Commands](#commands)), so the same kit works just as well for a single-language site as a multilingual one. An example website is included, built from [CodeStitch's vanilla component library](https://codestitch.app/) for easy section swaps — deployment is possible in as little as two minutes.
 
@@ -141,7 +141,7 @@ All commands are run from the root of the project, from a terminal:
 ## Features
 
 - **Polyvalent**: every optional feature below can be removed with `npm run setup-project` (or its individual `remove-*` script), so this one kit covers single-language and multilingual projects alike
-- Runs on **Astro v6**
+- Runs on **Astro v7**
 - Bilingual by default (English/French) with Astro's built-in i18n routing and custom utilities — add more locales anytime
 - Optional Decap CMS integration for blog management (removable via `node scripts/remove-decap.js`)
 - Dark mode (removable via `node scripts/remove-dark-mode.js`)
