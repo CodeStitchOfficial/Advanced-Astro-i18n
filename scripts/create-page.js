@@ -7,6 +7,14 @@ import { checkFeatureFlagBeforeRun } from "./utils/feature-flags.js";
 
 const root = process.cwd();
 
+// Reads routing.prefixDefaultLocale from astro.config.ts.
+function readPrefixDefaultLocale(root) {
+	const configPath = join(root, "astro.config.ts");
+	if (!existsSync(configPath)) return false;
+	const content = readFileSync(configPath, "utf8");
+	const m = content.match(/prefixDefaultLocale:\s*(true|false)/);
+	return m?.[1] === "true";
+}
 
 const i18nDisabled = checkFeatureFlagBeforeRun(
 	root,
@@ -155,11 +163,18 @@ async function main() {
 	const secondaryLocales = i18nEnabled
 		? detectSecondaryLocales(defaultLocale)
 		: [];
+	// null = default locale pages live at src/pages/ root; string = src/pages/{locale}/
+	const defaultLocaleDir = i18nEnabled && readPrefixDefaultLocale(root)
+		? defaultLocale
+		: null;
 
 	// ── Templates ─────────────────────────────────────────────────────────────
-	const defaultTemplatePath = join(root, "src", "pages", "_template.astro");
+	const defaultTemplateRelPath = defaultLocaleDir
+		? `src/pages/${defaultLocaleDir}/_template.astro`
+		: `src/pages/_template.astro`;
+	const defaultTemplatePath = join(root, ...defaultTemplateRelPath.split("/"));
 	if (!existsSync(defaultTemplatePath)) {
-		console.log(`Template not found: src/pages/_template.astro`);
+		console.log(`Template not found: ${defaultTemplateRelPath}`);
 		process.exit(1);
 	}
 	const defaultTemplate = readFileSync(defaultTemplatePath, "utf8");
@@ -242,12 +257,15 @@ async function main() {
 		}
 
 		// Default locale page
-		const defaultPagePath = join(root, "src", "pages", `${defaultSlug}.astro`);
+		const defaultPageRelPath = defaultLocaleDir
+			? `src/pages/${defaultLocaleDir}/${defaultSlug}.astro`
+			: `src/pages/${defaultSlug}.astro`;
+		const defaultPagePath = join(root, ...defaultPageRelPath.split("/"));
 		if (existsSync(defaultPagePath)) {
-			console.log(`Skipped src/pages/${defaultSlug}.astro — already exists`);
+			console.log(`Skipped ${defaultPageRelPath} — already exists`);
 		} else {
 			writeFileSync(defaultPagePath, applyTemplate(defaultTemplate, defaultTitle), "utf8");
-			console.log(`Created src/pages/${defaultSlug}.astro`);
+			console.log(`Created ${defaultPageRelPath}`);
 		}
 
 		// Secondary locale pages
