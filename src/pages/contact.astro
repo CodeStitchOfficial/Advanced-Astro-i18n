@@ -1,27 +1,25 @@
 ---
+import { getSiteContext } from "@js/getSiteContext";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { BUSINESS } from "@data/client";
-import Banner from "@components/Banner/Banner.astro";
+import Banner from "src/features/demo/Banner.astro";
 import { Picture } from "astro:assets";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
 import skyscraper from "@assets/images/skyscraper.jpg";
 
 import landingImage from "@assets/images/landing.jpg";
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+const { content } = await getSiteContext(Astro.url);
 ---
 
 <BaseLayout
-  title={t("contact:landing")}
+  title={content.contact.landing}
   description="Meta description for the page"
 >
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Banner title={t("contact:landing")} image={landingImage}/>
+  <Banner title={content.contact.landing} image={landingImage} />
 
   <!-- ============================================ -->
   <!--                Contact Form                  -->
@@ -31,73 +29,76 @@ const t = useTranslations(locale);
     <div class="cs-container">
       <form id="cs-form" name="Contact Form" method="post">
         <div class="cs-content">
-          <span class="cs-topper">{t("contact:topper")}</span>
-          <h2 class="cs-title">{t("contact:title")}</h2>
+          <span class="cs-topper">{content.contact.topper}</span>
+          <h2 class="cs-title">{content.contact.title}</h2>
           <p class="cs-text">
-            {t("contact:p-1")}
+            {content.contact.p1}
           </p>
         </div>
         <label>
-          {t("contact:form.name")}
+          {content.contact.form.name}
           <input
             required
             type="text"
             id="name"
             name="name"
-            placeholder={t("contact:form.name")}
+            placeholder={content.contact.form.name}
           />
         </label>
         <label>
-          {t("contact:form.email")}
+          {content.contact.form.email}
           <input
             required
             type="text"
             id="email"
             name="email"
-            placeholder={t("contact:form.email")}
+            placeholder={content.contact.form.email}
           />
         </label>
         <label>
-          {t("contact:form.phone")}
+          {content.contact.form.phone}
           <input
             required
             type="text"
             id="phone"
             name="phone"
-            placeholder={t("contact:form.phone")}
+            placeholder={content.contact.form.phone}
           />
         </label>
         <label>
-          {t("contact:form.how")}
+          {content.contact.form.how}
           <input
             type="text"
             id="find"
             name="find-us"
-            placeholder={t("contact:form.how")}
+            placeholder={content.contact.form.how}
           />
         </label>
         <label class="cs-label-message">
-          {t("contact:form.message")}
+          {content.contact.form.message}
           <textarea
             required
             name="Message"
             id="message"
-            placeholder={t("contact:form.message-placeholder")}></textarea>
+            placeholder={content.contact.form["message-placeholder"]}
+          ></textarea>
         </label>
-        <button class="cs-button-solid" type="submit">{t("contact:cta")}</button
+        <button class="cs-button-solid" type="submit"
+          >{content.contact.cta}</button
         >
       </form>
       <div class="cs-right-section">
         <!--Email-->
-        <span class="cs-header">{t("contact:form.email")}</span>
-        <a class="cs-link" href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+        <span class="cs-header">{content.contact.form.email}</span>
+        <a class="cs-link" href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a
+        >
         <!--Phone-->
-        <span class="cs-header">{t("contact:form.phone")}</span>
+        <span class="cs-header">{content.contact.form.phone}</span>
         <a class="cs-link" href={`tel:${BUSINESS.phoneForTel}`}
           >{BUSINESS.phoneFormatted}</a
         >
         <!--Address-->
-        <span class="cs-header">{t("contact:form.address")}</span>
+        <span class="cs-header">{content.contact.form.address}</span>
         <a class="cs-link" href={BUSINESS.address.mapLink}>
           {BUSINESS.address.lineOne},
           <br />
@@ -111,7 +112,16 @@ const t = useTranslations(locale);
         </a>
 
         <!-- Background Image-->
-        <Picture src={skyscraper} alt="building" width={2500} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-bg-picture" }} aria-hidden="true" decoding="async" priority />
+        <Picture
+          src={skyscraper}
+          alt="building"
+          width={2500}
+          formats={["avif", "webp"]}
+          pictureAttributes={{ class: "cs-bg-picture" }}
+          aria-hidden="true"
+          decoding="async"
+          priority
+        />
       </div>
     </div>
   </section>

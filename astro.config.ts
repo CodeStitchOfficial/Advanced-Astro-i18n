@@ -1,0 +1,40 @@
+import { defineConfig, fontProviders } from "astro/config";
+import icon from "astro-icon";
+import sitemap from "@astrojs/sitemap";
+import { SITE } from "./src/data/siteConfig";
+
+export default defineConfig({
+	site: SITE.url,
+	i18n: {
+		defaultLocale: "en",
+		locales: ["en", "fr"],
+		routing: {
+			prefixDefaultLocale: false,
+		},
+	},
+	trailingSlash: "always",
+	compressHTML: true,
+	integrations: [
+		icon(),
+		sitemap({
+			filter: (page) => !page.includes("/admin"),
+			i18n: {
+				defaultLocale: "en",
+				locales: {
+					en: "en-US",
+					fr: "fr-FR",
+				},
+			},
+		}),
+	],
+	fonts: [
+		{
+			provider: fontProviders.fontsource(),
+			name: "Roboto",
+			cssVariable: "--font-primary",
+			fallbacks: ["Arial", "sans-serif"],
+			weights: [400, 700, 900],
+			styles: ["normal"],
+		},
+	],
+});

@@ -1,7 +1,7 @@
-<h3 align="center">Advanced Astro v6 - i18n</h3>
+<h3 align="center">Advanced Astro v7 - i18n</h3>
 
 <p align="center">
-  This Astro advanced kit includes a pre-configured multi-language setup, along with five pages filled with CodeStitch components. Everything is ready to go right from the start, offering a fantastic introduction to the advantages of a Static Site Generator, complete with LESS preprocessing and a blog powered by Astro's content collections.
+  This Astro starter kit ships bilingual (English/French) by default, with several pages built from CodeStitch components, a blog powered by Astro's content collections, and Decap CMS pre-wired for content editing. Every optional piece — i18n, the CMS, dark mode, demo content — can be stripped out with one interactive script, so the same kit works just as well for single-language projects as multilingual ones.
   <br/>
   <br/>
   <a href="https://advanced-astro-kit-i18n.netlify.app/" target="_blank">View Live Result</a>
@@ -11,7 +11,12 @@
 
 - [Overview](#overview)
 - [Getting Started](#getting-started)
-- [Commands](#commands)
+    - [Using the Github template](#using-the-github-template)
+    - [Using the CLI](#using-the-cli)
+    - [Quickstart](#quickstart)
+    - [Set up your project](#set-up-your-project)
+    - [Essential files to configure](#essential-files-to-configure)
+    - [Commands](#commands)
 - [Features](#features)
 - [Project Structure](#project-structure)
     - [Project Tree](#project-tree)
@@ -19,15 +24,14 @@
 - [i18n System](#i18n-system)
     - [Overview and Config](#overview-and-config)
     - [Adding or changing locales](#adding-or-changing-locales)
-    - [Using a single language](#using-a-single-language)
     - [Page Structure](#page-structure)
+    - [Scaffolding New Pages](#scaffolding-new-pages)
     - [Configuration Files](#configuration-files)
     - [Translation Files and Namespaces](#translation-files-and-namespaces)
     - [Using Translations](#using-translations)
     - [Generating Localized URLs](#generating-localized-urls)
     - [Localizing Route Slugs](#localizing-route-slugs)
     - [Localizing Blog Post Slugs](#localizing-blog-post-slugs)
-    - [Browser Language Redirect](#browser-language-redirect)
     - [Language Switcher Components](#language-switcher-components)
 - [Content Management & Blog](#content-management--blog)
     - [Content Collections](#content-collections)
@@ -45,9 +49,9 @@
 
 ## Overview
 
-This Advanced kit includes a pre-configured [Astro](https://www.astro.build) environment, which allows for repeated components, centralized data and greater room to scale as your clients grow. The kit runs **Astro v6** with internationalization powered by [Astro's built-in i18n routing](https://docs.astro.build/en/guides/internationalization/) and a set of custom utility functions to create a multilingual website, scalable to as many languages as necessary. The blog is powered by Decap CMS and Astro's Content Collections.
+This kit runs on **Astro v7** with reusable components and centralized data, giving you room to scale as a client's site grows. It ships bilingual by default, with internationalization powered by [Astro's built-in i18n routing](https://docs.astro.build/en/guides/internationalization/), scalable to as many locales as you need. The blog runs on Decap CMS and Astro's Content Collections.
 
-An example website has also been provided, with easy substitution of website sections possible through the use of [CodeStitch's vanilla component library](https://codestitch.app/). This kit aims to get any project off the ground in as little time as possible, with deployment being possible in as little as two minutes.
+Every optional feature (i18n, Decap CMS, dark mode, demo content) can be removed with an interactive script (see [Commands](#commands)), so the same kit works just as well for a single-language site as a multilingual one. An example website is included, built from [CodeStitch's vanilla component library](https://codestitch.app/) for easy section swaps — deployment is possible in as little as two minutes.
 
 ## Getting Started
 
@@ -59,8 +63,6 @@ There are two ways you can bootstrap your starter kit:
    then click _Create a new repository_.
 2. Follow the instructions to create a new repository, using this repo as a template.
 3. When created, clone the repository to your local machine.
-4. Run `npm install` to install all dependencies.
-5. Run `npm run dev` to start the project and spin up a development server on `localhost:4321`.
 
 ### Using the CLI
 
@@ -70,6 +72,9 @@ Run one of these commands to initialize a new project from this template:
 npm create astro@latest -- --template CodeStitchOfficial/Advanced-Astro-i18n
 ```
 
+<details>
+<summary>Using yarn or pnpm instead</summary>
+
 ```sh
 yarn create astro@latest --template CodeStitchOfficial/Advanced-Astro-i18n
 ```
@@ -78,34 +83,68 @@ yarn create astro@latest --template CodeStitchOfficial/Advanced-Astro-i18n
 pnpm create astro@latest --template CodeStitchOfficial/Advanced-Astro-i18n
 ```
 
-Then follow the prompts, install dependencies with `npm install`, and start the dev server with `npm run dev`.
+</details>
 
-Next, you can run any of the CLI commands below to help you shape the kit according to your needs.
+### Quickstart
+
+Once you have the code, via either method above:
+
+```sh
+npm install
+npm run dev
+```
+
+Open `localhost:4321` — you should see the demo site running. From there, jump to [Set up your project](#set-up-your-project) to strip out any features you don't need.
+
+### Set up your project
+
+```sh
+npm run setup-project
+```
+
+This is the main onboarding command: it asks which optional features to keep (i18n, Decap CMS, demo content, dark mode) and, if i18n is kept, offers to configure your locales right after. Under the hood it calls the scripts below — they're not exposed as `npm run` commands, but you can also run them directly at any time (e.g. to reconfigure locales later)
+
+### Essential files to configure
+
+Once you've run `setup-project`, these are the files most projects need to personalize before writing any new code:
+
+| File | What to update |
+| ---- | --------------- |
+| `src/data/client.ts` | Business name, email, phone, address (`BUSINESS` object) |
+| `src/data/siteConfig.ts` | Domain, description, social share image (`SITE`, `OG`) |
+| `astro.config.ts` | `site` — your production domain |
+| `src/styles/root.less` | Brand colors/fonts via CSS variables (`--primary`, `--secondary`, `--headerColor`, etc.) |
+| `src/components/Settings/Settings.astro` | Swap or remove the dark-mode toggle / language switcher |
+| `src/data/navData.json` | Nav links, and per-locale translated paths if i18n is kept |
+| `public/admin/config.yml` | Decap CMS repo + DecapBridge auth endpoints, if keeping the CMS |
+
+See [Pre-Deployment Checklist](#pre-deployment-checklist) for the full list to double-check right before going live (production domain, favicons, sitemap, etc.).
 
 ### Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                    | Action                                       |
-| :------------------------- | :------------------------------------------- |
-| `npm install`              | Installs dependencies                        |
-| `npm run dev`              | Starts local dev server at `localhost:4321`  |
-| `npm run build`            | Build your production site to `./dist/`      |
-| `npm run preview`          | Preview your build locally, before deploying |
-| `npm run config-i18n`      | Configures the i18n setup interactively      |
-| `npm run remove-demo`      | Removes demo/placeholder content             |
-| `npm run remove-dark-mode` | Removes dark mode components and styles      |
-| `npm run remove-decap`     | Removes Decap CMS integration                |
-| `npm run create-page`      | Scaffolds a new page for all locales         |
-| `npm run test:scripts`     | Runs unit tests for the utility scripts      |
+| Command                 | Action                                                                     |
+| ----------------------- | -------------------------------------------------------------------------- |
+| `npm install`           | Installs dependencies                                                      |
+| `npm run dev`           | Starts local dev server at `localhost:4321`                                |
+| `npm run build`         | Build your production site to `./dist/`                                    |
+| `npm run preview`       | Preview your build locally, before deploying                               |
+| `npm run setup-project` | Interactively choose which features to keep/remove, then configure locales |
+| `npm run create-page -- "Page Name"` | Scaffolds a new page for every locale — see [Scaffolding New Pages](#scaffolding-new-pages) |
+| `node scripts/config-i18n.js` | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
+| `node scripts/remove-i18n.js` | Permanently removes the i18n system |
+| `node scripts/remove-decap.js` | Removes Decap CMS integration |
+| `node scripts/remove-demo.js` | Removes demo/placeholder content |
+| `node scripts/remove-dark-mode.js` | Removes dark mode components and styles |
 
 ## Features
 
-- Runs on **Astro v6**
-- i18n setup ready to go with Astro's built-in i18n routing and custom utilities
-- Browser language redirect on the home page
-- Dark mode (removable via `npm run remove-dark-mode`)
-- Optional Decap CMS integration (removable via `npm run remove-decap`)
+- **Polyvalent**: every optional feature below can be removed with `npm run setup-project` (or its individual `remove-*` script), so this one kit covers single-language and multilingual projects alike
+- Runs on **Astro v7**
+- Bilingual by default (English/French) with Astro's built-in i18n routing and custom utilities — add more locales anytime
+- Optional Decap CMS integration for blog management (removable via `node scripts/remove-decap.js`)
+- Dark mode (removable via `node scripts/remove-dark-mode.js`)
 - Astro's `<ClientRouter />` integration for view transitions
 - Astro Fonts API
 - Astro's content collections to supercharge your Astro pages and content
@@ -130,16 +169,19 @@ All commands are run from the root of the project, from a terminal:
 ├── src/
 │   ├── assets/
 │   ├── components/
-│   ├── config/
-│   │   ├── routeTranslations.ts
-│   │   └── siteSettings.ts
 │   ├── content/
 │   │   └── blog/
 │   │       ├── en/
 │   │       └── fr/
 │   ├── data/
 │   │   ├── client.ts
+│   │   ├── siteConfig.ts
 │   │   └── navData.json
+│   ├── features/
+│   │   ├── i18n/
+│   │   ├── darkmode/
+│   │   ├── decapCMS/
+│   │   └── demo/
 │   ├── icons/
 │   ├── js/
 │   ├── layouts/
@@ -166,63 +208,58 @@ All commands are run from the root of the project, from a terminal:
 │   │   ├── 404.astro
 │   │   └── index.astro
 │   ├── styles/
-├── astro.config.mjs
-├── content.config.ts
+│   └── content.config.ts
+├── astro.config.ts
 └── tsconfig.json
 ```
 
 ### Key Directories
 
 - **`public/`** — Static assets that won't be processed by Astro (Decap admin, favicons, `_redirects`, `robots.txt`).
-- **`src/components/`** — Reusable Astro components.
-- **`src/config/`** — i18n configuration: locale definitions (`siteSettings.ts`) and route translations (`routeTranslations.ts`).
-- **`src/content/blog/`** — Blog posts organized by locale (`en/`, `fr/`).
-- **`src/data/`** — Site-wide data (`client.json`, `navData.json`).
+- **`src/components/`** — Reusable Astro components (`Meta/`, `Header/`, `Footer/`, `Settings/`, etc.).
+- **`src/content/blog/`** — Blog posts, one folder per locale (`en/`, `fr/`).
+- **`src/data/`** — Site-wide data (`client.ts`, `siteConfig.ts`, `navData.json`).
 - **`src/icons/`** — SVGs used by the `<Icon />` component.
-- **`src/js/`** — i18n utility functions.
 - **`src/layouts/`** — Page layouts. `BaseLayout.astro` wraps all pages.
-- **`src/locales/`** — Translation JSON files organized by locale (`en/`, `fr/`).
-- **`src/pages/`** — Astro page files. By default, English pages live at the root, French pages under `fr/` with translated slugs.
+- **`src/locales/`** — Translation JSON files, one folder per locale (`en/`, `fr/`).
+- **`src/pages/`** — Astro page files. English pages live at the root, French pages under `fr/` with translated slugs.
 - **`src/styles/`** — CSS/LESS stylesheets.
 
 ## i18n System
 
 ### Overview and Config
 
-Internationalization is powered by **Astro's built-in i18n routing** combined with custom utility functions. The project ships with two languages out of the box: English (default) and French.
+Internationalization runs on **Astro's built-in i18n routing**, plus a small set of helpers in `src/features/i18n/`. Two languages ship out of the box: English (default) and French.
 
-The i18n routing is configured in `astro.config.mjs`:
-
-```js
+```ts
+// astro.config.ts
 i18n: {
   defaultLocale: "en",
   locales: ["en", "fr"],
-  routing: {
-    prefixDefaultLocale: false,
-  },
+  routing: { prefixDefaultLocale: false },
 },
 ```
 
-With `prefixDefaultLocale: false`, English pages are served at the root (`/about/`) while French pages are prefixed (`/fr/a-propos/`).
+`prefixDefaultLocale: false` means English pages have clean URLs (`/about/`) while French ones get a prefix (`/fr/a-propos/`). It is this kit's default setting.
 
-Locale settings are centralized in `src/config/siteSettings.ts`:
+> **Note:** This kit's i18n is opinionated, and not the only valid way to do it here. Full page duplication (see [Page Structure](#page-structure)) is already enough on its own to serve translated content — each locale's pages could just contain hardcoded copy in their own language. The JSON translation layer (`src/locales/`) exists on top of that so _shared components_ (Hero, CTA, the header, etc.) can serve every locale without duplicating their markup. If your components diverge a lot per locale anyway, or you'd rather edit copy directly in place, skipping the JSON layer and hardcoding is a perfectly reasonable alternative.
 
 ### Adding or changing locales
 
-> **Tip:** Run `npm run config-i18n` to configure locales interactively.
+> **Tip:** Run `npm run setup-project` for an interactive setup instead of doing this by hand.
 
-To add a new locale manually (e.g. Spanish `es`):
+To add a locale manually (e.g. Spanish `es`):
 
-1. **`astro.config.mjs`** — add `"es"` to the `locales` array
-2. **`src/config/siteSettings.ts`** — add `es` to `locales`, `localeMap` (`es: "es-ES"`), and `languageSwitcherMap` (`es: "ES"`)
-3. **`src/locales/es/`** — create translated JSON files mirroring `en/`
-4. **`src/pages/es/`** — create translated page files mirroring `src/pages/fr/`
-5. **`src/config/routeTranslations.ts`** — add `es` entries for each translated route segment
-6. **`src/content/blog/es/`** — add translated blog posts with matching `mappingKey` values
+1. **`astro.config.ts`** — add `"es"` to `locales`
+2. **`src/features/i18n/i18nConfig.ts`** — add `es` to `locales`, `localeMap`, and `languageSwitcherMap`
+3. **`src/locales/es/`** — copy the JSON files from `en/` and translate them
+4. **`src/pages/es/`** — copy the pages from `src/pages/fr/` and translate them
+5. **`src/data/navData.json`** — add an `es` entry to each nav item's `urls` and `label`
+6. **`src/content/blog/es/`** — add translated blog posts (see [Localizing Blog Post Slugs](#localizing-blog-post-slugs))
 
 ### Page Structure
 
-Unlike a plugin-based approach, this kit uses **full page duplication**: English pages live at the root of `src/pages/`, and French pages are duplicated under `src/pages/fr/`. A localization system has been implemented to localize the slugs with translated filenames:
+Each locale gets its own copy of every page: default locale pages sit at the root of `src/pages/`, secondary locale pages live inside a sub-folder
 
 ```
 src/pages/
@@ -235,53 +272,77 @@ src/pages/
 │   └── index.astro       → /fr/
 ```
 
-Each page detects its locale using `getLocaleFromUrl()` and loads translations accordingly. This approach gives you full control over each locale's page structure.
+Every page starts with one call — `getSiteContext(Astro.url)` — which figures out the locale from the URL and hands back that locale's translated content. See [Using Translations](#using-translations)
+
+> **Note:** if `prefixDefaultLocale: true` (see [Overview and Config](#overview-and-config)), the default locale also moves into its own sub-folder (`src/pages/en/`) instead of sitting at the root.
+
+### Scaffolding New Pages
+
+Rather than copying `_template.astro` into each locale folder by hand, `npm run create-page` does it for every locale at once, from one command:
+
+```sh
+npm run create-page -- "Page Name"
+```
+
+It reads `src/pages/_template.astro` (and each secondary locale's own `_template.astro`), derives a slug and title from the name you give it (`"About Us"` → `about-us.astro` / "About Us"), and for every page it creates it also:
+
+- Adds an entry to `src/data/navData.json` (skipped if that page is already registered)
+- Registers the per-locale slugs in `src/features/i18n/routeTranslations.ts`, if i18n is enabled (see [Localizing Route Slugs](#localizing-route-slugs))
+- Skips any file that already exists, rather than overwriting it
+
+**Arguments** (everything after `--`):
+
+| Position | Example | Meaning |
+| --- | --- | --- |
+| 1st — page name(s) | `"Contact"` or `"Contact, About, Services"` | Required. Comma-separated names in the default locale — one page per name. |
+| 2nd — secondary-locale name(s) | `"Contactez-nous"` or `"Contactez-nous, À propos"` | Optional. Comma-separated names for the *first* secondary locale, matched positionally to the names above. Any other locales fall back to the default-locale slug/title. |
+
+```sh
+# Multiple pages at once
+npm run create-page -- "Contact, About, Services"
+
+# Skip the interactive prompt below by supplying the French name directly
+npm run create-page -- "Contact" "Contactez-nous"
+
+# Same, for multiple pages — positional: 1st name pairs with 1st page, etc.
+npm run create-page -- "Contact, About" "Contactez-nous, À propos"
+```
+
+If you omit the 2nd argument and run the command in a terminal, it prompts you for each secondary locale's name per page (press Enter to reuse the default-locale name). In a non-interactive context (CI, piped input) with no 2nd argument, it silently reuses the default-locale slug and title for every secondary locale.
 
 ### Configuration Files
 
-#### `src/config/siteSettings.ts`
-
-Defines the available locales, default locale, locale-to-region mapping, and language switcher labels. Import from `@config/siteSettings`.
-
-The `localeMap` object maps locale codes to BCP 47 region tags and is used for date formatting (e.g. `fr: "fr-FR"`).
-
-#### `src/config/routeTranslations.ts`
-
-Maps route segments between locales. Used by `getLocalizedRoute()` and `getLocalizedPathname()` to generate and translate URLs:
+**`src/features/i18n/i18nConfig.ts`** is the single source of truth for locale setup:
 
 ```ts
-export const routeTranslations: Record<Locale, Record<string, string>> = {
-	en: {
-		about: "about",
-		projects: "projects",
-		"project-1": "project-1",
-		"project-2": "project-2",
-	},
-	fr: {
-		about: "a-propos",
-		projects: "projets",
-		"project-1": "projet-1",
-		"project-2": "projet-2",
-	},
-};
+export const locales = ["en", "fr"] as const;
+export const defaultLocale: Locale = "en";
+export const localeMap = { en: "en-US", fr: "fr-FR" }; // for og:locale / hreflang
+export const languageSwitcherMap = { en: "EN", fr: "FR" }; // labels on the toggle
 ```
+
+> **Info:** This file is automatically populated when you set up your project with `npm run setup-project`.
+
+**Route translations** (e.g. `about` → `a-propos`) aren't written by hand: they're generated automatically from `src/data/navData.json`, where each nav entry already has a translated URL per locale. To change a translated route, edit `navData.json`; you never need to touch the generated map directly.
 
 ### Translation Files and Namespaces
 
-Translation files live in `src/locales/{locale}/` as JSON files. Each JSON file is a **namespace**. The default namespace is `common.json`.
+Translations live in `src/locales/{locale}/`, one JSON file per **namespace**:
 
 ```
 src/locales/
 ├── en/
 │   ├── common.json
 │   ├── home.json
-│   ├── about.json
-│   └── ...
+│   ├── contact.json
+│   ├── blog.json
+│   └── reviews.json
 └── fr/
     ├── common.json
     ├── home.json
-    ├── about.json
-    └── ...
+    ├── contact.json
+    ├── blog.json
+    └── reviews.json
 ```
 
 JSON files for each locale must have the **same structure and keys** — only the translated values differ.
@@ -314,123 +375,89 @@ JSON files for each locale must have the **same structure and keys** — only th
 
 ### Using Translations
 
-Use `useTranslations(locale)` to get a `t()` function that resolves translation keys:
+Call `getSiteContext(Astro.url)` and read from `content`, namespaced by filename (`common.json` → `content.common`, `home.json` → `content.home`, etc.):
 
 ```astro
 ---
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
+import { getSiteContext } from "@js/getSiteContext";
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+const { content } = await getSiteContext(Astro.url);
 ---
 
-<h2>{t("ctaComponent.title")}</h2>
-<p>{t("ctaComponent.message")}</p>
-```
-
-To access a key from a namespace other than `common`, prefix with the namespace name:
-
-```astro
-<!-- Loads from src/locales/{locale}/home.json -->
-<h1>{t("home:hero.title")}</h1>
-```
-
-Array items are accessed by index:
-
-```astro
-<!-- home.json: { "services": [{ "heading": "Service 1" }, ...] } -->
-<h2>{t("home:services.0.heading")}</h2>
+<h2>{content.common.ctaComponent.title}</h2>
+<h1>{content.home.hero.title}</h1>
 ```
 
 ### Generating Localized URLs
 
-Use `getLocalizedRoute(locale, basePath)` to generate locale-aware URLs with translated segments:
+Route translation is driven by `src/data/navData.json`: each nav entry stores a per-locale URL, so look up the slug for the current locale there and pass it to `getRoute(locale, path)` to add the correct locale prefix:
 
 ```astro
 ---
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { getLocalizedRoute } from "@js/translationUtils";
+import navData from "@data/navData.json";
+import { getSiteContext } from "@js/getSiteContext";
+import { getRoute } from "@js/routes";
 
-const locale = getLocaleFromUrl(Astro.url);
+const { locale } = await getSiteContext(Astro.url);
+const aboutEntry = navData.find((entry) => entry.key === "about");
+const aboutUrl = aboutEntry.urls[locale] ?? aboutEntry.urls.en;
 ---
 
-<!-- Outputs "/contact/" for EN, "/fr/contact/" for FR -->
-<a href={getLocalizedRoute(locale, "/contact")}>Contact</a>
-
-<!-- Outputs "/about/" for EN, "/fr/a-propos/" for FR -->
-<a href={getLocalizedRoute(locale, "/about")}>About</a>
+<a href={getRoute(locale, aboutUrl)}>About</a>
+<!-- "/about/" for EN, "/fr/a-propos/" for FR -->
 ```
 
 > [!IMPORTANT]
-> For `getLocalizedRoute()` to produce translated URLs, the route segments must be defined in `src/config/routeTranslations.ts` (see below) **and** the corresponding page files must exist with matching filenames (e.g. `src/pages/fr/a-propos.astro` for the French version of `/about`).
+> This only translates routes that exist in `src/data/navData.json` **and** have a matching page file (e.g. `src/pages/fr/a-propos.astro`).
 
 ### Localizing Route Slugs
 
-Route slug translations are defined in `src/config/routeTranslations.ts`. When you add a new page with a translated slug:
+Adding a page with a translated slug is a 3-step combo:
 
-1. Create the English page at `src/pages/my-page.astro`.
-2. Create the French page at `src/pages/fr/ma-page.astro`.
-3. Add the mapping to `routeTranslations`:
+1. Create the English page: `src/pages/my-page.astro`
+2. Create the French page: `src/pages/fr/ma-page.astro`
+3. Add it to `navData.json`:
 
-```ts
-en: {
-  "my-page": "my-page",
-},
-fr: {
-  "my-page": "ma-page",
-},
+```json
+{
+	"key": "my-page",
+	"urls": { "en": "/my-page", "fr": "/ma-page" },
+	"label": { "en": "My Page", "fr": "Ma Page" }
+}
 ```
 
-The `getLocalizedRoute()` and `getLocalizedPathname()` functions will use this mapping to generate and translate URLs.
+That's it — every URL helper picks this up automatically.
 
 ### Localizing Blog Post Slugs
 
-Blog post slugs are localized using the `mappingKey` frontmatter field. This field links translations of the same post across locales.
-
-**English** — `src/content/blog/en/first-post-in-english.md`:
+Link translations of the same post with a matching `mappingKey` in frontmatter:
 
 ```yaml
----
+# src/content/blog/en/first-post-in-english.md
 title: First blog post in English
 mappingKey: "post-1"
-# ...
----
 ```
-
-**French** — `src/content/blog/fr/premier-article-en-francais.md`:
 
 ```yaml
----
+# src/content/blog/fr/premier-article-en-francais.md
 title: Premier article de blog en français
 mappingKey: "post-1"
-# ...
----
 ```
 
-The `mappingKey` value (`"post-1"`) connects these posts. The `getLocalizedPathname()` function uses this to resolve the correct slug when switching locales — for example, `/blog/first-post-in-english/` ↔ `/fr/blog/premier-article-en-francais/`.
-
-### Browser Language Redirect
-
-The home page (`/`) automatically redirects visitors to their preferred locale based on the browser's primary language. For example, a visitor whose browser is set to French will be redirected to `/fr/`.
-
-- The redirect only applies to the **home page**, not other pages.
-- Once a user manually switches languages via the language switcher, a `locale-preference` key is stored in `localStorage` and the auto-redirect is disabled.
-
-**To disable this feature**, remove the `<BrowserLanguageRedirect />` component and its import from `src/pages/index.astro`.
+With the same `mappingKey`, but a different slug per locale, the language switcher uses it to jump from `/blog/first-post-in-english/` straight to `/fr/blog/premier-article-en-francais/`.
 
 ### Language Switcher Components
 
-Two language switcher components are provided in `src/components/LanguageSwitch/`:
+Two ready-made components live in `src/features/i18n/LanguageSwitch/`:
 
-- **`TwoLocalesSelect.astro`** — A simple toggle for two-locale setups (e.g. EN/FR).
-- **`MultiLocalesSelect.astro`** — A dropdown menu for projects with more than two locales.
+- **`TwoLocalesSelect.astro`** — simple toggle, best for 2 locales (default).
+- **`MultiLocalesSelect.astro`** — dropdown, best for 3+ locales.
 
-Both components use `getLocalizedPathname(locale, Astro.url)` to resolve the equivalent URL in the target locale, including translated route segments and blog post slugs. To swap which one is active, edit the imports in `src/components/Settings/Settings.astro`.
+Both always link to the correct translated URL automatically. To switch which one is active, change the import in `src/components/Settings/Settings.astro`.
 
 ## Content Management & Blog
 
-This kit ships with [Decap CMS](https://decapcms.org/) pre-configured, giving clients a user-friendly admin interface to manage blog posts in multiple languages. Authentication is handled by [DecapBridge](https://decapbridge.com/), which adds GitHub-based login without requiring Netlify Identity.
+This kit ships with [Decap CMS](https://decapcms.org/) pre-configured, giving clients a user-friendly admin interface to manage blog posts in multiple languages. Authentication is handled by [DecapBridge](https://decapbridge.com/).
 
 ### Content Collections
 
@@ -535,8 +562,9 @@ npm install decap-server
 
 Before going live, confirm the following are updated for your client's project:
 
-- **`astro.config.mjs`** — set the `site` field to your production URL
+- **`astro.config.ts`** — set the `site` field to your production URL
 - **`src/data/client.ts`** — fill in business name, address, phone, email, and social links
+- **`src/data/siteConfig.ts`** — fill in site title, description, production URL, and social share image
 - **`public/robots.txt`** — update the `Sitemap` URL to your production domain
 - **`public/assets/favicons/`** — replace placeholder favicons with the client's branding
 - **`public/admin/config.yml`** — complete the DecapBridge setup (see below) and set `site_url` to the production URL

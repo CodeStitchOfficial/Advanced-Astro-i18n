@@ -2,12 +2,12 @@
 	"home": "Accueil",
 	"about": "À propos",
 	"projects": "Portfolio",
-	"project-1": "Projet 1",
-	"project-2": "Projet 2",
+	"project1": "Projet 1",
+	"project2": "Projet 2",
 	"blog": "Blog",
 	"contact": "Contact",
-	"theme-label": "Select theme",
-	"language-label": "Select language",
+	"theme-label": "Sélectionner le thème",
+	"language-label": "Sélectionner la langue",
 	"languageSelect": {
 		"en": "Anglais",
 		"fr": "Français",
@@ -28,13 +28,13 @@
 		"cta": "Obtenir un devis",
 		"alt": " "
 	},
-	"about-page": {
+	"aboutPage": {
 		"landing": "À propos",
 		"topper": "À propos",
 		"title": "À propos de Nom de la Compagnie",
-		"p-1": "Notre compagnie a été fondée In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p-2": "Nous croyons que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
-		"p-3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
+		"p1": "Notre compagnie a été fondée In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p2": "Nous croyons que In consequat tincidunt turpis sit amet imperdiet. Praesent Class officelan nonatoureanor mauris laoreet, iaculis libero quis. Curabitur et tempus eri consequat tincidunt turpis sit amet imperdiet. Praesent nonatourean olei aptent taciti sociosqu ad litora torquent per.",
+		"p3": "Il est vital de In consequat tincidunt turpis sit amet imperdiet.",
 		"rank": "PDG",
 		"cta": "Notre portfolio"
 	},
@@ -51,7 +51,11 @@
 		"linkText": "Retourner à la page d'accueil"
 	},
 	"skipLink": "Cliquez pour accéder au contenu principal.",
+	"backToHome": "Retour à l'accueil",
+	"mobileMenuToggle": "Basculer le menu mobile",
+	"darkModeToggle": "Basculer le mode sombre",
 	"pagination": {
+		"label": "Pagination",
 		"previous": "Préc.",
 		"next": "Suiv."
 	},

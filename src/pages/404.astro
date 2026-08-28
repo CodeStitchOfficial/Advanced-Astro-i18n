@@ -1,19 +1,22 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
+
+import { getSiteContext } from "@js/getSiteContext";
 import { Picture } from "astro:assets";
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
-const title = t("notFound.pageNotFound");
+const { locale, content } = await getSiteContext(Astro.url);
+const title = content.common.notFound.pageNotFound;
 
 import landingImage from "@assets/images/landing.jpg";
+import { getRoute } from "@js/routes";
 ---
+
 <BaseLayout title={title} description={title}>
   <section id="int-hero">
     <h1>{title}</h1>
-    <a href={getLocalizedRoute(locale, "/")} class="cs-button-solid">{t("notFound.linkText")}</a>
+    <a href={getRoute(locale, "/")} class="cs-button-solid"
+      >{content.common.notFound.linkText}</a
+    >
     <Picture
       src={landingImage}
       formats={["avif", "webp"]}
@@ -42,7 +45,7 @@ import landingImage from "@assets/images/landing.jpg";
     }
 
     picture {
-      opacity: 0.2;;
+      opacity: 0.2;
       width: 100%;
       height: 100%;
       position: absolute;

@@ -1,51 +1,119 @@
 import { existsSync, readFileSync, writeFileSync, readdirSync } from "fs";
-import { join, dirname } from "path";
-import { fileURLToPath } from "url";
+import { join } from "path";
 import readline from "readline";
 import { slugify, titleCase, insertIntoLocaleBlock } from "./utils/transforms.js";
 import { readI18nConfig } from "./utils/read-i18n-config.js";
+import { checkFeatureFlagBeforeRun } from "./utils/feature-flags.js";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const root = process.env.SCRIPT_ROOT ?? join(__dirname, "..");
+const root = process.cwd();
+
+// Reads routing.prefixDefaultLocale from astro.config.ts.
+function readPrefixDefaultLocale(root) {
+	const configPath = join(root, "astro.config.ts");
+	if (!existsSync(configPath)) return false;
+	const content = readFileSync(configPath, "utf8");
+	const m = content.match(/prefixDefaultLocale:\s*(true|false)/);
+	return m?.[1] === "true";
+}
+
+const i18nDisabled = checkFeatureFlagBeforeRun(
+	root,
+	"i18n",
+	"i18n"
+);
+
+const i18nEnabled = !i18nDisabled;
 
 // ─── Client data ──────────────────────────────────────────────────────────────
 
 function readClientData() {
 	const clientPath = join(root, "src", "data", "client.ts");
-	if (!existsSync(clientPath)) return null;
-	const content = readFileSync(clientPath, "utf8");
-	const nameMatch = content.match(/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/);
-	const titleMatch = content.match(/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/);
+	const siteConfigPath = join(root, "src", "data", "siteConfig.ts");
+	const businessName = existsSync(clientPath)
+		? readFileSync(clientPath, "utf8").match(/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/)?.[1] ?? null
+		: null;
+	const siteTitle = existsSync(siteConfigPath)
+		? readFileSync(siteConfigPath, "utf8").match(/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/)?.[1] ?? null
+		: null;
+	if (!businessName && !siteTitle) return null;
 	return {
-		businessName: nameMatch?.[1] ?? null,
-		siteTitle: titleMatch?.[1] ?? null,
+		businessName,
+		siteTitle,
 	};
+}
+
+
+function registerNavItem(slugMap, labels) {
+	const navPath = join(
+		root,
+		"src",
+		"data",
+		"navData.json"
+	);
+
+	if (!existsSync(navPath)) {
+		return "missing";
+	}
+
+	const nav = JSON.parse(
+		readFileSync(navPath, "utf8")
+	);
+
+	if (nav.some(item => item.key === slugMap.en)) {
+		return "skipped";
+	}
+
+	nav.push({
+		key: slugMap.en,
+		urls: Object.fromEntries(
+			Object.entries(slugMap)
+				.map(([locale, slug]) => [
+					locale,
+					`/${slug}`
+				])
+		),
+		label: labels,
+		children: []
+	});
+
+
+	writeFileSync(
+		navPath,
+		JSON.stringify(nav, null, "\t") + "\n",
+		"utf8"
+	);
+
+
+	return "registered";
 }
 
 // ─── Locale detection ─────────────────────────────────────────────────────────
 
 function detectSecondaryLocales(defaultLocale) {
 	const pagesDir = join(root, "src", "pages");
+
 	if (!existsSync(pagesDir)) return [];
-	try {
-		return readdirSync(pagesDir, { withFileTypes: true })
-			.filter(
-				(e) =>
-					e.isDirectory() &&
-					/^[a-z]{2}(-[a-z]{2})?$/i.test(e.name) &&
-					e.name !== defaultLocale &&
-					existsSync(join(pagesDir, e.name, "_template.astro")),
-			)
-			.map((e) => e.name);
-	} catch {
-		return [];
-	}
+
+	return readdirSync(pagesDir, { withFileTypes: true })
+		.filter(
+			(e) =>
+				e.isDirectory() &&
+				/^[a-z]{2}(-[a-z]{2})?$/i.test(e.name) &&
+				e.name !== defaultLocale
+		)
+		.map((e) => e.name);
 }
 
 // ─── Route translations ────────────────────────────────────────────────────────
 
 function registerInRouteTranslations(defaultSlug, slugMap) {
-	const rtPath = join(root, "src", "config", "routeTranslations.ts");
+	const rtPath = join(
+		root,
+		"src",
+		"features",
+		"i18n",
+		"routeTranslations.ts"
+	);
 	if (!existsSync(rtPath)) return "missing";
 
 	let content = readFileSync(rtPath, "utf8");
@@ -67,7 +135,6 @@ function registerInRouteTranslations(defaultSlug, slugMap) {
 // ─── Template helpers ─────────────────────────────────────────────────────────
 
 function applyTemplate(template, title) {
-	// Handles both the standard placeholder and the legacy French one
 	return template.replaceAll("Page Title", title).replaceAll("Titre de la page", title);
 }
 
@@ -88,14 +155,26 @@ async function main() {
 	}
 
 	// ── Locale config ─────────────────────────────────────────────────────────
-	const i18nConfig = readI18nConfig(root);
-	const defaultLocale = i18nConfig?.defaultLocale ?? "en";
-	const secondaryLocales = detectSecondaryLocales(defaultLocale);
+	const i18nConfig = i18nEnabled
+		? readI18nConfig(root)
+		: null;
+	const defaultLocale =
+		i18nConfig?.defaultLocale ?? "en";
+	const secondaryLocales = i18nEnabled
+		? detectSecondaryLocales(defaultLocale)
+		: [];
+	// null = default locale pages live at src/pages/ root; string = src/pages/{locale}/
+	const defaultLocaleDir = i18nEnabled && readPrefixDefaultLocale(root)
+		? defaultLocale
+		: null;
 
 	// ── Templates ─────────────────────────────────────────────────────────────
-	const defaultTemplatePath = join(root, "src", "pages", "_template.astro");
+	const defaultTemplateRelPath = defaultLocaleDir
+		? `src/pages/${defaultLocaleDir}/_template.astro`
+		: `src/pages/_template.astro`;
+	const defaultTemplatePath = join(root, ...defaultTemplateRelPath.split("/"));
 	if (!existsSync(defaultTemplatePath)) {
-		console.log(`Template not found: src/pages/_template.astro`);
+		console.log(`Template not found: ${defaultTemplateRelPath}`);
 		process.exit(1);
 	}
 	const defaultTemplate = readFileSync(defaultTemplatePath, "utf8");
@@ -178,12 +257,15 @@ async function main() {
 		}
 
 		// Default locale page
-		const defaultPagePath = join(root, "src", "pages", `${defaultSlug}.astro`);
+		const defaultPageRelPath = defaultLocaleDir
+			? `src/pages/${defaultLocaleDir}/${defaultSlug}.astro`
+			: `src/pages/${defaultSlug}.astro`;
+		const defaultPagePath = join(root, ...defaultPageRelPath.split("/"));
 		if (existsSync(defaultPagePath)) {
-			console.log(`Skipped src/pages/${defaultSlug}.astro — already exists`);
+			console.log(`Skipped ${defaultPageRelPath} — already exists`);
 		} else {
 			writeFileSync(defaultPagePath, applyTemplate(defaultTemplate, defaultTitle), "utf8");
-			console.log(`Created src/pages/${defaultSlug}.astro`);
+			console.log(`Created ${defaultPageRelPath}`);
 		}
 
 		// Secondary locale pages
@@ -199,12 +281,26 @@ async function main() {
 			}
 		}
 
-		// routeTranslations.ts
-		const rtStatus = registerInRouteTranslations(defaultSlug, slugMap);
-		if (rtStatus === "registered") {
-			console.log(`Registered in routeTranslations.ts`);
-		} else if (rtStatus === "skipped") {
-			console.log(`Skipped routeTranslations.ts — "${defaultSlug}" already registered`);
+		// ── navData.json ───────────────────────────────────────
+		const navStatus = registerNavItem(slugMap, titleMap);
+
+		if (navStatus === "registered") {
+			console.log("Registered in navData.json");
+		}
+		// ── routeTranslations.ts ───────────────────────────────────────────────────
+		if (i18nEnabled) {
+			const rtStatus = registerInRouteTranslations(
+				defaultSlug,
+				slugMap
+			);
+
+			if (rtStatus === "registered") {
+				console.log("Registered in routeTranslations.ts");
+			} else if (rtStatus === "skipped") {
+				console.log(
+					`Skipped routeTranslations.ts — "${defaultSlug}" already registered`
+				);
+			}
 		}
 	}
 

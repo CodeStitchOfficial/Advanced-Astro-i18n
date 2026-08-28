@@ -1,4 +1,45 @@
-# Advanced Astro v6 i18n
+# Advanced Astro v7 i18n
+
+## 4.0.0
+
+### Major changes
+
+- Overhauled the i18n system and the various addons to allow for modular addition or removal of features. In short, i18n, Decap CMS, dark mode, and demo content are now optional, removable features (`src/features/`).
+
+To get started on a new project, set it up interactively via `npm run setup-project`.
+
+- Upgraded to Astro v7
+  In Astro v7, whitespace is now managed differently. To avoid unwanted changes (notably when using inline `<span>` in address blocks for example), you can add an explicit space between these elements using {" "}
+
+```diff
+- <span>hello</span>
+- <em>world</em>
++ <span>hello</span>{" "}<em>world</em>
+```
+
+If you prefer to keep the previous behavior, like this kit does, set compressHTML to true.
+
+```diff
+astro.config.mjs
+import { defineConfig } from 'astro/config';
+
+export default defineConfig({
++ compressHTML: true,
+});
+```
+
+More information on the [new whitespace handling on Astro docs](https://docs.astro.build/en/guides/upgrade-to/v7/#new-default-whitespace-handling-compresshtml-jsx)
+
+- Fixes a bug where `create-page` did not respect `defaultPrefix: true`, generating default-locale pages under `src/pages/{locale}/` instead of always at the `src/pages/` root ([#62](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/62))
+- Fixes a bug where `DynamicHeader` did not correctly support `defaultPrefix: true` ([#63](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/63))
+- Fixes consistency issues in hyphenated locale keys in favour of camelCase, fixing a translation-key parsing bug
+
+```diff
+- 	"project-1": "Project 1",
++ 	"project1": "Project 1",
+```
+
+- General housekeeping and updates of readme and codetours
 
 ## 3.0.2
 
@@ -111,7 +152,6 @@
 - **`npm run create-page`** — Scaffolds a new page for all locales
 - **`npm run remove-demo`** — Removes demo/placeholder content
 - **`npm run remove-dark-mode`** — Removes dark mode components and styles
-- **`npm run test:scripts`** — Runs unit tests for the utility scripts
 
 #### Schema changes
 
