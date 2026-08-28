@@ -1,3 +1,4 @@
+import { getRelativeLocaleUrl } from "astro:i18n";
 import { defaultLocale } from "../features/i18n/i18nConfig";
 
 function normalizePath(path: string) {
@@ -14,9 +15,5 @@ function normalizePath(path: string) {
 export function getRoute(locale: string | undefined, path: string) {
   const cleanPath = normalizePath(path);
 
-  if (!locale || locale === defaultLocale) {
-    return cleanPath;
-  }
-
-  return normalizePath(`/${locale}${cleanPath}`);
+  return normalizePath(getRelativeLocaleUrl(locale || defaultLocale, cleanPath));
 }
