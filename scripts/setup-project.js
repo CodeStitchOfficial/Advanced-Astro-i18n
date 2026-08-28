@@ -13,7 +13,6 @@ import { askYesNo } from "./utils/prompt.js";
 const root = process.cwd();
 
 
-// Guard block. if the value of setup inside the featuresFlags.ts is set to false. it means this script has been run.
 if (checkFeatureFlagBeforeRun(root, "setup", "project setup")) {
     process.exit(0);
 }
@@ -27,9 +26,6 @@ const featuresFile = join(
     "featuresFlags.ts"
 );
 
-/**
- * Reads the current feature flags from featuresFlags.ts
- */
 function readFeatureFlags() {
     const content = readFileSync(featuresFile, "utf8");
 

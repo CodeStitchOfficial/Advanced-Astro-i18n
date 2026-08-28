@@ -129,7 +129,6 @@ function registerInRouteTranslations(defaultSlug, slugMap) {
 // ─── Template helpers ─────────────────────────────────────────────────────────
 
 function applyTemplate(template, title) {
-	// Handles both the standard placeholder and the legacy French one
 	return template.replaceAll("Page Title", title).replaceAll("Titre de la page", title);
 }
 

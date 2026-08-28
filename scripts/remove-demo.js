@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * remove-demo.js
- *
- * Removes the demo feature from the project while preserving
- * any user customizations. Unlike previous versions, this script
- * never overwrites pages or layouts—it only removes demo-specific
- * files and references.
+ * Removes demo-specific files and references without touching pages or layouts.
  */
 
 import { promises as fs } from "fs";

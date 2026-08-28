@@ -42,9 +42,7 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
     <!-- Sitewide Scripts -->
     <script src="@assets/js/nav.js"></script>
 
-    <!-- FOUC prevention: applies dark-mode class before first paint.
-		     Reads cs-theme (set by ThemeSelect or DarkModeToggle) and falls
-		     back to the legacy "theme" key used by the Intermediate kit. -->
+    <!-- FOUC prevention: applies dark-mode class before first paint -->
     <script is:inline>
       (function () {
         var stored = localStorage.getItem("cs-theme");
@@ -54,7 +52,6 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
         } else if (stored === "light" || stored === "") {
           isDark = false;
         } else {
-          // Not set or any unexpected value — fall back to legacy key, then system pref
           var legacy = localStorage.getItem("theme");
           if (legacy === "dark") {
             isDark = true;

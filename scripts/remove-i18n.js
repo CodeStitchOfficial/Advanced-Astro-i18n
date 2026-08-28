@@ -177,14 +177,11 @@ function patchAstroConfig(defaultLocale) {
 async function runRemoval() {
     console.log("\nStarting i18n removal process...\n");
 
-    // 1. Capture the current locale config before anything gets deleted
     const i18nConfig = readI18nConfig(root) ?? { defaultLocale: "en", locales: ["en", "fr"] };
     const nonDefaultLocales = i18nConfig.locales.filter((l) => l !== i18nConfig.defaultLocale);
 
-    // 2. Flip i18n flag to false
     await disableFeatureFlag(root, "i18n");
 
-    // 3. Remove (Move) i18n-owned directories
     removeDirectory(path.join(root, "src/features/i18n"));
     for (const locale of nonDefaultLocales) {
         removeDirectory(path.join(root, "src/pages", locale));
@@ -193,17 +190,14 @@ async function runRemoval() {
     }
     cleanupNavData();
 
-    // 4. Replace fallback utility files (and backup the old ones)
     replaceNoI18n("src/js/getSiteContext");
     replaceNoI18n("src/features/decapCMS/core/getBlogPosts");
     replaceNoI18n("src/js/routes");
 
-    // 5. Clean up imports and component usages
     removeFromFile("src/components/Settings/Settings.astro", [
         /import\s+TwoLocalesSelect\s+from\s+["'][^"']*TwoLocalesSelect\.astro["'];?\r?\n/g, /\s*<TwoLocalesSelect\s*\/>\r?\n?/g,
     ]);
 
-    // 6. Narrow astro.config.ts down to the single remaining locale
     patchAstroConfig(i18nConfig.defaultLocale);
 
     console.log("\n✔ i18n removal complete. Originals backed up to scripts/deleted/");

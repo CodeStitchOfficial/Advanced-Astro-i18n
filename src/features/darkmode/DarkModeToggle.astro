@@ -106,8 +106,6 @@ const { content } = await getSiteContext(Astro.url);
 </button>
 
 <script>
-  // Shared localStorage key (cs-theme). Falls back to legacy "theme" key for
-  // cross-kit compatibility with the Intermediate kit.
   const STORAGE_KEY = "cs-theme";
   const LEGACY_KEY = "theme";
 
@@ -117,7 +115,6 @@ const { content } = await getSiteContext(Astro.url);
     if (stored === "dark" || stored === "light") return stored;
     // 'auto', '' (empty string), or not set — check system pref
     if (stored === null) {
-      // Fall back to legacy key used by the Intermediate kit
       const legacy = localStorage.getItem(LEGACY_KEY);
       if (legacy === "dark" || legacy === "light") return legacy;
     }

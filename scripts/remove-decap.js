@@ -56,14 +56,11 @@ function resolveBlogPagesPaths() {
 		? i18n.locales
 			.filter((localeItem) => localeItem !== i18n.defaultLocale)
 			.map((localeItem) => ({ locale: localeItem, path: join(root, "src", "pages", localeItem, "blog") }))
-		: [{ locale: "fr", path: join(root, "src", "pages", "fr", "blog") }]; // Fixed: explicitly used "fr" string literal here
+		: [{ locale: "fr", path: join(root, "src", "pages", "fr", "blog") }];
 
 	return { defaultBlogDir, nonDefaultBlogDirs };
 }
 
-/**
- * Move helper with source check and target cleanup
- */
 async function moveItem(sourcePath, destPath, label) {
 	try {
 		await fs.access(sourcePath);
@@ -149,10 +146,8 @@ async function cleanupNavData() {
 		const navData = JSON.parse(content);
 
 		const filtered = navData.filter(item => {
-			// 1. Check the item key safely (case-insensitive)
 			const isBlogKey = item.key && String(item.key).toLowerCase() === "blog";
 
-			// 2. Check the item URL safely, walking through strings or deep object values
 			let isBlogUrl = false;
 			if (item.urls) {
 				if (typeof item.urls === "string") {
@@ -164,7 +159,6 @@ async function cleanupNavData() {
 				}
 			}
 
-			// Keep the item only if it's NOT related to the blog
 			return !isBlogKey && !isBlogUrl;
 		});
 

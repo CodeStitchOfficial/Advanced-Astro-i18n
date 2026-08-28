@@ -6,7 +6,6 @@ import { Icon } from "astro-icon/components";
 import { formatDate } from "@js/utils";
 import "@styles/markdown.less";
 
-// Receiving incoming props and destructuring them
 const { post } = Astro.props;
 const { title, date, image, author, imageAlt } = post.data;
 const { Content } = await render(post);

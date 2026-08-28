@@ -10,8 +10,6 @@ interface Props {
 	description?: string;
 	heroImage?: ImageMetadata;
 	locale: string;
-	// og:locale (e.g. "en_US") and the active page's BCP-47 hreflang (e.g. "en-US"),
-	// precomputed by getSiteContext so this component doesn't need to know about i18n
 	currentHreflang: string;
 	ogLocale: string;
 	alternates?: {
@@ -30,7 +28,6 @@ const {
 	alternates = [],
 } = Astro.props;
 
-// Data
 const localBusinessSchema = getLocalBusinessSchema(Astro.url.origin, locale);
 const canonical = Astro.url.href;
 const [defaultAlternate] = alternates;
@@ -40,19 +37,15 @@ const [defaultAlternate] = alternates;
 const isLandingPage =
 	Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
 
-// Format page title with business name (and location if home page)
 const pageTitle = isLandingPage
 	? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}`
 	: `${title} | ${BUSINESS.name}`;
 
-// OG type is hardcoded since it rarely changes
 const ogType = "website";
 
-// Use page-specific values for OG tags
 const ogTitle = pageTitle;
 const ogDescription = description;
 
-// Social image logic - Priority: 1) Provided heroImage, 2) Default /assets/social.jpg
 let socialImage: string;
 
 if (heroImage) {

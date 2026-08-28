@@ -2,12 +2,12 @@
 import { Icon } from "astro-icon/components";
 
 interface Props {
-	id?: string; // optional id for the button
-	href?: string; // the href to go to, ex "/posts/"
-	arrow?: "left" | "right" | "none"; // position of the arrow, if any
-	class?: string; // any additional classes
-	rel?: "prev" | "next"; // for <a> tags, ex "prev" or "next"
-	rest?: any; // catch-all for any additional parameters, such as "aria-label"
+	id?: string;
+	href?: string;
+	arrow?: "left" | "right" | "none";
+	class?: string;
+	rel?: "prev" | "next";
+	rest?: any;
 }
 
 const { id, href, arrow = "none", class: className, rel, ...rest } = Astro.props as Props;

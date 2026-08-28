@@ -1,17 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * remove-dark-mode.js
- *
- * Removes dark mode support from the Advanced Astro i18n kit.
- * This script:
- *   - Removes DarkMode components (DarkModeToggle, ThemeSelect)
- *   - Removes the dark mode toggle from Settings component
- *   - Removes the inline dark mode scripts from BaseLayout
- *   - Sweeps all src .astro/.less/.css files for body.dark-mode CSS blocks
- *   - Disables the darkMode feature flag
- *
- * Run with: node scripts/remove-dark-mode.js
+ * Removes dark mode support: DarkMode components, Settings toggle, BaseLayout
+ * inline scripts, and all body.dark-mode CSS blocks. Run with:
+ * node scripts/remove-dark-mode.js
  */
 
 import { existsSync, rmSync, readFileSync, writeFileSync, readdirSync } from "fs";
@@ -88,9 +80,6 @@ function replaceRegex(relPath, pattern, replacement) {
 	}
 }
 
-/**
- * Remove all body.dark-mode { ... } blocks.
- */
 function removeDarkModeBlocks(content) {
 	let result = content;
 	const selector = "body.dark-mode";
@@ -147,9 +136,6 @@ function removeDarkModeBlocks(content) {
 	return result;
 }
 
-/**
- * Recursively collect matching files.
- */
 function walkFiles(dir, exts) {
 	const files = [];
 

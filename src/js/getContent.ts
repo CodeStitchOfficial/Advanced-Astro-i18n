@@ -8,7 +8,5 @@ export function getContent(locale?: string) {
     return loadTranslations(locale ?? "en");
   }
 
-  // BASIC MODE:
-  // ignore locale completely
   return loadTranslations("en");
 }

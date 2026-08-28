@@ -20,6 +20,5 @@ export function loadTranslations(locale: string) {
 }
 
 function getFileKey(path: string) {
-  // "../locales/en/home.json" → "home"
   return path.split("/").pop()?.replace(".json", "")!;
 }

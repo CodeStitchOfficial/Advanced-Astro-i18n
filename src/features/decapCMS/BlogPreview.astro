@@ -5,7 +5,6 @@ import { getSiteContext } from "@js/getSiteContext";
 import { getRoute } from "@js/routes";
 import { getPostSlug } from "./core/blogUtils";
 
-// Receiving incoming props and destructuring them
 const { post } = Astro.props;
 
 const site = await getSiteContext(Astro.url);
