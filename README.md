@@ -297,13 +297,15 @@ src/locales/
 ├── en/
 │   ├── common.json
 │   ├── home.json
-│   ├── about.json
-│   └── ...
+│   ├── contact.json
+│   ├── blog.json
+│   └── reviews.json
 └── fr/
     ├── common.json
     ├── home.json
-    ├── about.json
-    └── ...
+    ├── contact.json
+    ├── blog.json
+    └── reviews.json
 ```
 
 JSON files for each locale must have the **same structure and keys** — only the translated values differ.
@@ -351,17 +353,20 @@ const { content } = await getSiteContext(Astro.url);
 
 ### Generating Localized URLs
 
-Use `getLocalizedRoute(locale, path)` to link to translated routes:
+Route translation is driven by `src/data/navData.json`: each nav entry stores a per-locale URL, so look up the slug for the current locale there and pass it to `getRoute(locale, path)` to add the correct locale prefix:
 
 ```astro
 ---
+import navData from "@data/navData.json";
 import { getSiteContext } from "@js/getSiteContext";
-import { getLocalizedRoute } from "src/features/i18n/routing/getLocalizedRoute";
+import { getRoute } from "@js/routes";
 
 const { locale } = await getSiteContext(Astro.url);
+const aboutEntry = navData.find((entry) => entry.key === "about");
+const aboutUrl = aboutEntry.urls[locale] ?? aboutEntry.urls.en;
 ---
 
-<a href={getLocalizedRoute(locale, "/about")}>About</a>
+<a href={getRoute(locale, aboutUrl)}>About</a>
 <!-- "/about/" for EN, "/fr/a-propos/" for FR -->
 ```
 
