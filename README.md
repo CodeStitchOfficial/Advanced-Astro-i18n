@@ -25,6 +25,7 @@
     - [Overview and Config](#overview-and-config)
     - [Adding or changing locales](#adding-or-changing-locales)
     - [Page Structure](#page-structure)
+    - [Scaffolding New Pages](#scaffolding-new-pages)
     - [Configuration Files](#configuration-files)
     - [Translation Files and Namespaces](#translation-files-and-namespaces)
     - [Using Translations](#using-translations)
@@ -130,7 +131,7 @@ All commands are run from the root of the project, from a terminal:
 | `npm run build`         | Build your production site to `./dist/`                                    |
 | `npm run preview`       | Preview your build locally, before deploying                               |
 | `npm run setup-project` | Interactively choose which features to keep/remove, then configure locales |
-| `npm run create-page` | Scaffolds a new page for all locales |
+| `npm run create-page -- "Page Name"` | Scaffolds a new page for every locale — see [Scaffolding New Pages](#scaffolding-new-pages) |
 | `node scripts/config-i18n.js` | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
 | `node scripts/remove-i18n.js` | Permanently removes the i18n system |
 | `node scripts/remove-decap.js` | Removes Decap CMS integration |
@@ -272,6 +273,42 @@ src/pages/
 ```
 
 Every page starts with one call — `getSiteContext(Astro.url)` — which figures out the locale from the URL and hands back that locale's translated content. See [Using Translations](#using-translations)
+
+> **Note:** if `prefixDefaultLocale: true` (see [Overview and Config](#overview-and-config)), the default locale also moves into its own sub-folder (`src/pages/en/`) instead of sitting at the root.
+
+### Scaffolding New Pages
+
+Rather than copying `_template.astro` into each locale folder by hand, `npm run create-page` does it for every locale at once, from one command:
+
+```sh
+npm run create-page -- "Page Name"
+```
+
+It reads `src/pages/_template.astro` (and each secondary locale's own `_template.astro`), derives a slug and title from the name you give it (`"About Us"` → `about-us.astro` / "About Us"), and for every page it creates it also:
+
+- Adds an entry to `src/data/navData.json` (skipped if that page is already registered)
+- Registers the per-locale slugs in `src/features/i18n/routeTranslations.ts`, if i18n is enabled (see [Localizing Route Slugs](#localizing-route-slugs))
+- Skips any file that already exists, rather than overwriting it
+
+**Arguments** (everything after `--`):
+
+| Position | Example | Meaning |
+| --- | --- | --- |
+| 1st — page name(s) | `"Contact"` or `"Contact, About, Services"` | Required. Comma-separated names in the default locale — one page per name. |
+| 2nd — secondary-locale name(s) | `"Contactez-nous"` or `"Contactez-nous, À propos"` | Optional. Comma-separated names for the *first* secondary locale, matched positionally to the names above. Any other locales fall back to the default-locale slug/title. |
+
+```sh
+# Multiple pages at once
+npm run create-page -- "Contact, About, Services"
+
+# Skip the interactive prompt below by supplying the French name directly
+npm run create-page -- "Contact" "Contactez-nous"
+
+# Same, for multiple pages — positional: 1st name pairs with 1st page, etc.
+npm run create-page -- "Contact, About" "Contactez-nous, À propos"
+```
+
+If you omit the 2nd argument and run the command in a terminal, it prompts you for each secondary locale's name per page (press Enter to reuse the default-locale name). In a non-interactive context (CI, piped input) with no 2nd argument, it silently reuses the default-locale slug and title for every secondary locale.
 
 ### Configuration Files
 
