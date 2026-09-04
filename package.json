@@ -18,8 +18,8 @@
 		"@astrojs/sitemap": "^3.7.2",
 		"astro": "^6.3.3",
 		"astro-icon": "^1.1.5",
-		"autoprefixer": "^10.5.0",
-		"less": "^4.6.4"
+		"autoprefixer": "^10.5.5",
+		"less": "^4.6.7"
 	},
 	"devDependencies": {
 		"slugify": "^1.6.9"
