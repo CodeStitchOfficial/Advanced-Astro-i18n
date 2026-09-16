@@ -3,49 +3,44 @@
 	"title": "i18n Routing & Translation System",
 	"steps": [
 		{
-			"file": "astro.config.mjs",
-			"description": "Astro's built-in i18n is configured here. **prefixDefaultLocale: false** means English (the default) uses clean URLs like `/about/` while French gets `/fr/a-propos/`. The `locales` array lists every supported language. To add a third language, add it here, then update `siteSettings.ts`, `routeTranslations.ts`, and add a new folder in `src/locales/`.",
-			"line": 7
+			"file": "astro.config.ts",
+			"description": "Astro's i18n routing starts here. **prefixDefaultLocale: false** means English gets clean URLs (`/about/`) while French gets a `/fr/` prefix (`/fr/a-propos/`). To add a third language, add it here, then in `i18nConfig.ts`, `navData.json`, and `src/locales/`.",
+			"line": 8
 		},
 		{
-			"file": "src/config/siteSettings.ts",
-			"description": "This is the single source of truth for locale configuration. **locales** is a readonly tuple that drives type-safety across the whole codebase (`Locale` type). **languageSwitcherMap** controls what text appears on the language toggle buttons. **localeMap** maps short locale codes to full BCP 47 tags used in hreflang attributes.",
+			"file": "src/features/i18n/i18nConfig.ts",
+			"description": "The single settings file for locales: which ones exist (**locales**), the labels on the language toggle (**languageSwitcherMap**), the region codes used for SEO tags (**localeMap**), and which blog-style collections need translated slugs (**localizedCollections**).",
 			"line": 1
 		},
 		{
-			"file": "src/js/localeUtils.ts",
-			"description": "Three utility functions for working with locales:\n- **getLocaleFromUrl(url)** — reads the first URL path segment; returns `defaultLocale` if no locale prefix is found (since English has no prefix)\n- **filterCollectionByLanguage(collection, locale)** — filters blog posts to a specific language by checking the `en/` or `fr/` folder prefix in the entry ID.",
+			"file": "src/features/i18n/localeUtils.ts",
+			"description": "A few small helpers: **getLocaleFromUrl()** reads the locale from the current URL, **filterCollectionByLanguage()** keeps only one locale's blog posts, and **toOgLocale()** formats a locale for social-share tags.",
 			"line": 4
 		},
 		{
-			"file": "src/config/routeTranslations.ts",
-			"description": "Static route translations map English page names to their localized equivalents. `\"about\"` → `\"a-propos\"`, `\"reviews\"` → `\"avis\"`, etc. **getLocalizedRoute()** in `translationUtils.ts` uses this to generate locale-correct links throughout the site. The **localizedCollections** object enables the language switcher to translate blog post slugs dynamically using `mappingKey` frontmatter.",
-			"line": 3
+			"file": "src/features/i18n/routeTranslations.ts",
+			"description": "This is where `\"about\"` becomes `\"a-propos\"` for links elsewhere in the site — but it's built automatically from `src/data/navData.json`, so you never edit this file by hand.",
+			"line": 29
 		},
 		{
-			"file": "src/js/translationUtils.ts",
-			"description": "**useTranslations(locale)** returns a `t(key)` function. Keys use a `namespace:path` format — `\"home:hero.title\"` loads `src/locales/{locale}/home.json` and returns the `hero.title` value. No namespace defaults to `common`. Translation files are loaded eagerly via Vite's `import.meta.glob` and cached per locale.",
-			"line": 57
+			"file": "src/features/i18n/routing/getLocalizedPathname.ts",
+			"description": "Powers the language switcher: given the page you're on and a target locale, it works out the equivalent URL in that locale — including translated blog post slugs, not just page routes.",
+			"line": 6
 		},
 		{
-			"file": "src/js/translationUtils.ts",
-			"description": "**getLocalizedPathname(locale, url)** is the async language-switcher function. It reverse-translates the current URL back to neutral route segments, then forward-translates to the target locale. For example: `/fr/a-propos/` → `about` → `/about/` (switching to English). It also handles blog post slug translation via dynamic route mappings built from `mappingKey` frontmatter.",
-			"line": 178
+			"file": "src/js/getSiteContext.ts",
+			"description": "The one function most pages call. Give it the current URL and it hands back the locale, the translated text for that locale, and the SEO links for the other languages, all in a single call.",
+			"line": 5
 		},
 		{
 			"file": "src/components/Meta/Meta.astro",
-			"description": "The Meta component generates **hreflang alternate links** for SEO. For every locale, it calls `getLocalizedPathname()` to get the equivalent URL and outputs `<link rel=\"alternate\" hreflang=\"...\">`. The `x-default` tag points to the English version. This tells search engines that pages exist in multiple languages and which URL to show for each region.",
-			"line": 31
+			"description": "Uses the SEO links from `getSiteContext()` to tell search engines \"this page also exists in French/English at this URL\"",
+			"line": 97
 		},
 		{
-			"file": "src/components/LanguageSwitch/BrowserLanguageRedirect.astro",
-			"description": "This component is placed only on the English homepage (`src/pages/index.astro`). It runs a small inline script that checks `navigator.language` — if the visitor's browser prefers French and they haven't chosen a language yet, it redirects to `/fr/`. A `localStorage` key prevents the redirect on return visits so users aren't forced back after manually switching.",
-			"line": 1
-		},
-		{
-			"file": "src/components/LanguageSwitch/TwoLocalesSelect.astro",
-			"description": "The language toggle UI component. It calls `getLocalizedPathname()` for each locale to compute where each button should link, then renders radio-button-style language options. A custom element (`<language-toggle>`) handles keyboard navigation (arrow keys) and saves the user's choice to `localStorage` so `BrowserLanguageRedirect` won't override it.",
-			"line": 10
+			"file": "src/features/i18n/LanguageSwitch/TwoLocalesSelect.astro",
+			"description": "The EN/FR toggle button in the header. It links each option to the correct translated URL and supports arrow-key navigation for accessibility.",
+			"line": 12
 		}
 	]
 }

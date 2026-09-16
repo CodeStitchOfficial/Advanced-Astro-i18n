@@ -1,12 +1,3 @@
-export const SITE = {
-	title: "Code Stitch Web Designs",
-	tagline: "Pixel Perfect Websites",
-	description: "Meta description for the page",
-	url: "https://www.codestitch.app",
-	author: "Code Stitch",
-	locale: "en",
-};
-
 export const BUSINESS = {
 	name: "Code Stitch Web Designs",
 	email: "help@codestitch.app",
@@ -25,9 +16,4 @@ export const BUSINESS = {
 		facebook: "https://www.facebook.com",
 		instagram: "https://www.instagram.com",
 	},
-};
-
-export const OG = {
-	locale: "en_US",
-	image: "/assets/social.jpg",
 };

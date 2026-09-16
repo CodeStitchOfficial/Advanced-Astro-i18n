@@ -2,7 +2,7 @@
     "landing": "Contact",
     "topper": "Contact",
     "title": "Nous écrire",
-    "p-1": "Dites-nous Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ridiculus elementum ullamcorper ipsum porttitor aliquam. Id magna urna ultrices odio pulvinar. Sed ut.",
+    "p1": "Dites-nous Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ridiculus elementum ullamcorper ipsum porttitor aliquam. Id magna urna ultrices odio pulvinar. Sed ut.",
     "form": {
         "name": "Nom",
         "email": "Email",

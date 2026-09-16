@@ -1,8 +1,3 @@
-/**
- * Pure transformation helpers shared across scripts.
- * Extracted here to make them independently unit-testable.
- */
-
 import slugifyLib from "slugify";
 
 export function slugify(name) {

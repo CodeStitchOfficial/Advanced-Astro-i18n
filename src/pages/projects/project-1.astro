@@ -1,10 +1,8 @@
 ---
+import { getSiteContext } from "@js/getSiteContext";
 import BaseLayout from "@layouts/BaseLayout.astro";
-import CTA from "@components/CTA/CTA.astro";
-import Banner from "@components/Banner/Banner.astro";
+import Banner from "src/features/demo/Banner.astro";
 import { Picture } from "astro:assets";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
 import port1 from "@assets/images/portfolio/port1.jpg";
 import port2 from "@assets/images/portfolio/port2.jpg";
 import port3 from "@assets/images/portfolio/port3.jpg";
@@ -16,17 +14,21 @@ import port8 from "@assets/images/portfolio/port8.jpg";
 import port9 from "@assets/images/portfolio/port9.jpg";
 
 import landingImage from "@assets/images/landing.jpg";
+import { getRoute } from "@js/routes";
+import CTA from "src/features/demo/CTA.astro";
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+const { content, locale } = await getSiteContext(Astro.url);
 ---
 
-<BaseLayout title={t("projects")} description="Meta description for the page">
+<BaseLayout
+  title={content.common.projects}
+  description="Meta description for the page"
+>
   <!-- ============================================ -->
   <!--                    LANDING                   -->
   <!-- ============================================ -->
 
-  <Banner title={t("project-1")} image={landingImage}/>
+  <Banner title={content.common.project1} image={landingImage} />
 
   <!-- ============================================ -->
   <!--                   Gallery                    -->
@@ -37,27 +39,110 @@ const t = useTranslations(locale);
       <div class="cs-image-group">
         <!-- Row 1-->
         <div class="cs-row cs-row-1">
-          <Picture src={port1} alt="new hallway" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture1" }} aria-hidden="true" decoding="async" loading="lazy" />
-          <Picture src={port4} alt="new home construction" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture2" }} aria-hidden="true" decoding="async" loading="lazy" />
-          <Picture src={port7} alt="building a new wall" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture3" }} aria-hidden="true" decoding="async" loading="lazy" />
+          <Picture
+            src={port1}
+            alt="new hallway"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture1" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={port4}
+            alt="new home construction"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture2" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={port7}
+            alt="building a new wall"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture3" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
         <!-- Row 2 -->
         <div class="cs-row cs-row-2">
-          <Picture src={port2} alt="new kitchen" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture1" }} aria-hidden="true" decoding="async" loading="lazy" />
-          <Picture src={port5} alt="apartment addition" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture2" }} aria-hidden="true" decoding="async" loading="lazy" />
-          <Picture src={port8} alt="new kitchen cabinets" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture3" }} aria-hidden="true" decoding="async" loading="lazy" />
+          <Picture
+            src={port2}
+            alt="new kitchen"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture1" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={port5}
+            alt="apartment addition"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture2" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={port8}
+            alt="new kitchen cabinets"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture3" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
         <!-- Row 3 -->
         <div class="cs-row cs-row-3">
-          <Picture src={port3} alt="new kitchen" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture1" }} aria-hidden="true" decoding="async" loading="lazy" />
-          <Picture src={port6} alt="apartment addition" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture2" }} aria-hidden="true" decoding="async" loading="lazy" />
-          <Picture src={port9} alt="new kitchen cabinets" width={400} formats={["avif", "webp"]} pictureAttributes={{ class: "cs-picture cs-picture3" }} aria-hidden="true" decoding="async" loading="lazy" />
+          <Picture
+            src={port3}
+            alt="new kitchen"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture1" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={port6}
+            alt="apartment addition"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture2" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
+          <Picture
+            src={port9}
+            alt="new kitchen cabinets"
+            width={400}
+            formats={["avif", "webp"]}
+            pictureAttributes={{ class: "cs-picture cs-picture3" }}
+            aria-hidden="true"
+            decoding="async"
+            loading="lazy"
+          />
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
       </div>
-      <a href={getLocalizedRoute(locale,"/contact")} class="cs-button-solid">{t("ctaComponent.cta")}</a>
+      <a href={getRoute(locale, "/contact")} class="cs-button-solid"
+        >{content.common.ctaComponent.cta}</a
+      >
     </div>
   </section>
   <CTA />

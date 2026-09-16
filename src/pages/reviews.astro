@@ -1,31 +1,27 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Banner from "@components/Banner/Banner.astro";
-import Reviews from "@components/Reviews/Reviews.astro";
-import CTA from "@components/CTA/CTA.astro";
-import { getLocaleFromUrl } from "@js/localeUtils";
-import { useTranslations } from "@js/translationUtils";
-import landingImage from "@assets/images/landing.jpg";
+import { getSiteContext } from "@js/getSiteContext";
+import Banner from "src/features/demo/Banner.astro";
+import ReviewsComponent from "src/features/demo/Reviews.astro";
 
-const locale = getLocaleFromUrl(Astro.url);
-const t = useTranslations(locale);
+import landingImage from "@assets/images/landing.jpg";
+import CTA from "src/features/demo/CTA.astro";
+
+const { content } = await getSiteContext(Astro.url);
 ---
 
-<BaseLayout
-	title={t("reviews:landing")}
-	description={t("reviews:p")}
->
-	<!-- ============================================ -->
-	<!--                    LANDING                   -->
-	<!-- ============================================ -->
+<BaseLayout title={content.reviews.landing} description={content.reviews.p}>
+  <!-- ============================================ -->
+  <!--                    LANDING                   -->
+  <!-- ============================================ -->
 
-	<Banner title={t("reviews:landing")} image={landingImage} />
+  <Banner title={content.reviews.landing} image={landingImage} />
 
-	<!-- ============================================ -->
-	<!--                   Reviews                    -->
-	<!-- ============================================ -->
+  <!-- ============================================ -->
+  <!--                   Reviews                    -->
+  <!-- ============================================ -->
 
-	<Reviews />
+  <ReviewsComponent />
 
-	<CTA />
+  <CTA />
 </BaseLayout>
