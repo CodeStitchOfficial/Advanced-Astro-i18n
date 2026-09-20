@@ -25,10 +25,7 @@
   },
   {
     "key": "projects",
-    "urls": {
-      "en": "/projects",
-      "fr": "/projets"
-    },
+    "urls": {},
     "label": {
       "en": "Projects",
       "fr": "Projets"
