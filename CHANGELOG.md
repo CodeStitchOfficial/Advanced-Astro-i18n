@@ -8,6 +8,51 @@
 
 To get started on a new project, set it up interactively via `npm run setup-project`.
 
+- Fixes a bug where `create-page` did not respect `defaultPrefix: true`, generating default-locale pages under `src/pages/{locale}/` instead of always at the `src/pages/` root ([#62](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/62))
+- Fixes a bug where `DynamicHeader` did not correctly support `defaultPrefix: true` ([#63](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/63))
+- Fixes consistency issues in hyphenated locale keys in favour of camelCase, fixing a translation-key parsing bug
+- General housekeeping and updates of readme and codetours
+- Minor upgrades of packages
+
+### Breaking changes
+
+- The `t()` translation function (`useTranslations(locale)` from `@js/translationUtils`) has been removed.
+  Translations are now read as plain objects from `content`, returned by `getSiteContext(Astro.url)` along with the `locale`. `content` is namespaced by JSON filename (`common.json` becomes `content.common`, `home.json` becomes `content.home`, ...), and the locale is detected from the URL for you.
+
+Keys that were dot-paths in a string are now regular property access, and array items use brackets. `t()` used to fall back to `common` when no namespace was given; you must now name the namespace yourself. `t()` also returned the key itself when a translation was missing, whereas `content` returns `undefined`, so check that both locales have the same keys.
+
+```diff
+- import { getLocaleFromUrl } from "@js/localeUtils";
+- import { useTranslations } from "@js/translationUtils";
++ import { getSiteContext } from "@js/getSiteContext";
+
+- const locale = getLocaleFromUrl(Astro.url);
+- const t = useTranslations(locale);
++ const { content, locale } = await getSiteContext(Astro.url);
+
+- <span>{t("home:hero.topper")}</span>
+- <h1>{t("home:hero.title.1")}</h1>
+- <h2>{t("ctaComponent.title")}</h2>
++ <span>{content.home.hero.topper}</span>
++ <h1>{content.home.hero.title[1]}</h1>
++ <h2>{content.common.ctaComponent.title}</h2>
+```
+
+With i18n removed, `content` always contains the English files, so components need no changes.
+
+- `getLocalizedRoute(locale, path)` has moved and now works differently.
+  It lives in `@js/routes` (it used to be exported from `@js/translationUtils`) and is driven by `src/data/navData.json` instead of the old `routeTranslations` config.
+  Usage: pass the default-locale path listed in `navData.json` (e.g. `/about`) and it returns the translated URL (`/fr/a-propos/`). This also works for nested pages such as `/projects/project-1`, which the old segment-by-segment lookup could not translate.
+  Paths that are not in `navData.json`, like `/blog/${slug}`, only get the locale prefix.
+  Locale prefixing now goes through Astro's `getRelativeLocaleUrl`, so `prefixDefaultLocale: true` is supported.
+
+```diff
+- import { useTranslations, getLocalizedRoute } from "@js/translationUtils";
++ import { getLocalizedRoute } from "@js/routes";
+```
+
+When i18n is removed, `getLocalizedRoute` is swapped for a prefix-only version, so links keep working without changes.
+
 - Upgraded to Astro v7
   In Astro v7, whitespace is now managed differently. To avoid unwanted changes (notably when using inline `<span>` in address blocks for example), you can add an explicit space between these elements using {" "}
 
@@ -29,17 +74,6 @@ export default defineConfig({
 ```
 
 More information on the [new whitespace handling on Astro docs](https://docs.astro.build/en/guides/upgrade-to/v7/#new-default-whitespace-handling-compresshtml-jsx)
-
-- Fixes a bug where `create-page` did not respect `defaultPrefix: true`, generating default-locale pages under `src/pages/{locale}/` instead of always at the `src/pages/` root ([#62](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/62))
-- Fixes a bug where `DynamicHeader` did not correctly support `defaultPrefix: true` ([#63](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/63))
-- Fixes consistency issues in hyphenated locale keys in favour of camelCase, fixing a translation-key parsing bug
-
-```diff
-- 	"project-1": "Project 1",
-+ 	"project1": "Project 1",
-```
-
-- General housekeeping and updates of readme and codetours
 
 ## 3.0.2
 

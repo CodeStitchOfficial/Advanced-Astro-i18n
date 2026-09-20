@@ -30,6 +30,7 @@
     - [Translation Files and Namespaces](#translation-files-and-namespaces)
     - [Using Translations](#using-translations)
     - [Generating Localized URLs](#generating-localized-urls)
+    - [Navigation Data](#navigation-data)
     - [Localizing Route Slugs](#localizing-route-slugs)
     - [Localizing Blog Post Slugs](#localizing-blog-post-slugs)
     - [Language Switcher Components](#language-switcher-components)
@@ -108,15 +109,15 @@ This is the main onboarding command: it asks which optional features to keep (i1
 
 Once you've run `setup-project`, these are the files most projects need to personalize before writing any new code:
 
-| File | What to update |
-| ---- | --------------- |
-| `src/data/client.ts` | Business name, email, phone, address (`BUSINESS` object) |
-| `src/data/siteConfig.ts` | Domain, description, social share image (`SITE`, `OG`) |
-| `astro.config.ts` | `site` — your production domain |
-| `src/styles/root.less` | Brand colors/fonts via CSS variables (`--primary`, `--secondary`, `--headerColor`, etc.) |
-| `src/components/Settings/Settings.astro` | Swap or remove the dark-mode toggle / language switcher |
-| `src/data/navData.json` | Nav links, and per-locale translated paths if i18n is kept |
-| `public/admin/config.yml` | Decap CMS repo + DecapBridge auth endpoints, if keeping the CMS |
+| File                                     | What to update                                                                           |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------- |
+| `src/data/client.ts`                     | Business name, email, phone, address (`BUSINESS` object)                                 |
+| `src/data/siteConfig.ts`                 | Domain, description, social share image (`SITE`, `OG`)                                   |
+| `astro.config.ts`                        | `site` — your production domain                                                          |
+| `src/styles/root.less`                   | Brand colors/fonts via CSS variables (`--primary`, `--secondary`, `--headerColor`, etc.) |
+| `src/components/Settings/Settings.astro` | Swap or remove the dark-mode toggle / language switcher                                  |
+| `src/data/navData.json`                  | Nav links, and per-locale translated paths if i18n is kept                               |
+| `public/admin/config.yml`                | Decap CMS repo + DecapBridge auth endpoints, if keeping the CMS                          |
 
 See [Pre-Deployment Checklist](#pre-deployment-checklist) for the full list to double-check right before going live (production domain, favicons, sitemap, etc.).
 
@@ -124,19 +125,19 @@ See [Pre-Deployment Checklist](#pre-deployment-checklist) for the full list to d
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                 | Action                                                                     |
-| ----------------------- | -------------------------------------------------------------------------- |
-| `npm install`           | Installs dependencies                                                      |
-| `npm run dev`           | Starts local dev server at `localhost:4321`                                |
-| `npm run build`         | Build your production site to `./dist/`                                    |
-| `npm run preview`       | Preview your build locally, before deploying                               |
-| `npm run setup-project` | Interactively choose which features to keep/remove, then configure locales |
+| Command                              | Action                                                                                      |
+| ------------------------------------ | ------------------------------------------------------------------------------------------- |
+| `npm install`                        | Installs dependencies                                                                       |
+| `npm run dev`                        | Starts local dev server at `localhost:4321`                                                 |
+| `npm run build`                      | Build your production site to `./dist/`                                                     |
+| `npm run preview`                    | Preview your build locally, before deploying                                                |
+| `npm run setup-project`              | Interactively choose which features to keep/remove, then configure locales                  |
 | `npm run create-page -- "Page Name"` | Scaffolds a new page for every locale — see [Scaffolding New Pages](#scaffolding-new-pages) |
-| `node scripts/config-i18n.js` | Reconfigure locales interactively (default locale, additional locales, URL prefixing) |
-| `node scripts/remove-i18n.js` | Permanently removes the i18n system |
-| `node scripts/remove-decap.js` | Removes Decap CMS integration |
-| `node scripts/remove-demo.js` | Removes demo/placeholder content |
-| `node scripts/remove-dark-mode.js` | Removes dark mode components and styles |
+| `node scripts/config-i18n.js`        | Reconfigure locales interactively (default locale, additional locales, URL prefixing)       |
+| `node scripts/remove-i18n.js`        | Permanently removes the i18n system                                                         |
+| `node scripts/remove-decap.js`       | Removes Decap CMS integration                                                               |
+| `node scripts/remove-demo.js`        | Removes demo/placeholder content                                                            |
+| `node scripts/remove-dark-mode.js`   | Removes dark mode components and styles                                                     |
 
 ## Features
 
@@ -292,10 +293,10 @@ It reads `src/pages/_template.astro` (and each secondary locale's own `_template
 
 **Arguments** (everything after `--`):
 
-| Position | Example | Meaning |
-| --- | --- | --- |
-| 1st — page name(s) | `"Contact"` or `"Contact, About, Services"` | Required. Comma-separated names in the default locale — one page per name. |
-| 2nd — secondary-locale name(s) | `"Contactez-nous"` or `"Contactez-nous, À propos"` | Optional. Comma-separated names for the *first* secondary locale, matched positionally to the names above. Any other locales fall back to the default-locale slug/title. |
+| Position                       | Example                                            | Meaning                                                                                                                                                                  |
+| ------------------------------ | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1st — page name(s)             | `"Contact"` or `"Contact, About, Services"`        | Required. Comma-separated names in the default locale — one page per name.                                                                                               |
+| 2nd — secondary-locale name(s) | `"Contactez-nous"` or `"Contactez-nous, À propos"` | Optional. Comma-separated names for the _first_ secondary locale, matched positionally to the names above. Any other locales fall back to the default-locale slug/title. |
 
 ```sh
 # Multiple pages at once
@@ -390,25 +391,60 @@ const { content } = await getSiteContext(Astro.url);
 
 ### Generating Localized URLs
 
-Route translation is driven by `src/data/navData.json`: each nav entry stores a per-locale URL, so look up the slug for the current locale there and pass it to `getRoute(locale, path)` to add the correct locale prefix:
+Use `getLocalizedRoute(locale, path)` to link to any page. Pass the **default-locale (English) path** as listed in `src/data/navData.json`; it returns the translated URL with the right locale prefix:
 
 ```astro
 ---
-import navData from "@data/navData.json";
 import { getSiteContext } from "@js/getSiteContext";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 
 const { locale } = await getSiteContext(Astro.url);
-const aboutEntry = navData.find((entry) => entry.key === "about");
-const aboutUrl = aboutEntry.urls[locale] ?? aboutEntry.urls.en;
 ---
 
-<a href={getRoute(locale, aboutUrl)}>About</a>
+<a href={getLocalizedRoute(locale, "/about")}>About</a>
 <!-- "/about/" for EN, "/fr/a-propos/" for FR -->
 ```
 
+Paths that are not in `navData.json` (dynamic routes such as `/blog/${slug}`) only get the locale prefix, so they work too.
+
 > [!IMPORTANT]
 > This only translates routes that exist in `src/data/navData.json` **and** have a matching page file (e.g. `src/pages/fr/a-propos.astro`).
+
+### Navigation Data
+
+`src/data/navData.json` is an array of nav entries. It drives the header, the footer, `getLocalizedRoute()` and the language switcher. Each entry has this shape:
+
+```ts
+interface NavItem {
+  key: string; // unique id, used by the route translations
+  urls: Record<string, string>; // locale -> path, e.g. { "en": "/about", "fr": "/a-propos" }
+  label: Record<string, string>; // locale -> link text
+  children: NavItem[]; // sub-pages shown in a dropdown, [] if none
+}
+```
+
+The type is declared in `src/typescript/global.d.ts`. A few rules to know:
+
+- **Every entry needs `key`, `urls`, `label` and `children`**, even when `children` is `[]`.
+- **`key` must be unique across the whole tree**, including children, because route translations are built from a flat map of keys.
+- **A child's `urls` is the full path**, not just its own segment: `"/projects/project-1"`, not `"/project-1"`.
+- **A parent that is only a dropdown toggle** (no page of its own) should have `"urls": {}`. The header renders it as a button, and the footer skips it, so there is no broken link.
+
+```json
+{
+  "key": "projects",
+  "urls": {},
+  "label": { "en": "Projects", "fr": "Projets" },
+  "children": [
+    {
+      "key": "project-1",
+      "urls": { "en": "/projects/project-1", "fr": "/projets/projet-1" },
+      "label": { "en": "Project 1", "fr": "Projet 1" },
+      "children": []
+    }
+  ]
+}
+```
 
 ### Localizing Route Slugs
 
@@ -426,7 +462,7 @@ Adding a page with a translated slug is a 3-step combo:
 }
 ```
 
-That's it — every URL helper picks this up automatically.
+That's it — `getLocalizedRoute`, the navigation and the language switcher pick it up automatically.
 
 ### Localizing Blog Post Slugs
 
