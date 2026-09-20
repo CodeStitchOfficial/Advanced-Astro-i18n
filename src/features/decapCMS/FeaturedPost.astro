@@ -5,7 +5,7 @@ import { formatDate } from "@js/utils";
 
 import { getSiteContext } from "@js/getSiteContext";
 import { getPostSlug } from "src/features/decapCMS/core/blogUtils";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 
 const { locale, content } = await getSiteContext(Astro.url);
 
@@ -22,7 +22,7 @@ const featuredPosts = await getCollection("blog", ({ id, data }) => {
       featuredPosts.map((post) => (
         <a
           class="blog-feature"
-          href={getRoute(locale, `/blog/${getPostSlug(post)}`)}
+          href={getLocalizedRoute(locale, `/blog/${getPostSlug(post)}`)}
         >
           <Picture
             src={post.data.image}

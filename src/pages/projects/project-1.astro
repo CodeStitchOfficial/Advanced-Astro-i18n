@@ -14,7 +14,7 @@ import port8 from "@assets/images/portfolio/port8.jpg";
 import port9 from "@assets/images/portfolio/port9.jpg";
 
 import landingImage from "@assets/images/landing.jpg";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 import CTA from "src/features/demo/CTA.astro";
 
 const { content, locale } = await getSiteContext(Astro.url);
@@ -140,7 +140,7 @@ const { content, locale } = await getSiteContext(Astro.url);
           <!-- To add more images, copy and paste this row's picture tags here in order from cs-picture-1 to cs-picture-3 and they will maintain the same layout-->
         </div>
       </div>
-      <a href={getRoute(locale, "/contact")} class="cs-button-solid"
+      <a href={getLocalizedRoute(locale, "/contact")} class="cs-button-solid"
         >{content.common.ctaComponent.cta}</a
       >
     </div>

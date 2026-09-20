@@ -8,13 +8,13 @@ const { locale, content } = await getSiteContext(Astro.url);
 const title = content.common.notFound.pageNotFound;
 
 import landingImage from "@assets/images/landing.jpg";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 ---
 
 <BaseLayout title={title} description={title}>
   <section id="int-hero">
     <h1>{title}</h1>
-    <a href={getRoute(locale, "/")} class="cs-button-solid"
+    <a href={getLocalizedRoute(locale, "/")} class="cs-button-solid"
       >{content.common.notFound.linkText}</a
     >
     <Picture

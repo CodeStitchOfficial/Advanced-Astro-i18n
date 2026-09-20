@@ -9,7 +9,7 @@ function normalizePath(path: string) {
   return result;
 }
 
-export function getRoute(locale: string | undefined, path: string) {
+export function getLocalizedRoute(locale: string | undefined, path: string) {
   const cleanPath = normalizePath(path);
 
   if (!locale || locale === "en") {
