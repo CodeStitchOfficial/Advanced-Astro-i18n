@@ -4,7 +4,7 @@ import { BUSINESS } from "@data/client";
 import navData from "@data/navData.json";
 import { getCurrentYear } from "@js/utils";
 import { getSiteContext } from "@js/getSiteContext";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 
 const { locale, content } = await getSiteContext(Astro.url);
 
@@ -16,7 +16,7 @@ const currentYear = getCurrentYear();
 		<section class="left-section">
 			<a
 				class="logo"
-				href={getRoute(locale, "/")}
+				href={getLocalizedRoute(locale, "/")}
 				aria-label={content.common.backToHome}
 			>
 				<Icon
@@ -52,7 +52,7 @@ const currentYear = getCurrentYear();
 
 							return (
 								<li>
-									<a href={getRoute(locale, entryUrl)}>
+									<a href={getLocalizedRoute(locale, entryUrl)}>
 										{entryLabel}
 									</a>
 								</li>
@@ -77,7 +77,7 @@ const currentYear = getCurrentYear();
 					</li>
 
 					<li>
-						<a href={getRoute(locale, "/contact")}>
+						<a href={getLocalizedRoute(locale, "/contact")}>
 							{BUSINESS.address.lineOne}<br />
 							{BUSINESS.address.lineTwo}<br />
 							{BUSINESS.address.city}
@@ -105,7 +105,7 @@ const currentYear = getCurrentYear();
 	<section class="credit">
 		<span>{content.common.footer.credit}</span>
 
-		<a href={getRoute(locale, "/")} target="_blank" rel="noopener">
+		<a href={getLocalizedRoute(locale, "/")} target="_blank" rel="noopener">
 			Your Company Name
 		</a>
 

@@ -3,7 +3,7 @@ import { Picture } from "astro:assets";
 import { getSiteContext } from "@js/getSiteContext";
 import cabinets2 from "@assets/images/CTA/cabinets2.jpg";
 import construction from "@assets/images/construction.jpg";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 
 const { locale, content } = await getSiteContext(Astro.url);
 ---
@@ -60,7 +60,7 @@ const { locale, content } = await getSiteContext(Astro.url);
           height="77"
         />
       </div>
-      <a href={getRoute(locale, "/about")} class="cs-button-solid"
+      <a href={getLocalizedRoute(locale, "/about")} class="cs-button-solid"
         >{content.home.about.cta}</a
       >
     </div>

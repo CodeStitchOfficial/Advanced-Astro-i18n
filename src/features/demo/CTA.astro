@@ -1,6 +1,6 @@
 ---
 import { getSiteContext } from "@js/getSiteContext";
-import { getRoute } from "@js/routes";
+import { getLocalizedRoute } from "@js/routes";
 
 const { locale, content } = await getSiteContext(Astro.url);
 
@@ -20,7 +20,7 @@ const ctaSquaresBg = `url("${ctaSquaresUrl}")`;
     <p>
       {content.common.ctaComponent.message}
     </p>
-    <a href={getRoute(locale, "/contact")} class="cs-button-solid"
+    <a href={getLocalizedRoute(locale, "/contact")} class="cs-button-solid"
       >{content.common.ctaComponent.cta}</a
     >
   </div>
