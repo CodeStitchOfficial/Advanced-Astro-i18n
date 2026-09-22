@@ -4,19 +4,23 @@
 // Copyright (c) 2023 Astro contributors
 
 import Select from "@components/Select/Select.astro";
-import { Icon } from "astro-icon/components";
 import { getSiteContext } from "@js/getSiteContext";
+import Sun from "../../icons/mdi--sun.svg";
+import Moon from "../../icons/mdi--moon.svg";
+import Laptop from "../../icons/mdi--laptop.svg";
 
 const { content } = await getSiteContext(Astro.url);
 ---
 
 {
-  /* Icon templates — referenced by updatePickers() to swap the select widget's icon */
+  /* Icon templates — referenced by updatePickers() to swap the select widget's icon.
+     Native Astro SVG components (not astro-icon) so each clone below carries
+     its own inline path data instead of a shared <symbol>/<use> sprite ref. */
 }
 <template id="theme-icons">
-  <Icon name="mdi--sun" class="light" />
-  <Icon name="mdi--moon" class="dark" />
-  <Icon name="mdi--laptop" class="auto" />
+  <Sun class="light" />
+  <Moon class="dark" />
+  <Laptop class="auto" />
 </template>
 
 {
