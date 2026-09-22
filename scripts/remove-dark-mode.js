@@ -9,10 +9,7 @@
 import { existsSync, rmSync, readFileSync, writeFileSync, readdirSync } from "fs";
 import { join } from "path";
 import readline from "readline";
-import {
-	checkFeatureFlagBeforeRun,
-	disableFeatureFlag,
-} from "./utils/feature-flags.js";
+import { checkFeatureFlagBeforeRun, disableFeatureFlag } from "./utils/feature-flags.js";
 import { askYesNo } from "./utils/prompt.js";
 
 const root = process.cwd();
@@ -163,27 +160,15 @@ async function runRemoval() {
 	replaceRegex(
 		settingsPath,
 		/import ThemeSelect from "src\/features\/darkmode\/ThemeSelect\.astro";\r?\n/,
-		""
+		"",
 	);
 
-	replaceRegex(
-		settingsPath,
-		/\s*<ThemeSelect \/>\r?\n?/,
-		""
-	);
+	replaceRegex(settingsPath, /\s*<ThemeSelect \/>\r?\n?/, "");
 
 	// ── Remove dark mode inline scripts ───────────────────────────────────────
-	replaceRegex(
-		"src/layouts/BaseLayout.astro",
-		/\n\t\t<!-- FOUC prevention[\s\S]*?<\/script>/,
-		""
-	);
+	replaceRegex("src/layouts/BaseLayout.astro", /\n\t\t<!-- FOUC prevention[\s\S]*?<\/script>/, "");
 
-	replaceRegex(
-		"src/layouts/BaseLayout.astro",
-		/\n\n<!-- Re-apply theme[\s\S]*?<\/script>\n?/,
-		""
-	);
+	replaceRegex("src/layouts/BaseLayout.astro", /\n\n<!-- Re-apply theme[\s\S]*?<\/script>\n?/, "");
 
 	// ── Sweep CSS ─────────────────────────────────────────────────────────────
 	console.log("\nSweeping src/ for body.dark-mode CSS blocks...\n");

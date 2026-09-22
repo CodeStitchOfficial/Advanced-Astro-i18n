@@ -11,10 +11,7 @@ import CTA from "src/features/demo/CTA.astro";
 const { content } = await getSiteContext(Astro.url);
 ---
 
-<BaseLayout
-	title={content.common.aboutPage.landing}
-	description="Meta description for the page"
->
+<BaseLayout title={content.common.aboutPage.landing} description="Meta description for the page">
 	<!-- ============================================ -->
 	<!--                    LANDING                   -->
 	<!-- ============================================ -->
@@ -54,16 +51,10 @@ const { content } = await getSiteContext(Astro.url);
 			<div class="cs-right">
 				<span class="cs-topper">{content.common.aboutPage.topper}</span>
 				<h2 class="cs-title">{content.common.aboutPage.title}</h2>
-				<p class="cs-text">
-					{content.common.aboutPage.p1}
-				</p>
-				<p class="cs-text">
-					{content.common.aboutPage.p2}
-				</p>
+				<p class="cs-text">{content.common.aboutPage.p1}</p>
+				<p class="cs-text">{content.common.aboutPage.p2}</p>
 				<div class="cs-flex-group">
-					<p class="cs-flex-p">
-						{content.common.aboutPage.p3}
-					</p>
+					<p class="cs-flex-p">{content.common.aboutPage.p3}</p>
 					<span class="cs-name">Justin Time</span>
 					<span class="cs-job">{content.common.aboutPage.rank}</span>
 					<img
@@ -86,8 +77,8 @@ const { content } = await getSiteContext(Astro.url);
 	/* PAGE-SPECIFIC STYLES FOR THE ABOUT PAGE */
 
 	/*-- -------------------------- -->
-<---       Side By Side         -->
-<--- -------------------------- -*/
+	<---       Side By Side         -->
+	<--- -------------------------- -*/
 
 	/* Mobile - 360px */
 	@media only screen and (min-width: 0em) {

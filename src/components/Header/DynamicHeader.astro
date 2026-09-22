@@ -11,17 +11,8 @@ const { locale, content } = await getSiteContext(Astro.url);
 
 <header id="cs-navigation">
 	<div class="cs-container">
-		<a
-			href={getLocalizedRoute(locale, "/")}
-			class="cs-logo"
-			aria-label={content.common.backToHome}
-		>
-			<Icon
-				name="logo-black"
-				width={210}
-				height={29}
-				aria-hidden="true"
-			/>
+		<a href={getLocalizedRoute(locale, "/")} class="cs-logo" aria-label={content.common.backToHome}>
+			<Icon name="logo-black" width={210} height={29} aria-hidden="true" />
 		</a>
 
 		<nav class="cs-nav" role="navigation">
@@ -41,148 +32,92 @@ const { locale, content } = await getSiteContext(Astro.url);
 
 			<div class="cs-ul-wrapper">
 				<ul id="cs-expanded-ul" class="cs-ul">
-					{
-						navData.map((entry: NavItem) => {
-							const entryUrl =
-								entry.urls?.[locale] ?? entry.urls?.en ?? "/";
-							const entryLabel =
-								entry.label?.[locale] ??
-								entry.label?.en ??
-								entry.key;
+					{navData.map((entry: NavItem) => {
+						const entryUrl = entry.urls?.[locale] ?? entry.urls?.en ?? "/";
+						const entryLabel = entry.label?.[locale] ?? entry.label?.en ?? entry.key;
 
-							return (
-								<li
-									class:list={[
-										"cs-li",
-										{
-											"cs-dropdown":
-												entry.children?.length > 0,
-										},
-									]}
-								>
-									{entry.children?.length ? (
-										<button
-											aria-expanded="false"
-											aria-controls={`submenu-${entry.key}`}
-											class:list={[
-												"cs-li-link cs-dropdown-button",
-												{
-													"cs-active":
-														entry.children.some(
-															(child: NavItem) =>
-																Astro.url.pathname.startsWith(
-																	getLocalizedRoute(
-																		locale,
-																		child
-																			.urls?.[
-																			locale
-																		] ??
-																			child
-																				.urls
-																				?.en ??
-																			"/",
-																	),
-																),
-														),
-												},
-											]}
-										>
-											{entryLabel}
-											<Icon
-												name="mdi--caret"
-												class="cs-drop-icon"
-											/>
-										</button>
-									) : (
-										<a
-											href={getLocalizedRoute(
-												locale,
-												entryUrl,
-											)}
-											class:list={[
-												"cs-li-link",
-												{
-													"cs-active":
-														Astro.url.pathname ===
+						return (
+							<li
+								class:list={[
+									"cs-li",
+									{
+										"cs-dropdown": entry.children?.length > 0,
+									},
+								]}
+							>
+								{entry.children?.length ? (
+									<button
+										aria-expanded="false"
+										aria-controls={`submenu-${entry.key}`}
+										class:list={[
+											"cs-li-link cs-dropdown-button",
+											{
+												"cs-active": entry.children.some((child: NavItem) =>
+													Astro.url.pathname.startsWith(
 														getLocalizedRoute(
 															locale,
-															entryUrl,
+															child.urls?.[locale] ?? child.urls?.en ?? "/",
 														),
-												},
-											]}
-											aria-current={
-												Astro.url.pathname ===
-												getLocalizedRoute(
-													locale,
-													entryUrl,
-												)
-													? "page"
-													: undefined
-											}
-										>
-											{entryLabel}
-										</a>
-									)}
+													),
+												),
+											},
+										]}
+									>
+										{entryLabel}
+										<Icon name="mdi--caret" class="cs-drop-icon" />
+									</button>
+								) : (
+									<a
+										href={getLocalizedRoute(locale, entryUrl)}
+										class:list={[
+											"cs-li-link",
+											{
+												"cs-active": Astro.url.pathname === getLocalizedRoute(locale, entryUrl),
+											},
+										]}
+										aria-current={
+											Astro.url.pathname === getLocalizedRoute(locale, entryUrl)
+												? "page"
+												: undefined
+										}
+									>
+										{entryLabel}
+									</a>
+								)}
 
-									{entry.children?.length ? (
-										<ul
-											id={`submenu-${entry.key}`}
-											class="cs-drop-ul"
-										>
-											{entry.children.map(
-												(child: NavItem) => {
-													const childUrl =
-														child.urls?.[locale] ??
-														child.urls?.en ??
-														"/";
-													const childLabel =
-														child.label?.[locale] ??
-														child.label?.en ??
-														child.key;
+								{entry.children?.length ? (
+									<ul id={`submenu-${entry.key}`} class="cs-drop-ul">
+										{entry.children.map((child: NavItem) => {
+											const childUrl = child.urls?.[locale] ?? child.urls?.en ?? "/";
+											const childLabel = child.label?.[locale] ?? child.label?.en ?? child.key;
 
-													const localizedRoute =
-														getLocalizedRoute(
-															locale,
-															childUrl,
-														);
+											const localizedRoute = getLocalizedRoute(locale, childUrl);
 
-													return (
-														<li class="cs-drop-li">
-															<a
-																href={
-																	localizedRoute
-																}
-																class:list={[
-																	"cs-li-link",
-																	"cs-drop-link",
-																	{
-																		"cs-active":
-																			Astro
-																				.url
-																				.pathname ===
-																			localizedRoute,
-																	},
-																]}
-																aria-current={
-																	Astro.url
-																		.pathname ===
-																	localizedRoute
-																		? "page"
-																		: undefined
-																}
-															>
-																{childLabel}
-															</a>
-														</li>
-													);
-												},
-											)}
-										</ul>
-									) : null}
-								</li>
-							);
-						})
-					}
+											return (
+												<li class="cs-drop-li">
+													<a
+														href={localizedRoute}
+														class:list={[
+															"cs-li-link",
+															"cs-drop-link",
+															{
+																"cs-active": Astro.url.pathname === localizedRoute,
+															},
+														]}
+														aria-current={
+															Astro.url.pathname === localizedRoute ? "page" : undefined
+														}
+													>
+														{childLabel}
+													</a>
+												</li>
+											);
+										})}
+									</ul>
+								) : null}
+							</li>
+						);
+					})}
 				</ul>
 
 				<div class="cs-shown cs-settings">
@@ -199,8 +134,8 @@ const { locale, content } = await getSiteContext(Astro.url);
 
 <style lang="less">
 	/*-- -------------------------- -->
-<---     Mobile Navigation      -->
-<--- -------------------------- -*/
+	<---     Mobile Navigation      -->
+	<--- -------------------------- -*/
 
 	/* Mobile - 1023px */
 	@media only screen and (max-width: 63.9375rem) {
@@ -316,8 +251,7 @@ const { locale, content } = await getSiteContext(Astro.url);
 
 				.cs-line2 {
 					top: 50%;
-					transform: translate(-50%, -50%) translateY(0)
-						rotate(-225deg);
+					transform: translate(-50%, -50%) translateY(0) rotate(-225deg);
 					transform-origin: center;
 				}
 
@@ -395,8 +329,7 @@ const { locale, content } = await getSiteContext(Astro.url);
 					transform 0.4s,
 					opacity 0.3s;
 				transform-origin: top right;
-				padding: (48/16rem) clamp(1.75rem, 3vw, 2.5rem) (32/16rem)
-					(70/16rem);
+				padding: (48/16rem) clamp(1.75rem, 3vw, 2.5rem) (32/16rem) (70/16rem);
 				display: grid;
 				gap: clamp(1.25rem, 2.6vw, 2.25rem);
 			}
@@ -528,8 +461,8 @@ const { locale, content } = await getSiteContext(Astro.url);
 	}
 
 	/*-- -------------------------- -->
-<---     Navigation Dropdown    -->
-<--- -------------------------- -*/
+	<---     Navigation Dropdown    -->
+	<--- -------------------------- -*/
 
 	/* Mobile - 1023px */
 	@media only screen and (max-width: 63.9375rem) {
@@ -803,8 +736,8 @@ const { locale, content } = await getSiteContext(Astro.url);
 	}
 
 	/*-- -------------------------- -->
-<---     Desktop Navigation     -->
-<--- -------------------------- -*/
+	<---     Desktop Navigation     -->
+	<--- -------------------------- -*/
 
 	/* Small Desktop - 1024px */
 	@media only screen and (min-width: 64rem) {

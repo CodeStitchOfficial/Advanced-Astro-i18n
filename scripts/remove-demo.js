@@ -9,10 +9,7 @@ import { join, relative, basename } from "path";
 import readline from "readline";
 
 import { collectFiles } from "./utils/collect-files.js";
-import {
-	checkFeatureFlagBeforeRun,
-	disableFeatureFlag,
-} from "./utils/feature-flags.js";
+import { checkFeatureFlagBeforeRun, disableFeatureFlag } from "./utils/feature-flags.js";
 import { askYesNo } from "./utils/prompt.js";
 
 const root = process.cwd();
@@ -42,11 +39,7 @@ const DEMO = {
 		join(root, "src", "pages", "fr", "projets"),
 	],
 
-	navKeys: new Set([
-		"about",
-		"projects",
-		"reviews",
-	]),
+	navKeys: new Set(["about", "projects", "reviews"]),
 };
 
 async function exists(path) {
@@ -69,9 +62,7 @@ async function ask(question) {
 		output: process.stdout,
 	});
 
-	const answer = await new Promise(resolve =>
-		rl.question(question, resolve)
-	);
+	const answer = await new Promise((resolve) => rl.question(question, resolve));
 
 	rl.close();
 
@@ -83,19 +74,15 @@ async function discoverDemoComponents() {
 
 	const files = await fs.readdir(DEMO.featureDir);
 
-	return files
-		.filter(file => file.endsWith(".astro"))
-		.map(file => basename(file, ".astro"));
+	return files.filter((file) => file.endsWith(".astro")).map((file) => basename(file, ".astro"));
 }
 
 function removeNavEntries(items, keys) {
 	return items
-		.filter(item => !keys.has(item.key))
-		.map(item => ({
+		.filter((item) => !keys.has(item.key))
+		.map((item) => ({
 			...item,
-			children: Array.isArray(item.children)
-				? removeNavEntries(item.children, keys)
-				: [],
+			children: Array.isArray(item.children) ? removeNavEntries(item.children, keys) : [],
 		}));
 }
 
@@ -109,15 +96,10 @@ async function cleanupNavigation() {
 
 		const cleaned = removeNavEntries(nav, DEMO.navKeys);
 
-		await fs.writeFile(
-			navPath,
-			JSON.stringify(cleaned, null, 2) + "\n",
-			"utf8"
-		);
+		await fs.writeFile(navPath, JSON.stringify(cleaned, null, 2) + "\n", "utf8");
 
 		console.log("✅ Updated navigation");
-	}
-	catch (err) {
+	} catch (err) {
 		console.error(`❌ Failed updating navData.json: ${err.message}`);
 	}
 }
@@ -134,13 +116,7 @@ async function removeDemoReferences(componentNames) {
 
 	let updated = 0;
 
-	const demoAssets = [
-		"hero",
-		"hero-m",
-		"construction",
-		"portfolio",
-		"CTA",
-	];
+	const demoAssets = ["hero", "hero-m", "construction", "portfolio", "CTA"];
 
 	for (const file of files) {
 		if (!file.endsWith(".astro")) continue;
@@ -150,15 +126,14 @@ async function removeDemoReferences(componentNames) {
 
 		// Remove imports and usages for every discovered component
 		for (const component of componentNames) {
-
 			const importRegex = new RegExp(
 				`^[ \\t]*import\\s+${escapeRegex(component)}\\s+from\\s+["'][^"']+["'];?\\r?\\n`,
-				"gm"
+				"gm",
 			);
 
 			const usageRegex = new RegExp(
 				`^[ \\t]*<${escapeRegex(component)}\\b[\\s\\S]*?\\/>[ \\t]*\\r?\\n?`,
-				"gm"
+				"gm",
 			);
 
 			source = source.replace(importRegex, "");
@@ -169,7 +144,7 @@ async function removeDemoReferences(componentNames) {
 		for (const asset of demoAssets) {
 			const assetRegex = new RegExp(
 				`^[ \\t]*import\\s+.*?from\\s+["'][^"']*${escapeRegex(asset)}[^"']*["'];?\\r?\\n`,
-				"gm"
+				"gm",
 			);
 
 			source = source.replace(assetRegex, "");
@@ -194,10 +169,7 @@ async function scanForRemainingReferences(componentNames) {
 
 	const names = componentNames.join("|");
 
-	const regex = new RegExp(
-		`features\\\\/demo|features/demo|${names}`,
-		"i"
-	);
+	const regex = new RegExp(`features\\\\/demo|features/demo|${names}`, "i");
 
 	const matches = [];
 
@@ -214,9 +186,7 @@ async function scanForRemainingReferences(componentNames) {
 		return;
 	}
 
-	console.log(
-		"\n⚠ Remaining demo references:\n"
-	);
+	console.log("\n⚠ Remaining demo references:\n");
 
 	for (const file of matches) {
 		console.log(`   - ${file}`);
@@ -224,7 +194,6 @@ async function scanForRemainingReferences(componentNames) {
 }
 
 async function removeDemo() {
-
 	const confirm = await askYesNo(
 		ask,
 		"\nThis will permanently remove all demo content.\n\nContinue?",
@@ -240,9 +209,7 @@ async function removeDemo() {
 
 	const demoComponents = await discoverDemoComponents();
 
-	console.log(
-		`Found ${demoComponents.length} demo component(s).`
-	);
+	console.log(`Found ${demoComponents.length} demo component(s).`);
 	console.log("\nRemoving demo pages...\n");
 
 	for (const page of DEMO.pages) {
@@ -304,7 +271,7 @@ Any remaining references (if any) were listed above.
 `);
 }
 
-removeDemo().catch(error => {
+removeDemo().catch((error) => {
 	console.error("\n❌ Demo removal failed.\n");
 	console.error(error);
 	process.exit(1);

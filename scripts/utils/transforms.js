@@ -66,11 +66,7 @@ export function insertIntoLocaleBlock(content, localeName, slug, value) {
 	let lineStart = closingBracePos;
 	while (lineStart > 0 && content[lineStart - 1] !== "\n") lineStart--;
 
-	return (
-		content.slice(0, lineStart) +
-		`    "${slug}": "${value}",\n` +
-		content.slice(lineStart)
-	);
+	return content.slice(0, lineStart) + `    "${slug}": "${value}",\n` + content.slice(lineStart);
 }
 
 /**

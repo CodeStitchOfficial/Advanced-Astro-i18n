@@ -14,22 +14,11 @@ const currentYear = getCurrentYear();
 <footer id="footer">
 	<div class="container">
 		<section class="left-section">
-			<a
-				class="logo"
-				href={getLocalizedRoute(locale, "/")}
-				aria-label={content.common.backToHome}
-			>
-				<Icon
-					name="logo-white"
-					width={264}
-					height={78}
-					aria-hidden="true"
-				/>
+			<a class="logo" href={getLocalizedRoute(locale, "/")} aria-label={content.common.backToHome}>
+				<Icon name="logo-white" width={264} height={78} aria-hidden="true" />
 			</a>
 
-			<p>
-				{content.common.footer.p}
-			</p>
+			<p>{content.common.footer.p}</p>
 		</section>
 
 		<section class="right-section">
@@ -39,26 +28,18 @@ const currentYear = getCurrentYear();
 						<h2>{content.common.footer.information}</h2>
 					</li>
 
-					{
-						navData.map((entry) => {
-							const entryUrl =
-								entry.urls?.[locale] ?? entry.urls?.en;
-							const entryLabel =
-								entry.label?.[locale] ??
-								entry.label?.en ??
-								entry.key;
+					{navData.map((entry) => {
+						const entryUrl = entry.urls?.[locale] ?? entry.urls?.en;
+						const entryLabel = entry.label?.[locale] ?? entry.label?.en ?? entry.key;
 
-							if (!entryUrl) return null;
+						if (!entryUrl) return null;
 
-							return (
-								<li>
-									<a href={getLocalizedRoute(locale, entryUrl)}>
-										{entryLabel}
-									</a>
-								</li>
-							);
-						})
-					}
+						return (
+							<li>
+								<a href={getLocalizedRoute(locale, entryUrl)}>{entryLabel}</a>
+							</li>
+						);
+					})}
 				</ul>
 
 				<ul>
@@ -78,8 +59,10 @@ const currentYear = getCurrentYear();
 
 					<li>
 						<a href={getLocalizedRoute(locale, "/contact")}>
-							{BUSINESS.address.lineOne}<br />
-							{BUSINESS.address.lineTwo}<br />
+							{BUSINESS.address.lineOne}
+							<br />
+							{BUSINESS.address.lineTwo}
+							<br />
 							{BUSINESS.address.city}
 							{BUSINESS.address.state}
 							{BUSINESS.address.zip}
@@ -87,15 +70,11 @@ const currentYear = getCurrentYear();
 					</li>
 
 					<li>
-						<a href={`tel:${BUSINESS.phoneForTel}`}>
-							T: {BUSINESS.phoneFormatted}
-						</a>
+						<a href={`tel:${BUSINESS.phoneForTel}`}>T: {BUSINESS.phoneFormatted}</a>
 					</li>
 
 					<li>
-						<a href={`mailto:${BUSINESS.email}`}>
-							{content.common.footer.click}
-						</a>
+						<a href={`mailto:${BUSINESS.email}`}>{content.common.footer.click}</a>
 					</li>
 				</ul>
 			</div>
@@ -109,9 +88,7 @@ const currentYear = getCurrentYear();
 			Your Company Name
 		</a>
 
-		<span class="copyright">
-			Copyright {currentYear}
-		</span>
+		<span class="copyright">Copyright {currentYear}</span>
 	</section>
 </footer>
 

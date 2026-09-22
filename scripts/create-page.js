@@ -16,11 +16,7 @@ function readPrefixDefaultLocale(root) {
 	return m?.[1] === "true";
 }
 
-const i18nDisabled = checkFeatureFlagBeforeRun(
-	root,
-	"i18n",
-	"i18n"
-);
+const i18nDisabled = checkFeatureFlagBeforeRun(root, "i18n", "i18n");
 
 const i18nEnabled = !i18nDisabled;
 
@@ -30,10 +26,14 @@ function readClientData() {
 	const clientPath = join(root, "src", "data", "client.ts");
 	const siteConfigPath = join(root, "src", "data", "siteConfig.ts");
 	const businessName = existsSync(clientPath)
-		? readFileSync(clientPath, "utf8").match(/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/)?.[1] ?? null
+		? (readFileSync(clientPath, "utf8").match(
+				/BUSINESS\s*=\s*\{[\s\S]*?name:\s*["']([^"']+)["']/,
+			)?.[1] ?? null)
 		: null;
 	const siteTitle = existsSync(siteConfigPath)
-		? readFileSync(siteConfigPath, "utf8").match(/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/)?.[1] ?? null
+		? (readFileSync(siteConfigPath, "utf8").match(
+				/SITE\s*=\s*\{[\s\S]*?title:\s*["']([^"']+)["']/,
+			)?.[1] ?? null)
 		: null;
 	if (!businessName && !siteTitle) return null;
 	return {
@@ -42,47 +42,27 @@ function readClientData() {
 	};
 }
 
-
 function registerNavItem(slugMap, labels) {
-	const navPath = join(
-		root,
-		"src",
-		"data",
-		"navData.json"
-	);
+	const navPath = join(root, "src", "data", "navData.json");
 
 	if (!existsSync(navPath)) {
 		return "missing";
 	}
 
-	const nav = JSON.parse(
-		readFileSync(navPath, "utf8")
-	);
+	const nav = JSON.parse(readFileSync(navPath, "utf8"));
 
-	if (nav.some(item => item.key === slugMap.en)) {
+	if (nav.some((item) => item.key === slugMap.en)) {
 		return "skipped";
 	}
 
 	nav.push({
 		key: slugMap.en,
-		urls: Object.fromEntries(
-			Object.entries(slugMap)
-				.map(([locale, slug]) => [
-					locale,
-					`/${slug}`
-				])
-		),
+		urls: Object.fromEntries(Object.entries(slugMap).map(([locale, slug]) => [locale, `/${slug}`])),
 		label: labels,
-		children: []
+		children: [],
 	});
 
-
-	writeFileSync(
-		navPath,
-		JSON.stringify(nav, null, "\t") + "\n",
-		"utf8"
-	);
-
+	writeFileSync(navPath, JSON.stringify(nav, null, "\t") + "\n", "utf8");
 
 	return "registered";
 }
@@ -96,10 +76,7 @@ function detectSecondaryLocales(defaultLocale) {
 
 	return readdirSync(pagesDir, { withFileTypes: true })
 		.filter(
-			(e) =>
-				e.isDirectory() &&
-				/^[a-z]{2}(-[a-z]{2})?$/i.test(e.name) &&
-				e.name !== defaultLocale
+			(e) => e.isDirectory() && /^[a-z]{2}(-[a-z]{2})?$/i.test(e.name) && e.name !== defaultLocale,
 		)
 		.map((e) => e.name);
 }
@@ -107,13 +84,7 @@ function detectSecondaryLocales(defaultLocale) {
 // ─── Route translations ────────────────────────────────────────────────────────
 
 function registerInRouteTranslations(defaultSlug, slugMap) {
-	const rtPath = join(
-		root,
-		"src",
-		"features",
-		"i18n",
-		"routeTranslations.ts"
-	);
+	const rtPath = join(root, "src", "features", "i18n", "routeTranslations.ts");
 	if (!existsSync(rtPath)) return "missing";
 
 	let content = readFileSync(rtPath, "utf8");
@@ -155,18 +126,11 @@ async function main() {
 	}
 
 	// ── Locale config ─────────────────────────────────────────────────────────
-	const i18nConfig = i18nEnabled
-		? readI18nConfig(root)
-		: null;
-	const defaultLocale =
-		i18nConfig?.defaultLocale ?? "en";
-	const secondaryLocales = i18nEnabled
-		? detectSecondaryLocales(defaultLocale)
-		: [];
+	const i18nConfig = i18nEnabled ? readI18nConfig(root) : null;
+	const defaultLocale = i18nConfig?.defaultLocale ?? "en";
+	const secondaryLocales = i18nEnabled ? detectSecondaryLocales(defaultLocale) : [];
 	// null = default locale pages live at src/pages/ root; string = src/pages/{locale}/
-	const defaultLocaleDir = i18nEnabled && readPrefixDefaultLocale(root)
-		? defaultLocale
-		: null;
+	const defaultLocaleDir = i18nEnabled && readPrefixDefaultLocale(root) ? defaultLocale : null;
 
 	// ── Templates ─────────────────────────────────────────────────────────────
 	const defaultTemplateRelPath = defaultLocaleDir
@@ -188,11 +152,17 @@ async function main() {
 	}
 
 	// ── Parse inputs ──────────────────────────────────────────────────────────
-	const pages = input.split(",").map((p) => p.trim()).filter(Boolean);
+	const pages = input
+		.split(",")
+		.map((p) => p.trim())
+		.filter(Boolean);
 
 	// Fast-path: secondary locale names supplied via argv[3] (one locale, backward-compat)
 	const fastPathNames = secondaryInput
-		? secondaryInput.split(",").map((p) => p.trim()).filter(Boolean)
+		? secondaryInput
+				.split(",")
+				.map((p) => p.trim())
+				.filter(Boolean)
 		: null;
 
 	// ── Readline (only opened when interactive prompts are needed) ────────────
@@ -289,17 +259,12 @@ async function main() {
 		}
 		// ── routeTranslations.ts ───────────────────────────────────────────────────
 		if (i18nEnabled) {
-			const rtStatus = registerInRouteTranslations(
-				defaultSlug,
-				slugMap
-			);
+			const rtStatus = registerInRouteTranslations(defaultSlug, slugMap);
 
 			if (rtStatus === "registered") {
 				console.log("Registered in routeTranslations.ts");
 			} else if (rtStatus === "skipped") {
-				console.log(
-					`Skipped routeTranslations.ts — "${defaultSlug}" already registered`
-				);
+				console.log(`Skipped routeTranslations.ts — "${defaultSlug}" already registered`);
 			}
 		}
 	}

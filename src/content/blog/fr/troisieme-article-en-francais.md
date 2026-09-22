@@ -8,6 +8,7 @@ imageAlt: Cuisine
 mappingKey: "post-3"
 permalink: troisieme-article-en-francais
 ---
+
 ## Sucos Creatoi
 
 Lorem markdownum trabeati dicere [deus](http://www.aetatis.org/pugnacem.html) traxit certus Scythiam certum, illi mulces. Et nihil dolores? Si scopulis somnus
@@ -34,10 +35,10 @@ vulnificus studiisque petunt, expulsumque ille iuncturas ferre feliciter resolut
 Enim altam tamen cur magis admiratur [tegebat](http://nepotum-sequantur.org/) Iuppiter forma _perdere possit_. Aniles illum deos longoque, quae si venit
 tetigit. Huc ferae **refugit**, proles, suggerit videt reliquit, et.
 
--   Dixit videt sustineat
--   Deduxit et genu
--   Uti contentus sub pater habet arboribus ut
--   Dixit facibusque illas sigillis petitus
+- Dixit videt sustineat
+- Deduxit et genu
+- Uti contentus sub pater habet arboribus ut
+- Dixit facibusque illas sigillis petitus
 
 Ubi aequoreae, vult huic, transibant dederat, liceret: vidi sacra o securi turaque. Superat hebeti, contortam honoris, di tibi. Vertex exsiluere.
 

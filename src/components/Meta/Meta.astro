@@ -34,8 +34,7 @@ const [defaultAlternate] = alternates;
 
 // Detect landing pages (home page for any locale: "/" or "/fr/", etc.)
 
-const isLandingPage =
-	Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
+const isLandingPage = Astro.url.pathname === "/" || Astro.url.pathname === `/${locale}/`;
 
 const pageTitle = isLandingPage
 	? `${title} | ${BUSINESS.name} | ${BUSINESS.address.city}, ${BUSINESS.address.state}`
@@ -78,8 +77,7 @@ if (heroImage) {
 	is:inline
 	type="application/ld+json"
 	set:html={JSON.stringify(localBusinessSchema)}
-/>
-
+></script>
 <!-- Allow additional schemas from child layouts (e.g., BlogPosting for blog posts) -->
 <slot name="schema" />
 
@@ -87,34 +85,19 @@ if (heroImage) {
 <title>{pageTitle}</title>
 
 <!-- Hreflang alternate links for SEO -->
-{
-	alternates.map(({ hreflang, href }) => (
-		<link rel="alternate" hreflang={hreflang} href={href} />
-	))
-}
+{alternates.map(({ hreflang, href }) => (
+	<link rel="alternate" hreflang={hreflang} href={href} />
+))}
 
-{
-	defaultAlternate && (
-		<link
-			rel="alternate"
-			hreflang="x-default"
-			href={defaultAlternate.href}
-		/>
-	)
-}
+{defaultAlternate && <link rel="alternate" hreflang="x-default" href={defaultAlternate.href} />}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:locale" content={ogLocale} />
-{
-	alternates
-		.filter((a) => a.hreflang !== currentHreflang)
-		.map((a) => (
-			<meta
-				property="og:locale:alternate"
-				content={a.hreflang.replace("-", "_")}
-			/>
-		))
-}
+{alternates
+	.filter((a) => a.hreflang !== currentHreflang)
+	.map((a) => (
+		<meta property="og:locale:alternate" content={a.hreflang.replace("-", "_")} />
+	))}
 <meta property="og:url" content={canonical} />
 <meta property="og:type" content={ogType} />
 <meta property="og:title" content={ogTitle} />
@@ -135,18 +118,9 @@ if (heroImage) {
 
 <!--Favicons-->
 <!-- https://realfavicongenerator.net/ -->
-<link
-	rel="icon"
-	type="image/png"
-	href="/assets/favicons/favicon-96x96.png"
-	sizes="96x96"
-/>
+<link rel="icon" type="image/png" href="/assets/favicons/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="/assets/favicons/favicon.svg" />
 <link rel="shortcut icon" href="/assets/favicons/favicon.ico" />
-<link
-	rel="apple-touch-icon"
-	sizes="180x180"
-	href="/assets/favicons/apple-touch-icon.png"
-/>
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicons/apple-touch-icon.png" />
 <meta name="apple-mobile-web-app-title" content="Starter Kit" />
 <link rel="manifest" href="/assets/favicons/site.webmanifest" />
