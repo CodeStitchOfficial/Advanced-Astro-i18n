@@ -45,14 +45,14 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
     <!-- FOUC prevention: applies dark-mode class before first paint -->
     <script is:inline>
       (function () {
-        var stored = localStorage.getItem("cs-theme");
-        var isDark;
+        const stored = localStorage.getItem("cs-theme");
+        let isDark;
         if (stored === "dark") {
           isDark = true;
-        } else if (stored === "light" || stored === "") {
+        } else if (stored === "light") {
           isDark = false;
-        } else {
-          var legacy = localStorage.getItem("theme");
+        } else if (stored === null) {
+          const legacy = localStorage.getItem("theme");
           if (legacy === "dark") {
             isDark = true;
           } else if (legacy === "light") {
@@ -60,6 +60,9 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
           } else {
             isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
           }
+        } else {
+          // "" (auto) or any other unexpected value — follow system preference directly
+          isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         }
         if (isDark) document.body?.classList.add("dark-mode");
       })();
@@ -80,14 +83,14 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
 <!-- Re-apply theme after each View Transition page swap -->
 <script is:inline>
   document.addEventListener("astro:after-swap", function () {
-    var stored = localStorage.getItem("cs-theme");
-    var isDark;
+    const stored = localStorage.getItem("cs-theme");
+    let isDark;
     if (stored === "dark") {
       isDark = true;
-    } else if (stored === "light" || stored === "") {
+    } else if (stored === "light") {
       isDark = false;
-    } else {
-      var legacy = localStorage.getItem("theme");
+    } else if (stored === null) {
+      const legacy = localStorage.getItem("theme");
       if (legacy === "dark") {
         isDark = true;
       } else if (legacy === "light") {
@@ -95,6 +98,9 @@ const { content, lang, alternates, locale, currentHreflang, ogLocale } =
       } else {
         isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
       }
+    } else {
+      // "" (auto) or any other unexpected value — follow system preference directly
+      isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     }
     isDark
       ? document.body.classList.add("dark-mode")
