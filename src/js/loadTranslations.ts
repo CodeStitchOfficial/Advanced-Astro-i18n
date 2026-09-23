@@ -1,24 +1,24 @@
 export function loadTranslations(locale: string) {
-  const modules = import.meta.glob("../locales/**/**/*.json", {
-    eager: true,
-  });
+	const modules = import.meta.glob("../locales/**/**/*.json", {
+		eager: true,
+	});
 
-  const result: Record<string, any> = {};
+	const result: Record<string, any> = {};
 
-  for (const path in modules) {
-    if (!path.includes(`/${locale}/`)) continue;
+	for (const path in modules) {
+		if (!path.includes(`/${locale}/`)) continue;
 
-    const mod = modules[path] as any;
-    const data = mod.default ?? mod;
+		const mod = modules[path] as any;
+		const data = mod.default ?? mod;
 
-    const key = getFileKey(path);
+		const key = getFileKey(path);
 
-    result[key] = data;
-  }
+		result[key] = data;
+	}
 
-  return result;
+	return result;
 }
 
 function getFileKey(path: string) {
-  return path.split("/").pop()?.replace(".json", "")!;
+	return path.split("/").pop()?.replace(".json", "")!;
 }

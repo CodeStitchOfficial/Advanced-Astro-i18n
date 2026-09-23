@@ -1,0 +1,7 @@
+dist/
+.astro/
+node_modules/
+package-lock.json
+public/admin/
+.tours/
+CHANGELOG.md

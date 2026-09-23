@@ -11,17 +11,17 @@ const { content } = await getSiteContext(Astro.url);
 ---
 
 <BaseLayout title={content.reviews.landing} description={content.reviews.p}>
-  <!-- ============================================ -->
-  <!--                    LANDING                   -->
-  <!-- ============================================ -->
+	<!-- ============================================ -->
+	<!--                    LANDING                   -->
+	<!-- ============================================ -->
 
-  <Banner title={content.reviews.landing} image={landingImage} />
+	<Banner title={content.reviews.landing} image={landingImage} />
 
-  <!-- ============================================ -->
-  <!--                   Reviews                    -->
-  <!-- ============================================ -->
+	<!-- ============================================ -->
+	<!--                   Reviews                    -->
+	<!-- ============================================ -->
 
-  <ReviewsComponent />
+	<ReviewsComponent />
 
-  <CTA />
+	<CTA />
 </BaseLayout>

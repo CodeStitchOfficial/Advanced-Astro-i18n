@@ -12,15 +12,15 @@ import FeaturedPost from "src/features/decapCMS/FeaturedPost.astro";
 import landingImage from "@assets/images/landing.jpg";
 
 export const getStaticPaths = (async () => {
-  const locale = "en";
-  const posts = await getBlogPosts(locale);
+	const locale = "en";
+	const posts = await getBlogPosts(locale);
 
-  return posts.map((post) => ({
-    params: {
-      slug: getPostSlug(post),
-    },
-    props: { post },
-  }));
+	return posts.map((post) => ({
+		params: {
+			slug: getPostSlug(post),
+		},
+		props: { post },
+	}));
 }) satisfies GetStaticPaths;
 
 const { post } = Astro.props;
@@ -31,50 +31,45 @@ const blogSchema = getBlogPostingSchema(post, locale, postUrl);
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <script
-    type="application/ld+json"
-    slot="schema"
-    set:html={JSON.stringify(blogSchema)}
-  />
+	<script type="application/ld+json" slot="schema" set:html={JSON.stringify(blogSchema)}></script>
+	<Banner title={content.blog.landing} image={landingImage} />
 
-  <Banner title={content.blog.landing} image={landingImage} />
-
-  <section class="main-content-wrapper">
-    <!--Main content -->
-    <div class="main-content">
-      <BlogFullArticle post={post} />
-    </div>
-    <FeaturedPost />
-  </section>
+	<section class="main-content-wrapper">
+		<!--Main content -->
+		<div class="main-content">
+			<BlogFullArticle post={post} />
+		</div>
+		<FeaturedPost />
+	</section>
 </BaseLayout>
 
 <style lang="less">
-  /* Mobile - 360px */
-  @media only screen and (min-width: 0em) {
-    .main-content-wrapper {
-      padding: var(--sectionPadding);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: (50/16em);
-    }
+	/* Mobile - 360px */
+	@media only screen and (min-width: 0em) {
+		.main-content-wrapper {
+			padding: var(--sectionPadding);
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: (50/16em);
+		}
 
-    .main-content {
-      // width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      row-gap: (50/16em);
-    }
-  }
+		.main-content {
+			// width: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			row-gap: (50/16em);
+		}
+	}
 
-  /* Tablet - 1024px */
-  @media only screen and (min-width: 64em) {
-    .main-content-wrapper {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  }
+	/* Tablet - 1024px */
+	@media only screen and (min-width: 64em) {
+		.main-content-wrapper {
+			flex-direction: row;
+			align-items: flex-start;
+		}
+	}
 </style>

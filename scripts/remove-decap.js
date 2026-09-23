@@ -3,19 +3,14 @@ import { join, dirname } from "path";
 import readline from "readline";
 import { collectFiles } from "./utils/collect-files.js";
 import { readI18nConfig } from "./utils/read-i18n-config.js";
-import {
-	checkFeatureFlagBeforeRun,
-	disableFeatureFlag,
-} from "./utils/feature-flags.js";
+import { checkFeatureFlagBeforeRun, disableFeatureFlag } from "./utils/feature-flags.js";
 import { askYesNo } from "./utils/prompt.js";
 
 const root = process.cwd();
 
-
 if (checkFeatureFlagBeforeRun(root, "cms", "Decap CMS")) {
 	process.exit(0);
 }
-
 
 // Decap CMS file and directory paths
 const astroConfigPath = join(root, "astro.config.ts");
@@ -31,11 +26,6 @@ const blogContentPath = join(root, "src", "content", "blog");
 const blogLocaleEn = join(root, "src", "locales", "en", "blog.json");
 const blogLocaleFr = join(root, "src", "locales", "fr", "blog.json");
 
-
-
-
-
-
 // Dynamic blog routing locations based on your i18n structure
 function resolveBlogPagesPaths() {
 	const i18n = readI18nConfig(root);
@@ -44,16 +34,22 @@ function resolveBlogPagesPaths() {
 		const astroConfig = readFileSync(astroConfigPath, "utf-8");
 		const m = astroConfig.match(/prefixDefaultLocale:\s*(true|false)/);
 		prefixDefaultLocale = m?.[1] === "true";
-	} catch { /* keep false */ }
+	} catch {
+		/* keep false */
+	}
 
-	const defaultBlogDir = prefixDefaultLocale && i18n
-		? join(root, "src", "pages", i18n.defaultLocale, "blog")
-		: join(root, "src", "pages", "blog");
+	const defaultBlogDir =
+		prefixDefaultLocale && i18n
+			? join(root, "src", "pages", i18n.defaultLocale, "blog")
+			: join(root, "src", "pages", "blog");
 
 	const nonDefaultBlogDirs = i18n
 		? i18n.locales
-			.filter((localeItem) => localeItem !== i18n.defaultLocale)
-			.map((localeItem) => ({ locale: localeItem, path: join(root, "src", "pages", localeItem, "blog") }))
+				.filter((localeItem) => localeItem !== i18n.defaultLocale)
+				.map((localeItem) => ({
+					locale: localeItem,
+					path: join(root, "src", "pages", localeItem, "blog"),
+				}))
 		: [{ locale: "fr", path: join(root, "src", "pages", "fr", "blog") }];
 
 	return { defaultBlogDir, nonDefaultBlogDirs };
@@ -67,7 +63,7 @@ async function moveItem(sourcePath, destPath, label) {
 		try {
 			await fs.access(destPath);
 			await fs.rm(destPath, { recursive: true, force: true });
-		} catch { }
+		} catch {}
 
 		await fs.rename(sourcePath, destPath);
 	} catch (error) {
@@ -93,7 +89,11 @@ async function replaceNoBlog(relativeFilePath) {
 		return;
 	}
 
-	await moveItem(targetPath, join(destinationDir, `${relativeFilePath}.ts`), "Blog-aware getLocalizedPathname (dynamic)");
+	await moveItem(
+		targetPath,
+		join(destinationDir, `${relativeFilePath}.ts`),
+		"Blog-aware getLocalizedPathname (dynamic)",
+	);
 	await fs.rename(noBlogPath, targetPath);
 }
 
@@ -119,19 +119,23 @@ async function scanForReferences(removedBlogContent) {
 			if (content.match(/decapCMS|netlify-cms|from\s+["'].*decapCMS.*["']/i)) {
 				decapReferences.push(file.replace(root, "."));
 			}
-		} catch { }
+		} catch {}
 	}
 
 	if (decapReferences.length > 0) {
 		console.log(`\n⚠️  Found ${decapReferences.length} file(s) with Decap/Blog dependencies:`);
-		decapReferences.forEach(file => console.log(`   - ${file}`));
+		decapReferences.forEach((file) => console.log(`   - ${file}`));
 	}
 }
 
 async function cleanupContentConfig() {
 	console.log("\n⚙️  Removing src/content.config.ts...");
 	const contentConfigPath = join(root, "src", "content.config.ts");
-	await moveItem(contentConfigPath, join(destinationDir, "src", "content.config.ts"), "Content collections config");
+	await moveItem(
+		contentConfigPath,
+		join(destinationDir, "src", "content.config.ts"),
+		"Content collections config",
+	);
 }
 
 async function cleanupNavData() {
@@ -143,7 +147,7 @@ async function cleanupNavData() {
 		const content = await fs.readFile(navDataPath, "utf-8");
 		const navData = JSON.parse(content);
 
-		const filtered = navData.filter(item => {
+		const filtered = navData.filter((item) => {
 			const isBlogKey = item.key && String(item.key).toLowerCase() === "blog";
 
 			let isBlogUrl = false;
@@ -152,7 +156,7 @@ async function cleanupNavData() {
 					isBlogUrl = item.urls.replace(/\/$/, "") === "/blog";
 				} else if (typeof item.urls === "object") {
 					isBlogUrl = Object.values(item.urls).some(
-						val => typeof val === "string" && val.replace(/\/$/, "") === "/blog"
+						(val) => typeof val === "string" && val.replace(/\/$/, "") === "/blog",
 					);
 				}
 			}
@@ -171,7 +175,11 @@ async function removeDecapCMS() {
 	const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
 	const ask = (q) => new Promise((resolve) => rl.question(q, resolve));
 
-	const confirm = await askYesNo(ask, "Are you sure you want to completely rip out Decap CMS?", false);
+	const confirm = await askYesNo(
+		ask,
+		"Are you sure you want to completely rip out Decap CMS?",
+		false,
+	);
 
 	if (!confirm) {
 		console.log("Cancelled.");
@@ -179,36 +187,86 @@ async function removeDecapCMS() {
 		return;
 	}
 
-	const clearBlog = await askYesNo(ask, "Do you also want to delete all blog content, UI features, and localized translations?", false);
+	const clearBlog = await askYesNo(
+		ask,
+		"Do you also want to delete all blog content, UI features, and localized translations?",
+		false,
+	);
 	rl.close();
 
 	// Execute Administration Module removal
-	await moveItem(adminSourcePath, join(destinationDir, "public", "admin"), "Admin dashboard settings");
-	await moveItem(adminPagePath, join(destinationDir, "src", "pages", "admin.astro"), "Admin Astro layout route");
+	await moveItem(
+		adminSourcePath,
+		join(destinationDir, "public", "admin"),
+		"Admin dashboard settings",
+	);
+	await moveItem(
+		adminPagePath,
+		join(destinationDir, "src", "pages", "admin.astro"),
+		"Admin Astro layout route",
+	);
 
 	if (clearBlog) {
 		// Remove component architectures
-		await moveItem(decapCMSFeaturePath, join(destinationDir, "src", "features", "decapCMS"), "Decap CMS Components feature folder");
-		await moveItem(blogContentPath, join(destinationDir, "src", "content", "blog"), "Markdown blog content directory");
+		await moveItem(
+			decapCMSFeaturePath,
+			join(destinationDir, "src", "features", "decapCMS"),
+			"Decap CMS Components feature folder",
+		);
+		await moveItem(
+			blogContentPath,
+			join(destinationDir, "src", "content", "blog"),
+			"Markdown blog content directory",
+		);
 
 		// Remove the dynamic route translations helper if it exists
-		const dynamicRouteTranslationsPath = join(root, "src", "features", "i18n", "collections", "generateDynamicRouteTranslations.ts");
+		const dynamicRouteTranslationsPath = join(
+			root,
+			"src",
+			"features",
+			"i18n",
+			"collections",
+			"generateDynamicRouteTranslations.ts",
+		);
 		await moveItem(
 			dynamicRouteTranslationsPath,
-			join(destinationDir, "src", "features", "i18n", "collections", "generateDynamicRouteTranslations.ts"),
-			"Dynamic Route Translations handler"
+			join(
+				destinationDir,
+				"src",
+				"features",
+				"i18n",
+				"collections",
+				"generateDynamicRouteTranslations.ts",
+			),
+			"Dynamic Route Translations handler",
 		);
 		await replaceNoBlog("src/features/i18n/routing/getLocalizedPathname");
 
 		// Remove dedicated layout locales translations
-		await moveItem(blogLocaleEn, join(destinationDir, "src", "locales", "en", "blog.json"), "English Blog Locale definitions");
-		await moveItem(blogLocaleFr, join(destinationDir, "src", "locales", "fr", "blog.json"), "French Blog Locale definitions");
+		await moveItem(
+			blogLocaleEn,
+			join(destinationDir, "src", "locales", "en", "blog.json"),
+			"English Blog Locale definitions",
+		);
+		await moveItem(
+			blogLocaleFr,
+			join(destinationDir, "src", "locales", "fr", "blog.json"),
+			"French Blog Locale definitions",
+		);
 
 		// Remove dynamic UI Routing pages
 		const { defaultBlogDir, nonDefaultBlogDirs } = resolveBlogPagesPaths();
-		await moveItem(defaultBlogDir, join(destinationDir, "src", "pages", "blog-default"), "Default locale routing engine files");
+		await moveItem(
+			defaultBlogDir,
+			join(destinationDir, "src", "pages", "blog-default"),
+			"Default locale routing engine files",
+		);
 		for (const { locale, path } of nonDefaultBlogDirs) {
-			await moveItem(path, join(destinationDir, "src", "pages", `blog-${locale}`), `Localized Routing directory for (${locale})`);
+			await moveItem(
+				path,
+				join(destinationDir, "src", "pages", `blog-${locale}`),
+				`Localized Routing directory for (${locale})`,
+			);
 		}
 
 		await cleanupContentConfig();
@@ -218,10 +276,13 @@ async function removeDecapCMS() {
 	// Clean up general configurations maps
 	try {
 		let config = await fs.readFile(astroConfigPath, "utf-8");
-		config = config.replace(/filter:\s*\(page\)\s*=>\s*!page\.includes\(["']\/admin["']\),\s*\n?/, "");
+		config = config.replace(
+			/filter:\s*\(page\)\s*=>\s*!page\.includes\(["']\/admin["']\),\s*\n?/,
+			"",
+		);
 		await fs.writeFile(astroConfigPath, config, "utf-8");
 		console.log("\n✅ Cleaned up tracking definitions inside astro.config.ts");
-	} catch { }
+	} catch {}
 
 	await disableFeatureFlag(root, "cms");
 	await scanForReferences(clearBlog);

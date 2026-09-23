@@ -16,31 +16,23 @@ const { id, href, arrow = "none", class: className, rel, ...rest } = Astro.props
 <!-- /* Customized cs-button-6 stitch */ -->
 {href ? (
 	<a id={id} class:list={[className, "cs-button-6"]} href={href} rel={rel} {...rest}>
-		{
-			arrow === "left" && (
-				<Icon name="arrow" class="cs-icon arrow-left" aria-hidden="true" width={24} height={24} />
-			)
-		}
+		{arrow === "left" && (
+			<Icon name="arrow" class="cs-icon arrow-left" aria-hidden="true" width={24} height={24} />
+		)}
 		<slot />
-		{
-			arrow === "right" && (
-				<Icon name="arrow" class="cs-icon arrow-right" aria-hidden="true" width={24} height={24} />
-			)
-		}
+		{arrow === "right" && (
+			<Icon name="arrow" class="cs-icon arrow-right" aria-hidden="true" width={24} height={24} />
+		)}
 	</a>
 ) : (
 	<span id={id} class:list={[className, "cs-button-6"]} aria-disabled="true" {...rest}>
-		{
-			arrow === "left" && (
-				<Icon name="arrow" class="cs-icon arrow-left" aria-hidden="true" width={24} height={24} />
-			)
-		}
+		{arrow === "left" && (
+			<Icon name="arrow" class="cs-icon arrow-left" aria-hidden="true" width={24} height={24} />
+		)}
 		<slot />
-		{
-			arrow === "right" && (
-				<Icon name="arrow" class="cs-icon arrow-right" aria-hidden="true" width={24} height={24} />
-			)
-		}
+		{arrow === "right" && (
+			<Icon name="arrow" class="cs-icon arrow-right" aria-hidden="true" width={24} height={24} />
+		)}
 	</span>
 )}
 

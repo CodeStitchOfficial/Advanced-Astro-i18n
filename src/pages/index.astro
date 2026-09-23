@@ -13,15 +13,12 @@ import Testimonials from "src/features/demo/Testimonials.astro";
 const { content } = await getSiteContext(Astro.url);
 ---
 
-<BaseLayout
-  title={content.home.layout.title}
-  description={content.home.layout.description}
->
-  <Hero image={landingImage} />
-  <Services />
-  <SideBySide />
-  <SideBySideReverse />
-  <Gallery />
-  <Testimonials />
-  <CTA />
+<BaseLayout title={content.home.layout.title} description={content.home.layout.description}>
+	<Hero image={landingImage} />
+	<Services />
+	<SideBySide />
+	<SideBySideReverse />
+	<Gallery />
+	<Testimonials />
+	<CTA />
 </BaseLayout>

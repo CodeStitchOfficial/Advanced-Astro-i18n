@@ -27,44 +27,42 @@ import { getSiteContext } from "@js/getSiteContext";
 const { locale, content } = await getSiteContext(Astro.url);
 
 const options = await Promise.all(
-  locales.map(async (l) => ({
-    value: await getLocalizedPathname(l, Astro.url),
-    selected: l === locale,
-    label: content.common.languageSelect[l],
-  })),
+	locales.map(async (l) => ({
+		value: await getLocalizedPathname(l, Astro.url),
+		selected: l === locale,
+		label: content.common.languageSelect[l],
+	})),
 );
 ---
 
 {
-  (
-    <starlight-lang-select>
-      <Select
-        icon="mdi--language"
-        label={content.common["language-label"]}
-        value={locale}
-        options={options}
-        width="6em"
-      />
-    </starlight-lang-select>
-  )
+	<starlight-lang-select>
+		<Select
+			icon="mdi--language"
+			label={content.common["language-label"]}
+			value={locale}
+			options={options}
+			width="6em"
+		/>
+	</starlight-lang-select>
 }
 
 <script>
-  import { setLocalePreference } from "@js/localePreference";
+	import { setLocalePreference } from "@js/localePreference";
 
-  class StarlightLanguageSelect extends HTMLElement {
-    constructor() {
-      super();
-      const select = this.querySelector("select");
-      if (select) {
-        select.addEventListener("change", (e) => {
-          if (e.currentTarget instanceof HTMLSelectElement) {
-            setLocalePreference(e.currentTarget.value);
-            window.location.pathname = e.currentTarget.value;
-          }
-        });
-      }
-    }
-  }
-  customElements.define("starlight-lang-select", StarlightLanguageSelect);
+	class StarlightLanguageSelect extends HTMLElement {
+		constructor() {
+			super();
+			const select = this.querySelector("select");
+			if (select) {
+				select.addEventListener("change", (e) => {
+					if (e.currentTarget instanceof HTMLSelectElement) {
+						setLocalePreference(e.currentTarget.value);
+						window.location.pathname = e.currentTarget.value;
+					}
+				});
+			}
+		}
+	}
+	customElements.define("starlight-lang-select", StarlightLanguageSelect);
 </script>

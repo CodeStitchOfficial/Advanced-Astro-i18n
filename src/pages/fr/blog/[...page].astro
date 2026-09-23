@@ -13,8 +13,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 	const locale = "fr";
 	const frPosts = await getBlogPosts(locale);
 	const sortedPosts = frPosts.sort(
-		(a, b) =>
-			new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
+		(a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf(),
 	);
 
 	return paginate(sortedPosts, {
@@ -26,10 +25,7 @@ const { content } = await getSiteContext(Astro.url);
 const { page } = Astro.props as { page: Page };
 ---
 
-<BaseLayout
-	title={content.blog.landing}
-	description="Meta description for the page"
->
+<BaseLayout title={content.blog.landing} description="Meta description for the page">
 	<!-- ============================================ -->
 	<!--                    LANDING                   -->
 	<!-- ============================================ -->
@@ -49,7 +45,9 @@ const { page } = Astro.props as { page: Page };
 				</div>
 			</div>
 			<ul class="cs-card-group">
-				{page.data.map((post) => <BlogPreview post={post} />)}
+				{page.data.map((post) => (
+					<BlogPreview post={post} />
+				))}
 			</ul>
 			<!-- Pagination -->
 			<Pagination page={page} />

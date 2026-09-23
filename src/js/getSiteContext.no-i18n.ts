@@ -2,14 +2,14 @@
 import { getContent } from "./getContent";
 
 export async function getSiteContext(url: URL) {
-  const content = await getContent("en");
+	const content = await getContent("en");
 
-  return {
-    locale: "en",
-    lang: "en",
-    content,
-    alternates: [],
-    currentHreflang: "en-US",
-    ogLocale: "en_US",
-  };
+	return {
+		locale: "en",
+		lang: "en",
+		content,
+		alternates: [],
+		currentHreflang: "en-US",
+		ogLocale: "en_US",
+	};
 }
