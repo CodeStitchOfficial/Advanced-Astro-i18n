@@ -1,5 +1,16 @@
 # Advanced Astro v7 i18n
 
+## 4.1.0
+
+### Minor changes
+
+- Added Prettier formatting tooling: an opinionated repo-wide config (see `.prettierrc`), a CI format check, and `.vscode/settings.json` so a contributor's personal editor settings can't override the repo's Prettier style. If you don't want it, this tooling is removable via the CLI during `npm run setup-project` or `node scripts/remove-prettier.js`.
+
+### Patch changes
+
+- Fixed a bug where the "Projects" nav item was rendered as a clickable link instead of a pure dropdown parent ([#75](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/pull/75))
+- Fixed the dark mode theme toggle: selecting "Auto" no longer flips to light on client-side navigation, and the Auto option's icon now renders correctly in the theme selector ([#76](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/issues/76), [#77](https://github.com/CodeStitchOfficial/Advanced-Astro-i18n/pull/77))
+
 ## 4.0.0
 
 ### Major changes
