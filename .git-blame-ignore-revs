@@ -1,0 +1,4 @@
+# Mass reformat with Prettier — see .prettierrc. Ignored so `git blame`
+# keeps pointing at real authorship instead of this whitespace-only commit.
+# Configure with: git config blame.ignoreRevsFile .git-blame-ignore-revs
+ac9657ecd8214d671c95f3111f60da784c09fcfe

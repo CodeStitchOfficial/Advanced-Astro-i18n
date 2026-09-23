@@ -138,6 +138,8 @@ All commands are run from the root of the project, from a terminal:
 | `node scripts/remove-decap.js`       | Removes Decap CMS integration                                                               |
 | `node scripts/remove-demo.js`        | Removes demo/placeholder content                                                            |
 | `node scripts/remove-dark-mode.js`   | Removes dark mode components and styles                                                     |
+| `npm run format`                     | Format the codebase with Prettier                                                           |
+| `npm run format:check`               | Check formatting without writing changes (what CI runs)                                     |
 
 ## Features
 
