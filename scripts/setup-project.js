@@ -30,6 +30,7 @@ function readFeatureFlags() {
 		cms: getFlag("cms"),
 		demo: getFlag("demo"),
 		darkMode: getFlag("darkMode"),
+		prettier: getFlag("prettier"),
 	};
 }
 
@@ -53,6 +54,11 @@ const FEATURES = [
 		key: "darkMode",
 		label: "Dark mode",
 		script: "remove-dark-mode",
+	},
+	{
+		key: "prettier",
+		label: "Prettier formatting tooling",
+		script: "remove-prettier",
 	},
 ];
 

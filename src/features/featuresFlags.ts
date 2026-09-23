@@ -4,6 +4,7 @@ export type FeatureFlags = {
 	cms: boolean;
 	demo: boolean;
 	darkMode: boolean;
+	prettier: boolean;
 };
 
 export const features: FeatureFlags = {
@@ -12,4 +13,5 @@ export const features: FeatureFlags = {
 	cms: true,
 	demo: true,
 	darkMode: true,
+	prettier: true,
 };
