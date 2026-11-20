@@ -17,12 +17,12 @@
 		"@astrojs/sitemap": "^3.7.4",
 		"astro": "^7.3.8",
 		"astro-icon": "^1.2.0",
-		"autoprefixer": "^10.6.2",
+		"autoprefixer": "^10.7.0",
 		"less": "^4.9.1"
 	},
 	"devDependencies": {
-		"prettier": "^3.9.10",
-		"prettier-plugin-astro": "^1.0.1",
+		"prettier": "^3.10.1",
+		"prettier-plugin-astro": "^1.1.2",
 		"slugify": "^1.6.9"
 	}
 }
