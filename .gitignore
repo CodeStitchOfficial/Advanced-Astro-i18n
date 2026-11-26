@@ -26,3 +26,5 @@ pnpm-debug.log*
 # remove-* script outputs
 scripts/deleted/
 .demo-removed
+
+/masoud-shopify
